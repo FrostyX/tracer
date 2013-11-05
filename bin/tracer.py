@@ -8,7 +8,7 @@ import sys
 sys.path.append('.')
 
 # Tracer modules
-import packageManagers.yum as yum
+from packageManagers.yum import Yum
 
 
 print "Hello world"
