@@ -39,6 +39,9 @@ class Yum(IPackageManager):
 		return 0
 
 	def _database_file(self):
-		"""Returns path to yum history database file"""
+		"""
+		Returns path to yum history database file
+		Requires root permissions.
+		"""
 		history_path = '/var/lib/yum/history/'
 		return history_path + listdir(history_path)[-1]
