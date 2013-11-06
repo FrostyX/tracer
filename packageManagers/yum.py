@@ -9,7 +9,28 @@ import sqlite3
 class Yum(IPackageManager):
 
 	def packages_newer_than(self, unix_time):
-		return 0
+		"""
+		Returns list of packages which were modified between unix_time and present
+		Requires root permissions.
+		"""
+
+		sql = """
+			SELECT *
+			FROM trans_data_pkgs JOIN pkgtups ON trans_data_pkgs.pkgtupid=pkgtups.pkgtupid
+			WHERE trans_data_pkgs.tid = ?
+			ORDER BY pkgtups.pkgtupid
+		"""
+
+		packages = []
+		sqlite = self._database_file()
+		conn = sqlite3.connect(sqlite)
+		conn.row_factory = sqlite3.Row
+		c = conn.cursor()
+
+		for t in self._transactions_newer_than(unix_time):
+			c.execute(sql, [t['tid']])
+			packages.extend(c.fetchall())
+		return packages
 
 	def is_from(self, pkg_name, file_name):
 		return 0
