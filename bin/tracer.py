@@ -4,8 +4,9 @@
 # Copyright 2013 Jakub Kadlčík
 
 # Enable importing modules from parent directory (tracer's root directory)
-import sys
-sys.path.append('.')
+import os
+parentdir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+os.sys.path.insert(0, parentdir)
 
 # Tracer modules
 from packageManagers.yum import Yum
