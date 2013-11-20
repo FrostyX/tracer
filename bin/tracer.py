@@ -16,13 +16,29 @@ import psutil
 from packageManagers.yum import Yum
 import resources.memory as memory
 
-def modified(manager):
-	packages = manager.packages_newer_than(psutil.BOOT_TIME)
+PACKAGE_MANAGER = Yum()
+
+# Returns list of packages what tracer should care about
+def modified_packages():
+	if not True:
+		packages = PACKAGE_MANAGER.packages_newer_than(psutil.BOOT_TIME)
+	else:
+		# Lets say its got from standard input
+		packages = [
+			{'name': 'xterm'},
+			{'name': 'ark'},
+			{'name': 'kactivities'},
+		]
+	return packages
+
+# Returns list of packages which have some files loaded in memory
+def trace_running():
 	files_in_memory = memory.files_in_memory()
+	packages = modified_packages()
 
 	modified = []
 	for package in packages:
-		for file in manager._package_files(package['name']):
+		for file in PACKAGE_MANAGER._package_files(package['name']):
 
 			regex = re.compile('^' + re.escape(file) + "(\.*|$)")
 			if memory.is_in_memory(regex, files_in_memory):
@@ -31,5 +47,5 @@ def modified(manager):
 	return modified
 
 # More times a package is updated the more times it is contained in a package list.
-for package in set(modified(Yum())):
+for package in set(trace_running()):
 	print package
