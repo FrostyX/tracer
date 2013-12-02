@@ -20,10 +20,12 @@ PACKAGE_MANAGER = Yum()
 
 # Returns list of packages what tracer should care about
 def modified_packages():
-	if not True:
+	# Else branch is only for dev and testing purposes
+	# Use: if True   or   if not True
+	if True:
 		packages = PACKAGE_MANAGER.packages_newer_than(psutil.BOOT_TIME)
 	else:
-		# Lets say its got from standard input
+		# Lets say these packages were updated
 		packages = [
 			{'name': 'xterm'},
 			{'name': 'ark'},
@@ -33,17 +35,22 @@ def modified_packages():
 
 # Returns list of packages which have some files loaded in memory
 def trace_running():
+	"""
+	Returns list of package names which owns outdated files loaded in memory
+	@TODO This function should be hardly optimized
+	"""
+
 	files_in_memory = memory.files_in_memory()
 	packages = modified_packages()
 
 	modified = []
 	for package in packages:
 		for file in PACKAGE_MANAGER._package_files(package['name']):
-
+			# Doesnt matter what is after dot cause in package files there is version number after it
 			regex = re.compile('^' + re.escape(file) + "(\.*|$)")
 			if memory.is_in_memory(regex, files_in_memory):
 				modified.append(package['name'])
-				break;
+				break
 	return modified
 
 # More times a package is updated the more times it is contained in a package list.

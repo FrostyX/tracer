@@ -27,7 +27,10 @@ def process_files(pid):
 	return files
 
 def is_in_memory(regex_file, memory):
-	"""Predicates if file is loaded in memory"""
+	"""
+	Predicates if file is loaded in memory
+	@TODO This function should be hardly optimized
+	"""
 	for file in memory:
 		if regex_file.match(file):
 			return True
