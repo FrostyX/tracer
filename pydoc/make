@@ -1,0 +1,13 @@
+#!/bin/bash
+
+# Pydoc has to be run from project root directory!
+pwd="$(pwd)"
+cd "$(dirname "$0")" # Change directory to script location
+cd ../
+
+for file in $(pydoc -w ./ | awk '{print $2}');
+do
+	mv "$file" pydoc;
+done
+
+cd $pwd
