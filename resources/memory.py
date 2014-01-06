@@ -42,6 +42,9 @@ def files_in_memory():
 	"""
 	files = []
 	for pid in psutil.get_pid_list():
-		files += process_files(pid)
+		try:
+			files += process_files(pid)
+		except psutil._error.NoSuchProcess:
+			pass
 
 	return set(files)
