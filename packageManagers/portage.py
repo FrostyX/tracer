@@ -2,7 +2,6 @@
 """Module to work with portage package manager class
 Copyright 2013 Jakub Kadlčík"""
 
-#from os import listdir
 from ipackageManager import IPackageManager
 import commands
 import time
