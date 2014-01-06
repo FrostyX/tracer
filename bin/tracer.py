@@ -11,12 +11,24 @@ os.sys.path.insert(0, parentdir)
 # System modules
 import re
 import psutil
+import platform
 
 # Tracer modules
 from packageManagers.yum import Yum
+from packageManagers.portage import Portage
 import resources.memory as memory
 
-PACKAGE_MANAGER = Yum()
+# Returns instance of package manager according to installed linux distribution
+def package_manager():
+	def e(): raise OSError("Unknown or unsupported linux distribution")
+
+	distro = platform.linux_distribution(full_distribution_name=False)[0]
+	return {
+		'gentoo': Portage(),
+		'fedora': Yum(),
+	}.get(distro, e)
+
+PACKAGE_MANAGER = package_manager()
 
 # Returns list of packages what tracer should care about
 def modified_packages():
