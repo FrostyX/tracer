@@ -57,7 +57,7 @@ def trace_running():
 
 	modified = []
 	for package in packages:
-		for file in PACKAGE_MANAGER._package_files(package['name']):
+		for file in PACKAGE_MANAGER.package_files(package['name']):
 			# Doesnt matter what is after dot cause in package files there is version number after it
 			regex = re.compile('^' + re.escape(file) + "(\.*|$)")
 			if memory.is_in_memory(regex, files_in_memory):

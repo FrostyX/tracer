@@ -33,9 +33,10 @@ class Yum(IPackageManager):
 			packages.extend(c.fetchall())
 		return packages
 
-	def is_from(self, pkg_name, file_name):
-		"""Predicates if file is provided by package"""
-		return 0
+	def package_files(self, pkg_name):
+		"""Returns list of files provided by package"""
+		# http://docs.fedoraproject.org/en-US/Fedora_Draft_Documentation/0.1/html/RPM_Guide/ch04s02s03.html
+		return commands.getoutput('rpm -ql ' + pkg_name).split('\n')
 
 	def _transactions_newer_than(self, unix_time):
 		"""
@@ -56,11 +57,6 @@ class Yum(IPackageManager):
 		c = conn.cursor()
 		c.execute(sql, [unix_time])
 		return c.fetchall()
-
-	def _package_files(self, pkg_name):
-		"""Returns list of files provided by package"""
-		# http://docs.fedoraproject.org/en-US/Fedora_Draft_Documentation/0.1/html/RPM_Guide/ch04s02s03.html
-		return commands.getoutput('rpm -ql ' + pkg_name).split('\n')
 
 	def _database_file(self):
 		"""

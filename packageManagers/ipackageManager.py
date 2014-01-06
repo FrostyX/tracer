@@ -7,6 +7,6 @@ class IPackageManager:
 		"""Returns list of packages which were modified between unix_time and present"""
 		raise NotImplementedError
 
-	def is_from(self, pkg_name, file_name):
-		"""Predicates if file is provided by package"""
+	def package_files(self, pkg_name):
+		"""Returns list of files provided by package"""
 		raise NotImplementedError

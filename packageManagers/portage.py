@@ -27,12 +27,7 @@ class Portage(IPackageManager):
 				newer.append({"name":pkg_name})
 		return newer
 
-	def is_from(self, pkg_name, file_name):
-		"""Predicates if file is provided by package"""
-		raise NotImplementedError
-
-
-	def _package_files(self, pkg_name):
+	def package_files(self, pkg_name):
 		"""Returns list of files provided by package"""
 		return commands.getoutput('equery -q f ' + pkg_name).split('\n')
 
