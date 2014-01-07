@@ -7,7 +7,7 @@ How does he do it? He simply finds all packages you have modified since you boot
 ## Requirements
 - Supported linux distribution - There are currently supported [Fedora](http://fedoraproject.org/) and [Gentoo](http://www.gentoo.org/)
 - Python interpreter
-- Python [psutil](https://code.google.com/p/psutil/) module. Available [here](https://admin.fedoraproject.org/pkgdb/acls/name/python-psutil?_csrf_token=09739007ef8cd539e0b5903b86bd3ef76d614a4b) and [here](https://packages.gentoo.org/package/dev-python/psutil). Please use testing version on gentoo.
+- Python [psutil](https://code.google.com/p/psutil/) module. Available [here](https://admin.fedoraproject.org/pkgdb/acls/name/python-psutil) and [here](https://packages.gentoo.org/package/dev-python/psutil). Please use testing version on gentoo.
 
 ## Usage
 Clone tracer from GitHub
