@@ -16,7 +16,7 @@ class Yum(IPackageManager):
 		"""
 
 		sql = """
-			SELECT *
+			SELECT pkgtups.name
 			FROM trans_data_pkgs JOIN pkgtups ON trans_data_pkgs.pkgtupid=pkgtups.pkgtupid
 			WHERE trans_data_pkgs.tid = ?
 			ORDER BY pkgtups.pkgtupid
