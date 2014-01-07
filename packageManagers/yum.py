@@ -5,7 +5,7 @@ Copyright 2013 Jakub Kadlčík"""
 from os import listdir
 from ipackageManager import IPackageManager
 import sqlite3
-import commands
+import subprocess
 
 class Yum(IPackageManager):
 
@@ -36,7 +36,9 @@ class Yum(IPackageManager):
 	def package_files(self, pkg_name):
 		"""Returns list of files provided by package"""
 		# http://docs.fedoraproject.org/en-US/Fedora_Draft_Documentation/0.1/html/RPM_Guide/ch04s02s03.html
-		return commands.getoutput('rpm -ql ' + pkg_name).split('\n')
+		p = subprocess.Popen(['rpm', '-ql', pkg_name], stdout=subprocess.PIPE)
+		files, err = p.communicate()
+		return files.split('\n')[:-1]
 
 	def _transactions_newer_than(self, unix_time):
 		"""

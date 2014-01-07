@@ -3,7 +3,7 @@
 Copyright 2013 Jakub Kadlčík"""
 
 from ipackageManager import IPackageManager
-import commands
+import subprocess
 import time
 
 class Portage(IPackageManager):
@@ -14,8 +14,9 @@ class Portage(IPackageManager):
 		Requires root permissions.
 		"""
 		newer = []
-		packages = commands.getoutput('sudo qlop -lC').split('\n')
-		for package in packages:
+		p = subprocess.Popen(['qlop', '-lC'], stdout=subprocess.PIPE)
+		packages, err = p.communicate()
+		for package in packages.split('\n')[:-1]:
 			package = package.split(" >>> ")
 
 			# There actually should be %e instead of %d
@@ -29,5 +30,7 @@ class Portage(IPackageManager):
 
 	def package_files(self, pkg_name):
 		"""Returns list of files provided by package"""
-		return commands.getoutput('equery -q f ' + pkg_name).split('\n')
+		p = subprocess.Popen(['equery', '-q', 'f', pkg_name], stdout=subprocess.PIPE)
+		files, err = p.communicate()
+		return files.split('\n')[:-1]
 
