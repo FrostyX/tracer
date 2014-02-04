@@ -52,7 +52,7 @@ def trace_running():
 	@TODO This function should be hardly optimized
 	"""
 
-	files_in_memory = memory.files_in_memory()
+	files_in_memory = memory.processes_with_files()
 	packages = modified_packages()
 
 	modified = []
@@ -60,7 +60,8 @@ def trace_running():
 		for file in PACKAGE_MANAGER.package_files(package['name']):
 			# Doesnt matter what is after dot cause in package files there is version number after it
 			regex = re.compile('^' + re.escape(file) + "(\.*|$)")
-			if memory.is_in_memory(regex, files_in_memory):
+			p = memory.is_in_memory(regex, files_in_memory)
+			if p and p.create_time <= package['modified']:
 				modified.append(package['name'])
 				break
 	return modified

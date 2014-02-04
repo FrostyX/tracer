@@ -30,7 +30,9 @@ class Yum(IPackageManager):
 
 		for t in self._transactions_newer_than(unix_time):
 			c.execute(sql, [t['tid']])
-			packages.extend(c.fetchall())
+			for p in c.fetchall():
+				packages.append({'name':p['name'], 'modified':t['end']})
+
 		return packages
 
 	def package_files(self, pkg_name):
