@@ -5,6 +5,7 @@ Copyright 2013 Jakub Kadlčík"""
 from ipackageManager import IPackageManager
 import subprocess
 import time
+import os
 
 class Portage(IPackageManager):
 
@@ -30,7 +31,8 @@ class Portage(IPackageManager):
 
 	def package_files(self, pkg_name):
 		"""Returns list of files provided by package"""
-		p = subprocess.Popen(['equery', '-q', 'f', pkg_name], stdout=subprocess.PIPE)
+		FNULL = open(os.devnull, 'w')
+		p = subprocess.Popen(['equery', '-q', 'f', pkg_name], stdout=subprocess.PIPE, stderr=FNULL)
 		files, err = p.communicate()
 		return files.split('\n')[:-1]
 
