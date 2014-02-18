@@ -13,6 +13,7 @@ import sys
 import re
 import psutil
 import platform
+import time
 
 # Tracer modules
 from packageManagers.yum import Yum
@@ -47,14 +48,16 @@ def modified_packages():
 	return packages
 
 # Returns list of packages which have some files loaded in memory
-def trace_running():
+def trace_running(packages=None):
 	"""
 	Returns list of package names which owns outdated files loaded in memory
+	packages -- set of packages, what ONLY should be traced
 	@TODO This function should be hardly optimized
 	"""
 
 	files_in_memory = memory.processes_with_files()
-	packages = modified_packages()
+	if not packages:
+		packages = modified_packages()
 
 	modified = []
 	for package in packages:
@@ -70,8 +73,16 @@ def trace_running():
 
 
 def main(argv=sys.argv):
+	# So far there is no CLI options, so everything given by argument is package
+	argv_packages = []
+	for package in argv[1:]:
+		argv_packages.append({
+			'name' : package,
+			'modified' : time.time(),
+		})
+
 	# More times a package is updated the more times it is contained in a package list.
-	for package in set(trace_running()):
+	for package in set(trace_running(argv_packages)):
 		print package
 
 if __name__ == '__main__':
