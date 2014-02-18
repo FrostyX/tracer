@@ -48,7 +48,7 @@ def modified_packages():
 	return packages
 
 # Returns list of packages which have some files loaded in memory
-def trace_running(packages=None):
+def trace_running(specified_packages=None):
 	"""
 	Returns list of package names which owns outdated files loaded in memory
 	packages -- set of packages, what ONLY should be traced
@@ -56,11 +56,13 @@ def trace_running(packages=None):
 	"""
 
 	files_in_memory = memory.processes_with_files()
-	if not packages:
-		packages = modified_packages()
+	packages = modified_packages()
 
 	modified = []
 	for package in packages:
+		if specified_packages and package not in specified_packages:
+			continue
+
 		for file in PACKAGE_MANAGER.package_files(package['name']):
 			# Doesnt matter what is after dot cause in package files there is version number after it
 			regex = re.compile('^' + re.escape(file) + "(\.*|$)")
@@ -74,19 +76,15 @@ def trace_running(packages=None):
 
 def main(argv=sys.argv, stdin=[]):
 	# If there is something on stdin (that means piped into tracer)
+	stdin_packages = []
 	if not sys.stdin.isatty():
-		stdin = sys.stdin.readline().split()
+		stdin_packages = sys.stdin.readline().split()
 
 	# So far there is no CLI options, so everything given by argument is package
-	argv_packages = []
-	for package in argv[1:] + stdin:
-		argv_packages.append({
-			'name' : package,
-			'modified' : time.time(),
-		})
+	argv_packages = argv[1:]
 
 	# More times a package is updated the more times it is contained in a package list.
-	for package in set(trace_running(argv_packages)):
+	for package in set(trace_running(argv_packages + stdin_packages)):
 		print package
 
 if __name__ == '__main__':
