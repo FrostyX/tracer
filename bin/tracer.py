@@ -72,10 +72,14 @@ def trace_running(packages=None):
 
 
 
-def main(argv=sys.argv):
+def main(argv=sys.argv, stdin=[]):
+	# If there is something on stdin (that means piped into tracer)
+	if not sys.stdin.isatty():
+		stdin = sys.stdin.readline().split()
+
 	# So far there is no CLI options, so everything given by argument is package
 	argv_packages = []
-	for package in argv[1:]:
+	for package in argv[1:] + stdin:
 		argv_packages.append({
 			'name' : package,
 			'modified' : time.time(),
