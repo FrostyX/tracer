@@ -9,6 +9,7 @@ parentdir = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
 os.sys.path.insert(0, parentdir)
 
 # System modules
+import sys
 import re
 import psutil
 import platform
@@ -66,6 +67,12 @@ def trace_running():
 				break
 	return modified
 
-# More times a package is updated the more times it is contained in a package list.
-for package in set(trace_running()):
-	print package
+
+
+def main(argv=sys.argv):
+	# More times a package is updated the more times it is contained in a package list.
+	for package in set(trace_running()):
+		print package
+
+if __name__ == '__main__':
+	main()
