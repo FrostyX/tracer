@@ -36,8 +36,11 @@ class Yum(IPackageManager):
 		return packages
 
 	def package_files(self, pkg_name):
-		"""Returns list of files provided by package"""
-		# http://docs.fedoraproject.org/en-US/Fedora_Draft_Documentation/0.1/html/RPM_Guide/ch04s02s03.html
+		"""
+		Returns list of files provided by package
+		See also: http://docs.fedoraproject.org/en-US/Fedora_Draft_Documentation/0.1/html/RPM_Guide/ch04s02s03.html
+		"""
+
 		p = subprocess.Popen(['rpm', '-ql', pkg_name], stdout=subprocess.PIPE)
 		files, err = p.communicate()
 		return files.split('\n')[:-1]
