@@ -10,10 +10,6 @@ import re
 
 class Rpm(IPackageManager):
 
-	#@property
-	#def history_path():
-		#return '/var/lib/yum/history/'
-
 	def packages_newer_than(self, unix_time):
 		"""
 		Returns list of packages which were modified between unix_time and present
