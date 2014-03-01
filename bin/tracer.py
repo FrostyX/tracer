@@ -16,6 +16,7 @@ import platform
 import time
 
 # Tracer modules
+from packageManagers.dnf import Dnf
 from packageManagers.yum import Yum
 from packageManagers.portage import Portage
 import resources.memory as memory
@@ -27,7 +28,7 @@ def package_manager():
 	distro = platform.linux_distribution(full_distribution_name=False)[0]
 	return {
 		'gentoo': Portage(),
-		'fedora': Yum(),
+		'fedora': Dnf(),
 	}.get(distro, e)
 
 PACKAGE_MANAGER = package_manager()
