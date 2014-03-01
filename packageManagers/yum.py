@@ -6,6 +6,7 @@ from os import listdir
 from ipackageManager import IPackageManager
 import sqlite3
 import subprocess
+import re
 
 class Yum(IPackageManager):
 
@@ -70,5 +71,8 @@ class Yum(IPackageManager):
 		Returns path to yum history database file
 		Requires root permissions.
 		"""
+
 		history_path = '/var/lib/yum/history/'
-		return history_path + listdir(history_path)[-1]
+		for file in listdir(history_path):
+			if file.startswith("history-") and file.endswith(".sqlite"):
+				return history_path + file
