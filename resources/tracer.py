@@ -14,15 +14,28 @@ import resources.memory as memory
 
 class Tracer:
 
-	_PACKAGE_MANAGER = None
+	"""
+	Tracer finds outdated running packages in your system
+	Copyright 2014 Jakub Kadlčík
+	"""
+
+	"""List of packages that only should be traced"""
 	_specified_packages = None
+
+	"""
+	When true, tracer pretends that specified packages have been updated just now.
+	Benefit of this is absolutely no need for openning the package history database
+	"""
 	_now = False
+
+	"""Instance of package manager class. Set by __init__"""
+	_PACKAGE_MANAGER = None
 
 	def __init__(self):
 		self._PACKAGE_MANAGER = self._PACKAGE_MANAGER()
 
-	# Returns instance of package manager according to installed linux distribution
 	def _PACKAGE_MANAGER(self):
+		"""Returns instance of package manager according to installed linux distribution"""
 		def e(): raise OSError("Unknown or unsupported linux distribution")
 
 		distro = platform.linux_distribution(full_distribution_name=False)[0]
@@ -31,8 +44,8 @@ class Tracer:
 			'fedora': Dnf(),
 		}.get(distro, e)
 
-	# Returns list of packages what tracer should care about
 	def _modified_packages(self):
+		"""Returns list of packages what tracer should care about"""
 		if self.specified_packages and self.now:
 			return self.specified_packages
 
@@ -43,11 +56,9 @@ class Tracer:
 					packages.remove(package)
 		return packages
 
-	# Returns list of packages which have some files loaded in memory
 	def trace_running(self):
 		"""
-		Returns list of package names which owns outdated files loaded in memory
-		packages -- set of packages, what ONLY should be traced
+		Returns list of packages which have some files loaded in memory
 		@TODO This function should be hardly optimized
 		"""
 
