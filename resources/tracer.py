@@ -16,6 +16,7 @@ import resources.memory as memory
 class Tracer:
 
 	_PACKAGE_MANAGER = None
+	_specified_packages = None
 
 	def __init__(self):
 		self._PACKAGE_MANAGER = self._PACKAGE_MANAGER()
@@ -31,19 +32,19 @@ class Tracer:
 		}.get(distro, e)
 
 	# Returns list of packages what tracer should care about
-	def _modified_packages(self, specified_packages=None):
-		if specified_packages and args.now:
-			return specified_packages
+	def _modified_packages(self):
+		if self.specified_packages and args.now:
+			return self.specified_packages
 
 		packages = self._PACKAGE_MANAGER.packages_newer_than(psutil.BOOT_TIME)
-		if specified_packages:
+		if self.specified_packages:
 			for package in packages:
-				if package not in specified_packages:
+				if package not in self.specified_packages:
 					packages.remove(package)
 		return packages
 
 	# Returns list of packages which have some files loaded in memory
-	def trace_running(self, specified_packages=None):
+	def trace_running(self):
 		"""
 		Returns list of package names which owns outdated files loaded in memory
 		packages -- set of packages, what ONLY should be traced
@@ -51,7 +52,7 @@ class Tracer:
 		"""
 
 		files_in_memory = memory.processes_with_files()
-		packages = specified_packages if specified_packages and args.now else self._modified_packages(specified_packages)
+		packages = self.specified_packages if self.specified_packages and args.now else self._modified_packages()
 
 		modified = []
 		for package in packages:
@@ -63,4 +64,12 @@ class Tracer:
 					modified.append(package.name)
 					break
 		return modified
+
+	@property
+	def specified_packages(self):
+		return self._specified_packages
+
+	@specified_packages.setter
+	def specified_packages(self, packages):
+		self._specified_packages = packages
 

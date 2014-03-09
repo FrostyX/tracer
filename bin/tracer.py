@@ -28,7 +28,8 @@ def main(argv=sys.argv, stdin=[]):
 
 	# More times a package is updated the more times it is contained in a package list.
 	tracer = Tracer()
-	for package in set(tracer.trace_running(packages)):
+	tracer.specified_packages = packages
+	for package in set(tracer.trace_running()):
 		print package
 
 if __name__ == '__main__':
