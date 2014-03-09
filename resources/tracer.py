@@ -9,7 +9,6 @@ import platform
 from packageManagers.dnf import Dnf
 from packageManagers.yum import Yum
 from packageManagers.portage import Portage
-from resources.args_parser import args
 from resources.package import Package
 import resources.memory as memory
 
@@ -17,6 +16,7 @@ class Tracer:
 
 	_PACKAGE_MANAGER = None
 	_specified_packages = None
+	_now = False
 
 	def __init__(self):
 		self._PACKAGE_MANAGER = self._PACKAGE_MANAGER()
@@ -33,7 +33,7 @@ class Tracer:
 
 	# Returns list of packages what tracer should care about
 	def _modified_packages(self):
-		if self.specified_packages and args.now:
+		if self.specified_packages and self.now:
 			return self.specified_packages
 
 		packages = self._PACKAGE_MANAGER.packages_newer_than(psutil.BOOT_TIME)
@@ -52,7 +52,7 @@ class Tracer:
 		"""
 
 		files_in_memory = memory.processes_with_files()
-		packages = self.specified_packages if self.specified_packages and args.now else self._modified_packages()
+		packages = self.specified_packages if self.specified_packages and self._now else self._modified_packages()
 
 		modified = []
 		for package in packages:
@@ -73,3 +73,10 @@ class Tracer:
 	def specified_packages(self, packages):
 		self._specified_packages = packages
 
+	@property
+	def now(self):
+		return self._now
+
+	@now.setter
+	def now(self, value):
+		self._now = value

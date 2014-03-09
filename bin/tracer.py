@@ -26,10 +26,11 @@ def main(argv=sys.argv, stdin=[]):
 	for package in args.packages + stdin_packages:
 		packages.append(Package(package, time.time() if args.now else None))
 
-	# More times a package is updated the more times it is contained in a package list.
 	tracer = Tracer()
 	tracer.specified_packages = packages
+	tracer.now = args.now
 	for package in set(tracer.trace_running()):
+		# More times a package is updated the more times it is contained in a package list.
 		print package
 
 if __name__ == '__main__':
