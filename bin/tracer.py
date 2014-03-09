@@ -31,7 +31,7 @@ def main(argv=sys.argv, stdin=[]):
 	tracer.now = args.now
 	for package in set(tracer.trace_running()):
 		# More times a package is updated the more times it is contained in a package list.
-		print package
+		print package.name
 
 if __name__ == '__main__':
 	main()

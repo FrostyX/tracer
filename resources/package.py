@@ -27,6 +27,9 @@ class Package:
 	def __str__(self):
 		return self._name
 
+	def __hash__(self):
+		return hash(id(self))
+
 	@property
 	def name(self):
 		return self._name

@@ -72,7 +72,7 @@ class Tracer:
 				regex = re.compile('^' + re.escape(file) + "(\.*|$)")
 				p = memory.is_in_memory(regex, files_in_memory)
 				if p and p.create_time <= package.modified:
-					modified.append(package.name)
+					modified.append(package)
 					break
 		return modified
 
