@@ -5,66 +5,33 @@
 
 # Enable importing modules from parent directory (tracer's root directory)
 import os
-parentdir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+parentdir = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
 os.sys.path.insert(0, parentdir)
 
-# System modules
-import re
-import psutil
-import platform
+import sys
+import time
+from resources.tracer import Tracer
+from resources.args_parser import args
+from resources.package import Package
 
-# Tracer modules
-from packageManagers.yum import Yum
-from packageManagers.portage import Portage
-import resources.memory as memory
 
-# Returns instance of package manager according to installed linux distribution
-def package_manager():
-	def e(): raise OSError("Unknown or unsupported linux distribution")
+def main(argv=sys.argv, stdin=[]):
+	# If there is something on stdin (that means piped into tracer)
+	stdin_packages = []
+	if not sys.stdin.isatty():
+		stdin_packages = sys.stdin.readline().split()
 
-	distro = platform.linux_distribution(full_distribution_name=False)[0]
-	return {
-		'gentoo': Portage(),
-		'fedora': Yum(),
-	}.get(distro, e)
+	# All input packages enchanced by actual time (as modified time)
+	packages = []
+	for package in args.packages + stdin_packages:
+		packages.append(Package(package, time.time() if args.now else None))
 
-PACKAGE_MANAGER = package_manager()
+	tracer = Tracer()
+	tracer.specified_packages = packages
+	tracer.now = args.now
+	for package in set(tracer.trace_running()):
+		# More times a package is updated the more times it is contained in a package list.
+		print package.name
 
-# Returns list of packages what tracer should care about
-def modified_packages():
-	# Else branch is only for dev and testing purposes
-	# Use: if True   or   if not True
-	if True:
-		packages = PACKAGE_MANAGER.packages_newer_than(psutil.BOOT_TIME)
-	else:
-		# Lets say these packages were updated
-		packages = [
-			{'name': 'xterm'},
-			{'name': 'ark'},
-			{'name': 'kactivities'},
-		]
-	return packages
-
-# Returns list of packages which have some files loaded in memory
-def trace_running():
-	"""
-	Returns list of package names which owns outdated files loaded in memory
-	@TODO This function should be hardly optimized
-	"""
-
-	files_in_memory = memory.files_in_memory()
-	packages = modified_packages()
-
-	modified = []
-	for package in packages:
-		for file in PACKAGE_MANAGER.package_files(package['name']):
-			# Doesnt matter what is after dot cause in package files there is version number after it
-			regex = re.compile('^' + re.escape(file) + "(\.*|$)")
-			if memory.is_in_memory(regex, files_in_memory):
-				modified.append(package['name'])
-				break
-	return modified
-
-# More times a package is updated the more times it is contained in a package list.
-for package in set(trace_running()):
-	print package
+if __name__ == '__main__':
+	main()

@@ -29,11 +29,14 @@ def process_files(pid):
 def is_in_memory(regex_file, memory):
 	"""
 	Predicates if file is loaded in memory
+	memory -- list given by self.processes_with_files()
+	return psutil.Process if true, otherwise False
 	@TODO This function should be hardly optimized
 	"""
-	for file in memory:
-		if regex_file.match(file):
-			return True
+	for process in memory:
+		for file in process[1]:
+			if regex_file.match(file):
+				return process[0]
 	return False
 
 def files_in_memory():
@@ -48,3 +51,19 @@ def files_in_memory():
 			pass
 
 	return set(files)
+
+def processes_with_files():
+	"""
+	Returns multidimensional list with this pattern - list[psutil.Process][files]
+	"""
+	processes = []
+	for pid in psutil.get_pid_list():
+		try:
+			processes.append([psutil.Process(pid), process_files(pid)])
+		except psutil._error.NoSuchProcess:
+			pass
+		except psutil._error.AccessDenied:
+			pass
+
+	return processes
+
