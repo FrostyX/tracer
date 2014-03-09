@@ -1,3 +1,4 @@
+#-*- coding: utf-8 -*-
 # tracer.py, calls tracer after every successful transaction.
 # Also supplies the 'tracer' command.
 #
