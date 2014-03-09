@@ -44,6 +44,25 @@ You can also specify packages that *only* should be traced. Just pass them as ar
 ### DNF
 Make symlink of `integration/dnf/plugins/tracer.py` file to your [dnf plugin directory](http://akozumpl.github.io/dnf/api_conf.html#dnf.conf.Conf.pluginpath)
 
+Tracer is called after every successful transaction.
+
+	$[FrostyX  ~]-> sudo dnf update vim-X11
+	...
+	Running transaction
+	  Upgrading    : vim-common-2:7.4.179-1.fc20.i686                           1/6
+	  Upgrading    : vim-X11-2:7.4.179-1.fc20.i686                              2/6
+	  Upgrading    : vim-enhanced-2:7.4.179-1.fc20.i686                         3/6
+	  ...
+
+	Upgraded:
+	  vim-X11.i686 2:7.4.179-1.fc20           vim-common.i686 2:7.4.179-1.fc20
+	  vim-enhanced.i686 2:7.4.179-1.fc20
+
+	Calling tracer
+	vim-X11
+
+	Done!
+
 
 ## Feedback
 Please report any bugs or feature requests to [issues](https://github.com/FrostyX/tracer/issues) on this repository. Pull requests are also welcome. If you rather want a talk or something, you can find me on `#gentoo.cs` or `#fedora-cs` `@freenode` or you can [mail me](mailto:frostyx@email.cz).
