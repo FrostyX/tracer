@@ -37,24 +37,14 @@ PACKAGE_MANAGER = package_manager()
 
 # Returns list of packages what tracer should care about
 def modified_packages(specified_packages=None):
-	# Else branch is only for dev and testing purposes
-	# Use: if True   or   if not True
-	if True:
-		if specified_packages and args.now:
-			return specified_packages
+	if specified_packages and args.now:
+		return specified_packages
 
-		packages = PACKAGE_MANAGER.packages_newer_than(psutil.BOOT_TIME)
-		if specified_packages:
-			for package in packages:
-				if package not in specified_packages:
-					packages.remove(package)
-	else:
-		# Lets say these packages were updated
-		packages = [
-			{'name': 'xterm'},
-			{'name': 'ark'},
-			{'name': 'kactivities'},
-		]
+	packages = PACKAGE_MANAGER.packages_newer_than(psutil.BOOT_TIME)
+	if specified_packages:
+		for package in packages:
+			if package not in specified_packages:
+				packages.remove(package)
 	return packages
 
 # Returns list of packages which have some files loaded in memory
