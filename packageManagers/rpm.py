@@ -4,6 +4,7 @@ Copyright 2013 Jakub Kadlčík"""
 
 from os import listdir
 from ipackageManager import IPackageManager
+from resources.package import Package
 import sqlite3
 import subprocess
 import re
@@ -32,7 +33,7 @@ class Rpm(IPackageManager):
 		for t in self._transactions_newer_than(unix_time):
 			c.execute(sql, [t['tid']])
 			for p in c.fetchall():
-				packages.append({'name':p['name'], 'modified':t['end']})
+				packages.append(Package(p['name'], t['end']))
 
 		return packages
 

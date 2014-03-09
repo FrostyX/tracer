@@ -3,6 +3,7 @@
 Copyright 2013 Jakub Kadlčík"""
 
 from ipackageManager import IPackageManager
+from resources.package import Package
 import subprocess
 import time
 import os
@@ -26,7 +27,7 @@ class Portage(IPackageManager):
 				pkg_name = package[1] # Package name with version, let's cut it off
 				pkg_name = pkg_name[:pkg_name.index('.')]  # Cut from first . to end
 				pkg_name = pkg_name[:pkg_name.rindex('-')] # Cut from last  - to end
-				newer.append({"name":pkg_name, "modified":modified})
+				newer.append(Package(pkg_name, modified))
 		return newer
 
 	def package_files(self, pkg_name):
