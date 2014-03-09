@@ -19,6 +19,8 @@ import time
 from packageManagers.dnf import Dnf
 from packageManagers.yum import Yum
 from packageManagers.portage import Portage
+from resources.args_parser import args
+from resources.package import Package
 import resources.memory as memory
 
 # Returns instance of package manager according to installed linux distribution
@@ -34,11 +36,18 @@ def package_manager():
 PACKAGE_MANAGER = package_manager()
 
 # Returns list of packages what tracer should care about
-def modified_packages():
+def modified_packages(specified_packages=None):
 	# Else branch is only for dev and testing purposes
 	# Use: if True   or   if not True
 	if True:
+		if specified_packages and args.now:
+			return specified_packages
+
 		packages = PACKAGE_MANAGER.packages_newer_than(psutil.BOOT_TIME)
+		if specified_packages:
+			for package in packages:
+				if package not in specified_packages:
+					packages.remove(package)
 	else:
 		# Lets say these packages were updated
 		packages = [
@@ -57,19 +66,16 @@ def trace_running(specified_packages=None):
 	"""
 
 	files_in_memory = memory.processes_with_files()
-	packages = modified_packages()
+	packages = specified_packages if specified_packages and args.now else modified_packages(specified_packages)
 
 	modified = []
 	for package in packages:
-		if specified_packages and package not in specified_packages:
-			continue
-
-		for file in PACKAGE_MANAGER.package_files(package['name']):
+		for file in PACKAGE_MANAGER.package_files(package.name):
 			# Doesnt matter what is after dot cause in package files there is version number after it
 			regex = re.compile('^' + re.escape(file) + "(\.*|$)")
 			p = memory.is_in_memory(regex, files_in_memory)
-			if p and p.create_time <= package['modified']:
-				modified.append(package['name'])
+			if p and p.create_time <= package.modified:
+				modified.append(package.name)
 				break
 	return modified
 
@@ -81,11 +87,13 @@ def main(argv=sys.argv, stdin=[]):
 	if not sys.stdin.isatty():
 		stdin_packages = sys.stdin.readline().split()
 
-	# So far there is no CLI options, so everything given by argument is package
-	argv_packages = argv[1:]
+	# All input packages enchanced by actual time (as modified time)
+	packages = []
+	for package in args.packages + stdin_packages:
+		packages.append(Package(package, time.time() if args.now else None))
 
 	# More times a package is updated the more times it is contained in a package list.
-	for package in set(trace_running(argv_packages + stdin_packages)):
+	for package in set(trace_running(packages)):
 		print package
 
 if __name__ == '__main__':
