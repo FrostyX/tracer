@@ -63,6 +63,8 @@ Tracer is called after every successful transaction.
 
 	Done!
 
+If you cant see tracer section in your output, make sure that you don't have `plugins=0` in your `/etc/dnf/dnf.conf`.
+
 
 ## Feedback
 Please report any bugs or feature requests to [issues](https://github.com/FrostyX/tracer/issues) on this repository. Pull requests are also welcome. If you rather want a talk or something, you can find me on `#gentoo.cs` or `#fedora-cs` `@freenode` or you can [mail me](mailto:frostyx@email.cz).
