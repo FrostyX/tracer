@@ -25,9 +25,13 @@ class Portage(IPackageManager):
 			modified = time.mktime(time.strptime(package[0], "%a %b %d %H:%M:%S %Y"))
 			if modified >= unix_time:
 				pkg_name = package[1] # Package name with version, let's cut it off
-				pkg_name = pkg_name[:pkg_name.index('.')]  # Cut from first . to end
-				pkg_name = pkg_name[:pkg_name.rindex('-')] # Cut from last  - to end
-				newer.append(Package(pkg_name, modified))
+				try:
+					pkg_name = pkg_name[:pkg_name.index('.')]  # Cut from first . to end
+					pkg_name = pkg_name[:pkg_name.rindex('-')] # Cut from last  - to end
+				except ValueError:
+					pass
+				finally:
+					newer.append(Package(pkg_name, modified))
 		return newer
 
 	def package_files(self, pkg_name):
