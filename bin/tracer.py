@@ -29,9 +29,8 @@ def main(argv=sys.argv, stdin=[]):
 	tracer = Tracer()
 	tracer.specified_packages = packages
 	tracer.now = args.now
-	for package in set(tracer.trace_running()):
-		# More times a package is updated the more times it is contained in a package list.
-		print package.name
+	for process in set(tracer.trace_running()):
+		print process.name
 
 if __name__ == '__main__':
 	if os.getuid() != 0:
