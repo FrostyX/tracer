@@ -34,4 +34,8 @@ def main(argv=sys.argv, stdin=[]):
 		print package.name
 
 if __name__ == '__main__':
+	if os.getuid() != 0:
+		print "Only root can use this application"
+		sys.exit();
+
 	main()
