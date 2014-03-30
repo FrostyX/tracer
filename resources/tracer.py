@@ -1,4 +1,20 @@
-# -*- coding: utf-8 -*-
+#-*- coding: utf-8 -*-
+# tracer.py
+# Tracer finds outdated running packages in your system
+#
+# Copyright (C) 2013 Jakub Kadlčík
+#
+# This copyrighted material is made available to anyone wishing to use,
+# modify, copy, or redistribute it subject to the terms and conditions of
+# the GNU General Public License v.2, or (at your option) any later version.
+# This program is distributed in the hope that it will be useful, but WITHOUT
+# ANY WARRANTY expressed or implied, including the implied warranties of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General
+# Public License for more details.  You should have received a copy of the
+# GNU General Public License along with this program; if not, write to the
+# Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+# 02110-1301, USA.
+#
 
 # System modules
 import re
@@ -13,11 +29,7 @@ from resources.package import Package
 import resources.memory as memory
 
 class Tracer:
-
-	"""
-	Tracer finds outdated running packages in your system
-	Copyright 2014 Jakub Kadlčík
-	"""
+	"""Tracer finds outdated running packages in your system"""
 
 	"""List of packages that only should be traced"""
 	_specified_packages = None
@@ -58,23 +70,23 @@ class Tracer:
 
 	def trace_running(self):
 		"""
-		Returns list of packages which have some files loaded in memory
+		Returns list of processes which uses some files that have been modified
 		@TODO This function should be hardly optimized
 		"""
 
 		files_in_memory = memory.processes_with_files()
 		packages = self.specified_packages if self.specified_packages and self._now else self._modified_packages()
 
-		modified = []
+		running = []
 		for package in packages:
 			for file in self._PACKAGE_MANAGER.package_files(package.name):
 				# Doesnt matter what is after dot cause in package files there is version number after it
 				regex = re.compile('^' + re.escape(file) + "\.*")
 				p = memory.is_in_memory(regex, files_in_memory)
 				if p and p.create_time <= package.modified:
-					modified.append(package)
+					running.append(p)
 					break
-		return modified
+		return running
 
 	@property
 	def specified_packages(self):
