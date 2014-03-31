@@ -36,11 +36,21 @@ def process_files(pid):
 	p = psutil.Process(pid)
 	for mmap in p.get_memory_maps():
 		if re.match(combined, mmap.path):
-			files.append(mmap.path)
+			file = mmap.path
+
+			# Doesnt matter what is after dot cause in package files there is version number after it
+			try: file = file[:file.index('.')]
+			except ValueError: pass
+
+			# Doesnt matter what is after space cause filename ends with first space
+			try: file = file[:file.index(' ')]
+			except ValueError: pass
+
+			files.append(file)
 
 	return files
 
-def is_in_memory(regex_file, memory):
+def is_in_memory(file, memory):
 	"""
 	Predicates if file is loaded in memory
 	memory -- list given by self.processes_with_files()
@@ -48,8 +58,8 @@ def is_in_memory(regex_file, memory):
 	@TODO This function should be hardly optimized
 	"""
 	for process in memory:
-		for file in process[1]:
-			if regex_file.match(file):
+		for f in process[1]:
+			if file == f:
 				return process[0]
 	return False
 

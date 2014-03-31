@@ -81,8 +81,10 @@ class Tracer:
 		for package in packages:
 			for file in self._PACKAGE_MANAGER.package_files(package.name):
 				# Doesnt matter what is after dot cause in package files there is version number after it
-				regex = re.compile('^' + re.escape(file) + "\.*")
-				p = memory.is_in_memory(regex, files_in_memory)
+				try: file = file[:file.index('.')]
+				except ValueError: pass
+
+				p = memory.is_in_memory(file, files_in_memory)
 				if p and p.create_time <= package.modified:
 					running.append(p)
 					break
