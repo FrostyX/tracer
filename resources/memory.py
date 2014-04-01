@@ -48,7 +48,7 @@ def process_files(pid):
 
 			files.append(file)
 
-	return files
+	return sorted(files)
 
 def is_in_memory(file, memory):
 	"""
@@ -58,9 +58,14 @@ def is_in_memory(file, memory):
 	@TODO This function should be hardly optimized
 	"""
 	for process in memory:
-		for f in process[1]:
-			if file == f:
-				return process[0]
+		l = 0
+		r = len(process[1])
+		while l <= r:
+			m = (l + r) / 2
+			if m >= len(process[1]): break
+			if file == process[1][m]: return process[0]
+			if file < process[1][m]:  r = m - 1
+			else: l = m + 1
 	return False
 
 def files_in_memory():
