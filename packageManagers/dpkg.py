@@ -1,6 +1,6 @@
 #-*- coding: utf-8 -*-
 # dpkg.py
-# Module to work with apt package manager
+# Module to work with dpkg based package managers
 #
 # Copyright (C) 2013 Jakub Kadlčík
 #
