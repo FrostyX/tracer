@@ -25,6 +25,7 @@ import platform
 from packageManagers.dnf import Dnf
 from packageManagers.yum import Yum
 from packageManagers.portage import Portage
+from packageManagers.dpkg import Dpkg
 from resources.package import Package
 import resources.memory as memory
 
@@ -54,6 +55,7 @@ class Tracer:
 		return {
 			'gentoo': Portage(),
 			'fedora': Dnf(),
+			'debian': Dpkg(),
 		}.get(distro, e)
 
 	def _modified_packages(self):
