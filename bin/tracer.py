@@ -27,6 +27,7 @@ import time
 from resources.tracer import Tracer
 from resources.args_parser import args
 from resources.package import Package
+from resources.exceptions import UnsupportedDistribution
 
 
 def main(argv=sys.argv, stdin=[]):
@@ -40,11 +41,18 @@ def main(argv=sys.argv, stdin=[]):
 	for package in args.packages + stdin_packages:
 		packages.append(Package(package, time.time() if args.now else None))
 
-	tracer = Tracer()
-	tracer.specified_packages = packages
-	tracer.now = args.now
-	for process in set(tracer.trace_running()):
-		print process.name
+	try:
+		tracer = Tracer()
+		tracer.specified_packages = packages
+		tracer.now = args.now
+		for process in set(tracer.trace_running()):
+			print process.name
+
+	except UnsupportedDistribution as ex:
+		print ex
+
+
+
 
 if __name__ == '__main__':
 	if os.getuid() != 0:
