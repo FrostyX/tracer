@@ -50,9 +50,10 @@ class Tracer:
 
 	def _PACKAGE_MANAGER(self):
 		"""Returns instance of package manager according to installed linux distribution"""
-		def e(): raise UnsupportedDistribution
 
 		distro = platform.linux_distribution(full_distribution_name=False)[0]
+		def e(): raise UnsupportedDistribution(distro)
+
 		return {
 			'gentoo': Portage,
 			'fedora': Dnf,

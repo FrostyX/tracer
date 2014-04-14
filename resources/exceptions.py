@@ -19,7 +19,14 @@
 class UnsupportedDistribution(OSError):
 
 	@property
-	def message(self): return "Unknown or unsupported linux distribution"
+	def message(self): return (
+		"You are running unsupported linux distribution\n"
+		"\n"
+		"Please visit https://github.com/FrostyX/tracer/issues\n"
+		"and create new issue called 'Unknown or unsupported linux distribution: {0}' if there isn't such.\n"
+		"\n"
+		"Don't you have an GitHub account? Please report this issue on frostyx@email.cz"
+	)
 
-	def __init__(self):
-		OSError.__init__(self, self.message)
+	def __init__(self, distro):
+		OSError.__init__(self, self.message.format(distro))
