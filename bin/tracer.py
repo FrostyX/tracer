@@ -1,7 +1,7 @@
 #!/usr/bin/python
 #-*- coding: utf-8 -*-
 # tracer.py
-# Tracer finds outdated running packages in your system
+# Tracer finds outdated running applications in your system
 #
 # Copyright (C) 2013 Jakub Kadlčík
 #

@@ -1,6 +1,6 @@
 #-*- coding: utf-8 -*-
 # tracer.py
-# Tracer finds outdated running packages in your system
+# Tracer finds outdated running applications in your system
 #
 # Copyright (C) 2013 Jakub Kadlčík
 #
@@ -30,7 +30,7 @@ from resources.package import Package
 import resources.memory as memory
 
 class Tracer:
-	"""Tracer finds outdated running packages in your system"""
+	"""Tracer finds outdated running applications in your system"""
 
 	"""List of packages that only should be traced"""
 	_specified_packages = None

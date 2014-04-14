@@ -20,7 +20,7 @@ import argparse
 
 parser = argparse.ArgumentParser(
 	prog = 'tracer',
-	description='Tracer finds outdated running packages in your system',
+	description='Tracer finds outdated running applications in your system',
 )
 
 parser.add_argument('packages',

@@ -1,6 +1,6 @@
 # tracer
 
-Tracer finds outdated running packages in your system
+Tracer finds outdated running applications in your system
 
 How does he do it? He simply finds all packages you have modified since you boot up. Then he traces their files in the jungle of your memory, ... senses them, and finally, finds them. In the end you will get list of packages what have been running while you updated or removed them.
 
