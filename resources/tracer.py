@@ -27,6 +27,7 @@ from packageManagers.yum import Yum
 from packageManagers.portage import Portage
 from packageManagers.dpkg import Dpkg
 from resources.package import Package
+from resources.exceptions import UnsupportedDistribution
 import resources.memory as memory
 
 class Tracer:
@@ -49,14 +50,14 @@ class Tracer:
 
 	def _PACKAGE_MANAGER(self):
 		"""Returns instance of package manager according to installed linux distribution"""
-		def e(): raise OSError("Unknown or unsupported linux distribution")
+		def e(): raise UnsupportedDistribution
 
 		distro = platform.linux_distribution(full_distribution_name=False)[0]
 		return {
-			'gentoo': Portage(),
-			'fedora': Dnf(),
-			'debian': Dpkg(),
-		}.get(distro, e)
+			'gentoo': Portage,
+			'fedora': Dnf,
+			'debian': Dpkg,
+		}.get(distro, e)()
 
 	def _modified_packages(self):
 		"""Returns list of packages what tracer should care about"""
