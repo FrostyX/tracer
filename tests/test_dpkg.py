@@ -1,11 +1,15 @@
 #!/usr/bin/env python
 
 from __meta__ import *
+from packageManagers.ipackageManager import IPackageManager
 from packageManagers.dpkg import Dpkg
 
 class TestDpkg(unittest.TestCase):
 	def setUp(self):
 		self.manager = Dpkg()
+
+	def test_implements_package_manager_interface(self):
+		self.assertIsInstance(self.manager, IPackageManager, "Every package manager should inherit from IPackageManager")
 
 	def test_package_newer_than_implemented(self):
 		try: self.manager.packages_newer_than(0)
