@@ -19,42 +19,26 @@
 class Package:
 	"""Represents linux package"""
 
-	_name = None
-	_modified = None
+	name = None
+	modified = None
 
 	def __init__(self, name, modified=None):
-		self._name = name
-		self._modified = modified
+		self.name = name
+		self.modified = modified
 
 	def __eq__(self, package):
 		"""Packages are equal when they have same name"""
 		return (isinstance(package, self.__class__)
-			and self._name == package._name)
+			and self.name == package.name)
 
 	def __ne__(self, package):
 		return not self.__eq__(package)
 
 	def __repr__(self):
-		return "<Package:" + self._name + ">"
+		return "<Package:" + self.name + ">"
 
 	def __str__(self):
-		return self._name
+		return self.name
 
 	def __hash__(self):
 		return hash(id(self))
-
-	@property
-	def name(self):
-		return self._name
-
-	@name.setter
-	def name(self, name):
-		self._name = name
-
-	@property
-	def modified(self):
-		return self._modified
-
-	@modified.setter
-	def modified(self, name):
-		self._modified = modified
