@@ -41,4 +41,4 @@ class Package:
 		return self.name
 
 	def __hash__(self):
-		return hash(id(self))
+		return hash(self.name)
