@@ -83,7 +83,7 @@ class Tracer:
 		packages = self.specified_packages if self.specified_packages and self._now else self._modified_packages()
 
 		running = []
-		for package in packages:
+		for package in set(packages):
 			for file in self._PACKAGE_MANAGER.package_files(package.name):
 				# Doesnt matter what is after dot cause in package files there is version number after it
 				try: file = file[:file.index('.')]
