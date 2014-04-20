@@ -28,6 +28,8 @@ class TestRules(unittest.TestCase):
 			if self._count(r["name"], rules) > 1:
 				self.fail("Duplicate rules for: " + r["name"])
 
+	def test_app_with_no_rule(self):
+		self.assertIsNone(Rules.find("NON_EXISTING_APPLICATION"))
 
 	def _count(self, app_name, rules):
 		count = 0

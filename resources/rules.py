@@ -26,7 +26,7 @@ class Rules:
 
 	ACTIONS = {
 		"CALL-PARENT"  :  "call-parent",
-		"PRINT-CHILD"  :  "print-child",
+		#"PRINT-CHILD"  :  "print-child",
 		"PRINT"        :  "print",
 	}
 	_DEFAULT_ACTION = ACTIONS["CALL-PARENT"]
@@ -35,7 +35,11 @@ class Rules:
 	def find(app_name):
 		f = open(Rules.DEFINITIONS)
 		soup = BeautifulSoup(f.read())
+
 		rule = soup.find("rule", {"name" : app_name})
+		if not rule:
+			return None
+
 		rule.attrs.setdefault("action", Rules._DEFAULT_ACTION)
 		return rule.attrs
 

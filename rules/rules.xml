@@ -1,6 +1,6 @@
 <rules>
 	<rule name="app_name1" />
 	<rule name="app_name2" action="call-parent" />
-	<rule name="app_name3" action="print-child" />
+	<rule name="app_name3" />
 	<rule name="app_name4" action="print" />
 </rules>
