@@ -26,7 +26,6 @@ class Rules:
 
 	ACTIONS = {
 		"CALL-PARENT"  :  "call-parent",
-		#"PRINT-CHILD"  :  "print-child",
 		"PRINT"        :  "print",
 	}
 	_DEFAULT_ACTION = ACTIONS["CALL-PARENT"]
