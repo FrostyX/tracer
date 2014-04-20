@@ -28,6 +28,7 @@ from packageManagers.portage import Portage
 from packageManagers.dpkg import Dpkg
 from resources.package import Package
 from resources.exceptions import UnsupportedDistribution
+from resources.rules import Rules
 import resources.memory as memory
 
 class Tracer:
@@ -90,9 +91,23 @@ class Tracer:
 
 				p = memory.is_in_memory(file, files_in_memory)
 				if p and p.create_time <= package.modified:
+					p = self._apply_rules(p)
 					running.append(p)
 					break
 		return running
+
+	def _apply_rules(self, process):
+		parent = process.parent
+		rule = Rules.find(parent.name)
+
+		if not rule or not rule["action"]:
+			return process
+
+		if rule["action"] == Rules.ACTIONS["CALL-PARENT"]:
+			return self._apply_rules(parent)
+
+		return process
+
 
 	@property
 	def specified_packages(self):
