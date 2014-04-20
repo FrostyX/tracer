@@ -54,7 +54,7 @@ def is_in_memory(file, memory):
 	"""
 	Predicates if file is loaded in memory
 	memory -- list given by self.processes_with_files()
-	return psutil.Process if true, otherwise False
+	return psutil.Process if true, otherwise None
 	@TODO This function should be hardly optimized
 	"""
 	for process in memory:
@@ -66,7 +66,7 @@ def is_in_memory(file, memory):
 			if file == process[1][m]: return process[0]
 			if file < process[1][m]:  r = m - 1
 			else: l = m + 1
-	return False
+	return None
 
 def files_in_memory():
 	"""
