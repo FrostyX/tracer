@@ -83,7 +83,7 @@ class Tracer:
 		packages = self.specified_packages if self.specified_packages and self._now else self._modified_packages()
 
 		running = []
-		for package in set(packages):
+		for package in packages:
 			for file in self._PACKAGE_MANAGER.package_files(package.name):
 				# Doesnt matter what is after dot cause in package files there is version number after it
 				try: file = file[:file.index('.')]
@@ -92,7 +92,8 @@ class Tracer:
 				p = memory.is_in_memory(file, files_in_memory)
 				if p and p.create_time <= package.modified:
 					p = self._apply_rules(p)
-					running.append(p)
+					if not self._in_processes(p, running):
+						running.append(p)
 					break
 		return running
 
@@ -107,6 +108,12 @@ class Tracer:
 			return self._apply_rules(parent)
 
 		return process
+
+	def _in_processes(self, process, processes):
+		for p in processes:
+			if p.pid == process.pid:
+				return True
+		return False
 
 
 	@property
