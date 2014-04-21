@@ -89,12 +89,11 @@ class Tracer:
 				try: file = file[:file.index('.')]
 				except ValueError: pass
 
-				p = memory.is_in_memory(file, files_in_memory)
-				if p and p.create_time <= package.modified:
-					p = self._apply_rules(p)
-					if not self._in_processes(p, running):
-						running.append(p)
-					break
+				for p in memory.processes_using_file(file, files_in_memory):
+					if p.create_time <= package.modified:
+						p = self._apply_rules(p)
+						if not self._in_processes(p, running):
+							running.append(p)
 		return running
 
 	def _apply_rules(self, process):

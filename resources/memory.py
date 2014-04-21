@@ -50,23 +50,24 @@ def process_files(pid):
 
 	return sorted(files)
 
-def is_in_memory(file, memory):
+def processes_using_file(file, memory):
 	"""
-	Predicates if file is loaded in memory
+	Returns list of processes which have file loaded into memory
 	memory -- list given by self.processes_with_files()
-	return psutil.Process if true, otherwise None
+	return list of psutil.Process
 	@TODO This function should be hardly optimized
 	"""
+	used_by = []
 	for process in memory:
 		l = 0
 		r = len(process[1])
 		while l <= r:
 			m = (l + r) / 2
 			if m >= len(process[1]): break
-			if file == process[1][m]: return process[0]
+			if file == process[1][m]: used_by.append(process[0]); break
 			if file < process[1][m]:  r = m - 1
 			else: l = m + 1
-	return None
+	return used_by
 
 def files_in_memory():
 	"""
