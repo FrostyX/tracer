@@ -16,6 +16,11 @@ class TestPortage(unittest.TestCase):
 		except NotImplementedError: self.fail("packages_newer_than() is not implemented!")
 		except Exception: pass
 
+	def test_package_info(self):
+		try: self.manager.package_info("")
+		except NotImplementedError: self.fail("package_info() is not implemented!")
+		except Exception: pass
+
 	def test_package_files_implemented(self):
 		try: self.manager.package_files("")
 		except NotImplementedError: self.fail("packages_files() is not implemented!")
