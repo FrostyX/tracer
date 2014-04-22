@@ -44,3 +44,8 @@ class Package:
 
 	def __hash__(self):
 		return hash(self.name)
+
+
+class PackageType: title = None
+class Application(PackageType): title = "Application"
+class Daemon(PackageType): title = "Daemon"
