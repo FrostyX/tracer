@@ -55,3 +55,20 @@ class Portage(IPackageManager):
 		files, err = p.communicate()
 		return files.split('\n')[:-1]
 
+	def provided_by(self, app_name):
+		"""Returns name of package which provides given application"""
+		p = subprocess.Popen(['which', app_name], stdout=subprocess.PIPE)
+		which, err = p.communicate()
+		which = which.split('\n')[0]
+
+		p = subprocess.Popen(['equery', '-q', 'b', which], stdout=subprocess.PIPE)
+		package, err = p.communicate()
+		package = package.split('\n')[0]
+
+		try:
+			package = package[:package.index('.')]  # Cut from first . to end
+			package = package[:package.rindex('-')] # Cut from last  - to end
+		except ValueError:
+			pass
+
+		return package

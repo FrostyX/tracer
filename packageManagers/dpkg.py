@@ -57,3 +57,15 @@ class Dpkg(IPackageManager):
 			if os.path.isfile(file):
 				files.append(file)
 		return files
+
+	def provided_by(self, app_name):
+		"""Returns name of package which provides given application"""
+		p = subprocess.Popen(['which', app_name], stdout=subprocess.PIPE)
+		which, err = p.communicate()
+		which = which.split('\n')[0]
+
+		p = subprocess.Popen(['dlocate', '-S', which], stdout=subprocess.PIPE)
+		package, err = p.communicate()
+		package = package.split('\n')[0]
+
+		return package.split(':')[0]
