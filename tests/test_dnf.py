@@ -13,17 +13,17 @@ class TestDnf(unittest.TestCase):
 
 	def test_package_newer_than_implemented(self):
 		try: self.manager.packages_newer_than(0)
-		except NotImplemented: self.fail("packages_newer_than() is not implemented!")
+		except NotImplementedError: self.fail("packages_newer_than() is not implemented!")
 		except Exception: pass
 
 	def test_package_files_implemented(self):
 		try: self.manager.package_files("")
-		except NotImplemented: self.fail("packages_files() is not implemented!")
+		except NotImplementedError: self.fail("packages_files() is not implemented!")
 		except Exception: pass
 
 	def test_provided_by(self):
 		try: self.manager.provided_by("")
-		except NotImplemented: self.fail("provided_by() is not implemented!")
+		except NotImplementedError: self.fail("provided_by() is not implemented!")
 		except Exception: pass
 
 
