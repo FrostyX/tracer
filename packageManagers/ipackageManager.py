@@ -27,3 +27,7 @@ class IPackageManager:
 	def package_files(self, pkg_name):
 		"""Returns list of files provided by package"""
 		raise NotImplementedError
+
+	def provided_by(self, app_name):
+		"""Returns name of package which provides given application"""
+		raise NotImplementedError

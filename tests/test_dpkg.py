@@ -21,6 +21,11 @@ class TestDpkg(unittest.TestCase):
 		except NotImplemented: self.fail("packages_files() is not implemented!")
 		except Exception: pass
 
+	def test_provided_by(self):
+		try: self.manager.provided_by("")
+		except NotImplemented: self.fail("provided_by() is not implemented!")
+		except Exception: pass
+
 
 if __name__ == '__main__':
 	unittest.main()
