@@ -31,3 +31,10 @@ class IPackageManager:
 	def provided_by(self, app_name):
 		"""Returns name of package which provides given application"""
 		raise NotImplementedError
+
+	def _pkg_name_without_version(self, pkg_name):
+		try:
+			pkg_name = pkg_name[:pkg_name.index('.')]  # Cut from first . to end
+			pkg_name = pkg_name[:pkg_name.rindex('-')] # Cut from last  - to end
+		except ValueError: pass
+		return pkg_name

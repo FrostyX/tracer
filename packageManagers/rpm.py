@@ -68,16 +68,10 @@ class Rpm(IPackageManager):
 		which = which.split('\n')[0]
 
 		p = subprocess.Popen(['rpm', '-qf', which], stdout=subprocess.PIPE)
-		package, err = p.communicate()
-		package = package.split('\n')[0]
+		pkg_name, err = p.communicate()
+		pkg_name = package.split('\n')[0]
 
-		try:
-			package = package[:package.index('.')]  # Cut from first . to end
-			package = package[:package.rindex('-')] # Cut from last  - to end
-		except ValueError:
-			pass
-
-		return package
+		return self._pkg_name_without_version(pkg_name)
 
 	def _transactions_newer_than(self, unix_time):
 		"""

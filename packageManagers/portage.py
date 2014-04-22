@@ -39,13 +39,9 @@ class Portage(IPackageManager):
 			modified = time.mktime(time.strptime(package[0], "%a %b %d %H:%M:%S %Y"))
 			if modified >= unix_time:
 				pkg_name = package[1] # Package name with version, let's cut it off
-				try:
-					pkg_name = pkg_name[:pkg_name.index('.')]  # Cut from first . to end
-					pkg_name = pkg_name[:pkg_name.rindex('-')] # Cut from last  - to end
-				except ValueError:
-					pass
-				finally:
-					newer.append(Package(pkg_name, modified))
+				pkg_name = self._pkg_name_without_version(pkg_name)
+				newer.append(Package(pkg_name, modified))
+
 		return newer
 
 	def package_files(self, pkg_name):
@@ -62,13 +58,7 @@ class Portage(IPackageManager):
 		which = which.split('\n')[0]
 
 		p = subprocess.Popen(['equery', '-q', 'b', which], stdout=subprocess.PIPE)
-		package, err = p.communicate()
-		package = package.split('\n')[0]
+		pkg_name, err = p.communicate()
+		pkg_name = package.split('\n')[0]
 
-		try:
-			package = package[:package.index('.')]  # Cut from first . to end
-			package = package[:package.rindex('-')] # Cut from last  - to end
-		except ValueError:
-			pass
-
-		return package
+		return self._pkg_name_without_version(pkg_name)
