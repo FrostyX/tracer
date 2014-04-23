@@ -51,6 +51,19 @@ class Portage(IPackageManager):
 		files, err = p.communicate()
 		return files.split('\n')[:-1]
 
+	def package_info(self, app_name):
+		"""Returns package object with all attributes"""
+		name = self.provided_by(app_name)
+
+		p = subprocess.Popen(['eix', '-e', name], stdout=subprocess.PIPE)
+		out, err = p.communicate()
+		out = out.split('\n')
+		description = out[4].split("Description:")[1].strip()
+
+		package = Package(name)
+		package.description = description
+		return package
+
 	def provided_by(self, app_name):
 		"""Returns name of package which provides given application"""
 		p = subprocess.Popen(['which', app_name], stdout=subprocess.PIPE)
@@ -59,6 +72,6 @@ class Portage(IPackageManager):
 
 		p = subprocess.Popen(['equery', '-q', 'b', which], stdout=subprocess.PIPE)
 		pkg_name, err = p.communicate()
-		pkg_name = package.split('\n')[0]
+		pkg_name = pkg_name.split('\n')[0]
 
 		return self._pkg_name_without_version(pkg_name)

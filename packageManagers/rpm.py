@@ -61,6 +61,19 @@ class Rpm(IPackageManager):
 		files, err = p.communicate()
 		return files.split('\n')[:-1]
 
+	def package_info(self, app_name):
+		"""Returns package object with all attributes"""
+		name = self.provided_by(app_name)
+
+		p = subprocess.Popen(['rpm', '-qi', name], stdout=subprocess.PIPE)
+		out, err = p.communicate()
+		out = out.split('\n')
+		description = out[17].split("Summary     :")[1].strip()
+
+		package = Package(name)
+		package.description = description
+		return package
+
 	def provided_by(self, app_name):
 		"""Returns name of package which provides given application"""
 		p = subprocess.Popen(['which', app_name], stdout=subprocess.PIPE)
@@ -69,7 +82,7 @@ class Rpm(IPackageManager):
 
 		p = subprocess.Popen(['rpm', '-qf', which], stdout=subprocess.PIPE)
 		pkg_name, err = p.communicate()
-		pkg_name = package.split('\n')[0]
+		pkg_name = pkg_name.split('\n')[0]
 
 		return self._pkg_name_without_version(pkg_name)
 

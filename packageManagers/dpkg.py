@@ -58,6 +58,23 @@ class Dpkg(IPackageManager):
 				files.append(file)
 		return files
 
+	def package_info(self, app_name):
+		"""Returns package object with all attributes"""
+		name = self.provided_by(app_name)
+		description = None
+
+		p = subprocess.Popen(['dpkg', '-s', name], stdout=subprocess.PIPE)
+		out, err = p.communicate()
+		out = out.split('\n')
+
+		for line in out:
+			if line.startswith("Description:"):
+				description = line.split("Description:")[1].strip()
+
+		package = Package(name)
+		package.description = description
+		return package
+
 	def provided_by(self, app_name):
 		"""Returns name of package which provides given application"""
 		p = subprocess.Popen(['which', app_name], stdout=subprocess.PIPE)
