@@ -73,6 +73,9 @@ class Tracer:
 					packages.remove(package)
 		return packages
 
+	def package_info(self, app_name):
+		return self._PACKAGE_MANAGER.package_info(app_name)
+
 	def trace_running(self):
 		"""
 		Returns list of processes which uses some files that have been modified
