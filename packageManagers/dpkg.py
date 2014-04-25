@@ -18,6 +18,7 @@
 
 from ipackageManager import IPackageManager
 from resources.package import Package
+import resources.memory as Memory
 import subprocess
 import time
 import os
@@ -77,11 +78,10 @@ class Dpkg(IPackageManager):
 
 	def provided_by(self, app_name):
 		"""Returns name of package which provides given application"""
-		p = subprocess.Popen(['which', app_name], stdout=subprocess.PIPE)
-		which, err = p.communicate()
-		which = which.split('\n')[0]
+		process = Memory.process_by_name(app_name)
+		f = process.cmdline[0]
 
-		p = subprocess.Popen(['dlocate', '-S', which], stdout=subprocess.PIPE)
+		p = subprocess.Popen(['dlocate', '-S', f], stdout=subprocess.PIPE)
 		package, err = p.communicate()
 		package = package.split('\n')[0]
 

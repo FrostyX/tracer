@@ -18,6 +18,7 @@
 
 from ipackageManager import IPackageManager
 from resources.package import Package
+import resources.memory as Memory
 import subprocess
 import time
 import os
@@ -66,11 +67,10 @@ class Portage(IPackageManager):
 
 	def provided_by(self, app_name):
 		"""Returns name of package which provides given application"""
-		p = subprocess.Popen(['which', app_name], stdout=subprocess.PIPE)
-		which, err = p.communicate()
-		which = which.split('\n')[0]
+		process = Memory.process_by_name(app_name)
+		f = process.cmdline[0]
 
-		p = subprocess.Popen(['equery', '-q', 'b', which], stdout=subprocess.PIPE)
+		p = subprocess.Popen(['equery', '-q', 'b', f], stdout=subprocess.PIPE)
 		pkg_name, err = p.communicate()
 		pkg_name = pkg_name.split('\n')[0]
 
