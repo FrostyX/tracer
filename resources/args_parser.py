@@ -35,4 +35,11 @@ parser.add_argument('-n', '--now',
 	help='when there are specified packages, dont look for time of their update. Use "now" instead'
 )
 
+parser.add_argument('-s', '--show',
+	nargs=1,
+	dest='helper',
+	metavar='app_name',
+	help='show helper for given application'
+)
+
 args = parser.parse_args()

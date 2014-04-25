@@ -101,6 +101,10 @@ def print_helper(app_name):
 
 
 if __name__ == '__main__':
+	if args.helper:
+		print_helper(args.helper[0])
+		sys.exit()
+
 	if os.getuid() != 0:
 		print "Only root can use this application"
 		sys.exit();
