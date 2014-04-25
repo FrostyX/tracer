@@ -65,11 +65,15 @@ class Rpm(IPackageManager):
 	def package_info(self, app_name):
 		"""Returns package object with all attributes"""
 		name = self.provided_by(app_name)
+		description = None
 
 		p = subprocess.Popen(['rpm', '-qi', name], stdout=subprocess.PIPE)
 		out, err = p.communicate()
 		out = out.split('\n')
-		description = out[17].split("Summary     :")[1].strip()
+
+		for line in out:
+			if line.startswith("Summary"):
+				description = line.split("Summary     :")[1].strip()
 
 		package = Package(name)
 		package.description = description
