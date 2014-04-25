@@ -97,3 +97,14 @@ def processes_with_files():
 
 	return processes
 
+def process_by_name(name):
+	for pid in psutil.get_pid_list():
+		try:
+			p = psutil.Process(pid)
+			if p.name == name:
+				return p
+
+		except psutil._error.NoSuchProcess: pass
+		except psutil._error.AccessDenied: pass
+
+	return None
