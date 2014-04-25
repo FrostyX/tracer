@@ -24,10 +24,13 @@ os.sys.path.insert(0, parentdir)
 
 import sys
 import time
+import datetime
+import textwrap
 from resources.tracer import Tracer
 from resources.args_parser import args
 from resources.package import Package
 from resources.exceptions import UnsupportedDistribution
+import resources.memory as Memory
 
 
 def main(argv=sys.argv, stdin=[]):
@@ -50,6 +53,49 @@ def main(argv=sys.argv, stdin=[]):
 
 	except UnsupportedDistribution as ex:
 		print ex
+
+def print_helper(app_name):
+	try:
+		tracer = Tracer()
+		package = tracer.package_info(app_name)
+		process = Memory.process_by_name(app_name)
+
+		now = datetime.datetime.fromtimestamp(time.time())
+		started = datetime.datetime.fromtimestamp(process.create_time)
+		started = now - started
+
+		started_str = ""
+		if started.days > 0:
+			started_str = str(started.days) + " days"
+		elif started.seconds >= 60 * 60:
+			started_str = str(started.seconds / (60 * 60)) + " hours"
+		elif started.seconds >= 60:
+			started_str = str(started.seconds / 60) + " minutes"
+		elif started.seconds >= 0:
+			started_str = str(started.seconds) + " seconds"
+
+		print textwrap.dedent("""\
+			* {app_name}
+			    Package:     {pkg_name}
+			    Description: {pkg_description}
+			    Type:        {type}
+			    State:       {app_name} has been started by {user} {time} ago. PID - {pid}
+
+			    How to restart:
+					 {how_to_restart}
+		""".format(
+				app_name = app_name,
+				pkg_name = package.name,
+				type = "Unknown",
+				pkg_description = package.description,
+				user = process.username,
+				time = started_str,
+				pid = process.pid,
+				how_to_restart = "Sorry, It's not known",
+			))
+
+	except AttributeError:
+		print "Application called %s is not running" % app_name
 
 
 
