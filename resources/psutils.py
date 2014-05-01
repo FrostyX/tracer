@@ -20,4 +20,13 @@
 from psutil import *
 
 class Process(Process):
-	pass
+	def __eq__(self, process):
+		"""For our purposes, two processes are equal when they have same name"""
+		return (isinstance(process, self.__class__)
+			and self.name == process.name)
+
+	def __ne__(self, process):
+		return not self.__eq__(process)
+
+	def __hash__(self):
+		return hash(self.name)
