@@ -16,7 +16,7 @@
 # 02110-1301, USA.
 #
 
-import psutil
+import resources.psutils as psutil
 import re
 
 def process_files(pid):

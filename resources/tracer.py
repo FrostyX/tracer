@@ -18,7 +18,6 @@
 
 # System modules
 import re
-import psutil
 import platform
 
 # Tracer modules
@@ -30,6 +29,7 @@ from resources.package import Package
 from resources.exceptions import UnsupportedDistribution
 from resources.rules import Rules
 import resources.memory as memory
+import resources.psutils as psutil
 
 class Tracer:
 	"""Tracer finds outdated running applications in your system"""
