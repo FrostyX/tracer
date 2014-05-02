@@ -77,7 +77,7 @@ def files_in_memory():
 	for pid in psutil.get_pid_list():
 		try:
 			files += process_files(pid)
-		except psutil._error.NoSuchProcess:
+		except psutil.NoSuchProcess:
 			pass
 
 	return set(files)
@@ -90,9 +90,9 @@ def processes_with_files():
 	for pid in psutil.get_pid_list():
 		try:
 			processes.append([psutil.Process(pid), process_files(pid)])
-		except psutil._error.NoSuchProcess:
+		except psutil.NoSuchProcess:
 			pass
-		except psutil._error.AccessDenied:
+		except psutil.AccessDenied:
 			pass
 
 	return processes
@@ -104,7 +104,7 @@ def process_by_name(name):
 			if p.name == name:
 				return p
 
-		except psutil._error.NoSuchProcess: pass
-		except psutil._error.AccessDenied: pass
+		except psutil.NoSuchProcess: pass
+		except psutil.AccessDenied: pass
 
 	return None
