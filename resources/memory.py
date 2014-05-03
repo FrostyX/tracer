@@ -16,6 +16,7 @@
 # 02110-1301, USA.
 #
 
+from sets import Set
 import resources.psutils as psutil
 import re
 
@@ -87,13 +88,11 @@ def processes_with_files():
 	Returns multidimensional list with this pattern - list[psutil.Process][files]
 	"""
 	processes = []
-	for pid in psutil.get_pid_list():
+	for p in all_processes():
 		try:
-			processes.append([psutil.Process(pid), process_files(pid)])
-		except psutil.NoSuchProcess:
-			pass
-		except psutil.AccessDenied:
-			pass
+			processes.append([p, process_files(p.pid)])
+		except psutil.NoSuchProcess: pass
+		except psutil.AccessDenied: pass
 
 	return processes
 
@@ -108,3 +107,13 @@ def process_by_name(name):
 		except psutil.AccessDenied: pass
 
 	return None
+
+def all_processes():
+	processes = Set()
+	for pid in psutil.get_pid_list():
+		try:
+			processes.add(psutil.Process(pid))
+		except psutil.NoSuchProcess: pass
+		except psutil.AccessDenied: pass
+
+	return processes
