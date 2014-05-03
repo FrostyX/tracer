@@ -48,7 +48,7 @@ def main(argv=sys.argv, stdin=[]):
 		tracer = Tracer()
 		tracer.specified_packages = packages
 		tracer.now = args.now
-		for process in set(tracer.trace_running()):
+		for process in tracer.trace_running():
 			print process.name
 
 	except UnsupportedDistribution as ex:

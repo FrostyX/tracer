@@ -19,6 +19,7 @@
 # System modules
 import re
 import platform
+from sets import Set
 
 # Tracer modules
 from packageManagers.dnf import Dnf
@@ -85,7 +86,7 @@ class Tracer:
 		files_in_memory = memory.processes_with_files()
 		packages = self.specified_packages if self.specified_packages and self._now else self._modified_packages()
 
-		running = []
+		running = Set()
 		for package in packages:
 			for file in self._PACKAGE_MANAGER.package_files(package.name):
 				# Doesnt matter what is after dot cause in package files there is version number after it
@@ -95,8 +96,7 @@ class Tracer:
 				for p in memory.processes_using_file(file, files_in_memory):
 					if p.create_time <= package.modified:
 						p = self._apply_rules(p)
-						if not self._in_processes(p, running):
-							running.append(p)
+						running.add(p)
 		return running
 
 	def _apply_rules(self, process):
@@ -110,13 +110,6 @@ class Tracer:
 			return self._apply_rules(parent)
 
 		return process
-
-	def _in_processes(self, process, processes):
-		for p in processes:
-			if p.pid == process.pid:
-				return True
-		return False
-
 
 	@property
 	def specified_packages(self):
