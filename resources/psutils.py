@@ -30,3 +30,9 @@ class Process(Process):
 
 	def __hash__(self):
 		return hash(self.name)
+
+	@property
+	def parent(self):
+		p = super(Process, self).parent
+		p.__class__ = Process
+		return p
