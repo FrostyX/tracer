@@ -109,7 +109,9 @@ class Tracer:
 		if rule["action"] == Rules.ACTIONS["CALL-PARENT"]:
 			return self._apply_rules(parent)
 
-		return process
+		# Only PRINT action left
+		# PRINT rule is defined for parent process
+		return parent
 
 	@property
 	def specified_packages(self):
