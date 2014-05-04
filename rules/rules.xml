@@ -40,7 +40,7 @@
 	<rule name="akonadiserver" />
 
 	<!-- Networking -->
-	<rule name="wicd-monitor" />
+	<rule name="wicd" />
 
 	<!-- Web browsers -->
 	<rule name="chromium" action="print" />
