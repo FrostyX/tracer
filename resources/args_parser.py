@@ -29,6 +29,12 @@ parser.add_argument('packages',
 	help='packages that only should be traced'
 )
 
+parser.add_argument('-i', '--interactive',
+	dest='interactive',
+	action='store_true',
+	help='run tracer in interactive mode. Print numbered applications and give helpers based on numbers'
+)
+
 parser.add_argument('-n', '--now',
 	dest='now',
 	action='store_true',

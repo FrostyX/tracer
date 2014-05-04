@@ -48,11 +48,39 @@ def main(argv=sys.argv, stdin=[]):
 		tracer = Tracer()
 		tracer.specified_packages = packages
 		tracer.now = args.now
-		for process in tracer.trace_running():
-			print process.name
+
+		processes = tracer.trace_running()
+		if args.interactive: _print_all_interactive(processes)
+		else: _print_all(processes)
 
 	except UnsupportedDistribution as ex:
 		print ex
+
+def _print_all(processes):
+	for process in processes:
+		print process.name
+
+def _print_all_interactive(processes):
+	processes = list(processes) # Cause Set is not ordered
+	while True:
+		i = 1
+		l = len(str(len(processes))) # Number of digits in processes length
+		for process in processes:
+			n = "[{0}]".format(i).ljust(l + 2)
+			print "{} {}".format(n, process.name)
+			i += 1
+
+		print "\nPress application number for help or 'q' to quit"
+		answer = raw_input("--> ")
+		try:
+			if answer == "q": return
+			elif int(answer) <= 0 or int(answer) > i: raise IndexError
+			print_helper(processes[int(answer) - 1].name)
+
+		except (SyntaxError, IndexError, ValueError):
+			print "Wrong application number"
+
+		raw_input("-- Press enter to get list of applications --")
 
 def print_helper(app_name):
 	try:
