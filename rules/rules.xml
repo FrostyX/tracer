@@ -39,5 +39,21 @@
 	<!-- KDE -->
 	<rule name="akonadiserver" />
 
+	<!-- Networking -->
+	<rule name="wicd-monitor" />
+
+	<!-- Web browsers -->
+	<rule name="chromium" action="print" />
+	<rule name="chrome-sandbox" />
 
 </rules>
+
+<!--
+  - @TODO - Deal with these applications:
+  -    + Manages desktop:
+  -        * Thunar
+  -        * Nautilus
+  -
+  -    + Test and add:
+  -
+  -->
