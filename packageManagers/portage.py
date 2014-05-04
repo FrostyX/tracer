@@ -55,11 +55,16 @@ class Portage(IPackageManager):
 	def package_info(self, app_name):
 		"""Returns package object with all attributes"""
 		name = self.provided_by(app_name)
+		description = None
 
 		p = subprocess.Popen(['eix', '-e', name], stdout=subprocess.PIPE)
 		out, err = p.communicate()
 		out = out.split('\n')
-		description = out[4].split("Description:")[1].strip()
+
+		for line in out:
+			line = line.strip()
+			if line.startswith("Description:"):
+				description = line.split("Description:")[1].strip()
 
 		package = Package(name)
 		package.description = description
