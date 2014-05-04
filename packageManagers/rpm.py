@@ -82,7 +82,7 @@ class Rpm(IPackageManager):
 	def provided_by(self, app_name):
 		"""Returns name of package which provides given application"""
 		process = Memory.process_by_name(app_name)
-		f = process.cmdline[0]
+		f = process.exe
 
 		p = subprocess.Popen(['rpm', '-qf', f], stdout=subprocess.PIPE)
 		pkg_name, err = p.communicate()
