@@ -50,6 +50,7 @@ def main(argv=sys.argv, stdin=[]):
 		tracer.now = args.now
 
 		processes = tracer.trace_running()
+		if not processes: return
 		if args.interactive: _print_all_interactive(processes)
 		else: _print_all(processes)
 
