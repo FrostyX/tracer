@@ -53,6 +53,12 @@ class Applications:
 		soup = BeautifulSoup(f.read())
 
 		for app in soup.find_all("app"):
-			Applications._apps.append(app.attrs)
+			if(len(app.attrs) > 1):
+				Applications._apps.append(app.attrs)
+
+		for group in soup.find_all("group"):
+			for app in group.findChildren():
+				app.attrs.update(group.attrs)
+				Applications._apps.append(app.attrs)
 
 		f.close();

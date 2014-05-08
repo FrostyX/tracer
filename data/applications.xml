@@ -23,27 +23,39 @@
   -
   -
   -
+  - Available types:
+  -     * daemon - Application is managed by init system
+  -     * static - Application is restartable only through rebooting the system
+  -
   - Application syntax:
   -     <app name="app_name1" type="daemon" />
   -     <app name="app_name2" helper="Run this command: app_name2 stop" />
   -     <app name="app_name3" rename="app_name_3" />
   -
-  - Available types:
-  -     * daemon - Application is managed by init system
-  -     * static - Application is restartable only through rebooting the system
+  -
+  - Note that applications can be wrapped into group. In this case please set
+  - attributes to the group and omit them from applications
+  -
+  - Group syntax
+  -     <group type="static">
+  -         <app name="app_name1" />
+  -         <app name="app_name2" />
+  -         <app name="app_name3" />
+  -     </group>
   -
   -->
 
 <applications>
 
-	<!-- Unrestartable -->
-	<app name="polkitd" type="static" />
-	<app name="udisksd" type="static" />
-	<app name="gvfsd" type="static" />
-	<app name="gvfs-afc-volume-monitor" type="static" />
-	<app name="gvfsd-metadata" type="static" />
-	<app name="gvfs-udisks2-volume-monitor" type="static" />
-	<app name="at-spi-bus-launcher" type="static" />
-	<app name="gconfd-2" type="static" />
+	<group type="static">
+		<app name="polkitd" />
+		<app name="udisksd" />
+		<app name="gvfsd" />
+		<app name="gvfs-afc-volume-monitor" />
+		<app name="gvfsd-metadata" />
+		<app name="gvfs-udisks2-volume-monitor" />
+		<app name="at-spi-bus-launcher" />
+		<app name="gconfd-2" />
+	</group>
 
 </applications>
