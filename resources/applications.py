@@ -28,26 +28,31 @@ class Applications:
 		"DAEMON" : "daemon",
 		"STATIC" : "static",
 	}
+	_apps = None
 
 	@staticmethod
 	def find(app_name):
-		f = open(Applications.DEFINITIONS)
-		soup = BeautifulSoup(f.read())
+		if not Applications._apps:
+			Applications._load()
 
-		app = soup.find("app", {"name" : app_name})
-		if not app:
-			return None
-
-		return app.attrs
+		for app in Applications._apps:
+			if app["name"] == app_name:
+				return app
 
 	@staticmethod
 	def all():
-		apps = []
+		if not Applications._apps:
+			Applications._load()
+
+		return Applications._apps
+
+	@staticmethod
+	def _load():
+		Applications._apps = []
 		f = open(Applications.DEFINITIONS)
 		soup = BeautifulSoup(f.read())
 
 		for app in soup.find_all("app"):
-			apps.append(app.attrs)
+			Applications._apps.append(app.attrs)
 
 		f.close();
-		return apps

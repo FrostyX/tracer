@@ -29,30 +29,33 @@ class Rules:
 		"PRINT"        :  "print",
 	}
 	_DEFAULT_ACTION = ACTIONS["CALL-PARENT"]
+	_rules = None
 
 	@staticmethod
 	def find(app_name):
-		f = open(Rules.DEFINITIONS)
-		soup = BeautifulSoup(f.read())
+		if not Rules._rules:
+			Rules._load()
 
-		rule = soup.find("rule", {"name" : app_name})
-		if not rule:
-			return None
-
-		rule.attrs.setdefault("action", Rules._DEFAULT_ACTION)
-		return rule.attrs
-
+		for rule in Rules._rules:
+			if rule["name"] == app_name:
+				return rule
 
 	@staticmethod
 	def all():
-		rules = []
+		if not Rules._rules:
+			Rules._load()
+
+		return Rules._rules
+
+	@staticmethod
+	def _load():
+		Rules._rules = []
 		f = open(Rules.DEFINITIONS)
 		soup = BeautifulSoup(f.read())
 
 		for rule in soup.find_all("rule"):
 			r = rule.attrs
 			r.setdefault('action', Rules._DEFAULT_ACTION)
-			rules.append(r)
+			Rules._rules.append(r)
 
 		f.close();
-		return rules
