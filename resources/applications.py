@@ -16,7 +16,7 @@
 # 02110-1301, USA.
 #
 
-from bs4 import BeautifulSoup
+from bs4 import BeautifulSoup, element
 from os.path import dirname, realpath
 parentdir = dirname(dirname(realpath(__file__)))
 
@@ -52,13 +52,16 @@ class Applications:
 		f = open(Applications.DEFINITIONS)
 		soup = BeautifulSoup(f.read())
 
-		for app in soup.find_all("app"):
-			if(len(app.attrs) > 1):
-				Applications._apps.append(app.attrs)
+		for child in soup.applications.children:
+			if not isinstance(child, element.Tag):
+				continue
 
-		for group in soup.find_all("group"):
-			for app in group.findChildren():
-				app.attrs.update(group.attrs)
-				Applications._apps.append(app.attrs)
+			if child.name == "app":
+				Applications._apps.append(child.attrs)
+
+			if child.name == "group":
+				for app in child.findChildren():
+					app.attrs.update(child.attrs)
+					Applications._apps.append(app.attrs)
 
 		f.close();
