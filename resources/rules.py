@@ -22,7 +22,7 @@ parentdir = dirname(dirname(realpath(__file__)))
 
 class Rules:
 
-	DEFINITIONS = parentdir + "/rules/rules.xml"
+	DEFINITIONS = parentdir + "/data/rules.xml"
 
 	ACTIONS = {
 		"CALL-PARENT"  :  "call-parent",
