@@ -30,6 +30,7 @@ from resources.tracer import Tracer
 from resources.args_parser import args
 from resources.package import Package
 from resources.exceptions import UnsupportedDistribution
+from resources.applications import Applications
 import resources.memory as Memory
 
 
@@ -58,30 +59,53 @@ def main(argv=sys.argv, stdin=[]):
 		print ex
 
 def _print_all(processes):
-	for process in processes:
+	without_static = _exclude_static(processes)
+	for process in without_static:
 		print process.name
+
+	static_count = len(processes)-len(without_static)
+	_print_static_note(static_count)
 
 def _print_all_interactive(processes):
 	processes = list(processes) # Cause Set is not ordered
+	without_static = _exclude_static(processes)
+	static_count = len(processes)-len(without_static)
 	while True:
 		i = 1
-		l = len(str(len(processes))) # Number of digits in processes length
-		for process in processes:
+		l = len(str(len(without_static))) # Number of digits in processes length
+		for process in without_static:
+			app = Applications.find(process.name)
+			if app and app["type"] == Applications.TYPES["STATIC"]:
+				continue
+
 			n = "[{0}]".format(i).ljust(l + 2)
 			print "{} {}".format(n, process.name)
 			i += 1
+		_print_static_note(static_count)
 
 		print "\nPress application number for help or 'q' to quit"
 		answer = raw_input("--> ")
 		try:
 			if answer == "q": return
 			elif int(answer) <= 0 or int(answer) > i: raise IndexError
-			print_helper(processes[int(answer) - 1].name)
+			print_helper(without_static[int(answer) - 1].name)
 
 		except (SyntaxError, IndexError, ValueError):
 			print "Wrong application number"
 
 		raw_input("-- Press enter to get list of applications --")
+
+def _exclude_static(processes):
+	without = []
+	for process in processes:
+		app = Applications.find(process.name)
+		if not app or app["type"] != Applications.TYPES["STATIC"]:
+			without.append(process)
+	return without
+
+def _print_static_note(static_count):
+	if static_count > 0:
+		print "Please note that there are {0} processes requiring reboot".format(static_count)
 
 def print_helper(app_name):
 	try:
