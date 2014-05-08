@@ -104,7 +104,7 @@ def _exclude_static(processes):
 	return without
 
 def _print_static_note(static_count):
-	if static_count > 0:
+	if not args.quiet and static_count > 0:
 		print "Please note that there are {0} processes requiring reboot".format(static_count)
 
 def print_helper(app_name):
