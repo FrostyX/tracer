@@ -14,7 +14,7 @@ class TestApplications(unittest.TestCase):
 			if ("name" not in a) or len(a) <= 1:
 				self.fail("Missing name in definition #" + str(i))
 
-			if a["type"] and a["type"] not in Applications.TYPES.values():
+			if "type" in a and a["type"] not in Applications.TYPES.values():
 				self.fail("Unknown type in application: " + a["name"])
 
 			allowed_keys = ["name", "type", "helper", "rename"]
