@@ -26,6 +26,8 @@
   - Available types:
   -     * daemon - Application is managed by init system
   -     * static - Application is restartable only through rebooting the system
+  -     * session - Application is restartable only through restarting the session
+  -                 (i.e. Log out & Log in again)
   -
   - Application syntax:
   -     <app name="app_name1" type="daemon" />
@@ -58,9 +60,18 @@
 		<app name="gconfd-2" />
 	</group>
 
+	<!-- KDE -->
 	<group helper="Run `kdeinit4` command">
 		<app name="kdeinit4" />
 		<app name="klauncher" />
+	</group>
+
+	<group type="session">
+		<app name="kuiserver" />
+		<app name="kglobalaccel" />
+		<app name="kactivitymanagerd" />
+		<app name="kded4" />
+		<app name="knotify4" />
 	</group>
 
 </applications>

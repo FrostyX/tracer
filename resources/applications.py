@@ -25,8 +25,9 @@ class Applications:
 	DEFINITIONS = parentdir + "/data/applications.xml"
 
 	TYPES = {
-		"DAEMON" : "daemon",
-		"STATIC" : "static",
+		"DAEMON"  :  "daemon",
+		"STATIC"  :  "static",
+		"SESSION" :  "session",
 	}
 	_apps = None
 
