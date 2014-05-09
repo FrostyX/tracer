@@ -49,6 +49,17 @@
 
 <applications>
 
+	<group type="daemon">
+		<app name="apache2" />
+		<app name="mpd" />
+		<app name="mysql" />
+		<app name="openvpn" />
+		<app name="samba" />
+		<app name="sshd" />
+		<app name="vixie-cron" />
+		<app name="wicd" />
+	</group>
+
 	<group type="static">
 		<app name="polkitd" />
 		<app name="udisksd" />
