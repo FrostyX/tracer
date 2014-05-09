@@ -59,21 +59,25 @@ def main(argv=sys.argv, stdin=[]):
 		print ex
 
 def _print_all(processes):
-	without_static = _exclude_static(processes)
-	for process in without_static:
+	without_static = _exclude_type(processes, Applications.TYPES["STATIC"])
+	without_session = _exclude_type(without_static, Applications.TYPES["SESSION"])
+	for process in without_session:
 		print process.name
 
 	static_count = len(processes)-len(without_static)
-	_print_static_note(static_count)
+	session_count = len(without_static)-len(without_session)
+	_print_note_for_hidden(session_count, static_count)
 
 def _print_all_interactive(processes):
 	processes = list(processes) # Cause Set is not ordered
-	without_static = _exclude_static(processes)
+	without_static = _exclude_type(processes, Applications.TYPES["STATIC"])
+	without_session = _exclude_type(without_static, Applications.TYPES["SESSION"])
 	static_count = len(processes)-len(without_static)
+	session_count = len(without_static)-len(without_session)
 	while True:
 		i = 1
-		l = len(str(len(without_static))) # Number of digits in processes length
-		for process in without_static:
+		l = len(str(len(without_session))) # Number of digits in processes length
+		for process in without_session:
 			app = Applications.find(process.name)
 			if app and app["type"] == Applications.TYPES["STATIC"]:
 				continue
@@ -81,31 +85,37 @@ def _print_all_interactive(processes):
 			n = "[{0}]".format(i).ljust(l + 2)
 			print "{} {}".format(n, process.name)
 			i += 1
-		_print_static_note(static_count)
+		_print_note_for_hidden(session_count, static_count)
 
 		print "\nPress application number for help or 'q' to quit"
 		answer = raw_input("--> ")
 		try:
 			if answer == "q": return
 			elif int(answer) <= 0 or int(answer) > i: raise IndexError
-			print_helper(without_static[int(answer) - 1].name)
+			print_helper(without_session[int(answer) - 1].name)
 
 		except (SyntaxError, IndexError, ValueError):
 			print "Wrong application number"
 
 		raw_input("-- Press enter to get list of applications --")
 
-def _exclude_static(processes):
+def _exclude_type(processes, app_type):
+	"""app_type -- see Applications.TYPES"""
 	without = []
 	for process in processes:
 		app = Applications.find(process.name)
-		if not app or app["type"] != Applications.TYPES["STATIC"]:
+		if not app or app["type"] != app_type:
 			without.append(process)
 	return without
 
-def _print_static_note(static_count):
-	if not args.quiet and static_count > 0:
-		print "Please note that there are {0} processes requiring reboot".format(static_count)
+def _print_note_for_hidden(session_count, static_count):
+	if not args.quiet and (session_count > 0 or static_count > 0):
+		print "\nPlease note that there are:"
+		if session_count > 0:
+			print "  - {0} processes requiring restarting your session (i.e. Logging out & Logging in again)".format(session_count)
+
+		if static_count > 0:
+			print "  - {0} processes requiring reboot".format(static_count)
 
 def print_helper(app_name):
 	try:
