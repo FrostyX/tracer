@@ -58,4 +58,9 @@
 		<app name="gconfd-2" />
 	</group>
 
+	<group helper="Run `kdeinit4` command">
+		<app name="kdeinit4" />
+		<app name="klauncher" />
+	</group>
+
 </applications>
