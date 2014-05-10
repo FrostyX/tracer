@@ -16,21 +16,14 @@
 # 02110-1301, USA.
 #
 
-# System modules
 import re
-import platform
 from sets import Set
 
-# Tracer modules
-from packageManagers.dnf import Dnf
-from packageManagers.yum import Yum
-from packageManagers.portage import Portage
-from packageManagers.dpkg import Dpkg
 from resources.package import Package
-from resources.exceptions import UnsupportedDistribution
 from resources.rules import Rules
 import resources.memory as memory
 import resources.psutils as psutil
+import resources.system as system
 
 class Tracer:
 	"""Tracer finds outdated running applications in your system"""
@@ -48,19 +41,7 @@ class Tracer:
 	_PACKAGE_MANAGER = None
 
 	def __init__(self):
-		self._PACKAGE_MANAGER = self._PACKAGE_MANAGER()
-
-	def _PACKAGE_MANAGER(self):
-		"""Returns instance of package manager according to installed linux distribution"""
-
-		distro = platform.linux_distribution(full_distribution_name=False)[0]
-		def e(): raise UnsupportedDistribution(distro)
-
-		return {
-			'gentoo': Portage,
-			'fedora': Dnf,
-			'debian': Dpkg,
-		}.get(distro, e)()
+		self._PACKAGE_MANAGER = system.package_manager()
 
 	def _modified_packages(self):
 		"""Returns list of packages what tracer should care about"""
