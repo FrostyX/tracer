@@ -100,7 +100,7 @@ def _exclude_type(processes, app_type):
 	without = []
 	for process in processes:
 		app = Applications.find(process.name)
-		if not app or app["type"] != app_type:
+		if app["type"] != app_type:
 			without.append(process)
 	return without
 

@@ -42,6 +42,8 @@ class Applications:
 			if app["name"] == app_name:
 				return app
 
+		return {"name" : app_name, "type" : Applications.DEFAULT_TYPE}
+
 	@staticmethod
 	def all():
 		if not Applications._apps:
