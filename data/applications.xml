@@ -49,6 +49,10 @@
 
 <applications>
 
+	<!--
+	   - Common applications
+	  -->
+
 	<group type="daemon">
 		<app name="apache2" />
 		<app name="mpd" />
@@ -69,9 +73,19 @@
 		<app name="gvfs-udisks2-volume-monitor" />
 		<app name="at-spi-bus-launcher" />
 		<app name="gconfd-2" />
+		<app name="upowerd" />
 	</group>
 
-	<!-- KDE -->
+	<group type="session">
+		<app name="dbus-launch" />
+		<app name="X" />
+	</group>
+
+
+	<!--
+	   - KDE applications
+	  -->
+
 	<group helper="Run `kdeinit4` command">
 		<app name="kdeinit4" />
 		<app name="klauncher" />
