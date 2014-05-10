@@ -18,7 +18,9 @@
 # 02110-1301, USA.
 #
 
+import os
 import platform
+import resources.psutils as psutil
 from packageManagers.dnf import Dnf
 from packageManagers.yum import Yum
 from packageManagers.portage import Portage
@@ -36,3 +38,13 @@ def package_manager():
 		'fedora': Dnf,
 		'debian': Dpkg,
 	}.get(distro, e)()
+
+def init_system():
+	"""
+	Returns name of init system you are using
+	e.g. init, systemd, upstart
+	"""
+
+	init = psutil.Process(1)
+	name = init.name.split(" ")[0]
+	return name
