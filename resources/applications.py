@@ -25,10 +25,12 @@ class Applications:
 	DEFINITIONS = parentdir + "/data/applications.xml"
 
 	TYPES = {
-		"DAEMON"  :  "daemon",
-		"STATIC"  :  "static",
-		"SESSION" :  "session",
+		"DAEMON"       :  "daemon",
+		"STATIC"       :  "static",
+		"SESSION"      :  "session",
+		"APPLICATION"  :  "application"
 	}
+	DEFAULT_TYPE = TYPES["APPLICATION"]
 	_apps = None
 
 	@staticmethod
