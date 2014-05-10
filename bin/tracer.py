@@ -78,10 +78,6 @@ def _print_all_interactive(processes):
 		i = 1
 		l = len(str(len(without_session))) # Number of digits in processes length
 		for process in without_session:
-			app = Applications.find(process.name)
-			if app and app["type"] == Applications.TYPES["STATIC"]:
-				continue
-
 			n = "[{0}]".format(i).ljust(l + 2)
 			print "{} {}".format(n, process.name)
 			i += 1
