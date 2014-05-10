@@ -118,6 +118,7 @@ def print_helper(app_name):
 		tracer = Tracer()
 		package = tracer.package_info(app_name)
 		process = Memory.process_by_name(app_name)
+		app = Applications.find(app_name)
 
 		now = datetime.datetime.fromtimestamp(time.time())
 		started = datetime.datetime.fromtimestamp(process.create_time)
@@ -145,7 +146,7 @@ def print_helper(app_name):
 		""".format(
 				app_name = app_name,
 				pkg_name = package.name,
-				type = "Unknown",
+				type = app["type"].capitalize(),
 				pkg_description = package.description,
 				user = process.username,
 				time = started_str,
