@@ -32,6 +32,7 @@ from resources.package import Package
 from resources.exceptions import UnsupportedDistribution
 from resources.applications import Applications
 import resources.memory as Memory
+import resources.system as System
 
 
 def main(argv=sys.argv, stdin=[]):
@@ -134,6 +135,12 @@ def print_helper(app_name):
 		elif started.seconds >= 0:
 			started_str = str(started.seconds) + " seconds"
 
+		how_to_restart = "Sorry, It's not known"
+		if app["type"] == Applications.TYPES["DAEMON"]:
+			init = System.init_system()
+			if init == "systemd": how_to_restart = "systemctl restart {0}".format(app["name"])
+			elif init == "init": how_to_restart = "/etc/init.d/{0} restart".format(app["name"])
+
 		print textwrap.dedent("""\
 			* {app_name}
 			    Package:     {pkg_name}
@@ -151,7 +158,7 @@ def print_helper(app_name):
 				user = process.username,
 				time = started_str,
 				pid = process.pid,
-				how_to_restart = "Sorry, It's not known",
+				how_to_restart = how_to_restart,
 			))
 
 	except AttributeError:
