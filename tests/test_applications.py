@@ -32,7 +32,9 @@ class TestApplications(unittest.TestCase):
 				self.fail("Duplicate definitions for: " + a["name"])
 
 	def test_app_with_no_definition(self):
-		self.assertIsNone(Applications.find("NON_EXISTING_APPLICATION"))
+		app_name = "NON_EXISTING_APPLICATION"
+		expected = {"name" : app_name, "type" : Applications.DEFAULT_TYPE}
+		self.assertDictEqual(expected, Applications.find(app_name))
 
 	def _count(self, app_name, apps):
 		count = 0
