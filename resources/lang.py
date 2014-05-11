@@ -32,10 +32,14 @@ def _system_languages():
 	lang.append(DEFAULT_LANG)
 	return lang
 
+# Import language locale (throws ImportError)
+def _locale(lang):
+	return __import__("lang.%s" % lang, fromlist=["LOCALE"]).LOCALE
+
 # Import a dictionary containing all localization lines for system language
 _LOCALE = None
 for lang in _system_languages():
-	try: _LOCALE = __import__("lang.%s" % lang, fromlist=["LOCALE"]).LOCALE; break
+	try: _LOCALE = _locale(lang); break
 	except ImportError: pass
 
 # Whenever you want print some language-specific text, use this function
