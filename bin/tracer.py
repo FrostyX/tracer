@@ -25,7 +25,7 @@ os.sys.path.insert(0, parentdir)
 import sys
 import time
 import datetime
-import textwrap
+from resources.lang import _
 from resources.tracer import Tracer
 from resources.args_parser import args
 from resources.package import Package
@@ -84,7 +84,7 @@ def _print_all_interactive(processes):
 			i += 1
 		_print_note_for_hidden(session_count, static_count)
 
-		print "\nPress application number for help or 'q' to quit"
+		print "\n" + _("prompt_help")
 		answer = raw_input("--> ")
 		try:
 			if answer == "q": return
@@ -92,9 +92,9 @@ def _print_all_interactive(processes):
 			print_helper(without_session[int(answer) - 1].name)
 
 		except (SyntaxError, IndexError, ValueError):
-			print "Wrong application number"
+			print _("wrong_app_number")
 
-		raw_input("-- Press enter to get list of applications --")
+		raw_input(_("press_enter"))
 
 def _exclude_type(processes, app_type):
 	"""app_type -- see Applications.TYPES"""
@@ -107,12 +107,12 @@ def _exclude_type(processes, app_type):
 
 def _print_note_for_hidden(session_count, static_count):
 	if not args.quiet and (session_count > 0 or static_count > 0):
-		print "\nPlease note that there are:"
+		print "\n" + _("note_unlisted_apps")
 		if session_count > 0:
-			print "  - {0} processes requiring restarting your session (i.e. Logging out & Logging in again)".format(session_count)
+			print _("requiring_session").format(session_count)
 
 		if static_count > 0:
-			print "  - {0} processes requiring reboot".format(static_count)
+			print _("requiring_reboot").format(static_count)
 
 def print_helper(app_name):
 	try:
@@ -135,35 +135,25 @@ def print_helper(app_name):
 		elif started.seconds >= 0:
 			started_str = str(started.seconds) + " seconds"
 
-		how_to_restart = "Sorry, It's not known"
+		how_to_restart = _("not_known_restart")
 		if app["type"] == Applications.TYPES["DAEMON"]:
 			init = System.init_system()
 			if init == "systemd": how_to_restart = "systemctl restart {0}".format(app["name"])
 			elif init == "init": how_to_restart = "/etc/init.d/{0} restart".format(app["name"])
 
-		print textwrap.dedent("""\
-			* {app_name}
-			    Package:     {pkg_name}
-			    Description: {pkg_description}
-			    Type:        {type}
-			    State:       {app_name} has been started by {user} {time} ago. PID - {pid}
-
-			    How to restart:
-					 {how_to_restart}
-		""".format(
-				app_name = app_name,
-				pkg_name = package.name,
-				type = app["type"].capitalize(),
-				pkg_description = package.description,
-				user = process.username,
-				time = started_str,
-				pid = process.pid,
-				how_to_restart = how_to_restart,
-			))
+		print _("helper").format(
+			app_name = app_name,
+			pkg_name = package.name,
+			type = app["type"].capitalize(),
+			pkg_description = package.description,
+			user = process.username,
+			time = started_str,
+			pid = process.pid,
+			how_to_restart = how_to_restart,
+		)
 
 	except AttributeError:
-		print "Application called %s is not running" % app_name
-
+		print _("app_not_running").format(app_name)
 
 
 
@@ -173,7 +163,7 @@ if __name__ == '__main__':
 		sys.exit()
 
 	if os.getuid() != 0:
-		print "Only root can use this application"
+		print _("root_only")
 		sys.exit();
 
 	main()
