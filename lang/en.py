@@ -21,11 +21,11 @@ import textwrap
 LOCALE = {
 
 	# Global
-	"root_only"         : "Only root can use this application",
-	"not_unlisted_apps" : "Please note that there are:",
-	"requiring_session" : "  - {0} processes requiring restarting your session (i.e. Logging out & Logging in again)",
-	"reuquiring_reboot" : "  - {0} processes requiring reboot",
-	"unsupported_distro": ( "You are running unsupported linux distribution\n"
+	"root_only"          : "Only root can use this application",
+	"note_unlisted_apps" : "Please note that there are:",
+	"requiring_session"  : "  - {0} processes requiring restarting your session (i.e. Logging out & Logging in again)",
+	"requiring_reboot"   : "  - {0} processes requiring reboot",
+	"unsupported_distro" : ( "You are running unsupported linux distribution\n"
 				"\n"
 				"Please visit https://github.com/FrostyX/tracer/issues\n"
 				"and create new issue called 'Unknown or unsupported linux distribution: {0}' if there isn't such.\n"
