@@ -25,6 +25,12 @@ LOCALE = {
 	"not_unlisted_apps" : "Please note that there are:",
 	"requiring_session" : "  - {0} processes requiring restarting your session (i.e. Logging out & Logging in again)",
 	"reuquiring_reboot" : "  - {0} processes requiring reboot",
+	"unsupported_distro": ( "You are running unsupported linux distribution\n"
+				"\n"
+				"Please visit https://github.com/FrostyX/tracer/issues\n"
+				"and create new issue called 'Unknown or unsupported linux distribution: {0}' if there isn't such.\n"
+				"\n"
+				"Don't you have an GitHub account? Please report this issue on frostyx@email.cz" ),
 
 	# Interactive
 	"prompt_help"      : "Press application number for help or 'q' to quit",
