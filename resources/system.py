@@ -20,7 +20,7 @@
 
 import os
 import platform
-import resources.psutils as psutil
+import psutil
 from packageManagers.dnf import Dnf
 from packageManagers.yum import Yum
 from packageManagers.portage import Portage

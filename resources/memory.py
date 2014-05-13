@@ -17,7 +17,8 @@
 #
 
 from sets import Set
-import resources.psutils as psutil
+from resources.psutils import TracerProcess
+import psutil
 import re
 
 def process_files(pid):
@@ -34,7 +35,7 @@ def process_files(pid):
 	combined = "(" + ")|(".join(paths) + ")"
 
 	files = []
-	p = psutil.Process(pid)
+	p = TracerProcess(pid)
 	for mmap in p.get_memory_maps():
 		if re.match(combined, mmap.path):
 			file = mmap.path
@@ -99,7 +100,7 @@ def processes_with_files():
 def process_by_name(name):
 	for pid in psutil.get_pid_list():
 		try:
-			p = psutil.Process(pid)
+			p = TracerProcess(pid)
 			if p.name == name:
 				return p
 
@@ -112,7 +113,7 @@ def all_processes():
 	processes = Set()
 	for pid in psutil.get_pid_list():
 		try:
-			processes.add(psutil.Process(pid))
+			processes.add(TracerProcess(pid))
 		except psutil.NoSuchProcess: pass
 		except psutil.AccessDenied: pass
 

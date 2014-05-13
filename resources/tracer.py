@@ -17,12 +17,12 @@
 #
 
 import re
+import psutil
 from sets import Set
 
 from resources.package import Package
 from resources.rules import Rules
 import resources.memory as memory
-import resources.psutils as psutil
 import resources.system as system
 
 class Tracer:
