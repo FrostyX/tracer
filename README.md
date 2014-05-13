@@ -60,7 +60,7 @@ Tracer is called after every successful transaction.
 	  vim-enhanced.i686 2:7.4.179-1.fc20
 
 	Calling tracer
-	vim-X11
+	gvim
 
 	Done!
 

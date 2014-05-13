@@ -2,7 +2,7 @@
   - rules.xml
   - Rules definitions for traced applications
   -
-  - When process is found, tracer looks into this file and searches for its rules.
+  - When process is found, tracer looks into this file and searches for its parent rules.
   - If rule is found, action is performed. These two actions can be done:
   -     * Print the actual process
   -     * Find the rule for parent process
