@@ -1,6 +1,6 @@
 # tracer
 
-Tracer finds outdated running packages in your system
+Tracer finds outdated running applications in your system
 
 How does he do it? He simply finds all packages you have modified since you boot up. Then he traces their files in the jungle of your memory, ... senses them, and finally, finds them. In the end you will get list of packages what have been running while you updated or removed them.
 
@@ -8,6 +8,7 @@ How does he do it? He simply finds all packages you have modified since you boot
 - Supported linux distribution - There are currently supported [Fedora](http://fedoraproject.org/) and [Gentoo](http://www.gentoo.org/)
 - Python interpreter
 - Python [psutil](https://code.google.com/p/psutil/) module. Available [here](https://admin.fedoraproject.org/pkgdb/acls/name/python-psutil) and [here](https://packages.gentoo.org/package/dev-python/psutil). Please use testing version on gentoo.
+- Python [beautifulsoup](http://www.crummy.com/software/BeautifulSoup/bs4/doc/) module. Available [here](https://admin.fedoraproject.org/pkgdb/acls/name/python-beautifulsoup4) and [here](https://packages.gentoo.org/package/dev-python/beautifulsoup)
 
 ## Usage
 ### Basics
@@ -59,10 +60,18 @@ Tracer is called after every successful transaction.
 	  vim-enhanced.i686 2:7.4.179-1.fc20
 
 	Calling tracer
-	vim-X11
+	gvim
 
 	Done!
+
+If you cant see tracer section in your output, make sure that you don't have `plugins=0` in your `/etc/dnf/dnf.conf`.
 
 
 ## Feedback
 Please report any bugs or feature requests to [issues](https://github.com/FrostyX/tracer/issues) on this repository. Pull requests are also welcome. If you rather want a talk or something, you can find me on `#gentoo.cs` or `#fedora-cs` `@freenode` or you can [mail me](mailto:frostyx@email.cz).
+
+
+## References
+- <https://pythonhosted.org/psutil/>
+- <https://code.google.com/p/psutil/wiki/Documentation>
+- <https://docs.python.org/2/library/unittest.html>

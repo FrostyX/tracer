@@ -1,5 +1,6 @@
 #-*- coding: utf-8 -*-
-# tracer.py, calls tracer after every successful transaction.
+# tracer.py
+# Calls tracer after every successful transaction.
 # Also supplies the 'tracer' command.
 #
 # Copyright (C) 2014 Jakub Kadlčík

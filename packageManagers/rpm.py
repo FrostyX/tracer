@@ -1,10 +1,25 @@
 #-*- coding: utf-8 -*-
-"""Base RPM package manager class
-Copyright 2013 Jakub Kadlčík"""
+# rpm.py
+# Base RPM package manager class
+#
+# Copyright (C) 2013 Jakub Kadlčík
+#
+# This copyrighted material is made available to anyone wishing to use,
+# modify, copy, or redistribute it subject to the terms and conditions of
+# the GNU General Public License v.2, or (at your option) any later version.
+# This program is distributed in the hope that it will be useful, but WITHOUT
+# ANY WARRANTY expressed or implied, including the implied warranties of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General
+# Public License for more details.  You should have received a copy of the
+# GNU General Public License along with this program; if not, write to the
+# Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+# 02110-1301, USA.
+#
 
 from os import listdir
 from ipackageManager import IPackageManager
 from resources.package import Package
+import resources.memory as Memory
 import sqlite3
 import subprocess
 import re
@@ -46,6 +61,34 @@ class Rpm(IPackageManager):
 		p = subprocess.Popen(['rpm', '-ql', pkg_name], stdout=subprocess.PIPE)
 		files, err = p.communicate()
 		return files.split('\n')[:-1]
+
+	def package_info(self, app_name):
+		"""Returns package object with all attributes"""
+		name = self.provided_by(app_name)
+		description = None
+
+		p = subprocess.Popen(['rpm', '-qi', name], stdout=subprocess.PIPE)
+		out, err = p.communicate()
+		out = out.split('\n')
+
+		for line in out:
+			if line.startswith("Summary"):
+				description = line.split("Summary     :")[1].strip()
+
+		package = Package(name)
+		package.description = description
+		return package
+
+	def provided_by(self, app_name):
+		"""Returns name of package which provides given application"""
+		process = Memory.process_by_name(app_name)
+		f = process.exe
+
+		p = subprocess.Popen(['rpm', '-qf', f], stdout=subprocess.PIPE)
+		pkg_name, err = p.communicate()
+		pkg_name = pkg_name.split('\n')[0]
+
+		return self._pkg_name_without_version(pkg_name)
 
 	def _transactions_newer_than(self, unix_time):
 		"""

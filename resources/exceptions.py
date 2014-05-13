@@ -1,8 +1,8 @@
 #-*- coding: utf-8 -*-
-# dnf.py
-# Module to work with DNF package manager class
+# exceptions.py
+# Tracer exceptions module
 #
-# Copyright (C) 2013 Jakub Kadlčík
+# Copyright (C) 2014 Jakub Kadlčík
 #
 # This copyrighted material is made available to anyone wishing to use,
 # modify, copy, or redistribute it subject to the terms and conditions of
@@ -16,9 +16,12 @@
 # 02110-1301, USA.
 #
 
-from rpm import Rpm
+from lang import _
 
-class Dnf(Rpm):
+class UnsupportedDistribution(OSError):
 
 	@property
-	def history_path(self): return '/var/lib/dnf/history/'
+	def message(self): return _("unsupported_distro")
+
+	def __init__(self, distro):
+		OSError.__init__(self, self.message.format(distro))

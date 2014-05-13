@@ -1,23 +1,32 @@
-# -*- coding: utf-8 -*-
+#-*- coding: utf-8 -*-
+# tracer.py
+# Tracer finds outdated running applications in your system
+#
+# Copyright (C) 2013 Jakub Kadlčík
+#
+# This copyrighted material is made available to anyone wishing to use,
+# modify, copy, or redistribute it subject to the terms and conditions of
+# the GNU General Public License v.2, or (at your option) any later version.
+# This program is distributed in the hope that it will be useful, but WITHOUT
+# ANY WARRANTY expressed or implied, including the implied warranties of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General
+# Public License for more details.  You should have received a copy of the
+# GNU General Public License along with this program; if not, write to the
+# Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+# 02110-1301, USA.
+#
 
-# System modules
 import re
-import psutil
-import platform
+from sets import Set
 
-# Tracer modules
-from packageManagers.dnf import Dnf
-from packageManagers.yum import Yum
-from packageManagers.portage import Portage
 from resources.package import Package
+from resources.rules import Rules
 import resources.memory as memory
+import resources.psutils as psutil
+import resources.system as system
 
 class Tracer:
-
-	"""
-	Tracer finds outdated running packages in your system
-	Copyright 2014 Jakub Kadlčík
-	"""
+	"""Tracer finds outdated running applications in your system"""
 
 	"""List of packages that only should be traced"""
 	_specified_packages = None
@@ -32,17 +41,7 @@ class Tracer:
 	_PACKAGE_MANAGER = None
 
 	def __init__(self):
-		self._PACKAGE_MANAGER = self._PACKAGE_MANAGER()
-
-	def _PACKAGE_MANAGER(self):
-		"""Returns instance of package manager according to installed linux distribution"""
-		def e(): raise OSError("Unknown or unsupported linux distribution")
-
-		distro = platform.linux_distribution(full_distribution_name=False)[0]
-		return {
-			'gentoo': Portage(),
-			'fedora': Dnf(),
-		}.get(distro, e)
+		self._PACKAGE_MANAGER = system.package_manager()
 
 	def _modified_packages(self):
 		"""Returns list of packages what tracer should care about"""
@@ -56,25 +55,44 @@ class Tracer:
 					packages.remove(package)
 		return packages
 
+	def package_info(self, app_name):
+		return self._PACKAGE_MANAGER.package_info(app_name)
+
 	def trace_running(self):
 		"""
-		Returns list of packages which have some files loaded in memory
+		Returns list of processes which uses some files that have been modified
 		@TODO This function should be hardly optimized
 		"""
 
 		files_in_memory = memory.processes_with_files()
 		packages = self.specified_packages if self.specified_packages and self._now else self._modified_packages()
 
-		modified = []
+		running = Set()
 		for package in packages:
 			for file in self._PACKAGE_MANAGER.package_files(package.name):
 				# Doesnt matter what is after dot cause in package files there is version number after it
-				regex = re.compile('^' + re.escape(file) + "\.*")
-				p = memory.is_in_memory(regex, files_in_memory)
-				if p and p.create_time <= package.modified:
-					modified.append(package)
-					break
-		return modified
+				try: file = file[:file.index('.')]
+				except ValueError: pass
+
+				for p in memory.processes_using_file(file, files_in_memory):
+					if p.create_time <= package.modified:
+						p = self._apply_rules(p)
+						running.add(p)
+		return running
+
+	def _apply_rules(self, process):
+		parent = process.parent
+		rule = Rules.find(parent.name)
+
+		if not rule or not rule["action"]:
+			return process
+
+		if rule["action"] == Rules.ACTIONS["CALL-PARENT"]:
+			return self._apply_rules(parent)
+
+		# Only PRINT action left
+		# PRINT rule is defined for parent process
+		return parent
 
 	@property
 	def specified_packages(self):

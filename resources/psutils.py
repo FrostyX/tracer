@@ -1,6 +1,7 @@
 #-*- coding: utf-8 -*-
-# dnf.py
-# Module to work with DNF package manager class
+# psutils.py
+# Personally modified python-psutil package
+# https://code.google.com/p/psutil/
 #
 # Copyright (C) 2013 Jakub Kadlčík
 #
@@ -16,9 +17,22 @@
 # 02110-1301, USA.
 #
 
-from rpm import Rpm
+from psutil import *
 
-class Dnf(Rpm):
+class Process(Process):
+	def __eq__(self, process):
+		"""For our purposes, two processes are equal when they have same name"""
+		return (isinstance(process, self.__class__)
+			and self.name == process.name)
+
+	def __ne__(self, process):
+		return not self.__eq__(process)
+
+	def __hash__(self):
+		return hash(self.name)
 
 	@property
-	def history_path(self): return '/var/lib/dnf/history/'
+	def parent(self):
+		p = super(Process, self).parent
+		p.__class__ = Process
+		return p
