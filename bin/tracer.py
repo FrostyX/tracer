@@ -137,9 +137,7 @@ def print_helper(app_name):
 
 		how_to_restart = _("not_known_restart")
 		if app["type"] == Applications.TYPES["DAEMON"]:
-			init = System.init_system()
-			if init == "systemd": how_to_restart = "systemctl restart {0}".format(app["name"])
-			elif init == "init": how_to_restart = "/etc/init.d/{0} restart".format(app["name"])
+			how_to_restart = "service {0} restart".format(app["name"])
 
 		print _("helper").format(
 			app_name = app_name,
