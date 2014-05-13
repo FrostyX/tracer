@@ -43,7 +43,7 @@
 	<rule name="wicd" />
 
 	<!-- Web browsers -->
-	<rule name="chromium" action="print" />
+	<rule name="chrome" />
 	<rule name="chrome-sandbox" />
 
 </rules>
