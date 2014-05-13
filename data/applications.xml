@@ -56,7 +56,7 @@
 	<group type="daemon">
 		<app name="apache2" />
 		<app name="mpd" />
-		<app name="mysql" />
+		<app name="mysqld" />
 		<app name="openvpn" />
 		<app name="samba" />
 		<app name="sshd" />
