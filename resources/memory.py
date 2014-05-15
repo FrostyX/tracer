@@ -97,6 +97,31 @@ def processes_with_files():
 
 	return processes
 
+def dump_memory():
+	"""
+	Returns memory in BTree structure
+
+	{ file_1 : [process_1, process_2, ..., process_n],
+		...
+	}
+
+	Which describes that processes 1 to `n` is using file_1
+	"""
+	memory = {}
+	for process in all_processes():
+		try:
+			for file in process_files(process.pid):
+				if file in memory:
+					memory[file].append(process)
+				else:
+					#memory.update({file : [process]})
+					memory[file] = [process]
+
+		except psutil.NoSuchProcess: pass
+		except psutil.AccessDenied: pass
+
+	return memory
+
 def process_by_name(name):
 	for pid in psutil.get_pid_list():
 		try:
