@@ -64,20 +64,27 @@ class Tracer:
 		@TODO This function should be hardly optimized
 		"""
 
-		files_in_memory = memory.processes_with_files()
+		files_in_memory = memory.dump_memory()
 		packages = self.specified_packages if self.specified_packages and self._now else self._modified_packages()
 
 		running = Set()
+		found = []
 		for package in packages:
 			for file in self._PACKAGE_MANAGER.package_files(package.name):
 				# Doesnt matter what is after dot cause in package files there is version number after it
 				try: file = file[:file.index('.')]
 				except ValueError: pass
 
-				for p in memory.processes_using_file(file, files_in_memory):
-					if p.create_time <= package.modified:
-						p = self._apply_rules(p)
-						running.add(p)
+				try:
+					for p in files_in_memory[file]:
+						if p.pid in found:
+							continue
+
+						if p.create_time <= package.modified:
+							found.append(p.pid)
+							p = self._apply_rules(p)
+							running.add(p)
+				except KeyError: pass
 		return running
 
 	def _apply_rules(self, process):
