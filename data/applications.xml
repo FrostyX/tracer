@@ -65,6 +65,7 @@
 	</group>
 
 	<group type="static">
+		<app name="dbus-daemon" />
 		<app name="polkitd" />
 		<app name="udisksd" />
 		<app name="gvfsd" />
@@ -80,6 +81,8 @@
 		<app name="dbus-launch" />
 		<app name="X" />
 	</group>
+
+	<app name="console-kit-daemon" helper="service consolekit restart" />
 
 
 	<!--
