@@ -16,9 +16,11 @@
 # 02110-1301, USA.
 #
 
-from ipackageManager import IPackageManager
+from __future__ import absolute_import
+from .ipackageManager import IPackageManager
 from resources.package import Package
 import resources.memory as Memory
+import portage
 import subprocess
 import time
 import os
@@ -47,10 +49,11 @@ class Portage(IPackageManager):
 
 	def package_files(self, pkg_name):
 		"""Returns list of files provided by package"""
-		FNULL = open(os.devnull, 'w')
-		p = subprocess.Popen(['equery', '-q', 'f', pkg_name], stdout=subprocess.PIPE, stderr=FNULL)
-		files, err = p.communicate()
-		return files.split('\n')[:-1]
+		vartree = portage.db[portage.root]['vartree']
+		cpv = str(vartree.dep_bestmatch(pkg_name))
+
+		contents = vartree.dbapi.aux_get(cpv, ['CONTENTS'])[0].split('\n')[:-1]
+		return [x.split()[1] for x in contents]
 
 	def package_info(self, app_name):
 		"""Returns package object with all attributes"""
