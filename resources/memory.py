@@ -40,15 +40,11 @@ def process_files(pid):
 		if re.match(combined, mmap.path):
 			file = mmap.path
 
-			# Doesnt matter what is after dot cause in package files there is version number after it
-			try: file = file[:file.index('.')]
-			except ValueError: pass
-
 			# Doesnt matter what is after space cause filename ends with first space
 			try: file = file[:file.index(' ')]
 			except ValueError: pass
 
-			files.append(file)
+			files.append(_filename_without_version(file))
 
 	return sorted(files)
 
@@ -143,3 +139,16 @@ def all_processes():
 		except psutil.AccessDenied: pass
 
 	return processes
+
+def _filename_without_version(file):
+	slash = file.rindex('/')
+	dirname = file[:slash]
+	basename = file[slash+1:]
+
+	try:
+		dot_split = basename.split(".")
+		if dot_split[1] == "so":
+			basename = dot_split[0] + '.' + dot_split[1]
+		else: basename = dot_split[0]
+	except IndexError: pass
+	return dirname + '/' + basename

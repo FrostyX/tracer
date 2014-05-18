@@ -71,10 +71,8 @@ class Tracer:
 		found = []
 		for package in packages:
 			for file in self._PACKAGE_MANAGER.package_files(package.name):
-				# Doesnt matter what is after dot cause in package files there is version number after it
-				try: file = file[:file.index('.')]
-				except ValueError: pass
 
+				file = memory._filename_without_version(file)
 				try:
 					for p in files_in_memory[file]:
 						if p.pid in found:
