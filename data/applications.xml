@@ -100,6 +100,7 @@
 		<app name="kactivitymanagerd" />
 		<app name="kded4" />
 		<app name="knotify4" />
+		<app name="kwalletd" />
 	</group>
 
 </applications>
