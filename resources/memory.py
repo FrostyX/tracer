@@ -110,7 +110,6 @@ def dump_memory():
 				if file in memory:
 					memory[file].append(process)
 				else:
-					#memory.update({file : [process]})
 					memory[file] = [process]
 
 		except psutil.NoSuchProcess: pass

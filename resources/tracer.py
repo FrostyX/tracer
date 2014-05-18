@@ -22,8 +22,8 @@ from sets import Set
 
 from resources.package import Package
 from resources.rules import Rules
-import resources.memory as memory
-import resources.system as system
+import resources.memory as Memory
+import resources.system as System
 
 class Tracer:
 	"""Tracer finds outdated running applications in your system"""
@@ -41,7 +41,7 @@ class Tracer:
 	_PACKAGE_MANAGER = None
 
 	def __init__(self):
-		self._PACKAGE_MANAGER = system.package_manager()
+		self._PACKAGE_MANAGER = System.package_manager()
 
 	def _modified_packages(self):
 		"""Returns list of packages what tracer should care about"""
@@ -64,7 +64,7 @@ class Tracer:
 		@TODO This function should be hardly optimized
 		"""
 
-		files_in_memory = memory.dump_memory()
+		memory = Memory.dump_memory()
 		packages = self.specified_packages if self.specified_packages and self._now else self._modified_packages()
 
 		running = Set()
@@ -72,9 +72,9 @@ class Tracer:
 		for package in packages:
 			for file in self._PACKAGE_MANAGER.package_files(package.name):
 
-				file = memory._filename_without_version(file)
+				file = Memory._filename_without_version(file)
 				try:
-					for p in files_in_memory[file]:
+					for p in memory[file]:
 						if p.pid in found:
 							continue
 
