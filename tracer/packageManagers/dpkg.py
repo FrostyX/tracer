@@ -1,6 +1,6 @@
 #-*- coding: utf-8 -*-
-# portage.py
-# Module to work with portage package manager class
+# dpkg.py
+# Module to work with dpkg based package managers
 #
 # Copyright (C) 2013 Jakub Kadlčík
 #
@@ -16,16 +16,17 @@
 # 02110-1301, USA.
 #
 
-from __future__ import absolute_import
-from .ipackageManager import IPackageManager
-from resources.package import Package
-import resources.memory as Memory
-import portage
+from ipackageManager import IPackageManager
+from tracer.resources.package import Package
+import tracer.resources.memory as Memory
 import subprocess
 import time
 import os
 
-class Portage(IPackageManager):
+class Dpkg(IPackageManager):
+
+	@property
+	def dpkg_log(self): return '/var/log/dpkg.log'
 
 	def packages_newer_than(self, unix_time):
 		"""
@@ -33,39 +34,41 @@ class Portage(IPackageManager):
 		Requires root permissions.
 		"""
 		newer = []
-		p = subprocess.Popen(['qlop', '-lC'], stdout=subprocess.PIPE)
-		packages, err = p.communicate()
-		for package in packages.split('\n')[:-1]:
-			package = package.split(" >>> ")
+		log = open(self.dpkg_log, 'r')
+		for line in log:
+			line = line.split(" ")
+
+			if line[2] != "upgrade":
+				continue
 
 			# There actually should be %e instead of %d
-			modified = time.mktime(time.strptime(package[0], "%a %b %d %H:%M:%S %Y"))
+			modified = time.mktime(time.strptime(line[0] + " " + line[1], "%Y-%m-%d %H:%M:%S"))
 			if modified >= unix_time:
-				pkg_name = package[1] # Package name with version, let's cut it off
-				pkg_name = self._pkg_name_without_version(pkg_name)
+				pkg_name = line[3].split(":")[0]
 				newer.append(Package(pkg_name, modified))
-
 		return newer
 
 	def package_files(self, pkg_name):
 		"""Returns list of files provided by package"""
-		vartree = portage.db[portage.root]['vartree']
-		cpv = str(vartree.dep_bestmatch(pkg_name))
-
-		contents = vartree.dbapi.aux_get(cpv, ['CONTENTS'])[0].split('\n')[:-1]
-		return [x.split()[1] for x in contents]
+		files = []
+		FNULL = open(os.devnull, 'w')
+		p = subprocess.Popen(['dpkg-query', '-L', pkg_name], stdout=subprocess.PIPE, stderr=FNULL)
+		out, err = p.communicate()
+		for file in out.split('\n')[:-1]:
+			if os.path.isfile(file):
+				files.append(file)
+		return files
 
 	def package_info(self, app_name):
 		"""Returns package object with all attributes"""
 		name = self.provided_by(app_name)
 		description = None
 
-		p = subprocess.Popen(['eix', '-e', name], stdout=subprocess.PIPE)
+		p = subprocess.Popen(['dpkg', '-s', name], stdout=subprocess.PIPE)
 		out, err = p.communicate()
 		out = out.split('\n')
 
 		for line in out:
-			line = line.strip()
 			if line.startswith("Description:"):
 				description = line.split("Description:")[1].strip()
 
@@ -78,8 +81,8 @@ class Portage(IPackageManager):
 		process = Memory.process_by_name(app_name)
 		f = process.cmdline[0]
 
-		p = subprocess.Popen(['equery', '-q', 'b', f], stdout=subprocess.PIPE)
-		pkg_name, err = p.communicate()
-		pkg_name = pkg_name.split('\n')[0]
+		p = subprocess.Popen(['dlocate', '-S', f], stdout=subprocess.PIPE)
+		package, err = p.communicate()
+		package = package.split('\n')[0]
 
-		return self._pkg_name_without_version(pkg_name)
+		return package.split(':')[0]

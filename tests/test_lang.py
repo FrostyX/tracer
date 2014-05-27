@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 from __meta__ import *
-import resources.lang as Lang
+import tracer.resources.lang as Lang
 import os
 
 class TestLang(unittest.TestCase):

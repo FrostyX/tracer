@@ -18,8 +18,8 @@
 
 from os import listdir
 from ipackageManager import IPackageManager
-from resources.package import Package
-import resources.memory as Memory
+from tracer.resources.package import Package
+import tracer.resources.memory as Memory
 import sqlite3
 import subprocess
 import re

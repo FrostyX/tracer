@@ -25,14 +25,14 @@ os.sys.path.insert(0, parentdir)
 import sys
 import time
 import datetime
-from resources.lang import _
-from resources.tracer import Tracer
-from resources.args_parser import args
-from resources.package import Package
-from resources.exceptions import UnsupportedDistribution
-from resources.applications import Applications
-import resources.memory as Memory
-import resources.system as System
+from tracer.resources.lang import _
+from tracer.resources.tracer import Tracer
+from tracer.resources.args_parser import args
+from tracer.resources.package import Package
+from tracer.resources.exceptions import UnsupportedDistribution
+from tracer.resources.applications import Applications
+import tracer.resources.memory as Memory
+import tracer.resources.system as System
 
 
 def main(argv=sys.argv, stdin=[]):

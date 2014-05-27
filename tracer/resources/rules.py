@@ -18,11 +18,11 @@
 
 from bs4 import BeautifulSoup
 from os.path import dirname, realpath
-parentdir = dirname(dirname(realpath(__file__)))
+projectdir = dirname(realpath(dirname(dirname(realpath(__file__)))))
 
 class Rules:
 
-	DEFINITIONS = parentdir + "/data/rules.xml"
+	DEFINITIONS = projectdir + "/data/rules.xml"
 
 	ACTIONS = {
 		"CALL-PARENT"  :  "call-parent",

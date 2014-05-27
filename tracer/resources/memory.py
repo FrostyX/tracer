@@ -16,8 +16,10 @@
 # 02110-1301, USA.
 #
 
+from __future__ import absolute_import
+
 from sets import Set
-from resources.psutils import TracerProcess
+from tracer.resources.psutils import TracerProcess
 import psutil
 import re
 

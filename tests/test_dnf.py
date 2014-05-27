@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 
 from __meta__ import *
-from packageManagers.ipackageManager import IPackageManager
-from packageManagers.dnf import Dnf
+from tracer.packageManagers.ipackageManager import IPackageManager
+from tracer.packageManagers.dnf import Dnf
 
 class TestDnf(unittest.TestCase):
 	def setUp(self):

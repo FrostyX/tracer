@@ -18,11 +18,11 @@
 
 from bs4 import BeautifulSoup, element
 from os.path import dirname, realpath
-parentdir = dirname(dirname(realpath(__file__)))
+projectdir = dirname(realpath(dirname(dirname(realpath(__file__)))))
 
 class Applications:
 
-	DEFINITIONS = parentdir + "/data/applications.xml"
+	DEFINITIONS = projectdir + "/data/applications.xml"
 
 	TYPES = {
 		"DAEMON"       :  "daemon",

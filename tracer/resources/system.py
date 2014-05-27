@@ -18,10 +18,13 @@
 # 02110-1301, USA.
 #
 
+from __future__ import absolute_import
+
+# WARNING: There are imports in package_manager()
 import os
 import platform
 import psutil
-from resources.exceptions import UnsupportedDistribution
+from tracer.resources.exceptions import UnsupportedDistribution
 
 
 def distribution():
@@ -31,9 +34,9 @@ def package_manager():
 	"""Returns instance of package manager according to installed linux distribution"""
 	d = distribution()
 
-	if   d == 'gentoo': from packageManagers.portage import Portage as P
-	elif d == 'fedora': from packageManagers.dnf import Dnf as P
-	elif d == 'debian': from packageManagers.dpkg import Dpkg as P
+	if   d == 'gentoo': from tracer.packageManagers.portage import Portage as P
+	elif d == 'fedora': from tracer.packageManagers.dnf import Dnf as P
+	elif d == 'debian': from tracer.packageManagers.dpkg import Dpkg as P
 	else: raise UnsupportedDistribution(d)
 	return P()
 

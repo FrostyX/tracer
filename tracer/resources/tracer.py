@@ -16,14 +16,16 @@
 # 02110-1301, USA.
 #
 
+from __future__ import absolute_import
+
 import re
 import psutil
 from sets import Set
 
-from resources.package import Package
-from resources.rules import Rules
-import resources.memory as Memory
-import resources.system as System
+from tracer.resources.package import Package
+from tracer.resources.rules import Rules
+import tracer.resources.memory as Memory
+import tracer.resources.system as System
 
 class Tracer:
 	"""Tracer finds outdated running applications in your system"""

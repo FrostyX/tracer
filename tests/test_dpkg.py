@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 
 from __meta__ import *
-from packageManagers.ipackageManager import IPackageManager
-from packageManagers.dpkg import Dpkg
+from tracer.packageManagers.ipackageManager import IPackageManager
+from tracer.packageManagers.dpkg import Dpkg
 
 class TestDpkg(unittest.TestCase):
 	def setUp(self):
