@@ -31,6 +31,7 @@ from tracer.resources.args_parser import args
 from tracer.resources.package import Package
 from tracer.resources.exceptions import UnsupportedDistribution
 from tracer.resources.applications import Applications
+from tracer.resources.ProcessesList import ProcessesList
 import tracer.resources.memory as Memory
 import tracer.resources.system as System
 
@@ -51,7 +52,7 @@ def main(argv=sys.argv, stdin=[]):
 		tracer.specified_packages = packages
 		tracer.now = args.now
 
-		processes = tracer.trace_running(_user(args.user))
+		processes = ProcessesList(tracer.trace_running(_user(args.user)))
 		if not processes: return
 		if args.interactive: _print_all_interactive(processes)
 		else: _print_all(processes)
@@ -65,36 +66,44 @@ def _user(user):
 	else: return user[0]
 
 def _print_all(processes):
-	without_static = _exclude_type(processes, Applications.TYPES["STATIC"])
-	without_session = _exclude_type(without_static, Applications.TYPES["SESSION"])
-	for process in without_session:
+	filtered = processes.exclude_types([
+		Applications.TYPES['STATIC'],
+		Applications.TYPES['SESSION']
+	])
+
+	for process in filtered:
 		print process.name
 
-	static_count = len(processes)-len(without_static)
-	session_count = len(without_static)-len(without_session)
-	_print_note_for_hidden(session_count, static_count)
+	_print_note_for_hidden(
+		processes.count_type(Applications.TYPES['SESSION']),
+		processes.count_type(Applications.TYPES['STATIC'])
+	)
 
 def _print_all_interactive(processes):
-	processes = list(processes) # Cause Set is not ordered
-	without_static = _exclude_type(processes, Applications.TYPES["STATIC"])
-	without_session = _exclude_type(without_static, Applications.TYPES["SESSION"])
-	static_count = len(processes)-len(without_static)
-	session_count = len(without_static)-len(without_session)
+	filtered = processes.exclude_types([
+		Applications.TYPES['STATIC'],
+		Applications.TYPES['SESSION']
+	])
+
 	while True:
 		i = 1
-		digits = len(str(len(without_session)))
-		for process in without_session:
+		digits = len(str(len(filtered)))
+		for process in filtered:
 			n = "[{0}]".format(i).ljust(digits + 2)
 			print "{} {}".format(n, process.name)
 			i += 1
-		_print_note_for_hidden(session_count, static_count)
+
+		_print_note_for_hidden(
+			processes.count_type(Applications.TYPES['SESSION']),
+			processes.count_type(Applications.TYPES['STATIC'])
+		)
 
 		print "\n" + _("prompt_help")
 		answer = raw_input("--> ")
 		try:
 			if answer == "q": return
 			elif int(answer) <= 0 or int(answer) > i: raise IndexError
-			print_helper(without_session[int(answer) - 1].name)
+			print_helper(filtered[int(answer) - 1].name)
 
 		except (SyntaxError, IndexError, ValueError):
 			print _("wrong_app_number")
