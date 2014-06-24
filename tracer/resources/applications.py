@@ -41,9 +41,10 @@ class Applications:
 		for app in Applications._apps:
 			if app["name"] == app_name:
 				app.setdefault('type', Applications.DEFAULT_TYPE)
+				app.setdefault('helper', Applications._helper(app))
 				return app
 
-		return {"name" : app_name, "type" : Applications.DEFAULT_TYPE}
+		return {"name" : app_name, "type" : Applications.DEFAULT_TYPE, "helper" : None}
 
 	@staticmethod
 	def all():
@@ -71,3 +72,9 @@ class Applications:
 					Applications._apps.append(app.attrs)
 
 		f.close();
+
+	@staticmethod
+	def _helper(app):
+		if app["type"] == Applications.TYPES["DAEMON"]:
+			return "service {0} restart".format(app["name"])
+		return None

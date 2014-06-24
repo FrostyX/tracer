@@ -135,11 +135,7 @@ def print_helper(app_name):
 		elif started.seconds >= 0:
 			started_str = str(started.seconds) + " seconds"
 
-		how_to_restart = _("not_known_restart")
-		if app["type"] == Applications.TYPES["DAEMON"]:
-			how_to_restart = "service {0} restart".format(app["name"])
-		elif 'helper' in app:
-			how_to_restart = app['helper']
+		how_to_restart = app['helper'] if app['helper'] else _("not_known_restart")
 
 		print _("helper").format(
 			app_name = app_name,
