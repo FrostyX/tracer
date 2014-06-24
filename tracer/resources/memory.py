@@ -95,7 +95,7 @@ def processes_with_files():
 
 	return processes
 
-def dump_memory():
+def dump_memory(user=None):
 	"""
 	Returns memory in BTree structure
 
@@ -106,7 +106,7 @@ def dump_memory():
 	Which describes that processes 1 to `n` is using file_1
 	"""
 	memory = {}
-	for process in all_processes():
+	for process in all_processes(user):
 		try:
 			for file in process_files(process.pid):
 				if file in memory:
@@ -131,11 +131,13 @@ def process_by_name(name):
 
 	return None
 
-def all_processes():
+def all_processes(user=None):
 	processes = Set()
 	for pid in psutil.get_pid_list():
 		try:
-			processes.add(TracerProcess(pid))
+			p = TracerProcess(pid)
+			if not user or p.username == user:
+				processes.add(p)
 		except psutil.NoSuchProcess: pass
 		except psutil.AccessDenied: pass
 

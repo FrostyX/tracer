@@ -60,13 +60,13 @@ class Tracer:
 	def package_info(self, app_name):
 		return self._PACKAGE_MANAGER.package_info(app_name)
 
-	def trace_running(self):
+	def trace_running(self, user=None):
 		"""
 		Returns list of processes which uses some files that have been modified
 		@TODO This function should be hardly optimized
 		"""
 
-		memory = Memory.dump_memory()
+		memory = Memory.dump_memory(user)
 		packages = self.specified_packages if self.specified_packages and self._now else self._modified_packages()
 
 		running = Set()

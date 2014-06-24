@@ -51,13 +51,18 @@ def main(argv=sys.argv, stdin=[]):
 		tracer.specified_packages = packages
 		tracer.now = args.now
 
-		processes = tracer.trace_running()
+		processes = tracer.trace_running(_user(args.user))
 		if not processes: return
 		if args.interactive: _print_all_interactive(processes)
 		else: _print_all(processes)
 
 	except UnsupportedDistribution as ex:
 		print ex
+
+def _user(user):
+	if   user == '*':    return None
+	elif user == None:   return os.getlogin()
+	else: return user[0]
 
 def _print_all(processes):
 	without_static = _exclude_type(processes, Applications.TYPES["STATIC"])

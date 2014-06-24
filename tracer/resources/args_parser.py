@@ -54,4 +54,24 @@ parser.add_argument('-s', '--show',
 	help='show helper for given application'
 )
 
+user = parser.add_mutually_exclusive_group()
+user.add_argument("-u", "--user",
+	nargs=1,
+	dest='user',
+	metavar='username'
+)
+
+user.add_argument("-r", "--root",
+	dest='user',
+	action="store_const",
+	const='root'
+)
+
+user.add_argument("-e", "--everyone",
+	dest='user',
+	action="store_const",
+	const='*'
+)
+
+
 args = parser.parse_args()
