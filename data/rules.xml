@@ -44,6 +44,7 @@
 
 	<!-- Web browsers -->
 	<rule name="chrome" />
+	<rule name="chromium" />
 	<rule name="chrome-sandbox" />
 
 </rules>
