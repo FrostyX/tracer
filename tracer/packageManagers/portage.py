@@ -75,11 +75,7 @@ class Portage(IPackageManager):
 
 	def provided_by(self, app_name):
 		"""Returns name of package which provides given application"""
-		process = Memory.process_by_name(app_name)
-		f = process.cmdline[0]
-
-		p = subprocess.Popen(['equery', '-q', 'b', f], stdout=subprocess.PIPE)
+		p = subprocess.Popen(['equery', '-q', 'b', app_name], stdout=subprocess.PIPE)
 		pkg_name, err = p.communicate()
 		pkg_name = pkg_name.split('\n')[0]
-
 		return self._pkg_name_without_version(pkg_name)

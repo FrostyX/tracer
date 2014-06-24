@@ -78,11 +78,7 @@ class Dpkg(IPackageManager):
 
 	def provided_by(self, app_name):
 		"""Returns name of package which provides given application"""
-		process = Memory.process_by_name(app_name)
-		f = process.cmdline[0]
-
-		p = subprocess.Popen(['dlocate', '-S', f], stdout=subprocess.PIPE)
+		p = subprocess.Popen(['dlocate', '-S', app_name], stdout=subprocess.PIPE)
 		package, err = p.communicate()
 		package = package.split('\n')[0]
-
 		return package.split(':')[0]
