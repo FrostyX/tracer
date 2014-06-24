@@ -138,6 +138,8 @@ def print_helper(app_name):
 		how_to_restart = _("not_known_restart")
 		if app["type"] == Applications.TYPES["DAEMON"]:
 			how_to_restart = "service {0} restart".format(app["name"])
+		elif 'helper' in app:
+			how_to_restart = app['helper']
 
 		print _("helper").format(
 			app_name = app_name,
