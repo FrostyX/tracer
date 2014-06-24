@@ -57,7 +57,10 @@
 		<app name="apache2" />
 		<app name="mpd" />
 		<app name="mysqld" />
+		<app name="nmbd" />
+		<app name="ntpd" />
 		<app name="openvpn" />
+		<app name="proftpd" />
 		<app name="samba" />
 		<app name="sshd" />
 		<app name="vixie-cron" />
@@ -90,7 +93,6 @@
 	  -->
 
 	<group helper="Run `kdeinit4` command">
-		<app name="kdeinit4" />
 		<app name="klauncher" />
 	</group>
 
@@ -101,6 +103,7 @@
 		<app name="kded4" />
 		<app name="knotify4" />
 		<app name="kwalletd" />
+		<app name="kdeinit4" />
 	</group>
 
 </applications>
