@@ -110,15 +110,6 @@ def _print_all_interactive(processes):
 
 		raw_input(_("press_enter"))
 
-def _exclude_type(processes, app_type):
-	"""app_type -- see Applications.TYPES"""
-	without = []
-	for process in processes:
-		app = Applications.find(process.name)
-		if app["type"] != app_type:
-			without.append(process)
-	return without
-
 def _print_note_for_hidden(session_count, static_count):
 	if not args.quiet and (session_count > 0 or static_count > 0):
 		print "\n" + _("note_unlisted_apps")
