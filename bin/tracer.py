@@ -77,9 +77,9 @@ def _print_all_interactive(processes):
 	session_count = len(without_static)-len(without_session)
 	while True:
 		i = 1
-		l = len(str(len(without_session))) # Number of digits in processes length
+		digits = len(str(len(without_session)))
 		for process in without_session:
-			n = "[{0}]".format(i).ljust(l + 2)
+			n = "[{0}]".format(i).ljust(digits + 2)
 			print "{} {}".format(n, process.name)
 			i += 1
 		_print_note_for_hidden(session_count, static_count)
