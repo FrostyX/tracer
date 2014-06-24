@@ -81,6 +81,7 @@ class Rpm(IPackageManager):
 
 	def provided_by(self, app_name):
 		"""Returns name of package which provides given application"""
+		# `rpm -qf ...` needs full path to binary, not only its name
 		process = Memory.process_by_name(app_name)
 		f = process.exe
 
