@@ -19,13 +19,18 @@
 from __future__ import absolute_import
 from .ipackageManager import IPackageManager
 from tracer.resources.package import Package
-import tracer.resources.memory as Memory
 import portage
 import subprocess
 import time
-import os
 
 class Portage(IPackageManager):
+
+	"""
+	Package manager class - Portage
+	"""
+
+	def __init__(self):
+		pass
 
 	def packages_newer_than(self, unix_time):
 		"""
@@ -33,8 +38,8 @@ class Portage(IPackageManager):
 		Requires root permissions.
 		"""
 		newer = []
-		p = subprocess.Popen(['qlop', '-lC'], stdout=subprocess.PIPE)
-		packages, err = p.communicate()
+		process = subprocess.Popen(['qlop', '-lC'], stdout=subprocess.PIPE)
+		packages = process.communicate()[0]
 		for package in packages.split('\n')[:-1]:
 			package = package.split(" >>> ")
 
@@ -60,8 +65,8 @@ class Portage(IPackageManager):
 		name = self.provided_by(app_name)
 		description = None
 
-		p = subprocess.Popen(['eix', '-e', name], stdout=subprocess.PIPE)
-		out, err = p.communicate()
+		process = subprocess.Popen(['eix', '-e', name], stdout=subprocess.PIPE)
+		out = process.communicate()[0]
 		out = out.split('\n')
 
 		for line in out:
@@ -75,7 +80,8 @@ class Portage(IPackageManager):
 
 	def provided_by(self, app_name):
 		"""Returns name of package which provides given application"""
-		p = subprocess.Popen(['equery', '-q', 'b', app_name], stdout=subprocess.PIPE)
-		pkg_name, err = p.communicate()
+		command = ['equery', '-q', 'b', app_name]
+		process = subprocess.Popen(command, stdout=subprocess.PIPE)
+		pkg_name = process.communicate()[0]
 		pkg_name = pkg_name.split('\n')[0]
 		return self._pkg_name_without_version(pkg_name)

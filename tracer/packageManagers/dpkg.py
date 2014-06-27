@@ -18,12 +18,18 @@
 
 from ipackageManager import IPackageManager
 from tracer.resources.package import Package
-import tracer.resources.memory as Memory
 import subprocess
 import time
 import os
 
 class Dpkg(IPackageManager):
+
+	"""
+	Package manager class - DPKG
+	"""
+
+	def __init__(self):
+		pass
 
 	@property
 	def dpkg_log(self): return '/var/log/dpkg.log'
@@ -42,7 +48,10 @@ class Dpkg(IPackageManager):
 				continue
 
 			# There actually should be %e instead of %d
-			modified = time.mktime(time.strptime(line[0] + " " + line[1], "%Y-%m-%d %H:%M:%S"))
+			modified = time.mktime(\
+				time.strptime(line[0] + " " + line[1],\
+				"%Y-%m-%d %H:%M:%S"))
+
 			if modified >= unix_time:
 				pkg_name = line[3].split(":")[0]
 				newer.append(Package(pkg_name, modified))
@@ -51,9 +60,10 @@ class Dpkg(IPackageManager):
 	def package_files(self, pkg_name):
 		"""Returns list of files provided by package"""
 		files = []
-		FNULL = open(os.devnull, 'w')
-		p = subprocess.Popen(['dpkg-query', '-L', pkg_name], stdout=subprocess.PIPE, stderr=FNULL)
-		out, err = p.communicate()
+		fnull = open(os.devnull, 'w')
+		command = ['dpkg-query', '-L', pkg_name]
+		process = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=fnull)
+		out = process.communicate()[0]
 		for file in out.split('\n')[:-1]:
 			if os.path.isfile(file):
 				files.append(file)
@@ -64,8 +74,8 @@ class Dpkg(IPackageManager):
 		name = self.provided_by(app_name)
 		description = None
 
-		p = subprocess.Popen(['dpkg', '-s', name], stdout=subprocess.PIPE)
-		out, err = p.communicate()
+		process = subprocess.Popen(['dpkg', '-s', name], stdout=subprocess.PIPE)
+		out = process.communicate()[0]
 		out = out.split('\n')
 
 		for line in out:
@@ -78,7 +88,8 @@ class Dpkg(IPackageManager):
 
 	def provided_by(self, app_name):
 		"""Returns name of package which provides given application"""
-		p = subprocess.Popen(['dlocate', '-S', app_name], stdout=subprocess.PIPE)
-		pkg_name, err = p.communicate()
+		command = ['dlocate', '-S', app_name]
+		process = subprocess.Popen(command, stdout=subprocess.PIPE)
+		pkg_name = process.communicate()[0]
 		pkg_name = pkg_name.split('\n')[0]
 		return pkg_name.split(':')[0]
