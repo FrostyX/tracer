@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 from __meta__ import *
-from resources.rules import Rules
+from tracer.resources.rules import Rules
 
 from bs4 import BeautifulSoup
 from os.path import dirname, realpath

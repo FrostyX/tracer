@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 
 from __meta__ import *
-from packageManagers.ipackageManager import IPackageManager
-from packageManagers.portage import Portage
+from tracer.packageManagers.ipackageManager import IPackageManager
+from tracer.packageManagers.portage import Portage
 
 class TestPortage(unittest.TestCase):
 	def setUp(self):

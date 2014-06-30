@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 
 from __meta__ import *
-from packageManagers.ipackageManager import IPackageManager
-from packageManagers.yum import Yum
+from tracer.packageManagers.ipackageManager import IPackageManager
+from tracer.packageManagers.yum import Yum
 
 class TestYum(unittest.TestCase):
 	def setUp(self):

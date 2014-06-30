@@ -56,8 +56,11 @@
 	<group type="daemon">
 		<app name="apache2" />
 		<app name="mpd" />
-		<app name="mysql" />
+		<app name="mysqld" />
+		<app name="nmbd" />
+		<app name="ntpd" />
 		<app name="openvpn" />
+		<app name="proftpd" />
 		<app name="samba" />
 		<app name="sshd" />
 		<app name="vixie-cron" />
@@ -65,6 +68,7 @@
 	</group>
 
 	<group type="static">
+		<app name="dbus-daemon" />
 		<app name="polkitd" />
 		<app name="udisksd" />
 		<app name="gvfsd" />
@@ -81,13 +85,14 @@
 		<app name="X" />
 	</group>
 
+	<app name="console-kit-daemon" helper="service consolekit restart" />
+
 
 	<!--
 	   - KDE applications
 	  -->
 
 	<group helper="Run `kdeinit4` command">
-		<app name="kdeinit4" />
 		<app name="klauncher" />
 	</group>
 
@@ -97,6 +102,8 @@
 		<app name="kactivitymanagerd" />
 		<app name="kded4" />
 		<app name="knotify4" />
+		<app name="kwalletd" />
+		<app name="kdeinit4" />
 	</group>
 
 </applications>

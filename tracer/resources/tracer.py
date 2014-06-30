@@ -16,14 +16,16 @@
 # 02110-1301, USA.
 #
 
+from __future__ import absolute_import
+
 import re
+import psutil
 from sets import Set
 
-from resources.package import Package
-from resources.rules import Rules
-import resources.memory as memory
-import resources.psutils as psutil
-import resources.system as system
+from tracer.resources.package import Package
+from tracer.resources.rules import Rules
+import tracer.resources.memory as Memory
+import tracer.resources.system as System
 
 class Tracer:
 	"""Tracer finds outdated running applications in your system"""
@@ -41,7 +43,7 @@ class Tracer:
 	_PACKAGE_MANAGER = None
 
 	def __init__(self):
-		self._PACKAGE_MANAGER = system.package_manager()
+		self._PACKAGE_MANAGER = System.package_manager()
 
 	def _modified_packages(self):
 		"""Returns list of packages what tracer should care about"""
@@ -58,26 +60,31 @@ class Tracer:
 	def package_info(self, app_name):
 		return self._PACKAGE_MANAGER.package_info(app_name)
 
-	def trace_running(self):
+	def trace_running(self, user=None):
 		"""
 		Returns list of processes which uses some files that have been modified
 		@TODO This function should be hardly optimized
 		"""
 
-		files_in_memory = memory.processes_with_files()
+		memory = Memory.dump_memory(user)
 		packages = self.specified_packages if self.specified_packages and self._now else self._modified_packages()
 
 		running = Set()
+		found = []
 		for package in packages:
 			for file in self._PACKAGE_MANAGER.package_files(package.name):
-				# Doesnt matter what is after dot cause in package files there is version number after it
-				try: file = file[:file.index('.')]
-				except ValueError: pass
 
-				for p in memory.processes_using_file(file, files_in_memory):
-					if p.create_time <= package.modified:
-						p = self._apply_rules(p)
-						running.add(p)
+				file = Memory._filename_without_version(file)
+				try:
+					for p in memory[file]:
+						if p.pid in found:
+							continue
+
+						if p.create_time <= package.modified:
+							found.append(p.pid)
+							p = self._apply_rules(p)
+							running.add(p)
+				except KeyError: pass
 		return running
 
 	def _apply_rules(self, process):

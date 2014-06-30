@@ -17,9 +17,9 @@
 # 02110-1301, USA.
 #
 
-from psutil import *
+import psutil
 
-class Process(Process):
+class TracerProcess(psutil.Process):
 	def __eq__(self, process):
 		"""For our purposes, two processes are equal when they have same name"""
 		return (isinstance(process, self.__class__)
@@ -33,6 +33,6 @@ class Process(Process):
 
 	@property
 	def parent(self):
-		p = super(Process, self).parent
-		p.__class__ = Process
+		p = super(TracerProcess, self).parent
+		p.__class__ = TracerProcess
 		return p

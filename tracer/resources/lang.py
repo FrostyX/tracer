@@ -18,6 +18,7 @@
 
 DEFAULT_LANG = "en"
 
+# WARNING: There are imports in package_manager()
 from os import environ
 from os.path import dirname, realpath
 parentdir = dirname(dirname(realpath(__file__)))
@@ -34,7 +35,7 @@ def _system_languages():
 
 # Import language locale (throws ImportError)
 def _locale(lang):
-	return __import__("lang.%s" % lang, fromlist=["LOCALE"]).LOCALE
+	return __import__("tracer.lang.%s" % lang, fromlist=["LOCALE"]).LOCALE
 
 # Import a dictionary containing all localization lines for system language
 _LOCALE = None

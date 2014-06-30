@@ -25,14 +25,15 @@ os.sys.path.insert(0, parentdir)
 import sys
 import time
 import datetime
-from resources.lang import _
-from resources.tracer import Tracer
-from resources.args_parser import args
-from resources.package import Package
-from resources.exceptions import UnsupportedDistribution
-from resources.applications import Applications
-import resources.memory as Memory
-import resources.system as System
+from tracer.resources.lang import _
+from tracer.resources.tracer import Tracer
+from tracer.resources.args_parser import args
+from tracer.resources.package import Package
+from tracer.resources.exceptions import UnsupportedDistribution
+from tracer.resources.applications import Applications
+from tracer.resources.ProcessesList import ProcessesList
+import tracer.resources.memory as Memory
+import tracer.resources.system as System
 
 
 def main(argv=sys.argv, stdin=[]):
@@ -51,7 +52,7 @@ def main(argv=sys.argv, stdin=[]):
 		tracer.specified_packages = packages
 		tracer.now = args.now
 
-		processes = tracer.trace_running()
+		processes = ProcessesList(tracer.trace_running(_user(args.user)))
 		if not processes: return
 		if args.interactive: _print_all_interactive(processes)
 		else: _print_all(processes)
@@ -59,51 +60,55 @@ def main(argv=sys.argv, stdin=[]):
 	except UnsupportedDistribution as ex:
 		print ex
 
+def _user(user):
+	if   user == '*':    return None
+	elif user == None:   return os.getlogin()
+	else: return user[0]
+
 def _print_all(processes):
-	without_static = _exclude_type(processes, Applications.TYPES["STATIC"])
-	without_session = _exclude_type(without_static, Applications.TYPES["SESSION"])
-	for process in without_session:
+	filtered = processes.exclude_types([
+		Applications.TYPES['STATIC'],
+		Applications.TYPES['SESSION']
+	])
+
+	for process in filtered:
 		print process.name
 
-	static_count = len(processes)-len(without_static)
-	session_count = len(without_static)-len(without_session)
-	_print_note_for_hidden(session_count, static_count)
+	_print_note_for_hidden(
+		processes.count_type(Applications.TYPES['SESSION']),
+		processes.count_type(Applications.TYPES['STATIC'])
+	)
 
 def _print_all_interactive(processes):
-	processes = list(processes) # Cause Set is not ordered
-	without_static = _exclude_type(processes, Applications.TYPES["STATIC"])
-	without_session = _exclude_type(without_static, Applications.TYPES["SESSION"])
-	static_count = len(processes)-len(without_static)
-	session_count = len(without_static)-len(without_session)
+	filtered = processes.exclude_types([
+		Applications.TYPES['STATIC'],
+		Applications.TYPES['SESSION']
+	])
+
 	while True:
 		i = 1
-		l = len(str(len(without_session))) # Number of digits in processes length
-		for process in without_session:
-			n = "[{0}]".format(i).ljust(l + 2)
+		digits = len(str(len(filtered)))
+		for process in filtered:
+			n = "[{0}]".format(i).ljust(digits + 2)
 			print "{} {}".format(n, process.name)
 			i += 1
-		_print_note_for_hidden(session_count, static_count)
+
+		_print_note_for_hidden(
+			processes.count_type(Applications.TYPES['SESSION']),
+			processes.count_type(Applications.TYPES['STATIC'])
+		)
 
 		print "\n" + _("prompt_help")
 		answer = raw_input("--> ")
 		try:
 			if answer == "q": return
 			elif int(answer) <= 0 or int(answer) > i: raise IndexError
-			print_helper(without_session[int(answer) - 1].name)
+			print_helper(filtered[int(answer) - 1].name)
 
 		except (SyntaxError, IndexError, ValueError):
 			print _("wrong_app_number")
 
 		raw_input(_("press_enter"))
-
-def _exclude_type(processes, app_type):
-	"""app_type -- see Applications.TYPES"""
-	without = []
-	for process in processes:
-		app = Applications.find(process.name)
-		if app["type"] != app_type:
-			without.append(process)
-	return without
 
 def _print_note_for_hidden(session_count, static_count):
 	if not args.quiet and (session_count > 0 or static_count > 0):
@@ -135,11 +140,7 @@ def print_helper(app_name):
 		elif started.seconds >= 0:
 			started_str = str(started.seconds) + " seconds"
 
-		how_to_restart = _("not_known_restart")
-		if app["type"] == Applications.TYPES["DAEMON"]:
-			init = System.init_system()
-			if init == "systemd": how_to_restart = "systemctl restart {0}".format(app["name"])
-			elif init == "init": how_to_restart = "/etc/init.d/{0} restart".format(app["name"])
+		how_to_restart = app['helper'] if app['helper'] else _("not_known_restart")
 
 		print _("helper").format(
 			app_name = app_name,

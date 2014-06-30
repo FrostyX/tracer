@@ -16,14 +16,21 @@
 # 02110-1301, USA.
 #
 
-from ipackageManager import IPackageManager
-from resources.package import Package
-import resources.memory as Memory
+from __future__ import absolute_import
+from .ipackageManager import IPackageManager
+from tracer.resources.package import Package
+import portage
 import subprocess
 import time
-import os
 
 class Portage(IPackageManager):
+
+	"""
+	Package manager class - Portage
+	"""
+
+	def __init__(self):
+		pass
 
 	def packages_newer_than(self, unix_time):
 		"""
@@ -31,8 +38,8 @@ class Portage(IPackageManager):
 		Requires root permissions.
 		"""
 		newer = []
-		p = subprocess.Popen(['qlop', '-lC'], stdout=subprocess.PIPE)
-		packages, err = p.communicate()
+		process = subprocess.Popen(['qlop', '-lC'], stdout=subprocess.PIPE)
+		packages = process.communicate()[0]
 		for package in packages.split('\n')[:-1]:
 			package = package.split(" >>> ")
 
@@ -47,18 +54,19 @@ class Portage(IPackageManager):
 
 	def package_files(self, pkg_name):
 		"""Returns list of files provided by package"""
-		FNULL = open(os.devnull, 'w')
-		p = subprocess.Popen(['equery', '-q', 'f', pkg_name], stdout=subprocess.PIPE, stderr=FNULL)
-		files, err = p.communicate()
-		return files.split('\n')[:-1]
+		vartree = portage.db[portage.root]['vartree']
+		cpv = str(vartree.dep_bestmatch(pkg_name))
+
+		contents = vartree.dbapi.aux_get(cpv, ['CONTENTS'])[0].split('\n')[:-1]
+		return [x.split()[1] for x in contents]
 
 	def package_info(self, app_name):
 		"""Returns package object with all attributes"""
 		name = self.provided_by(app_name)
 		description = None
 
-		p = subprocess.Popen(['eix', '-e', name], stdout=subprocess.PIPE)
-		out, err = p.communicate()
+		process = subprocess.Popen(['eix', '-e', name], stdout=subprocess.PIPE)
+		out = process.communicate()[0]
 		out = out.split('\n')
 
 		for line in out:
@@ -72,11 +80,8 @@ class Portage(IPackageManager):
 
 	def provided_by(self, app_name):
 		"""Returns name of package which provides given application"""
-		process = Memory.process_by_name(app_name)
-		f = process.cmdline[0]
-
-		p = subprocess.Popen(['equery', '-q', 'b', f], stdout=subprocess.PIPE)
-		pkg_name, err = p.communicate()
+		command = ['equery', '-q', 'b', app_name]
+		process = subprocess.Popen(command, stdout=subprocess.PIPE)
+		pkg_name = process.communicate()[0]
 		pkg_name = pkg_name.split('\n')[0]
-
 		return self._pkg_name_without_version(pkg_name)

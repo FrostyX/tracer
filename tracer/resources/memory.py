@@ -16,8 +16,11 @@
 # 02110-1301, USA.
 #
 
+from __future__ import absolute_import
+
 from sets import Set
-import resources.psutils as psutil
+from tracer.resources.psutils import TracerProcess
+import psutil
 import re
 
 def process_files(pid):
@@ -34,20 +37,16 @@ def process_files(pid):
 	combined = "(" + ")|(".join(paths) + ")"
 
 	files = []
-	p = psutil.Process(pid)
+	p = TracerProcess(pid)
 	for mmap in p.get_memory_maps():
 		if re.match(combined, mmap.path):
 			file = mmap.path
-
-			# Doesnt matter what is after dot cause in package files there is version number after it
-			try: file = file[:file.index('.')]
-			except ValueError: pass
 
 			# Doesnt matter what is after space cause filename ends with first space
 			try: file = file[:file.index(' ')]
 			except ValueError: pass
 
-			files.append(file)
+			files.append(_filename_without_version(file))
 
 	return sorted(files)
 
@@ -96,10 +95,34 @@ def processes_with_files():
 
 	return processes
 
+def dump_memory(user=None):
+	"""
+	Returns memory in BTree structure
+
+	{ file_1 : [process_1, process_2, ..., process_n],
+		...
+	}
+
+	Which describes that processes 1 to `n` is using file_1
+	"""
+	memory = {}
+	for process in all_processes(user):
+		try:
+			for file in process_files(process.pid):
+				if file in memory:
+					memory[file].append(process)
+				else:
+					memory[file] = [process]
+
+		except psutil.NoSuchProcess: pass
+		except psutil.AccessDenied: pass
+
+	return memory
+
 def process_by_name(name):
 	for pid in psutil.get_pid_list():
 		try:
-			p = psutil.Process(pid)
+			p = TracerProcess(pid)
 			if p.name == name:
 				return p
 
@@ -108,12 +131,27 @@ def process_by_name(name):
 
 	return None
 
-def all_processes():
+def all_processes(user=None):
 	processes = Set()
 	for pid in psutil.get_pid_list():
 		try:
-			processes.add(psutil.Process(pid))
+			p = TracerProcess(pid)
+			if not user or p.username == user:
+				processes.add(p)
 		except psutil.NoSuchProcess: pass
 		except psutil.AccessDenied: pass
 
 	return processes
+
+def _filename_without_version(file):
+	slash = file.rindex('/')
+	dirname = file[:slash]
+	basename = file[slash+1:]
+
+	try:
+		dot_split = basename.split(".")
+		if dot_split[1] == "so":
+			basename = dot_split[0] + '.' + dot_split[1]
+		else: basename = dot_split[0]
+	except IndexError: pass
+	return dirname + '/' + basename
