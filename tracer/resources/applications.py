@@ -16,13 +16,14 @@
 # 02110-1301, USA.
 #
 
+from __future__ import absolute_import
+
 from bs4 import BeautifulSoup, element
-from os.path import dirname, realpath
-projectdir = dirname(realpath(dirname(dirname(realpath(__file__)))))
+from tracer.paths import DATA_DIR
 
 class Applications:
 
-	DEFINITIONS = projectdir + "/data/applications.xml"
+	DEFINITIONS = DATA_DIR + "/applications.xml"
 
 	TYPES = {
 		"DAEMON"       :  "daemon",

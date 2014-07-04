@@ -16,13 +16,14 @@
 # 02110-1301, USA.
 #
 
+from __future__ import absolute_import
+
 from bs4 import BeautifulSoup
-from os.path import dirname, realpath
-projectdir = dirname(realpath(dirname(dirname(realpath(__file__)))))
+from tracer.paths import DATA_DIR
 
 class Rules:
 
-	DEFINITIONS = projectdir + "/data/rules.xml"
+	DEFINITIONS = DATA_DIR + "/rules.xml"
 
 	ACTIONS = {
 		"CALL-PARENT"  :  "call-parent",
