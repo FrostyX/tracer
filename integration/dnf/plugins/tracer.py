@@ -42,10 +42,18 @@ class Tracer(dnf.Plugin):
 
 		args = ['tracer', '-n'] + items
 		p = subprocess.Popen(args, stdout=subprocess.PIPE)
-		out, err = p.communicate()
+		out = p.communicate()[0]
+		self._print_output(out)
 
-		print 'Calling tracer'
-		print out
+	def _print_output(self, out):
+		print 'Tracer'
+		if len(out) == 0:
+			print "  Nothing needs to be restarted"
+			return
+
+		# Last value is blank line
+		for line in out.split('\n')[:-1]:
+			print "  " + line
 
 
 class TracerCommand(dnf.cli.Command):
@@ -54,6 +62,8 @@ class TracerCommand(dnf.cli.Command):
 	activate_sack = True
 
 	def run(self, args):
-		"Call after running `dnf tracer ...`"
-		for arg in args:
-			print arg
+		"Called after running `dnf tracer ...`"
+		args = ['tracer'] + args
+		p = subprocess.Popen(args, stdout=subprocess.PIPE)
+		out = p.communicate()[0]
+		print out
