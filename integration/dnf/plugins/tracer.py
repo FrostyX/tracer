@@ -46,7 +46,7 @@ class Tracer(dnf.Plugin):
 		self._print_output(out)
 
 	def _print_output(self, out):
-		print 'Tracer'
+		print 'You should restart:'
 		if len(out) == 0:
 			print "  Nothing needs to be restarted"
 			return
