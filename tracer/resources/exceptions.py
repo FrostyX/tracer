@@ -16,7 +16,10 @@
 # 02110-1301, USA.
 #
 
-from lang import _
+from __future__ import absolute_import
+
+from tracer.version import __version__
+from tracer.resources.lang import _
 
 class UnsupportedDistribution(OSError):
 
@@ -24,4 +27,4 @@ class UnsupportedDistribution(OSError):
 	def message(self): return _("unsupported_distro")
 
 	def __init__(self, distro):
-		OSError.__init__(self, self.message.format(distro))
+		OSError.__init__(self, self.message.format(distro, __version__))
