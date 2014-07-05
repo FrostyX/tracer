@@ -30,7 +30,7 @@ from tracer.resources.lang import _
 from tracer.resources.tracer import Tracer
 from tracer.resources.args_parser import args
 from tracer.resources.package import Package
-from tracer.resources.exceptions import UnsupportedDistribution
+from tracer.resources.exceptions import UnsupportedDistribution, PathNotFound
 from tracer.resources.applications import Applications
 from tracer.resources.ProcessesList import ProcessesList
 import tracer.resources.memory as Memory
@@ -58,7 +58,7 @@ def main(argv=sys.argv, stdin=[]):
 		if args.interactive: _print_all_interactive(processes)
 		else: _print_all(processes)
 
-	except UnsupportedDistribution as ex:
+	except (UnsupportedDistribution, PathNotFound) as ex:
 		print ex
 
 def _user(user):

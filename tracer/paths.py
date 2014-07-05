@@ -20,6 +20,7 @@
 import os
 from os.path import dirname, realpath
 
+
 def __(paths):
 	for path in paths:
 		if os.path.isdir(path):

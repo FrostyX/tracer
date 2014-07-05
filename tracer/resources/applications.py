@@ -20,6 +20,7 @@ from __future__ import absolute_import
 
 from bs4 import BeautifulSoup, element
 from tracer.paths import DATA_DIR
+from tracer.resources.exceptions import PathNotFound
 
 class Applications:
 
@@ -56,23 +57,27 @@ class Applications:
 
 	@staticmethod
 	def _load():
-		Applications._apps = []
-		f = open(Applications.DEFINITIONS)
-		soup = BeautifulSoup(f.read())
+		try:
+			Applications._apps = []
+			f = open(Applications.DEFINITIONS)
+			soup = BeautifulSoup(f.read())
 
-		for child in soup.applications.children:
-			if not isinstance(child, element.Tag):
-				continue
+			for child in soup.applications.children:
+				if not isinstance(child, element.Tag):
+					continue
 
-			if child.name == "app":
-				Applications._apps.append(child.attrs)
+				if child.name == "app":
+					Applications._apps.append(child.attrs)
 
-			if child.name == "group":
-				for app in child.findChildren():
-					app.attrs.update(child.attrs)
-					Applications._apps.append(app.attrs)
+				if child.name == "group":
+					for app in child.findChildren():
+						app.attrs.update(child.attrs)
+						Applications._apps.append(app.attrs)
 
-		f.close();
+			f.close();
+
+		except IOError:
+			raise PathNotFound('DATA_DIR')
 
 	@staticmethod
 	def _helper(app):

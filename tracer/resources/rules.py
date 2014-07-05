@@ -20,6 +20,7 @@ from __future__ import absolute_import
 
 from bs4 import BeautifulSoup
 from tracer.paths import DATA_DIR
+from tracer.resources.exceptions import PathNotFound
 
 class Rules:
 
@@ -50,13 +51,18 @@ class Rules:
 
 	@staticmethod
 	def _load():
-		Rules._rules = []
-		f = open(Rules.DEFINITIONS)
-		soup = BeautifulSoup(f.read())
+		try:
+			Rules._rules = []
+			f = open(Rules.DEFINITIONS)
+			soup = BeautifulSoup(f.read())
 
-		for rule in soup.find_all("rule"):
-			r = rule.attrs
-			r.setdefault('action', Rules._DEFAULT_ACTION)
-			Rules._rules.append(r)
+			for rule in soup.find_all("rule"):
+				r = rule.attrs
+				r.setdefault('action', Rules._DEFAULT_ACTION)
+				Rules._rules.append(r)
 
-		f.close();
+			f.close();
+
+		except IOError:
+			raise PathNotFound('DATA_DIR')
+

@@ -28,3 +28,15 @@ class UnsupportedDistribution(OSError):
 
 	def __init__(self, distro):
 		OSError.__init__(self, self.message.format(distro, __version__))
+
+
+# @TODO Figure out why this import can't be above UnsupportedDistribution class
+from tracer.resources.system import distribution
+
+class PathNotFound(OSError):
+
+	@property
+	def message(self): return _("path_not_found")
+
+	def __init__(self, name):
+		OSError.__init__(self, self.message.format(name, distribution()))
