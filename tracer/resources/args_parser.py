@@ -54,6 +54,12 @@ parser.add_argument('-s', '--show',
 	help='show helper for given application'
 )
 
+parser.add_argument('--version',
+	dest='version',
+	action='store_true',
+	help='print program version'
+)
+
 user = parser.add_mutually_exclusive_group()
 user.add_argument("-u", "--user",
 	nargs=1,

@@ -25,6 +25,7 @@ os.sys.path.insert(0, parentdir)
 import sys
 import time
 import datetime
+from tracer.version import __version__
 from tracer.resources.lang import _
 from tracer.resources.tracer import Tracer
 from tracer.resources.args_parser import args
@@ -161,6 +162,10 @@ def print_helper(app_name):
 if __name__ == '__main__':
 	if args.helper:
 		print_helper(args.helper[0])
+		sys.exit()
+
+	if args.version:
+		print __version__
 		sys.exit()
 
 	if os.getuid() != 0:
