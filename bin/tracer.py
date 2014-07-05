@@ -55,8 +55,8 @@ def main(argv=sys.argv, stdin=[]):
 
 		processes = ProcessesList(tracer.trace_running(_user(args.user)))
 		if not processes: return
-		if args.interactive: _print_all_interactive(processes)
-		else: _print_all(processes)
+		if args.interactive: _print_all_interactive(processes, args)
+		else: _print_all(processes, args)
 
 	except (UnsupportedDistribution, PathNotFound) as ex:
 		print ex
@@ -66,25 +66,25 @@ def _user(user):
 	elif user == None:   return os.getlogin()
 	else: return user[0]
 
-def _print_all(processes):
+def _print_all(processes, args):
 	filtered = processes.exclude_types([
 		Applications.TYPES['STATIC'],
 		Applications.TYPES['SESSION']
-	])
+	]) if not args.all else processes
 
 	for process in filtered:
 		print process.name
 
-	_print_note_for_hidden(
+	if not args.all: _print_note_for_hidden(
 		processes.count_type(Applications.TYPES['SESSION']),
 		processes.count_type(Applications.TYPES['STATIC'])
 	)
 
-def _print_all_interactive(processes):
+def _print_all_interactive(processes, args):
 	filtered = processes.exclude_types([
 		Applications.TYPES['STATIC'],
 		Applications.TYPES['SESSION']
-	])
+	]) if not args.all else processes
 
 	while True:
 		i = 1
@@ -94,7 +94,7 @@ def _print_all_interactive(processes):
 			print "{} {}".format(n, process.name)
 			i += 1
 
-		_print_note_for_hidden(
+		if not args.all: _print_note_for_hidden(
 			processes.count_type(Applications.TYPES['SESSION']),
 			processes.count_type(Applications.TYPES['STATIC'])
 		)

@@ -54,6 +54,12 @@ parser.add_argument('-s', '--show',
 	help='show helper for given application'
 )
 
+parser.add_argument('-a', '--all',
+	dest='all',
+	action='store_true',
+	help='list even session and unrestartable applications'
+)
+
 parser.add_argument('--version',
 	dest='version',
 	action='store_true',
