@@ -1,5 +1,5 @@
 Name:		tracer
-Version:	0.3.1
+Version:	0.4.0
 Release:	1%{?dist}
 Summary:	Tracer finds outdated running applications in your system
 
@@ -60,5 +60,6 @@ cp -ar integration/dnf/plugins/tracer.py %{buildroot}/%{python2_sitelib}/dnf-plu
 %{python2_sitelib}/dnf-plugins/tracer.pyo
 
 %changelog
-* Mon Jun 30 2014 Jakub Kadlčík <frostyx@email.cz> 0.3
-- create tracer package
+* Tue Jul 08 2014 Jakub Kadlčík <frostyx@email.cz> 0.4.0-1
+- new package built with tito
+
