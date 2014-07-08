@@ -22,6 +22,7 @@ How does he do it? He simply finds all packages you have modified since you boot
 %package -n dnf-tracer-plugin
 Summary:	DNF plugin for %{name}
 Requires:	%{name} = %{version}-%{release}
+Requires:	dnf >= 0.4.9
 
 %description -n dnf-tracer-plugin
 Tracer finds outdated running applications in your system
