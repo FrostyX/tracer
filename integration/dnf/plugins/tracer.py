@@ -43,17 +43,7 @@ class Tracer(dnf.Plugin):
 		args = ['tracer', '-n'] + items
 		p = subprocess.Popen(args, stdout=subprocess.PIPE)
 		out = p.communicate()[0]
-		self._print_output(out)
-
-	def _print_output(self, out):
-		print 'You should restart:'
-		if len(out) == 0:
-			print "  Nothing needs to be restarted"
-			return
-
-		# Last value is blank line
-		for line in out.split('\n')[:-1]:
-			print "  " + line
+		_print_output(out)
 
 
 class TracerCommand(dnf.cli.Command):
@@ -66,4 +56,15 @@ class TracerCommand(dnf.cli.Command):
 		args = ['tracer'] + args
 		p = subprocess.Popen(args, stdout=subprocess.PIPE)
 		out = p.communicate()[0]
-		print out
+		_print_output(out)
+
+
+def _print_output(out):
+	print 'You should restart:'
+	if len(out) == 0:
+		print "  Nothing needs to be restarted"
+		return
+
+	# Last value is blank line
+	for line in out.split('\n')[:-1]:
+		print "  " + line
