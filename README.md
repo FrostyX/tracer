@@ -14,7 +14,7 @@ How does he do it? He simply finds all packages you have modified since you boot
 
 
 ## Requirements
-- Supported linux distribution - There are currently supported [Fedora](http://fedoraproject.org/) and [Gentoo](http://www.gentoo.org/)
+- Supported linux distribution - There are currently supported [Fedora](http://fedoraproject.org/), [Gentoo](http://www.gentoo.org/) and [Debian](https://www.debian.org/)
 - Python interpreter
 - Python [psutil](https://code.google.com/p/psutil/) module. Available [here](https://admin.fedoraproject.org/pkgdb/acls/name/python-psutil) and [here](https://packages.gentoo.org/package/dev-python/psutil). Please use testing version on gentoo.
 - Python [beautifulsoup](http://www.crummy.com/software/BeautifulSoup/bs4/doc/) module. Available [here](https://admin.fedoraproject.org/pkgdb/acls/name/python-beautifulsoup4) and [here](https://packages.gentoo.org/package/dev-python/beautifulsoup)
