@@ -21,6 +21,7 @@ from __future__ import absolute_import
 from bs4 import BeautifulSoup, element
 from tracer.paths import DATA_DIR
 from tracer.resources.exceptions import PathNotFound
+from tracer.resources.lang import _
 
 class Applications:
 
@@ -83,4 +84,11 @@ class Applications:
 	def _helper(app):
 		if app["type"] == Applications.TYPES["DAEMON"]:
 			return "service {0} restart".format(app["name"])
+
+		elif app["type"] == Applications.TYPES["STATIC"]:
+			return _("static_restart")
+
+		elif app["type"] == Applications.TYPES["SESSION"]:
+			return _("session_restart")
+
 		return None

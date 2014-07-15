@@ -42,6 +42,8 @@ LOCALE = {
 	# Helpers
 	"app_not_running"   : "Application called {0} is not running",
 	"not_known_restart" : "Sorry, It's not known",
+	"session_restart"   : "You will have to log out & log in again",
+	"static_restart"    : "You will have to reboot your computer",
 	"helper"            : textwrap.dedent("""\
 				* {app_name}
 				    Package:     {pkg_name}
