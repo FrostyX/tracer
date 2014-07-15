@@ -76,6 +76,7 @@ def _print_all(processes, args):
 		print process.name
 
 	if not args.all: _print_note_for_hidden(
+		len(processes),
 		processes.count_type(Applications.TYPES['SESSION']),
 		processes.count_type(Applications.TYPES['STATIC'])
 	)
@@ -95,6 +96,7 @@ def _print_all_interactive(processes, args):
 			i += 1
 
 		if not args.all: _print_note_for_hidden(
+			len(processes),
 			processes.count_type(Applications.TYPES['SESSION']),
 			processes.count_type(Applications.TYPES['STATIC'])
 		)
@@ -111,9 +113,12 @@ def _print_all_interactive(processes, args):
 
 		raw_input(_("press_enter"))
 
-def _print_note_for_hidden(session_count, static_count):
+def _print_note_for_hidden(total_count, session_count, static_count):
 	if not args.quiet and (session_count > 0 or static_count > 0):
-		print "\n" + _("note_unlisted_apps")
+		if session_count + static_count != total_count:
+			print ""
+
+		print _("note_unlisted_apps")
 		if session_count > 0:
 			print _("requiring_session").format(session_count)
 
