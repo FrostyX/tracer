@@ -54,6 +54,12 @@ parser.add_argument('-s', '--show',
 	help='show helper for given application'
 )
 
+parser.add_argument('--helpers',
+	dest='helpers',
+	action='store_true',
+	help='not list applications, but list their helpers'
+)
+
 parser.add_argument('-a', '--all',
 	dest='all',
 	action='store_true',

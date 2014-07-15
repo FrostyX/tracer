@@ -73,7 +73,10 @@ def _print_all(processes, args):
 	]) if not args.all else processes
 
 	for process in filtered:
-		print process.name
+		if args.helpers:
+			print_helper(process.name)
+		else:
+			print process.name
 
 	if not args.all: _print_note_for_hidden(
 		len(processes),
