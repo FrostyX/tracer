@@ -1,13 +1,17 @@
 Name:		tracer
 Version:	0.4.0
 Release:	1%{?dist}
-Summary:	Tracer finds outdated running applications in your system
+Summary:	finds outdated running applications in your system
 
 BuildArch:	noarch
 Group:		Applications/System
 License:	GPLv2
 URL:		https://github.com/FrostyX/tracer/wiki
-Source0:	tracer-%{version}.tar.gz
+# Sources can be obtained by
+# git clone git@github.com:FrostyX/tracer.git
+# cd tracer
+# tito build --tgz
+Source0:	%{name}-%{version}.tar.gz
 
 BuildRequires:	python2-devel
 Requires:	python
@@ -15,9 +19,12 @@ Requires:	python-beautifulsoup4
 Requires:	python-psutil
 
 %description
-Tracer finds outdated running applications in your system
+Tracer finds outdated running applications in your system.
 
-How does he do it? He simply finds all packages you have modified since you boot up. Then he traces their files in the jungle of your memory, ... senses them, and finally, finds them. In the end you will get list of packages what have been running while you updated or removed them.
+How does he do it? He simply finds all packages you have modified since you boot
+up. Then he traces their files in the jungle of your memory, ... senses them,
+and finally, finds them. In the end you will get list of packages what have been
+running while you updated or removed them.
 
 %package -n dnf-tracer-plugin
 Summary:	DNF plugin for %{name}
@@ -25,7 +32,7 @@ Requires:	%{name} = %{version}-%{release}
 Requires:	dnf >= 0.4.9
 
 %description -n dnf-tracer-plugin
-Tracer finds outdated running applications in your system
+Tracer finds outdated running applications in your system.
 
 This is plugin for DNF which runs tracer after every successful transaction
 
@@ -55,9 +62,7 @@ cp -ar integration/dnf/plugins/tracer.py %{buildroot}/%{python2_sitelib}/dnf-plu
 %{python2_sitelib}/tracer/
 
 %files -n dnf-tracer-plugin
-%{python2_sitelib}/dnf-plugins/tracer.py
-%{python2_sitelib}/dnf-plugins/tracer.pyc
-%{python2_sitelib}/dnf-plugins/tracer.pyo
+%{python2_sitelib}/dnf-plugins/tracer.py*
 
 %changelog
 * Tue Jul 08 2014 Jakub Kadlčík <frostyx@email.cz> 0.4.0-1
