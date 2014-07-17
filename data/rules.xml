@@ -39,7 +39,16 @@
 	<!-- KDE -->
 	<rule name="akonadiserver" />
 	<rule name="kwin" />
-	<rule name="ksmserver" />
+	<rule name="akonadi_agent_launcher" />
+	<rule name="akonadi_archivemail_agent" />
+	<rule name="akonadi_birthdays_resource" />
+	<rule name="akonadi_folderarchive_agent" />
+	<rule name="akonadi_maildispatcher_agent" />
+	<rule name="akonadi_mailfilter_agent" />
+	<rule name="akonadi_migration_agent" />
+	<rule name="akonadi_nepomuk_feeder" />
+	<rule name="akonadi_newmailnotifier_agent" />
+	<rule name="akonadi_sendlater_agent" />
 
 	<!-- Networking -->
 	<rule name="wicd" />

@@ -107,4 +107,6 @@
 		<app name="kdeinit4" />
 	</group>
 
+	<app name="akonadi_control" helper="akonadictl restart" />
+
 </applications>
