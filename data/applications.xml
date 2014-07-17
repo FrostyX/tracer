@@ -83,6 +83,7 @@
 	<group type="session">
 		<app name="dbus-launch" />
 		<app name="X" />
+        <app name="kdeinit4: kdeinit4 Running..." />
 	</group>
 
 	<app name="console-kit-daemon" helper="service consolekit restart" />

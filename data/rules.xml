@@ -38,6 +38,8 @@
 
 	<!-- KDE -->
 	<rule name="akonadiserver" />
+	<rule name="kwin" />
+	<rule name="ksmserver" />
 
 	<!-- Networking -->
 	<rule name="wicd" />
