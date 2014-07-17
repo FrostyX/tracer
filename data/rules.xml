@@ -58,6 +58,7 @@
 	<rule name="chrome" />
 	<rule name="chromium" />
 	<rule name="chrome-sandbox" />
+	<rule name="plugin-container" />
 
 </rules>
 
