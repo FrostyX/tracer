@@ -17,8 +17,13 @@
 # 02110-1301, USA.
 #
 
-import dnf
+from __future__ import absolute_import
+import sys
+sys.path.pop(0) # To avoid filename conflict
+
+import dnf.cli
 import subprocess
+from tracer.resources.lang import _
 
 class Tracer(dnf.Plugin):
 	"""DNF plugin for `tracer` command"""
@@ -60,9 +65,9 @@ class TracerCommand(dnf.cli.Command):
 
 
 def _print_output(out):
-	print 'You should restart:'
+	print _("you_should_restart")
 	if len(out) == 0:
-		print "  Nothing needs to be restarted"
+		print "  " + _("nothing_to_restart")
 		return
 
 	# Last value is blank line
