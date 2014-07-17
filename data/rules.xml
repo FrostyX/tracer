@@ -39,6 +39,7 @@
 	<!-- KDE -->
 	<rule name="akonadiserver" />
 	<rule name="kwin" />
+	<rule name="ksmserver" />
 	<rule name="akonadi_agent_launcher" />
 	<rule name="akonadi_archivemail_agent" />
 	<rule name="akonadi_birthdays_resource" />
