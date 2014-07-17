@@ -55,13 +55,29 @@
 
 	<group type="daemon">
 		<app name="apache2" />
+		<app name="abrtd" />
+		<app name="acpid" />
+		<app name="atd" />
+		<app name="auditd" />
+		<app name="crond" />
+		<app name="cups-browsed" />
+		<app name="cups" />
+		<app name="docker" />
+		<app name="httpd" />
+		<app name="iceccd" />
+		<app name="libvirtd" />
+		<app name="mcelog" />
 		<app name="mpd" />
 		<app name="mysqld" />
+		<app name="NetworkManager" />
 		<app name="nmbd" />
 		<app name="ntpd" />
 		<app name="openvpn" />
 		<app name="proftpd" />
+		<app name="rhnsd" />
 		<app name="samba" />
+		<app name="sendmail" />
+		<app name="sm-client" />
 		<app name="sshd" />
 		<app name="vixie-cron" />
 		<app name="wicd" />
@@ -83,10 +99,11 @@
 	<group type="session">
 		<app name="dbus-launch" />
 		<app name="X" />
+        <app name="kdeinit4: kdeinit4 Running..." />
 	</group>
 
 	<app name="console-kit-daemon" helper="service consolekit restart" />
-
+	<app name="dropbox" helper="dropbox stop; dropbox start" />
 
 	<!--
 	   - KDE applications
@@ -105,5 +122,7 @@
 		<app name="kwalletd" />
 		<app name="kdeinit4" />
 	</group>
+
+	<app name="akonadi_control" helper="akonadictl restart" />
 
 </applications>
