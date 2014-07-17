@@ -1,5 +1,5 @@
 Name:		tracer
-Version:	0.4.0
+Version:	0.4.1
 Release:	1%{?dist}
 Summary:	finds outdated running applications in your system
 
@@ -65,6 +65,12 @@ cp -ar integration/dnf/plugins/tracer.py %{buildroot}/%{python2_sitelib}/dnf-plu
 %{python2_sitelib}/dnf-plugins/tracer.py*
 
 %changelog
+* Fri Jul 18 2014 Jakub Kadlčík <frostyx@email.cz> 0.4.1-1
+- Print 'You should restart' above processes list (frostyx@email.cz)
+- Merge pull request #10 from xsuchy/pr-1 (frostyx@email.cz)
+- Fix details in tracer.spec (frostyx@email.cz)
+- Print 'how to restart' for session and static applications (frostyx@email.cz)
+- Add 'tracer --helpers' parameter to list helpers (frostyx@email.cz)
 * Tue Jul 08 2014 Jakub Kadlčík <frostyx@email.cz> 0.4.0-1
 - new package built with tito
 
