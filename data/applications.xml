@@ -87,7 +87,7 @@
 	</group>
 
 	<app name="console-kit-daemon" helper="service consolekit restart" />
-
+	<app name="dropbox" helper="dropbox stop; dropbox start" />
 
 	<!--
 	   - KDE applications
