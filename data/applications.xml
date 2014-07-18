@@ -127,5 +127,6 @@
 	</group>
 
 	<app name="akonadi_control" helper="akonadictl restart" />
+	<app name="akonadiserver" helper="akonadictl restart" />
 
 </applications>
