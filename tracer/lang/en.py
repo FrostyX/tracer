@@ -35,6 +35,7 @@ LOCALE = {
 				"Please contact maintainer of tracer package in your distribution ({1})."),
 	"you_should_restart" : "You should restart:",
 	"nothing_to_restart" : "Nothing needs to be restarted",
+	"locked_database"    : "Package database is locked by another process",
 
 	# Interactive
 	"prompt_help"      : "Press application number for help or 'q' to quit",

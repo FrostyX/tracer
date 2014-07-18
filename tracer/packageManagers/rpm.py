@@ -19,6 +19,7 @@
 from os import listdir
 from ipackageManager import IPackageManager
 from tracer.resources.package import Package
+from tracer.resources.exceptions import LockedDatabase
 import tracer.resources.memory as Memory
 import sqlite3
 import subprocess
@@ -48,18 +49,22 @@ class Rpm(IPackageManager):
 			ORDER BY pkgtups.pkgtupid
 		"""
 
-		packages = []
-		sqlite = self._database_file()
-		conn = sqlite3.connect(sqlite)
-		conn.row_factory = sqlite3.Row
-		cursor = conn.cursor()
+		try:
+			packages = []
+			sqlite = self._database_file()
+			conn = sqlite3.connect(sqlite)
+			conn.row_factory = sqlite3.Row
+			cursor = conn.cursor()
 
-		for tran in self._transactions_newer_than(unix_time):
-			cursor.execute(sql, [tran['tid']])
-			for pkg in cursor.fetchall():
-				packages.append(Package(pkg['name'], tran['end']))
+			for tran in self._transactions_newer_than(unix_time):
+				cursor.execute(sql, [tran['tid']])
+				for pkg in cursor.fetchall():
+					packages.append(Package(pkg['name'], tran['end']))
 
-		return packages
+			return packages
+
+		except sqlite3.OperationalError:
+			raise LockedDatabase()
 
 	def package_files(self, pkg_name):
 		"""
