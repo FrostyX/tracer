@@ -1,5 +1,5 @@
 Name:		tracer
-Version:	0.4.1
+Version:	0.4.2
 Release:	1%{?dist}
 Summary:	finds outdated running applications in your system
 
@@ -65,6 +65,12 @@ cp -ar integration/dnf/plugins/tracer.py %{buildroot}/%{python2_sitelib}/dnf-plu
 %{python2_sitelib}/dnf-plugins/tracer.py*
 
 %changelog
+* Mon Jul 21 2014 Jakub Kadlčík <frostyx@email.cz> 0.4.2-1
+- Dont try to get list of files provided by non-installed RPM package
+  (frostyx@email.cz)
+- Print user-friendly exception when package database is locked
+  (frostyx@email.cz)
+
 * Fri Jul 18 2014 Jakub Kadlčík <frostyx@email.cz> 0.4.1-1
 - Print 'You should restart' above processes list (frostyx@email.cz)
 - Merge pull request #10 from xsuchy/pr-1 (frostyx@email.cz)
