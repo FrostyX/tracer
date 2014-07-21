@@ -16,13 +16,16 @@
 # 02110-1301, USA.
 #
 
+from __future__ import absolute_import
+
 from os import listdir
-from ipackageManager import IPackageManager
+from .ipackageManager import IPackageManager
 from tracer.resources.package import Package
 from tracer.resources.exceptions import LockedDatabase
 import tracer.resources.memory as Memory
 import sqlite3
 import subprocess
+import rpm
 
 class Rpm(IPackageManager):
 
@@ -71,10 +74,11 @@ class Rpm(IPackageManager):
 		Returns list of files provided by package
 		See also: http://docs.fedoraproject.org/en-US/Fedora_Draft_Documentation/0.1/html/RPM_Guide/ch04s02s03.html
 		"""
-
-		process = subprocess.Popen(['rpm', '-ql', pkg_name], stdout=subprocess.PIPE)
-		files = process.communicate()[0]
-		return files.split('\n')[:-1]
+		if self._is_installed(pkg_name):
+			process = subprocess.Popen(['rpm', '-ql', pkg_name], stdout=subprocess.PIPE)
+			files = process.communicate()[0]
+			return files.split('\n')[:-1]
+		return []
 
 	def package_info(self, app_name):
 		"""Returns package object with all attributes"""
@@ -135,3 +139,10 @@ class Rpm(IPackageManager):
 			if file.startswith("history-") and file.endswith(".sqlite"):
 				return self.history_path + file
 
+
+	def _is_installed(self, pkg_name):
+		"""Returns True if package is installed"""
+
+		ts = rpm.TransactionSet()
+		mi = ts.dbMatch('name', pkg_name)
+		return True if len(mi) > 0 else False
