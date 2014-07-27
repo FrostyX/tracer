@@ -56,7 +56,7 @@ def main(argv=sys.argv, stdin=[]):
 		processes = ProcessesList(tracer.trace_running(_user(args.user)))
 		if not processes: return
 
-		print _("you_should_restart")
+		if not args.helpers: print _("you_should_restart")
 		if args.interactive: _print_all_interactive(processes, args)
 		else: _print_all(processes, args)
 
