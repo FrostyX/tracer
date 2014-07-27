@@ -61,6 +61,7 @@
 	<rule name="plugin-container" />
 
 	<rule name="urxvt" />
+	<rule name="xmonad-i386-linux" />
 
 </rules>
 
