@@ -60,6 +60,8 @@
 	<rule name="chrome-sandbox" />
 	<rule name="plugin-container" />
 
+	<rule name="urxvt" />
+
 </rules>
 
 <!--
