@@ -101,6 +101,27 @@ class Tracer:
 		# PRINT rule is defined for parent process
 		return parent
 
+	def who_affected(self, app_name):
+		"""
+		Returns list of packages and their files who affected the process
+		[ [pkg_name, [file1, file2, ...]], ... ]
+		"""
+
+		affected_by = {}
+		app = Memory.process_by_name(app_name)
+		app_files = Memory.process_files(app.pid)
+		for package in self._modified_packages():
+			match = []
+			for package_file in self._PACKAGE_MANAGER.package_files(package.name):
+				if not package_file in app_files:
+					continue
+
+				if app.create_time <= package.modified:
+					match.append(package_file)
+
+			if match: affected_by[package.name] = match
+		return affected_by
+
 	@property
 	def specified_packages(self):
 		return self._specified_packages

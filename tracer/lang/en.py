@@ -54,7 +54,8 @@ LOCALE = {
 				    Type:        {type}
 				    State:       {app_name} has been started by {user} {time} ago. PID - {pid}
 
+				    Affected by:{affected_by}
 				    How to restart:
-						 {how_to_restart}
+				        {how_to_restart}
 				"""),
 }

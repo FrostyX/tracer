@@ -130,6 +130,14 @@ def _print_note_for_hidden(total_count, session_count, static_count):
 		if static_count > 0:
 			print _("requiring_reboot").format(static_count)
 
+def _affected_by_str(app_name):
+	tracer = Tracer()
+	affected_by = "\n"
+	for package in tracer.who_affected(app_name):
+		affected_by += 2 * "    " + package + "\n"
+	return affected_by
+
+
 def print_helper(app_name):
 	try:
 		tracer = Tracer()
@@ -151,6 +159,7 @@ def print_helper(app_name):
 		elif started.seconds >= 0:
 			started_str = str(started.seconds) + " seconds"
 
+		affected_by = _affected_by_str(app_name)
 		how_to_restart = app['helper'] if app['helper'] else _("not_known_restart")
 
 		print _("helper").format(
@@ -161,6 +170,7 @@ def print_helper(app_name):
 			user = process.username,
 			time = started_str,
 			pid = process.pid,
+			affected_by = affected_by,
 			how_to_restart = how_to_restart,
 		)
 
