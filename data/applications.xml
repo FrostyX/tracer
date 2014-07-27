@@ -99,6 +99,7 @@
 	<group type="session">
 		<app name="dbus-launch" />
 		<app name="X" />
+		<app name="xmonad-i386-linux" />
 		<app name="kdeinit4: kdeinit4 Running..." />
 	</group>
 
