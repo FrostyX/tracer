@@ -27,26 +27,17 @@ def process_files(pid):
 	"""
 	Returns list of files which are used by process with given pid
 	"""
-	# By default work only with applications
-	paths = ['\/usr/bin', '\/usr/sbin']
-
-	# Work with libs too
-	paths.append('\/usr/lib')
-
-	# Make a regex that matches if any of our regexes match.
-	combined = "(" + ")|(".join(paths) + ")"
 
 	files = []
 	p = TracerProcess(pid)
 	for mmap in p.get_memory_maps():
-		if re.match(combined, mmap.path):
-			file = mmap.path
+		file = mmap.path
 
-			# Doesnt matter what is after space cause filename ends with first space
-			try: file = file[:file.index(' ')]
-			except ValueError: pass
+		# Doesnt matter what is after space cause filename ends with first space
+		try: file = file[:file.index(' ')]
+		except ValueError: pass
 
-			files.append(_filename_without_version(file))
+		files.append(_filename_without_version(file))
 
 	return sorted(files)
 
@@ -144,14 +135,16 @@ def all_processes(user=None):
 	return processes
 
 def _filename_without_version(file):
-	slash = file.rindex('/')
-	dirname = file[:slash]
-	basename = file[slash+1:]
-
 	try:
+		slash = file.rindex('/')
+		dirname = file[:slash]
+		basename = file[slash+1:]
+
 		dot_split = basename.split(".")
 		if dot_split[1] == "so":
 			basename = dot_split[0] + '.' + dot_split[1]
 		else: basename = dot_split[0]
+		return dirname + '/' + basename
 	except IndexError: pass
-	return dirname + '/' + basename
+	except ValueError: pass
+	return file

@@ -113,6 +113,7 @@ class Tracer:
 		for package in self._modified_packages():
 			match = []
 			for package_file in self._PACKAGE_MANAGER.package_files(package.name):
+				package_file = Memory._filename_without_version(package_file)
 				if not package_file in app_files:
 					continue
 
