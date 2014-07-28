@@ -1,5 +1,5 @@
 Name:		tracer
-Version:	0.4.2
+Version:	0.4.3
 Release:	1%{?dist}
 Summary:	finds outdated running applications in your system
 
@@ -65,6 +65,12 @@ cp -ar integration/dnf/plugins/tracer.py %{buildroot}/%{python2_sitelib}/dnf-plu
 %{python2_sitelib}/dnf-plugins/tracer.py*
 
 %changelog
+* Mon Jul 28 2014 Jakub Kadlčík <frostyx@email.cz> 0.4.3-1
+- Run tests before releasing new version (frostyx@email.cz)
+- Add 'make test' target (frostyx@email.cz)
+- Dont filter processes files (frostyx@email.cz)
+- Print 'affected by' section in helpers (frostyx@email.cz)
+
 * Mon Jul 21 2014 Jakub Kadlčík <frostyx@email.cz> 0.4.2-1
 - Dont try to get list of files provided by non-installed RPM package
   (frostyx@email.cz)
