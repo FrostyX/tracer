@@ -3,4 +3,8 @@ import os
 parentdir = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
 os.sys.path.insert(0, parentdir)
 
+import sys
+import platform
 import unittest
+
+DISTRO = platform.linux_distribution(full_distribution_name=False)[0]

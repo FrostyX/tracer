@@ -1,9 +1,12 @@
 #!/usr/bin/env python
 
 from __meta__ import *
-from tracer.packageManagers.ipackageManager import IPackageManager
-from tracer.packageManagers.yum import Yum
+try:
+	from tracer.packageManagers.ipackageManager import IPackageManager
+	from tracer.packageManagers.yum import Yum
+except ImportError: pass
 
+@unittest.skipIf(DISTRO != 'fedora', "Skipping tests because they are distro-specific")
 class TestYum(unittest.TestCase):
 	def setUp(self):
 		self.manager = Yum()

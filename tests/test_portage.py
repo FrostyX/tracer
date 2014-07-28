@@ -1,9 +1,12 @@
 #!/usr/bin/env python
 
 from __meta__ import *
-from tracer.packageManagers.ipackageManager import IPackageManager
-from tracer.packageManagers.portage import Portage
+try:
+	from tracer.packageManagers.ipackageManager import IPackageManager
+	from tracer.packageManagers.portage import Portage
+except ImportError: pass
 
+@unittest.skipIf(DISTRO != 'gentoo', "Skipping tests because they are distro-specific")
 class TestPortage(unittest.TestCase):
 	def setUp(self):
 		self.manager = Portage()

@@ -1,9 +1,12 @@
 #!/usr/bin/env python
 
 from __meta__ import *
-from tracer.packageManagers.ipackageManager import IPackageManager
-from tracer.packageManagers.dpkg import Dpkg
+try:
+	from tracer.packageManagers.ipackageManager import IPackageManager
+	from tracer.packageManagers.dpkg import Dpkg
+except ImportError: pass
 
+@unittest.skipIf(DISTRO != 'debian', "Skipping tests because they are distro-specific")
 class TestDpkg(unittest.TestCase):
 	def setUp(self):
 		self.manager = Dpkg()
