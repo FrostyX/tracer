@@ -1,4 +1,4 @@
-release:
+release: test
 	tito tag
 
 packages: rpm
