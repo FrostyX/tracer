@@ -1,5 +1,7 @@
 release: test
 	tito tag
+	@echo
+	@echo Please visit https://github.com/FrostyX/tracer/tags and edit release notes
 
 packages: rpm
 
