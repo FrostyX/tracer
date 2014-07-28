@@ -33,7 +33,7 @@ class TestApplications(unittest.TestCase):
 
 	def test_app_with_no_definition(self):
 		app_name = "NON_EXISTING_APPLICATION"
-		expected = {"name" : app_name, "type" : Applications.DEFAULT_TYPE}
+		expected = {"name" : app_name, "type" : Applications.DEFAULT_TYPE, "helper" : None}
 		self.assertDictEqual(expected, Applications.find(app_name))
 
 	def _count(self, app_name, apps):
