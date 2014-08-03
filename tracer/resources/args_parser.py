@@ -47,6 +47,13 @@ parser.add_argument('-q', '--quiet',
 	help='do not print additional information'
 )
 
+parser.add_argument('-v', '--verbose',
+	dest='verbose',
+	action='count',
+	default=0,
+	help='print more informations. Use -v or -vv'
+)
+
 parser.add_argument('-s', '--show',
 	nargs=1,
 	dest='helper',
