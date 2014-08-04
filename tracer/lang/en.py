@@ -54,7 +54,6 @@ LOCALE = {
 				    Description: {pkg_description}
 				    Type:        {type}
 				    State:       {app_name} has been started by {user} {time} ago. PID - {pid}
-
 				    {affected_by}
 				    How to restart:
 				        {how_to_restart}
