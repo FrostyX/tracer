@@ -104,7 +104,7 @@ class Tracer:
 	def who_affected(self, app_name):
 		"""
 		Returns list of packages and their files who affected the process
-		[ [pkg_name, [file1, file2, ...]], ... ]
+		[ {pkg_name : [file1, file2, ...]}, ... ]
 		"""
 
 		affected_by = {}
