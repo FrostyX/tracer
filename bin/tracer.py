@@ -141,6 +141,12 @@ def _affected_by_str(app_name):
 	s = "\n" + indent + _("affected_by") + ":\n"
 	for package in affected_by:
 		s += 2 * indent + package + "\n"
+
+		if args.verbose < 2:
+			continue
+
+		for file in affected_by[package]:
+			s += 3 * indent + file + "\n"
 	return s
 
 def print_helper(app_name):
