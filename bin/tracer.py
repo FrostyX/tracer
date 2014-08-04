@@ -135,12 +135,13 @@ def _affected_by_str(app_name):
 		return ""
 
 	tracer = Tracer()
-	indent = "    "
-	affected_by = "\n" + indent + _("affected_by") + ":\n"
-	for package in tracer.who_affected(app_name):
-		affected_by += 2 * indent + package + "\n"
-	return affected_by
+	affected_by = tracer.who_affected(app_name)
 
+	indent = "    "
+	s = "\n" + indent + _("affected_by") + ":\n"
+	for package in affected_by:
+		s += 2 * indent + package + "\n"
+	return s
 
 def print_helper(app_name):
 	try:
