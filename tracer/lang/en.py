@@ -47,6 +47,7 @@ LOCALE = {
 	"not_known_restart" : "Sorry, It's not known",
 	"session_restart"   : "You will have to log out & log in again",
 	"static_restart"    : "You will have to reboot your computer",
+	"affected_by"       : "Affected by",
 	"helper"            : textwrap.dedent("""\
 				* {app_name}
 				    Package:     {pkg_name}
@@ -54,7 +55,7 @@ LOCALE = {
 				    Type:        {type}
 				    State:       {app_name} has been started by {user} {time} ago. PID - {pid}
 
-				    Affected by:{affected_by}
+				    {affected_by}
 				    How to restart:
 				        {how_to_restart}
 				"""),

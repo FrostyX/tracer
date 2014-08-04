@@ -132,7 +132,7 @@ def _print_note_for_hidden(total_count, session_count, static_count):
 
 def _affected_by_str(app_name):
 	tracer = Tracer()
-	affected_by = "\n"
+	affected_by = _("affected_by") + ":\n"
 	for package in tracer.who_affected(app_name):
 		affected_by += 2 * "    " + package + "\n"
 	return affected_by
