@@ -150,10 +150,10 @@ def _affected_by_str(app_name):
 	return s
 
 def print_helper(app_name):
-	try:
+	process = Memory.process_by_name(app_name)
+	if process:
 		tracer = Tracer()
 		package = tracer.package_info(app_name)
-		process = Memory.process_by_name(app_name)
 		app = Applications.find(app_name)
 
 		now = datetime.datetime.fromtimestamp(time.time())
@@ -185,7 +185,7 @@ def print_helper(app_name):
 			how_to_restart = how_to_restart,
 		)
 
-	except AttributeError:
+	else:
 		print _("app_not_running").format(app_name)
 
 
