@@ -19,6 +19,7 @@
 from __future__ import absolute_import
 from .ipackageManager import IPackageManager
 from tracer.resources.package import Package
+from gentoolkit.helpers import FileOwner
 import portage
 import subprocess
 import time
@@ -80,8 +81,6 @@ class Portage(IPackageManager):
 
 	def provided_by(self, app_name):
 		"""Returns name of package which provides given application"""
-		command = ['equery', '-q', 'b', app_name]
-		process = subprocess.Popen(command, stdout=subprocess.PIPE)
-		pkg_name = process.communicate()[0]
-		pkg_name = pkg_name.split('\n')[0]
-		return self._pkg_name_without_version(pkg_name)
+		find_owner = FileOwner(early_out=True)
+		package = find_owner([app_name])[0][0]
+		return package.category + '/' + package.name
