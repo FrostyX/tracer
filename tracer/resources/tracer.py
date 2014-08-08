@@ -111,16 +111,16 @@ class Tracer:
 		app = Memory.process_by_name(app_name)
 		app_files = Memory.process_files(app.pid)
 		for package in self._modified_packages():
-			match = []
+			matching_files = []
 			for package_file in self._PACKAGE_MANAGER.package_files(package.name):
 				package_file = Memory._filename_without_version(package_file)
 				if not package_file in app_files:
 					continue
 
 				if app.create_time <= package.modified:
-					match.append(package_file)
+					matching_files.append(package_file)
 
-			if match: affected_by[package.name] = match
+			if matching_files: affected_by[package.name] = matching_files
 		return affected_by
 
 	@property
