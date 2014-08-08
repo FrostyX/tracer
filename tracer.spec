@@ -1,5 +1,5 @@
 Name:		tracer
-Version:	0.4.3
+Version:	0.4.4
 Release:	1%{?dist}
 Summary:	finds outdated running applications in your system
 
@@ -65,6 +65,12 @@ cp -ar integration/dnf/plugins/tracer.py %{buildroot}/%{python2_sitelib}/dnf-plu
 %{python2_sitelib}/dnf-plugins/tracer.py*
 
 %changelog
+* Fri Aug 08 2014 Jakub Kadlčík <frostyx@email.cz> 0.4.4-1
+- Refactor determining whether application is running or not (frostyx@email.cz)
+- Add verbose mode (frostyx@email.cz)
+- Print 'affected by' section only in verbose mode (frostyx@email.cz)
+- In second verbose level print even affected files (frostyx@email.cz)
+
 * Mon Jul 28 2014 Jakub Kadlčík <frostyx@email.cz> 0.4.3-1
 - Run tests before releasing new version (frostyx@email.cz)
 - Add 'make test' target (frostyx@email.cz)
