@@ -48,6 +48,7 @@ LOCALE = {
 	"session_restart"   : "You will have to log out & log in again",
 	"static_restart"    : "You will have to reboot your computer",
 	"affected_by"       : "Affected by",
+	"how_to_restart"    : "How to restart",
 	"helper"            : textwrap.dedent("""\
 				* {app_name}
 				    Package:     {pkg_name}
