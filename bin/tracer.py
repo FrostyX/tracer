@@ -28,7 +28,7 @@ import datetime
 from tracer.version import __version__
 from tracer.resources.lang import _
 from tracer.resources.tracer import Tracer
-from tracer.resources.args_parser import args
+from tracer.resources.args_parser import parser
 from tracer.resources.package import Package
 from tracer.resources.exceptions import UnsupportedDistribution, PathNotFound, LockedDatabase
 from tracer.resources.applications import Applications
@@ -42,7 +42,7 @@ import tracer.templates.interactive
 import tracer.templates.note_for_hidden
 
 
-def main(argv=sys.argv, stdin=[]):
+def main(args, stdin=[]):
 	# If there is something on stdin (that means piped into tracer)
 	stdin_packages = []
 	if not sys.stdin.isatty():
@@ -96,7 +96,7 @@ def _print_all(processes, args):
 
 def _print_helpers(processes, args):
 	for process in _processes(processes, args):
-		print_helper(process.name)
+		print_helper(process.name, args)
 		print ""
 
 	tracer.templates.note_for_hidden.render(
@@ -123,7 +123,7 @@ def _print_all_interactive(processes, args):
 		try:
 			if answer == "q": return
 			elif int(answer) <= 0 or int(answer) > len(filtered): raise IndexError
-			print_helper(filtered[int(answer) - 1].name)
+			print_helper(filtered[int(answer) - 1].name, args)
 
 		except (SyntaxError, IndexError, ValueError):
 			print _("wrong_app_number")
@@ -131,7 +131,7 @@ def _print_all_interactive(processes, args):
 		raw_input("\n" + _("press_enter"))
 
 
-def print_helper(app_name):
+def print_helper(app_name, args):
 	process = Memory.process_by_name(app_name)
 	if process:
 		tr = Tracer()
@@ -169,8 +169,10 @@ def print_helper(app_name):
 
 
 if __name__ == '__main__':
+	args = parser.parse_args()
+
 	if args.helper:
-		print_helper(args.helper[0])
+		print_helper(args.helper[0], args)
 		sys.exit()
 
 	if args.version:
@@ -181,4 +183,4 @@ if __name__ == '__main__':
 		print _("root_only")
 		sys.exit();
 
-	main()
+	main(args)

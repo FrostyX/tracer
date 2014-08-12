@@ -97,6 +97,3 @@ user.add_argument("-e", "--everyone",
 	action="store_const",
 	const='*'
 )
-
-
-args = parser.parse_args()
