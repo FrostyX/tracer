@@ -89,6 +89,9 @@ class Tracer:
 
 	def _apply_rules(self, process):
 		parent = process.parent
+		if not parent:
+			return process
+
 		rule = Rules.find(parent.name)
 
 		if not rule or not rule["action"]:

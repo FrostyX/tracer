@@ -34,5 +34,6 @@ class TracerProcess(psutil.Process):
 	@property
 	def parent(self):
 		p = super(TracerProcess, self).parent
-		p.__class__ = TracerProcess
+		if p:
+			p.__class__ = TracerProcess
 		return p
