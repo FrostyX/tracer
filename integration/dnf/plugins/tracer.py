@@ -57,7 +57,7 @@ class TracerCommand(dnf.cli.Command):
 	activate_sack = True
 
 	def run(self, args):
-		"Called after running `dnf tracer ...`"
+		"""Called after running `dnf tracer ...`"""
 		args = ['tracer'] + args
 		p = subprocess.Popen(args, stdout=subprocess.PIPE)
 		out = p.communicate()[0]
