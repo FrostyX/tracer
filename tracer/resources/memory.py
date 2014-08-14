@@ -18,7 +18,6 @@
 
 from __future__ import absolute_import
 
-from sets import Set
 from tracer.resources.psutils import TracerProcess
 import psutil
 import re
@@ -129,7 +128,7 @@ def process_by_name(name):
 	return None
 
 def all_processes(user=None):
-	processes = Set()
+	processes = set()
 	for pid in psutil.get_pid_list():
 		try:
 			p = TracerProcess(pid)

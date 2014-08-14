@@ -20,7 +20,6 @@ from __future__ import absolute_import
 
 import re
 import psutil
-from sets import Set
 
 from tracer.resources.package import Package
 from tracer.resources.rules import Rules
@@ -69,7 +68,7 @@ class Tracer:
 		memory = Memory.dump_memory(user)
 		packages = self.specified_packages if self.specified_packages and self._now else self._modified_packages()
 
-		running = Set()
+		running = set()
 		found = []
 		for package in packages:
 			for file in self._PACKAGE_MANAGER.package_files(package.name):
@@ -114,7 +113,7 @@ class Tracer:
 		app = Memory.process_by_name(app_name)
 		app_files = Memory.process_files(app.pid)
 		for package in self._modified_packages():
-			matching_files = Set()
+			matching_files = set()
 			for package_file in self._PACKAGE_MANAGER.package_files(package.name):
 				package_file = Memory._filename_without_version(package_file)
 				if not package_file in app_files:
