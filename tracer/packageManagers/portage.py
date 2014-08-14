@@ -20,6 +20,8 @@ from __future__ import absolute_import
 from .ipackageManager import IPackageManager
 from tracer.resources.package import Package
 from gentoolkit.helpers import FileOwner
+from psutil import AccessDenied
+import os
 import portage
 import subprocess
 import time
@@ -38,6 +40,10 @@ class Portage(IPackageManager):
 		Returns list of packages which were modified between unix_time and present
 		Requires root permissions.
 		"""
+
+		if not os.access('/var/log/emerge.log', os.R_OK):
+			raise AccessDenied
+
 		newer = []
 		process = subprocess.Popen(['qlop', '-lC'], stdout=subprocess.PIPE)
 		packages = process.communicate()[0]
