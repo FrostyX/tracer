@@ -185,6 +185,6 @@ if __name__ == '__main__':
 
 	if os.getuid() != 0:
 		print _("root_only")
-		sys.exit();
+		sys.exit()
 
 	main(args)

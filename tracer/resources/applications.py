@@ -75,7 +75,7 @@ class Applications:
 						app.attrs.update(child.attrs)
 						Applications._apps.append(app.attrs)
 
-			f.close();
+			f.close()
 
 		except IOError:
 			raise PathNotFound('DATA_DIR')
