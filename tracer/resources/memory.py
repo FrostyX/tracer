@@ -37,6 +37,12 @@ def process_files(pid):
 		try: file = file[:file.index(' ')]
 		except ValueError: pass
 
+		# On Gentoo, there is #new after some files in lsof
+		# i.e. /usr/bin/gvim#new (deleted)
+		if file.endswith('#new'):
+			file = file[0:-4]
+
+
 		files.append(_filename_without_version(file))
 
 	return sorted(files)
