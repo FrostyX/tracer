@@ -43,7 +43,7 @@ import tracer.templates.interactive
 import tracer.templates.note_for_hidden
 
 
-def main(args, stdin=[]):
+def main(args):
 	# If there is something on stdin (that means piped into tracer)
 	stdin_packages = []
 	if not sys.stdin.isatty():
