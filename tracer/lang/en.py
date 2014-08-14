@@ -59,4 +59,5 @@ LOCALE = {
 				    How to restart:
 				        {how_to_restart}
 				"""),
+	"affected_by_forbidden" : "You don't have enough permissions",
 }

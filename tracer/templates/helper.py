@@ -36,6 +36,11 @@ def render_affected_by(args=None, affected_by=None):
 
 	indent = "    "
 	print indent + _("affected_by") + ":"
+
+	if type(affected_by) == str:
+		print 2 * indent + affected_by
+		return
+
 	for package in affected_by:
 		print 2 * indent + package
 

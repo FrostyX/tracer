@@ -25,6 +25,7 @@ os.sys.path.insert(0, parentdir)
 import sys
 import time
 import datetime
+from psutil import AccessDenied
 from tracer.version import __version__
 from tracer.resources.lang import _
 from tracer.resources.tracer import Tracer
@@ -153,7 +154,9 @@ def print_helper(app_name, args):
 			started_str = str(started.seconds) + " seconds"
 
 		how_to_restart = app['helper'] if app['helper'] else _("not_known_restart")
-		affected_by = tr.who_affected(app_name) if args.verbose else None
+
+		try: affected_by = tr.who_affected(app_name) if args.verbose else None
+		except AccessDenied: affected_by = _("affected_by_forbidden")
 
 		tracer.templates.helper.render(
 			args = args,
