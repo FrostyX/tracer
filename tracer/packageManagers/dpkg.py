@@ -48,8 +48,8 @@ class Dpkg(IPackageManager):
 				continue
 
 			# There actually should be %e instead of %d
-			modified = time.mktime(\
-				time.strptime(line[0] + " " + line[1],\
+			modified = time.mktime(
+				time.strptime(line[0] + " " + line[1],
 				"%Y-%m-%d %H:%M:%S"))
 
 			if modified >= unix_time:
