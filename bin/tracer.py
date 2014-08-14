@@ -153,6 +153,7 @@ def print_helper(app_name, args):
 			started_str = str(started.seconds) + " seconds"
 
 		how_to_restart = app['helper'] if app['helper'] else _("not_known_restart")
+		affected_by = tr.who_affected(app_name) if args.verbose else None
 
 		tracer.templates.helper.render(
 			args = args,
@@ -160,7 +161,7 @@ def print_helper(app_name, args):
 			application = app,
 			package = package,
 			time = started_str,
-			affected_by = tr.who_affected(app_name),
+			affected_by = affected_by,
 			how_to_restart = how_to_restart
 		)
 	else:
