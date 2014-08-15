@@ -20,7 +20,6 @@ from __future__ import absolute_import
 
 from tracer.resources.psutils import TracerProcess
 import psutil
-import re
 
 
 def process_files(pid):

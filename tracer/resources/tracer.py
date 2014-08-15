@@ -18,10 +18,7 @@
 
 from __future__ import absolute_import
 
-import re
 import psutil
-
-from tracer.resources.package import Package
 from tracer.resources.rules import Rules
 import tracer.resources.memory as Memory
 import tracer.resources.system as System

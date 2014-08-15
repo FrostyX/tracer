@@ -1,6 +1,4 @@
 from tracer.resources.lang import _
-from tracer.resources.tracer import Tracer
-import tracer.templates.note_for_hidden
 
 
 def render(args=None, process=None, application=None, package=None, time=None, affected_by=None, how_to_restart=None):

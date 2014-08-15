@@ -21,7 +21,6 @@
 from __future__ import absolute_import
 
 # WARNING: There are imports in package_manager()
-import os
 import platform
 import psutil
 from tracer.resources.exceptions import UnsupportedDistribution
