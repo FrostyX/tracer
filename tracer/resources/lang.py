@@ -46,4 +46,4 @@ for lang in _system_languages():
 # Whenever you want print some language-specific text, use this function
 def _(string_label):
 	try: return _LOCALE[string_label]
-	except: return string_label
+	except KeyError: return string_label
