@@ -33,6 +33,9 @@ class Rules:
 	_DEFAULT_ACTION = ACTIONS["CALL-PARENT"]
 	_rules = None
 
+	def __init__(self):
+		pass
+
 	@staticmethod
 	def find(app_name):
 		if not Rules._rules:
@@ -61,7 +64,7 @@ class Rules:
 				r.setdefault('action', Rules._DEFAULT_ACTION)
 				Rules._rules.append(r)
 
-			f.close()
+			f.close();
 
 		except IOError:
 			raise PathNotFound('DATA_DIR')

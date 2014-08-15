@@ -36,6 +36,9 @@ class Applications:
 	DEFAULT_TYPE = TYPES["APPLICATION"]
 	_apps = None
 
+	def __init__(self):
+		pass
+
 	@staticmethod
 	def find(app_name):
 		if not Applications._apps:

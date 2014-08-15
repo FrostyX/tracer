@@ -17,6 +17,11 @@
 #
 
 class IPackageManager:
+
+	def __init__(self):
+		"""This class is 'interface' so you can't create an instance"""
+		raise NotImplementedError
+
 	def packages_newer_than(self, unix_time):
 		"""
 		Returns list of packages which were modified between unix_time and present
