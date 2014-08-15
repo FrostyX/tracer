@@ -72,7 +72,7 @@ def main(args):
 
 def _user(user):
 	if   user == '*':    return None
-	elif user == None:   return os.getlogin()
+	elif not user:       return os.getlogin()
 	else: return user[0]
 
 
