@@ -64,7 +64,7 @@ class Rules:
 				r.setdefault('action', Rules._DEFAULT_ACTION)
 				Rules._rules.append(r)
 
-			f.close();
+			f.close()
 
 		except IOError:
 			raise PathNotFound('DATA_DIR')
