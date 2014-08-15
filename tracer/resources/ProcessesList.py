@@ -2,6 +2,7 @@ from __future__ import absolute_import
 
 from tracer.resources.applications import Applications
 
+
 class ProcessesList(list):
 
 	def __init__(self, *args):

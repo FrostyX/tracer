@@ -25,6 +25,7 @@ import dnf.cli
 import subprocess
 from tracer.resources.lang import _
 
+
 class Tracer(dnf.Plugin):
 	"""DNF plugin for `tracer` command"""
 	name = 'tracer'

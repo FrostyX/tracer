@@ -2,6 +2,7 @@ from tracer.resources.lang import _
 from tracer.resources.tracer import Tracer
 import tracer.templates.note_for_hidden
 
+
 def render(args=None, process=None, application=None, package=None, time=None, affected_by=None, how_to_restart=None):
 
 	print "* {app_name}"                       .format(app_name=application['name'])
@@ -28,8 +29,6 @@ def render(args=None, process=None, application=None, package=None, time=None, a
 	print ""
 	print "    {title}:".format(title=_('how_to_restart'))
 	print "        {how_to_restart}".format(how_to_restart=how_to_restart)
-
-
 
 
 def render_affected_by(args=None, affected_by=None):

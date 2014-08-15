@@ -18,6 +18,7 @@
 
 from rpm import Rpm
 
+
 class Yum(Rpm):
 
 	@property

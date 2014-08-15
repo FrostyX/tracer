@@ -21,6 +21,7 @@ from __future__ import absolute_import
 from tracer.version import __version__
 from tracer.resources.lang import _
 
+
 class UnsupportedDistribution(OSError):
 
 	@property
@@ -28,6 +29,7 @@ class UnsupportedDistribution(OSError):
 
 	def __init__(self, distro):
 		OSError.__init__(self, self.message.format(distro, __version__))
+
 
 class LockedDatabase(OSError):
 
@@ -37,8 +39,10 @@ class LockedDatabase(OSError):
 	def __init__(self):
 		OSError.__init__(self, self.message)
 
+
 # @TODO Figure out why this import can't be above UnsupportedDistribution class
 from tracer.resources.system import distribution
+
 
 class PathNotFound(OSError):
 

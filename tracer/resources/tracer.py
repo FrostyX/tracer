@@ -26,6 +26,7 @@ from tracer.resources.rules import Rules
 import tracer.resources.memory as Memory
 import tracer.resources.system as System
 
+
 class Tracer:
 	"""Tracer finds outdated running applications in your system"""
 

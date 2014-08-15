@@ -27,6 +27,7 @@ import sqlite3
 import subprocess
 import rpm
 
+
 class Rpm(IPackageManager):
 
 	"""

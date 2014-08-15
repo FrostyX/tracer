@@ -22,6 +22,7 @@ from bs4 import BeautifulSoup
 from tracer.paths import DATA_DIR
 from tracer.resources.exceptions import PathNotFound
 
+
 class Rules:
 
 	DEFINITIONS = DATA_DIR + "/rules.xml"

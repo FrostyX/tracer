@@ -22,6 +22,7 @@ from tracer.resources.psutils import TracerProcess
 import psutil
 import re
 
+
 def process_files(pid):
 	"""
 	Returns list of files which are used by process with given pid
@@ -46,6 +47,7 @@ def process_files(pid):
 
 	return sorted(files)
 
+
 def processes_using_file(file, memory):
 	"""
 	Returns list of processes which have file loaded into memory
@@ -65,6 +67,7 @@ def processes_using_file(file, memory):
 			else: l = m + 1
 	return used_by
 
+
 def files_in_memory():
 	"""
 	Returns list of all files loaded in memory
@@ -78,6 +81,7 @@ def files_in_memory():
 
 	return set(files)
 
+
 def processes_with_files():
 	"""
 	Returns multidimensional list with this pattern - list[psutil.Process][files]
@@ -90,6 +94,7 @@ def processes_with_files():
 		except psutil.AccessDenied: pass
 
 	return processes
+
 
 def dump_memory(user=None):
 	"""
@@ -115,6 +120,7 @@ def dump_memory(user=None):
 
 	return memory
 
+
 def process_by_name(name):
 	for pid in psutil.get_pid_list():
 		try:
@@ -127,6 +133,7 @@ def process_by_name(name):
 
 	return None
 
+
 def all_processes(user=None):
 	processes = set()
 	for pid in psutil.get_pid_list():
@@ -138,6 +145,7 @@ def all_processes(user=None):
 		except psutil.AccessDenied: pass
 
 	return processes
+
 
 def _filename_without_version(file):
 	try:

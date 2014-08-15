@@ -1,6 +1,7 @@
 from tracer.resources.lang import _
 import tracer.templates.note_for_hidden
 
+
 def render(processes=None, args=None, total_count=None, session_count=None, static_count=None):
 	i = 1
 	digits = len(str(len(processes)))

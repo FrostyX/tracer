@@ -1,5 +1,6 @@
 from tracer.resources.lang import _
 
+
 def render(args=None, total_count=None, session_count=None, static_count=None):
 
 	if not args.quiet and (session_count > 0 or static_count > 0):

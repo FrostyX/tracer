@@ -22,6 +22,7 @@ import subprocess
 import time
 import os
 
+
 class Dpkg(IPackageManager):
 
 	"""

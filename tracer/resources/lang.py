@@ -24,6 +24,7 @@ from os.path import dirname, realpath
 parentdir = dirname(dirname(realpath(__file__)))
 _LANG_PATH = parentdir + "/lang/"
 
+
 # Languages supported by system, sorted by priority
 def _system_languages():
 	lang = []
@@ -32,6 +33,7 @@ def _system_languages():
 
 	lang.append(DEFAULT_LANG)
 	return lang
+
 
 # Import language locale (throws ImportError)
 def _locale(lang):
@@ -42,6 +44,7 @@ _LOCALE = None
 for lang in _system_languages():
 	try: _LOCALE = _locale(lang); break
 	except ImportError: pass
+
 
 # Whenever you want print some language-specific text, use this function
 def _(string_label):

@@ -16,6 +16,7 @@
 # 02110-1301, USA.
 #
 
+
 class IPackageManager:
 
 	def __init__(self):

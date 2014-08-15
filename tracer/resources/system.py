@@ -30,6 +30,7 @@ from tracer.resources.exceptions import UnsupportedDistribution
 def distribution():
 	return platform.linux_distribution(full_distribution_name=False)[0]
 
+
 def package_manager():
 	"""Returns instance of package manager according to installed linux distribution"""
 	d = distribution()
@@ -39,6 +40,7 @@ def package_manager():
 	elif d == 'debian': from tracer.packageManagers.dpkg import Dpkg as P
 	else: raise UnsupportedDistribution(d)
 	return P()
+
 
 def init_system():
 	"""

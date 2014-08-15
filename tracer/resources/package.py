@@ -16,6 +16,7 @@
 # 02110-1301, USA.
 #
 
+
 class Package:
 	"""Represents linux package"""
 

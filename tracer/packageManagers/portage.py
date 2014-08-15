@@ -26,6 +26,7 @@ import portage
 import subprocess
 import time
 
+
 class Portage(IPackageManager):
 
 	"""

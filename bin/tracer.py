@@ -171,7 +171,6 @@ def print_helper(app_name, args):
 		print _("app_not_running").format(app_name)
 
 
-
 if __name__ == '__main__':
 	args = parser.parse_args()
 

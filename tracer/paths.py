@@ -28,7 +28,6 @@ def __(paths):
 	return paths[0]
 
 
-
 PROJECT_DIR = dirname(dirname(realpath(__file__)))
 
 DATA_DIR = __([

@@ -19,6 +19,7 @@
 
 import psutil
 
+
 class TracerProcess(psutil.Process):
 	def __eq__(self, process):
 		"""For our purposes, two processes are equal when they have same name"""
