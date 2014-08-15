@@ -28,6 +28,7 @@ class Dpkg(IPackageManager):
 	Package manager class - DPKG
 	"""
 
+	# noinspection PyMissingConstructor
 	def __init__(self):
 		pass
 

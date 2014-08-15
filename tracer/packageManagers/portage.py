@@ -32,6 +32,7 @@ class Portage(IPackageManager):
 	Package manager class - Portage
 	"""
 
+	# noinspection PyMissingConstructor
 	def __init__(self):
 		pass
 

@@ -33,6 +33,7 @@ class Rpm(IPackageManager):
 	Package manager class - RPM
 	"""
 
+	# noinspection PyMissingConstructor
 	def __init__(self):
 		pass
 
