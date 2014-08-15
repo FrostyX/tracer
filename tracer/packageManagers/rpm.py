@@ -142,7 +142,8 @@ class Rpm(IPackageManager):
 				return self.history_path + file
 
 
-	def _is_installed(self, pkg_name):
+	@staticmethod
+	def _is_installed(pkg_name):
 		"""Returns True if package is installed"""
 
 		ts = rpm.TransactionSet()
