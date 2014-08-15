@@ -23,6 +23,7 @@ from tracer.paths import DATA_DIR
 from tracer.resources.exceptions import PathNotFound
 from tracer.resources.lang import _
 
+
 class Applications:
 
 	DEFINITIONS = DATA_DIR + "/applications.xml"
@@ -95,3 +96,29 @@ class Applications:
 			return _("session_restart")
 
 		return None
+
+
+class Application:
+
+	"""
+	Represent the application defined in `applications.xml`
+
+	Attributes
+	----------
+	name : str
+	type : str
+		See `Applications.TYPES` for possible values
+	helper : str
+		Describes how to restart the applications
+	"""
+
+	_attributes = None
+
+	def __init__(self, attributes_dict):
+		self._attributes = attributes_dict
+
+	def __getattr__(self, item):
+		return self._attributes[item]
+
+	def __str__(self):
+		return "<Application: " + self._attributes["name"] + ">"
