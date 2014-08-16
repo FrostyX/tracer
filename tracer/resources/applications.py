@@ -120,5 +120,11 @@ class Application:
 	def __getattr__(self, item):
 		return self._attributes[item]
 
+	def __len__(self):
+		return len(self._attributes)
+
+	def __contains__(self, item):
+		return item in self._attributes
+
 	def __str__(self):
 		return "<Application: " + self._attributes["name"] + ">"
