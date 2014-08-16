@@ -13,7 +13,7 @@ class ProcessesList(list):
 		without = []
 		for p in self:
 			a = Applications.find(p.name)
-			if a["type"] != app_type:
+			if a.type != app_type:
 				without.append(p)
 		return without
 
@@ -22,7 +22,7 @@ class ProcessesList(list):
 		without = []
 		for p in self:
 			a = Applications.find(p.name)
-			if a["type"] not in app_types:
+			if a.type not in app_types:
 				without.append(p)
 		return without
 
@@ -30,6 +30,6 @@ class ProcessesList(list):
 		count = 0
 		for p in self:
 			a = Applications.find(p.name)
-			if a['type'] == app_type:
+			if a.type == app_type:
 				count += 1
 		return count

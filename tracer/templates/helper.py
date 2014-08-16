@@ -3,16 +3,16 @@ from tracer.resources.lang import _
 
 def render(args=None, process=None, application=None, package=None, time=None, affected_by=None, how_to_restart=None):
 
-	print "* {app_name}"                       .format(app_name=application['name'])
+	print "* {app_name}"                       .format(app_name=application.name)
 
 	# Package informations
 	print "    Package:     {pkg_name}"        .format(pkg_name=package.name)
 	print "    Description: {pkg_description}" .format(pkg_description=package.description)
-	print "    Type:        {type}"            .format(type=application['type'].capitalize())
+	print "    Type:        {type}"            .format(type=application.type.capitalize())
 
 	# State
 	print "    State:       {app_name} has been started by {user} {time} ago. PID - {pid}".format(
-			app_name=application['name'],
+			app_name=application.name,
 			user=process.username,
 			time=time,
 			pid=process.pid

@@ -46,12 +46,12 @@ class Applications:
 			Applications._load()
 
 		for app in Applications._apps:
-			if app["name"] == app_name:
-				app.setdefault('type', Applications.DEFAULT_TYPE)
-				app.setdefault('helper', Applications._helper(app))
+			if app.name == app_name:
+				#app.setdefault('type', Applications.DEFAULT_TYPE)
+				#app.setdefault('helper', Applications._helper(app))
 				return app
 
-		return {"name" : app_name, "type" : Applications.DEFAULT_TYPE, "helper" : None}
+		return Application({"name" : app_name, "type" : Applications.DEFAULT_TYPE, "helper" : None})
 
 	@staticmethod
 	def all():
@@ -72,12 +72,16 @@ class Applications:
 					continue
 
 				if child.name == "app":
-					Applications._apps.append(child.attrs)
+					child.attrs.setdefault('type', Applications.DEFAULT_TYPE)
+					child.attrs.setdefault('helper', Applications._helper(app))
+					Applications._apps.append(Application(child.attrs))
 
 				if child.name == "group":
 					for app in child.findChildren():
+						app.attrs.setdefault('type', Applications.DEFAULT_TYPE)
+						app.attrs.setdefault('helper', Applications._helper(app))
 						app.attrs.update(child.attrs)
-						Applications._apps.append(app.attrs)
+						Applications._apps.append(Application(app.attrs))
 
 			f.close()
 
@@ -86,13 +90,13 @@ class Applications:
 
 	@staticmethod
 	def _helper(app):
-		if app["type"] == Applications.TYPES["DAEMON"]:
-			return "service {0} restart".format(app["name"])
+		if app.type == Applications.TYPES["DAEMON"]:
+			return "service {0} restart".format(app.name)
 
-		elif app["type"] == Applications.TYPES["STATIC"]:
+		elif app.type == Applications.TYPES["STATIC"]:
 			return _("static_restart")
 
-		elif app["type"] == Applications.TYPES["SESSION"]:
+		elif app.type == Applications.TYPES["SESSION"]:
 			return _("session_restart")
 
 		return None

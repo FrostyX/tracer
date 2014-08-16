@@ -153,7 +153,7 @@ def print_helper(app_name, args):
 		elif started.seconds >= 0:
 			started_str = str(started.seconds) + " seconds"
 
-		how_to_restart = app['helper'] if app['helper'] else _("not_known_restart")
+		how_to_restart = app.helper if app.helper else _("not_known_restart")
 
 		try: affected_by = tr.who_affected(app_name) if args.verbose else None
 		except AccessDenied: affected_by = _("affected_by_forbidden")
