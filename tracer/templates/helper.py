@@ -6,9 +6,12 @@ def render(args=None, process=None, application=None, package=None, time=None, a
 	print "* {app_name}"                       .format(app_name=application.name)
 
 	# Package informations
-	print "    Package:     {pkg_name}"        .format(pkg_name=package.name)
-	print "    Description: {pkg_description}" .format(pkg_description=package.description)
-	print "    Type:        {type}"            .format(type=application.type.capitalize())
+	if package:
+		print "    Package:     {pkg_name}"        .format(pkg_name=package.name)
+		print "    Description: {pkg_description}" .format(pkg_description=package.description)
+		print "    Type:        {type}"            .format(type=application.type.capitalize())
+	else:
+		print "    Package:     {app_name} is not provided by any package".format(app_name=application.name)
 
 	# State
 	print "    State:       {app_name} has been started by {user} {time} ago. PID - {pid}".format(

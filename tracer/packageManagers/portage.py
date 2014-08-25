@@ -71,8 +71,10 @@ class Portage(IPackageManager):
 
 	def package_info(self, app_name):
 		"""Returns package object with all attributes"""
-		name = self.provided_by(app_name)
 		description = None
+		name = self.provided_by(app_name)
+		if not name:
+			return None
 
 		process = subprocess.Popen(['eix', '-e', name], stdout=subprocess.PIPE)
 		out = process.communicate()[0]
@@ -90,5 +92,8 @@ class Portage(IPackageManager):
 	def provided_by(self, app_name):
 		"""Returns name of package which provides given application"""
 		find_owner = FileOwner(early_out=True)
-		package = find_owner([app_name])[0][0]
-		return package.category + '/' + package.name
+		packages = find_owner([app_name])
+		if packages:
+			package = packages[0][0]
+			return package.category + '/' + package.name
+		return None
