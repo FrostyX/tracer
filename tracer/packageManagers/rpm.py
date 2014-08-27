@@ -21,7 +21,7 @@ from __future__ import absolute_import
 from os import listdir
 from .ipackageManager import IPackageManager
 from tracer.resources.package import Package
-from tracer.resources.exceptions import LockedDatabase
+from tracer.resources.exceptions import LockedDatabase, DatabasePermissions
 import tracer.resources.memory as Memory
 import sqlite3
 import subprocess
@@ -68,8 +68,8 @@ class Rpm(IPackageManager):
 
 			return packages
 
-		except sqlite3.OperationalError:
-			raise LockedDatabase()
+		except sqlite3.OperationalError as e:
+			raise LockedDatabase() if e.message == 'database is locked' else DatabasePermissions()
 
 	def package_files(self, pkg_name):
 		"""

@@ -40,6 +40,15 @@ class LockedDatabase(OSError):
 		OSError.__init__(self, self.message)
 
 
+class DatabasePermissions(OSError):
+
+	@property
+	def message(self): return _("database_permissions")
+
+	def __init__(self):
+		OSError.__init__(self, self.message)
+
+
 # @TODO Figure out why this import can't be above UnsupportedDistribution class
 from tracer.resources.system import distribution
 
