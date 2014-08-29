@@ -76,7 +76,9 @@ def _main(args):
 		processes = ProcessesList(tracer.trace_running(_user(args.user)))
 		if not processes: return
 
-		if args.helpers: _print_helpers(processes, args)
+		if args.helpers:
+			controller = DefaultController()
+			controller.render_helpers(processes, args)
 		elif args.interactive: _print_all_interactive(processes, args)
 		else:
 			controller = DefaultController()
@@ -97,19 +99,6 @@ def _processes(processes, args):
 		Applications.TYPES['STATIC'],
 		Applications.TYPES['SESSION']
 	]) if not args.all else processes
-
-
-def _print_helpers(processes, args):
-	for process in _processes(processes, args):
-		print_helper(process.name, args)
-		print ""
-
-	tracer.templates.note_for_hidden.render(
-		args = args,
-		total_count = len(processes),
-		session_count = processes.count_type(Applications.TYPES['SESSION']),
-		static_count = processes.count_type(Applications.TYPES['STATIC'])
-	)
 
 
 def _print_all_interactive(processes, args):

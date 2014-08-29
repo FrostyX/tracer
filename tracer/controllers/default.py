@@ -19,12 +19,26 @@
 
 import tracer.templates.default
 from tracer.resources.applications import Applications
+from tracer.controllers.helper import HelperController
 
 
 class DefaultController(object):
 
 	def render(self, processes, args):
 		self._print_all(processes, args)
+
+	def render_helpers(self, processes, args):
+		helper_controller = HelperController()
+		for process in self._processes(processes, args):
+			helper_controller.print_helper(process.name, args)
+			print ""
+
+		tracer.templates.note_for_hidden.render(
+			args = args,
+			total_count = len(processes),
+			session_count = processes.count_type(Applications.TYPES['SESSION']),
+			static_count = processes.count_type(Applications.TYPES['STATIC'])
+		)
 
 	def _print_all(self, processes, args):
 		filtered = self._processes(processes, args)
