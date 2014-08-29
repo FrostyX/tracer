@@ -17,6 +17,7 @@
 # 02110-1301, USA.
 #
 
+import os
 import tracer.templates.default
 import tracer.templates.interactive
 from tracer.resources.lang import _
@@ -56,7 +57,7 @@ class DefaultController(object):
 		)
 
 	def render_interactive(self):
-		helper_controller = HelperController()
+		helper_controller = HelperController(self.args)
 		filtered = self._processes(self.processes, self.args)
 
 		while True:

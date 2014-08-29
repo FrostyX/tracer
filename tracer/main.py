@@ -17,39 +17,17 @@
 # 02110-1301, USA.
 #
 
-import os
 import sys
 import time
-from tracer.version import __version__
-from tracer.resources.lang import _
+from tracer.resources.router import Router
 from tracer.resources.args_parser import parser
 from tracer.resources.package import Package
 from tracer.resources.exceptions import UnsupportedDistribution, PathNotFound, LockedDatabase
-
-from tracer.controllers.default import DefaultController
-from tracer.controllers.helper import HelperController
 
 
 def run():
 	args = parser.parse_args()
 
-	if args.helper:
-		controller = HelperController(args)
-		controller.render()
-		sys.exit()
-
-	if args.version:
-		print __version__
-		sys.exit()
-
-	if os.getuid() != 0:
-		print _("root_only")
-		sys.exit()
-
-	_main(args)
-
-
-def _main(args):
 	# If there is something on stdin (that means piped into tracer)
 	stdin_packages = []
 	if not sys.stdin.isatty():
@@ -61,13 +39,8 @@ def _main(args):
 		packages.append(Package(package, time.time() if args.now else None))
 
 	try:
-		controller = DefaultController(args, packages)
-		if args.helpers:
-			controller.render_helpers()
-		elif args.interactive:
-			controller.render_interactive()
-		else:
-			controller.render()
+		router = Router(args, packages)
+		return router.dispatch()
 
 	except (UnsupportedDistribution, PathNotFound, LockedDatabase) as ex:
 		print ex
