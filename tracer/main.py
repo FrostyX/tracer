@@ -20,8 +20,6 @@
 import os
 import sys
 import time
-import datetime
-from psutil import AccessDenied
 from tracer.version import __version__
 from tracer.resources.lang import _
 from tracer.resources.tracer import Tracer
@@ -30,8 +28,7 @@ from tracer.resources.package import Package
 from tracer.resources.exceptions import UnsupportedDistribution, PathNotFound, LockedDatabase
 from tracer.resources.applications import Applications
 from tracer.resources.ProcessesList import ProcessesList
-import tracer.resources.memory as Memory
-import tracer.resources.system as System
+from tracer.controllers.helper import HelperController
 
 import tracer.templates.default
 import tracer.templates.helper
@@ -43,7 +40,8 @@ def run():
 	args = parser.parse_args()
 
 	if args.helper:
-		print_helper(args.helper[0], args)
+		controller = HelperController()
+		controller.render(args)
 		sys.exit()
 
 	if args.version:
@@ -144,42 +142,3 @@ def _print_all_interactive(processes, args):
 			print _("wrong_app_number")
 
 		raw_input("\n" + _("press_enter"))
-
-
-def print_helper(app_name, args):
-	process = Memory.process_by_name(app_name)
-	if process:
-		tr = Tracer()
-		package = tr.package_info(app_name)
-		app = Applications.find(app_name)
-
-		now = datetime.datetime.fromtimestamp(time.time())
-		started = datetime.datetime.fromtimestamp(process.create_time)
-		started = now - started
-
-		started_str = ""
-		if started.days > 0:
-			started_str = str(started.days) + " days"
-		elif started.seconds >= 60 * 60:
-			started_str = str(started.seconds / (60 * 60)) + " hours"
-		elif started.seconds >= 60:
-			started_str = str(started.seconds / 60) + " minutes"
-		elif started.seconds >= 0:
-			started_str = str(started.seconds) + " seconds"
-
-		how_to_restart = app.helper if app.helper else _("not_known_restart")
-
-		try: affected_by = tr.who_affected(app_name) if args.verbose else None
-		except AccessDenied: affected_by = _("affected_by_forbidden")
-
-		tracer.templates.helper.render(
-			args = args,
-			process = process,
-			application = app,
-			package = package,
-			time = started_str,
-			affected_by = affected_by,
-			how_to_restart = how_to_restart
-		)
-	else:
-		print _("app_not_running").format(app_name)
