@@ -26,16 +26,10 @@ from tracer.resources.tracer import Tracer
 from tracer.resources.args_parser import parser
 from tracer.resources.package import Package
 from tracer.resources.exceptions import UnsupportedDistribution, PathNotFound, LockedDatabase
-from tracer.resources.applications import Applications
 from tracer.resources.ProcessesList import ProcessesList
 
 from tracer.controllers.default import DefaultController
 from tracer.controllers.helper import HelperController
-
-import tracer.templates.default
-import tracer.templates.helper
-import tracer.templates.interactive
-import tracer.templates.note_for_hidden
 
 
 def run():

@@ -18,6 +18,7 @@
 #
 
 import tracer.templates.default
+import tracer.templates.interactive
 from tracer.resources.lang import _
 from tracer.resources.applications import Applications
 from tracer.controllers.helper import HelperController
