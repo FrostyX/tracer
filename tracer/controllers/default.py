@@ -20,46 +20,59 @@
 import tracer.templates.default
 import tracer.templates.interactive
 from tracer.resources.lang import _
+from tracer.resources.tracer import Tracer
 from tracer.resources.applications import Applications
+from tracer.resources.ProcessesList import ProcessesList
 from tracer.controllers.helper import HelperController
 
 
 class DefaultController(object):
 
-	def render(self, processes, args):
-		self._print_all(processes, args)
+	args = None
+	tracer = None
+	processes = None
 
-	def render_helpers(self, processes, args):
+	def __init__(self, args, packages):
+		self.args = args
+		self.tracer = Tracer()
+		self.tracer.specified_packages = packages
+		self.tracer.now = args.now
+		self.processes = ProcessesList(self.tracer.trace_running(self._user(args.user)))
+
+	def render(self):
+		self._print_all(self.processes, self.args)
+
+	def render_helpers(self):
 		helper_controller = HelperController()
-		for process in self._processes(processes, args):
-			helper_controller.print_helper(process.name, args)
+		for process in self._processes(self.processes, self.args):
+			helper_controller.print_helper(process.name, self.args)
 			print ""
 
 		tracer.templates.note_for_hidden.render(
-			args = args,
-			total_count = len(processes),
-			session_count = processes.count_type(Applications.TYPES['SESSION']),
-			static_count = processes.count_type(Applications.TYPES['STATIC'])
+			args = self.args,
+			total_count = len(self.processes),
+			session_count = self.processes.count_type(Applications.TYPES['SESSION']),
+			static_count = self.processes.count_type(Applications.TYPES['STATIC'])
 		)
 
-	def render_interactive(self, processes, args):
+	def render_interactive(self):
 		helper_controller = HelperController()
-		filtered = self._processes(processes, args)
+		filtered = self._processes(self.processes, self.args)
 
 		while True:
 			tracer.templates.interactive.render(
 				processes = filtered,
-				args = args,
-				total_count = len(processes),
-				session_count = processes.count_type(Applications.TYPES['SESSION']),
-				static_count = processes.count_type(Applications.TYPES['STATIC'])
+				args = self.args,
+				total_count = len(self.processes),
+				session_count = self.processes.count_type(Applications.TYPES['SESSION']),
+				static_count = self.processes.count_type(Applications.TYPES['STATIC'])
 			)
 
 			answer = raw_input("--> ")
 			try:
 				if answer == "q": return
 				elif int(answer) <= 0 or int(answer) > len(filtered): raise IndexError
-				helper_controller.print_helper(filtered[int(answer) - 1].name, args)
+				helper_controller.print_helper(filtered[int(answer) - 1].name, self.args)
 
 			except (SyntaxError, IndexError, ValueError):
 				print _("wrong_app_number")
@@ -82,3 +95,8 @@ class DefaultController(object):
 			Applications.TYPES['STATIC'],
 			Applications.TYPES['SESSION']
 		]) if not args.all else processes
+
+	def _user(self, user):
+		if   user == '*':    return None
+		elif not user:       return os.getlogin()
+		else: return user[0]

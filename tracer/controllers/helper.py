@@ -30,8 +30,13 @@ from tracer.resources.applications import Applications
 
 class HelperController(object):
 
-	def render(self, args):
-		self.print_helper(args.helper[0], args)
+	args = None
+
+	def __init__(self, args):
+		self.args = args
+
+	def render(self):
+		self.print_helper(self.args.helper[0], self.args)
 
 	def print_helper(self, app_name, args):
 		process = Memory.process_by_name(app_name)

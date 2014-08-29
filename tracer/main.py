@@ -22,11 +22,9 @@ import sys
 import time
 from tracer.version import __version__
 from tracer.resources.lang import _
-from tracer.resources.tracer import Tracer
 from tracer.resources.args_parser import parser
 from tracer.resources.package import Package
 from tracer.resources.exceptions import UnsupportedDistribution, PathNotFound, LockedDatabase
-from tracer.resources.ProcessesList import ProcessesList
 
 from tracer.controllers.default import DefaultController
 from tracer.controllers.helper import HelperController
@@ -36,8 +34,8 @@ def run():
 	args = parser.parse_args()
 
 	if args.helper:
-		controller = HelperController()
-		controller.render(args)
+		controller = HelperController(args)
+		controller.render()
 		sys.exit()
 
 	if args.version:
@@ -63,28 +61,13 @@ def _main(args):
 		packages.append(Package(package, time.time() if args.now else None))
 
 	try:
-		tracer = Tracer()
-		tracer.specified_packages = packages
-		tracer.now = args.now
-
-		processes = ProcessesList(tracer.trace_running(_user(args.user)))
-		if not processes: return
-
+		controller = DefaultController(args, packages)
 		if args.helpers:
-			controller = DefaultController()
-			controller.render_helpers(processes, args)
+			controller.render_helpers()
 		elif args.interactive:
-			controller = DefaultController()
-			controller.render_interactive(processes, args)
+			controller.render_interactive()
 		else:
-			controller = DefaultController()
-			controller.render(processes, args)
+			controller.render()
 
 	except (UnsupportedDistribution, PathNotFound, LockedDatabase) as ex:
 		print ex
-
-
-def _user(user):
-	if   user == '*':    return None
-	elif not user:       return os.getlogin()
-	else: return user[0]
