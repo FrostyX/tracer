@@ -18,6 +18,7 @@
 #
 
 import tracer.templates.default
+from tracer.resources.lang import _
 from tracer.resources.applications import Applications
 from tracer.controllers.helper import HelperController
 
@@ -39,6 +40,30 @@ class DefaultController(object):
 			session_count = processes.count_type(Applications.TYPES['SESSION']),
 			static_count = processes.count_type(Applications.TYPES['STATIC'])
 		)
+
+	def render_interactive(self, processes, args):
+		helper_controller = HelperController()
+		filtered = self._processes(processes, args)
+
+		while True:
+			tracer.templates.interactive.render(
+				processes = filtered,
+				args = args,
+				total_count = len(processes),
+				session_count = processes.count_type(Applications.TYPES['SESSION']),
+				static_count = processes.count_type(Applications.TYPES['STATIC'])
+			)
+
+			answer = raw_input("--> ")
+			try:
+				if answer == "q": return
+				elif int(answer) <= 0 or int(answer) > len(filtered): raise IndexError
+				helper_controller.print_helper(filtered[int(answer) - 1].name, args)
+
+			except (SyntaxError, IndexError, ValueError):
+				print _("wrong_app_number")
+
+			raw_input("\n" + _("press_enter"))
 
 	def _print_all(self, processes, args):
 		filtered = self._processes(processes, args)

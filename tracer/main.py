@@ -79,7 +79,9 @@ def _main(args):
 		if args.helpers:
 			controller = DefaultController()
 			controller.render_helpers(processes, args)
-		elif args.interactive: _print_all_interactive(processes, args)
+		elif args.interactive:
+			controller = DefaultController()
+			controller.render_interactive(processes, args)
 		else:
 			controller = DefaultController()
 			controller.render(processes, args)
@@ -92,34 +94,3 @@ def _user(user):
 	if   user == '*':    return None
 	elif not user:       return os.getlogin()
 	else: return user[0]
-
-
-def _processes(processes, args):
-	return processes.exclude_types([
-		Applications.TYPES['STATIC'],
-		Applications.TYPES['SESSION']
-	]) if not args.all else processes
-
-
-def _print_all_interactive(processes, args):
-	filtered = _processes(processes, args)
-
-	while True:
-		tracer.templates.interactive.render(
-			processes = filtered,
-			args = args,
-			total_count = len(processes),
-			session_count = processes.count_type(Applications.TYPES['SESSION']),
-			static_count = processes.count_type(Applications.TYPES['STATIC'])
-		)
-
-		answer = raw_input("--> ")
-		try:
-			if answer == "q": return
-			elif int(answer) <= 0 or int(answer) > len(filtered): raise IndexError
-			print_helper(filtered[int(answer) - 1].name, args)
-
-		except (SyntaxError, IndexError, ValueError):
-			print _("wrong_app_number")
-
-		raw_input("\n" + _("press_enter"))
