@@ -28,6 +28,8 @@ from tracer.resources.package import Package
 from tracer.resources.exceptions import UnsupportedDistribution, PathNotFound, LockedDatabase
 from tracer.resources.applications import Applications
 from tracer.resources.ProcessesList import ProcessesList
+
+from tracer.controllers.default import DefaultController
 from tracer.controllers.helper import HelperController
 
 import tracer.templates.default
@@ -76,7 +78,9 @@ def _main(args):
 
 		if args.helpers: _print_helpers(processes, args)
 		elif args.interactive: _print_all_interactive(processes, args)
-		else: _print_all(processes, args)
+		else:
+			controller = DefaultController()
+			controller.render(processes, args)
 
 	except (UnsupportedDistribution, PathNotFound, LockedDatabase) as ex:
 		print ex
@@ -93,18 +97,6 @@ def _processes(processes, args):
 		Applications.TYPES['STATIC'],
 		Applications.TYPES['SESSION']
 	]) if not args.all else processes
-
-
-def _print_all(processes, args):
-	filtered = _processes(processes, args)
-
-	tracer.templates.default.render(
-		processes = filtered,
-		args = args,
-		total_count = len(processes),
-		session_count = processes.count_type(Applications.TYPES['SESSION']),
-		static_count = processes.count_type(Applications.TYPES['STATIC'])
-	)
 
 
 def _print_helpers(processes, args):
