@@ -1,8 +1,9 @@
+from . import View
 from tracer.resources.lang import _
 from tracer.views.note_for_hidden import NoteForHiddenView
 
 
-class InteractiveView(object):
+class InteractiveView(View):
 	def render(self, processes=None, args=None, total_count=None, session_count=None, static_count=None):
 		i = 1
 		digits = len(str(len(processes)))

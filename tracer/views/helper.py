@@ -1,7 +1,8 @@
+from . import View
 from tracer.resources.lang import _
 
 
-class HelperView(object):
+class HelperView(View):
 	def render(self, args=None, process=None, application=None, package=None, time=None, affected_by=None, how_to_restart=None):
 
 		print "* {app_name}"                       .format(app_name=application.name)
