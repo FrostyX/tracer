@@ -38,3 +38,12 @@ class TracerProcess(psutil.Process):
 		if p:
 			p.__class__ = TracerProcess
 		return p
+
+	@property
+	def exe(self):
+		# On Gentoo, there is #new after some files in lsof
+		# i.e. /usr/bin/gvim#new (deleted)
+		exe = super(TracerProcess, self).exe
+		if exe.endswith('#new'):
+			exe = exe[0:-4]
+		return exe
