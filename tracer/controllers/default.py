@@ -44,7 +44,7 @@ class DefaultController(object):
 		self._print_all(self.processes, self.args)
 
 	def render_helpers(self):
-		helper_controller = HelperController()
+		helper_controller = HelperController(self.args)
 		for process in self._processes(self.processes, self.args):
 			helper_controller.print_helper(process.name, self.args)
 			print ""
