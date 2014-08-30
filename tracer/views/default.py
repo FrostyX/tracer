@@ -1,21 +1,22 @@
+from . import View
 from tracer.resources.lang import _
 from tracer.views.note_for_hidden import NoteForHiddenView
 
 
-class DefaultView(object):
-	def render(self, processes=None, args=None, total_count=None, session_count=None, static_count=None):
+class DefaultView(View):
+	def render(self):
 
 		# If there are only hidden applications (any listed)
-		if total_count != session_count + static_count:
+		if self.args.total_count != self.args.session_count + self.args.static_count:
 			print _("you_should_restart")
 
-		for process in processes:
+		for process in self.args.processes:
 			print "  " + _(process.name)
 
-		view = NoteForHiddenView()
-		if not args.all: view.render(
-			args = args,
-			total_count = total_count,
-			session_count = session_count,
-			static_count = static_count
-		)
+		if not self.args.args.all:
+			view = NoteForHiddenView()
+			view.assign("args", self.args.args)
+			view.assign("total_count", self.args.total_count)
+			view.assign("session_count", self.args.session_count)
+			view.assign("static_count", self.args.static_count)
+			view.render()

@@ -65,14 +65,13 @@ class HelperController(object):
 			except AccessDenied: affected_by = _("affected_by_forbidden")
 
 			view = HelperView()
-			view.render(
-				args = args,
-				process = process,
-				application = app,
-				package = package,
-				time = started_str,
-				affected_by = affected_by,
-				how_to_restart = how_to_restart
-			)
+			view.assign("args", args)
+			view.assign("process", process)
+			view.assign("application", app)
+			view.assign("package", package)
+			view.assign("time", started_str)
+			view.assign("affected_by", affected_by)
+			view.assign("how_to_restart", how_to_restart)
+			view.render()
 		else:
 			print _("app_not_running").format(app_name)

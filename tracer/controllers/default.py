@@ -51,12 +51,11 @@ class DefaultController(object):
 			print ""
 
 		view = NoteForHiddenView()
-		view.render(
-			args = self.args,
-			total_count = len(self.processes),
-			session_count = self.processes.count_type(Applications.TYPES['SESSION']),
-			static_count = self.processes.count_type(Applications.TYPES['STATIC'])
-		)
+		view.assign("args", self.args)
+		view.assign("total_count", len(self.processes))
+		view.assign("session_count", self.processes.count_type(Applications.TYPES['SESSION']))
+		view.assign("static_count", self.processes.count_type(Applications.TYPES['STATIC']))
+		view.render()
 
 	def render_interactive(self):
 		helper_controller = HelperController(self.args)
@@ -64,13 +63,12 @@ class DefaultController(object):
 
 		while True:
 			view = InteractiveView()
-			view.render(
-				processes = filtered,
-				args = self.args,
-				total_count = len(self.processes),
-				session_count = self.processes.count_type(Applications.TYPES['SESSION']),
-				static_count = self.processes.count_type(Applications.TYPES['STATIC'])
-			)
+			view.assign("processes", filtered)
+			view.assign("args", self.args)
+			view.assign("total_count", len(self.processes))
+			view.assign("session_count", self.processes.count_type(Applications.TYPES['SESSION']))
+			view.assign("static_count", self.processes.count_type(Applications.TYPES['STATIC']))
+			view.render()
 
 			answer = raw_input("--> ")
 			try:
@@ -87,13 +85,12 @@ class DefaultController(object):
 		filtered = self._processes(processes, args)
 
 		view = DefaultView()
-		view.render(
-			processes = filtered,
-			args = args,
-			total_count = len(processes),
-			session_count = processes.count_type(Applications.TYPES['SESSION']),
-			static_count = processes.count_type(Applications.TYPES['STATIC'])
-		)
+		view.assign("processes", filtered)
+		view.assign("args", args)
+		view.assign("total_count", len(processes))
+		view.assign("session_count", processes.count_type(Applications.TYPES['SESSION']))
+		view.assign("static_count", processes.count_type(Applications.TYPES['STATIC']))
+		view.render()
 
 	def _processes(self, processes, args):
 		return processes.exclude_types([
