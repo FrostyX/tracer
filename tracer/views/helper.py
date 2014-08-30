@@ -1,51 +1,51 @@
 from tracer.resources.lang import _
 
 
-def render(args=None, process=None, application=None, package=None, time=None, affected_by=None, how_to_restart=None):
+class HelperView(object):
+	def render(self, args=None, process=None, application=None, package=None, time=None, affected_by=None, how_to_restart=None):
 
-	print "* {app_name}"                       .format(app_name=application.name)
+		print "* {app_name}"                       .format(app_name=application.name)
 
-	# Package informations
-	if package:
-		print "    Package:     {pkg_name}"        .format(pkg_name=package.name)
-		print "    Description: {pkg_description}" .format(pkg_description=package.description)
-		print "    Type:        {type}"            .format(type=application.type.capitalize())
-	else:
-		print "    Package:     {app_name} is not provided by any package".format(app_name=application.name)
+		# Package informations
+		if package:
+			print "    Package:     {pkg_name}"        .format(pkg_name=package.name)
+			print "    Description: {pkg_description}" .format(pkg_description=package.description)
+			print "    Type:        {type}"            .format(type=application.type.capitalize())
+		else:
+			print "    Package:     {app_name} is not provided by any package".format(app_name=application.name)
 
-	# State
-	print "    State:       {app_name} has been started by {user} {time} ago. PID - {pid}".format(
-			app_name=application.name,
-			user=process.username,
-			time=time,
-			pid=process.pid
-	)
+		# State
+		print "    State:       {app_name} has been started by {user} {time} ago. PID - {pid}".format(
+				app_name=application.name,
+				user=process.username,
+				time=time,
+				pid=process.pid
+		)
 
-	# Affected by
-	if args.verbose > 0:
+		# Affected by
+		if args.verbose > 0:
+			print ""
+			self.render_affected_by(args=args, affected_by=affected_by)
+
+		# How to restart
 		print ""
-		render_affected_by(args=args, affected_by=affected_by)
+		print "    {title}:".format(title=_('how_to_restart'))
+		print "        {how_to_restart}".format(how_to_restart=how_to_restart)
 
-	# How to restart
-	print ""
-	print "    {title}:".format(title=_('how_to_restart'))
-	print "        {how_to_restart}".format(how_to_restart=how_to_restart)
+	def render_affected_by(self, args=None, affected_by=None):
 
+		indent = "    "
+		print indent + _("affected_by") + ":"
 
-def render_affected_by(args=None, affected_by=None):
+		if type(affected_by) == str:
+			print 2 * indent + affected_by
+			return
 
-	indent = "    "
-	print indent + _("affected_by") + ":"
+		for package in affected_by:
+			print 2 * indent + package
 
-	if type(affected_by) == str:
-		print 2 * indent + affected_by
-		return
+			if args.verbose < 2:
+				continue
 
-	for package in affected_by:
-		print 2 * indent + package
-
-		if args.verbose < 2:
-			continue
-
-		for file in affected_by[package]:
-			print 3 * indent + file
+			for file in affected_by[package]:
+				print 3 * indent + file

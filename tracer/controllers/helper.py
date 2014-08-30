@@ -21,8 +21,8 @@ import time
 import datetime
 from psutil import AccessDenied
 
-import tracer.views.helper
 import tracer.resources.memory as Memory
+from tracer.views.helper import HelperView
 from tracer.resources.lang import _
 from tracer.resources.tracer import Tracer
 from tracer.resources.applications import Applications
@@ -64,7 +64,8 @@ class HelperController(object):
 			try: affected_by = tr.who_affected(app_name) if args.verbose else None
 			except AccessDenied: affected_by = _("affected_by_forbidden")
 
-			tracer.views.helper.render(
+			view = HelperView()
+			view.render(
 				args = args,
 				process = process,
 				application = app,

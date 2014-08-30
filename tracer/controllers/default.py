@@ -18,8 +18,9 @@
 #
 
 import os
-import tracer.views.default
-import tracer.views.interactive
+from tracer.views.default import DefaultView
+from tracer.views.interactive import InteractiveView
+from tracer.views.note_for_hidden import NoteForHiddenView
 from tracer.resources.lang import _
 from tracer.resources.tracer import Tracer
 from tracer.resources.applications import Applications
@@ -49,7 +50,8 @@ class DefaultController(object):
 			helper_controller.print_helper(process.name, self.args)
 			print ""
 
-		tracer.views.note_for_hidden.render(
+		view = NoteForHiddenView()
+		view.render(
 			args = self.args,
 			total_count = len(self.processes),
 			session_count = self.processes.count_type(Applications.TYPES['SESSION']),
@@ -61,7 +63,8 @@ class DefaultController(object):
 		filtered = self._processes(self.processes, self.args)
 
 		while True:
-			tracer.views.interactive.render(
+			view = InteractiveView()
+			view.render(
 				processes = filtered,
 				args = self.args,
 				total_count = len(self.processes),
@@ -83,7 +86,8 @@ class DefaultController(object):
 	def _print_all(self, processes, args):
 		filtered = self._processes(processes, args)
 
-		tracer.views.default.render(
+		view = DefaultView()
+		view.render(
 			processes = filtered,
 			args = args,
 			total_count = len(processes),
