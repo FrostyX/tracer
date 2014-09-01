@@ -22,7 +22,7 @@ LOCALE = {
 
 	# Global
 	"root_only"          : "Only root can use this application",
-	"note_unlisted_apps" : "Please note that there are:",
+	"note_unlisted_apps" : "Please note that:",
 	"requires_session"  : "  - {0} processes requires restarting your session (i.e. Logging out & Logging in again)",
 	"requires_reboot"   : "  - {0} processes requires reboot",
 	"unsupported_distro" : ( "You are running unsupported linux distribution\n"
