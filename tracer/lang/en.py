@@ -23,8 +23,8 @@ LOCALE = {
 	# Global
 	"root_only"          : "Only root can use this application",
 	"note_unlisted_apps" : "Please note that there are:",
-	"requiring_session"  : "  - {0} processes requiring restarting your session (i.e. Logging out & Logging in again)",
-	"requiring_reboot"   : "  - {0} processes requiring reboot",
+	"requires_session"  : "  - {0} processes requires restarting your session (i.e. Logging out & Logging in again)",
+	"requires_reboot"   : "  - {0} processes requires reboot",
 	"unsupported_distro" : ( "You are running unsupported linux distribution\n"
 				"\n"
 				"Please visit https://github.com/FrostyX/tracer/issues\n"

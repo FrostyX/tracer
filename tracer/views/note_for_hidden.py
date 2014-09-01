@@ -13,8 +13,8 @@ class NoteForHiddenView(View):
 
 			print _("note_unlisted_apps")
 			if self.args.session_count > 0:
-				print _("requiring_session").format(self.args.session_count)
+				print _("requires_session").format(self.args.session_count)
 
 			if self.args.static_count > 0:
-				print _("requiring_reboot").format(self.args.static_count)
+				print _("requires_reboot").format(self.args.static_count)
 
