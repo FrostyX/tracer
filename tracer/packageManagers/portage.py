@@ -77,6 +77,7 @@ class Portage(IPackageManager):
 		if not name:
 			return None
 
+		category = name.split('/')[0]
 		process = subprocess.Popen(['eix', '-e', name], stdout=subprocess.PIPE)
 		out = process.communicate()[0]
 		out = out.split('\n')
@@ -88,6 +89,7 @@ class Portage(IPackageManager):
 
 		package = Package(name)
 		package.description = description
+		package.category = category
 		return package
 
 	def provided_by(self, app_name):

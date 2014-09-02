@@ -24,6 +24,7 @@ class Package:
 	modified = None
 	description = None
 	pkg_type = None
+	category = None
 
 	def __init__(self, name, modified=None):
 		self.name = name
