@@ -95,9 +95,23 @@ class Portage(IPackageManager):
 	def provided_by(self, app_name):
 		"""Returns name of package which provides given application"""
 		process = Memory.process_by_name(app_name)
+		package = self._file_provided_by(process.exe)
+		if package:
+			if package.category == 'dev-lang':
+				for arg in process.cmdline[1:]:
+					if os.path.isfile(arg):
+						package = self._file_provided_by(arg)
+						return package.name if package else None
+			return package.name
+		return None
+
+	def _file_provided_by(self, file):
 		find_owner = FileOwner(early_out=True)
-		packages = find_owner([process.exe])
+		packages = find_owner([file])
 		if packages:
 			package = packages[0][0]
-			return package.category + '/' + package.name
+			name = package.category + '/' + package.name
+			p = Package(name)
+			p.category = package.category
+			return p
 		return None
