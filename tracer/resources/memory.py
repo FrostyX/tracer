@@ -20,6 +20,7 @@ from __future__ import absolute_import
 
 from tracer.resources.psutils import TracerProcess
 import psutil
+import os
 
 
 def process_files(pid):
@@ -29,6 +30,8 @@ def process_files(pid):
 
 	files = []
 	p = TracerProcess(pid)
+
+	# Files from memory maps
 	for mmap in p.get_memory_maps():
 		file = mmap.path
 
@@ -41,8 +44,12 @@ def process_files(pid):
 		if file.endswith('#new'):
 			file = file[0:-4]
 
-
 		files.append(_filename_without_version(file))
+
+	# Process arguments
+	for arg in p.cmdline[1:]:
+		if os.path.isfile(arg):
+			files.append(arg)
 
 	return sorted(files)
 
