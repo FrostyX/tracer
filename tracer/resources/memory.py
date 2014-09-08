@@ -19,6 +19,7 @@
 from __future__ import absolute_import
 
 from tracer.resources.psutils import TracerProcess
+from tracer.resources.FilenameCleaner import FilenameCleaner
 import psutil
 import os
 
@@ -44,7 +45,7 @@ def process_files(pid):
 		if file.endswith('#new'):
 			file = file[0:-4]
 
-		files.append(_filename_without_version(file))
+		files.append(FilenameCleaner.strip(file))
 
 	# Process arguments
 	for arg in p.cmdline[1:]:
@@ -151,19 +152,3 @@ def all_processes(user=None):
 		except psutil.AccessDenied: pass
 
 	return processes
-
-
-def _filename_without_version(file):
-	try:
-		slash = file.rindex('/')
-		dirname = file[:slash]
-		basename = file[slash+1:]
-
-		dot_split = basename.split(".")
-		if dot_split[1] == "so":
-			basename = dot_split[0] + '.' + dot_split[1]
-		else: basename = dot_split[0]
-		return dirname + '/' + basename
-	except IndexError: pass
-	except ValueError: pass
-	return file

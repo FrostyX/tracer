@@ -20,6 +20,7 @@ from __future__ import absolute_import
 
 import psutil
 from tracer.resources.rules import Rules
+from tracer.resources.FilenameCleaner import FilenameCleaner
 import tracer.resources.memory as Memory
 import tracer.resources.system as System
 
@@ -71,7 +72,7 @@ class Tracer:
 		for package in packages:
 			for file in self._PACKAGE_MANAGER.package_files(package.name):
 
-				file = Memory._filename_without_version(file)
+				file = FilenameCleaner.strip(file)
 				try:
 					for p in memory[file]:
 						if p.pid in found:
@@ -113,7 +114,7 @@ class Tracer:
 		for package in self._modified_packages():
 			matching_files = set()
 			for package_file in self._PACKAGE_MANAGER.package_files(package.name):
-				package_file = Memory._filename_without_version(package_file)
+				package_file = FilenameCleaner.strip(package_file)
 				if not package_file in app_files:
 					continue
 
