@@ -72,16 +72,18 @@ class Applications:
 					continue
 
 				if child.name == "app":
-					child.attrs.setdefault('type', Applications.DEFAULT_TYPE)
-					child.attrs.setdefault('helper', Applications._helper(app))
-					Applications._apps.append(Application(child.attrs))
+					application = Application(child.attrs)
+					application.setdefault('type', Applications.DEFAULT_TYPE)
+					application.setdefault('helper', Applications._helper(application))
+					Applications._apps.append(application)
 
 				if child.name == "group":
 					for app in child.findChildren():
-						app.attrs.setdefault('type', Applications.DEFAULT_TYPE)
-						app.attrs.setdefault('helper', Applications._helper(app))
-						app.attrs.update(child.attrs)
-						Applications._apps.append(Application(app.attrs))
+						application = Application(app.attrs)
+						application.update(child.attrs)
+						application.setdefault('type', Applications.DEFAULT_TYPE)
+						application.setdefault('helper', Applications._helper(application))
+						Applications._apps.append(application)
 
 			f.close()
 
@@ -132,3 +134,12 @@ class Application:
 
 	def __str__(self):
 		return "<Application: " + self._attributes["name"] + ">"
+
+	def __repr__(self):
+		return self.__str__() + "\n"
+
+	def setdefault(self, key, value):
+		self._attributes.setdefault(key, value)
+
+	def update(self, values):
+		self._attributes.update(values)
