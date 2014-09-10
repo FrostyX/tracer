@@ -26,6 +26,7 @@ import tracer.resources.memory as Memory
 import sqlite3
 import subprocess
 import rpm
+import os
 
 
 class Rpm(IPackageManager):
@@ -84,9 +85,11 @@ class Rpm(IPackageManager):
 
 	def package_info(self, app_name):
 		"""Returns package object with all attributes"""
-		name = self.provided_by(app_name)
 		description = None
 		category = None
+		name = self.provided_by(app_name)
+		if not name:
+			return None
 
 		process = subprocess.Popen(['rpm', '-qi', name], stdout=subprocess.PIPE)
 		out = process.communicate()[0]
@@ -108,13 +111,42 @@ class Rpm(IPackageManager):
 		"""Returns name of package which provides given application"""
 		# `rpm -qf ...` needs full path to binary, not only its name
 		process = Memory.process_by_name(app_name)
+		package = self._file_provided_by(process.exe)
+		if package:
+			# If package is interpreter, return the package providing that interpreted file
+			if package.category == 'Development/Languages':
+				for arg in process.cmdline[1:]:
+					if os.path.isfile(arg):
+						package = self._file_provided_by(arg)
+						return package.name if package else None
+			return package.name
+		return None
 
-		command = ['rpm', '-qf', process.exe]
+	def _file_provided_by(self, file):
+		"""Returns name of package which provides given file"""
+		command = ['rpm', '-qf', file]
 		process = subprocess.Popen(command, stdout=subprocess.PIPE)
 		pkg_name = process.communicate()[0]
 		pkg_name = pkg_name.split('\n')[0]
 
-		return self._pkg_name_without_version(pkg_name)
+		# File is not provided by any package
+		if len(pkg_name.split(" ")) > 1:
+			return None
+
+		p = Package(self._pkg_name_without_version(pkg_name))
+		p.category = self._package_category(pkg_name)
+		return p
+
+	def _package_category(self, pkg_name):
+		"""Returns category of given package name; @TODO Use package_info as soon as possible"""
+		process = subprocess.Popen(['rpm', '-qi', pkg_name], stdout=subprocess.PIPE)
+		out = process.communicate()[0]
+		out = out.split('\n')
+
+		for line in out:
+			if line.startswith("Group"):
+				return line.split("Group       :")[1].strip()
+		return None
 
 	def _transactions_newer_than(self, unix_time):
 		"""
