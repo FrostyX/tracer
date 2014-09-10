@@ -59,8 +59,6 @@ class HelperController(object):
 			elif started.seconds >= 0:
 				started_str = str(started.seconds) + " seconds"
 
-			how_to_restart = app.helper if app.helper else _("not_known_restart")
-
 			try: affected_by = tr.who_affected(app_name) if args.verbose else None
 			except AccessDenied: affected_by = _("affected_by_forbidden")
 
@@ -71,7 +69,6 @@ class HelperController(object):
 			view.assign("package", package)
 			view.assign("time", started_str)
 			view.assign("affected_by", affected_by)
-			view.assign("how_to_restart", how_to_restart)
 			view.render()
 		else:
 			print _("app_not_running").format(app_name)
