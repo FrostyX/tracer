@@ -124,16 +124,15 @@ class Rpm(IPackageManager):
 
 	def _file_provided_by(self, file):
 		"""Returns name of package which provides given file"""
-		command = ['rpm', '-qf', file]
+		command = ['rpm', '-qf', file, "--queryformat", "%{NAME}"]
 		process = subprocess.Popen(command, stdout=subprocess.PIPE)
 		pkg_name = process.communicate()[0]
-		pkg_name = pkg_name.split('\n')[0]
 
 		# File is not provided by any package
 		if len(pkg_name.split(" ")) > 1:
 			return None
 
-		p = Package(self._pkg_name_without_version(pkg_name))
+		p = Package(pkg_name)
 		p.category = self._package_category(pkg_name)
 		return p
 
