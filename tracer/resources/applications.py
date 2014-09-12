@@ -142,4 +142,6 @@ class Application:
 		self._attributes.setdefault(key, value)
 
 	def update(self, values):
+		if isinstance(values, Application):
+			values = values._attributes
 		self._attributes.update(values)
