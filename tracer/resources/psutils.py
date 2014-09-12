@@ -46,4 +46,9 @@ class TracerProcess(psutil.Process):
 		exe = super(TracerProcess, self).exe
 		if exe.endswith('#new'):
 			exe = exe[0:-4]
+
+		# On Fedora, there is something like ;541350b3 after some files in lsof
+		if ';' in exe:
+			exe = exe[0:exe.index(';')]
+
 		return exe

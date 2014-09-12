@@ -45,6 +45,11 @@ def process_files(pid):
 		if file.endswith('#new'):
 			file = file[0:-4]
 
+		# On Fedora, there is something like ;541350b3 after some files in lsof
+		# See issue #9
+		if ';' in file:
+			file = file[0:file.index(';')]
+
 		files.append(FilenameCleaner.strip(file))
 
 	# Process arguments
