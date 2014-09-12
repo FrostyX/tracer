@@ -18,7 +18,7 @@
 #
 
 import os
-from os.path import dirname, realpath
+from os.path import dirname, realpath, expanduser
 
 
 def __(paths):
@@ -34,3 +34,8 @@ DATA_DIR = __([
 	PROJECT_DIR + '/' + 'data',
 	'/usr/share/tracer',
 ])
+
+USER_CONFIG_DIRS = [
+	'/etc/tracer',
+    expanduser('~') + '/.config/tracer',
+]
