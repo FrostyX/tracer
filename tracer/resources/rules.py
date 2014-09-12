@@ -19,13 +19,14 @@
 from __future__ import absolute_import
 
 from bs4 import BeautifulSoup
-from tracer.paths import DATA_DIR
+from tracer.paths import DATA_DIR, USER_CONFIG_DIRS
 from tracer.resources.exceptions import PathNotFound
+from os.path import dirname
 
 
 class Rules:
 
-	DEFINITIONS = DATA_DIR + "/rules.xml"
+	DEFINITIONS = map(lambda x: x + "/rules.xml", [DATA_DIR] + USER_CONFIG_DIRS)
 
 	ACTIONS = {
 		"CALL-PARENT"  :  "call-parent",
@@ -40,7 +41,7 @@ class Rules:
 	@staticmethod
 	def find(app_name):
 		if not Rules._rules:
-			Rules._load()
+			Rules._load_definitions()
 
 		for rule in Rules._rules:
 			if rule["name"] == app_name:
@@ -49,21 +50,33 @@ class Rules:
 	@staticmethod
 	def all():
 		if not Rules._rules:
-			Rules._load()
+			Rules._load_definitions()
 
 		return Rules._rules
 
 	@staticmethod
-	def _load():
+	def _load_definitions():
+		Rules._rules = []
+		for file in Rules.DEFINITIONS:
+			try: Rules._load(file);
+			except PathNotFound as ex:
+				if not dirname(file) in USER_CONFIG_DIRS:
+					raise ex
+
+	@staticmethod
+	def _load(file):
 		try:
-			Rules._rules = []
-			f = open(Rules.DEFINITIONS)
+			f = open(file)
 			soup = BeautifulSoup(f.read())
 
 			for rule in soup.find_all("rule"):
 				r = rule.attrs
-				r.setdefault('action', Rules._DEFAULT_ACTION)
-				Rules._rules.append(r)
+				if r in Rules._rules:
+					i = Rules._rules.index(r)
+					Rules._rules[i].update(r)
+				else:
+					r.setdefault('action', Rules._DEFAULT_ACTION)
+					Rules._rules.append(r)
 
 			f.close()
 
