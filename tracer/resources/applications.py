@@ -123,6 +123,9 @@ class Application:
 	def __init__(self, attributes_dict):
 		self._attributes = attributes_dict
 
+	def __eq__(self, other):
+		return isinstance(other, Application) and self.name == other.name
+
 	def __getattr__(self, item):
 		return self._attributes[item]
 
