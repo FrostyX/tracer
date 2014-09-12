@@ -19,14 +19,15 @@
 from __future__ import absolute_import
 
 from bs4 import BeautifulSoup, element
-from tracer.paths import DATA_DIR
+from tracer.paths import DATA_DIR, USER_CONFIG_DIRS
 from tracer.resources.exceptions import PathNotFound
 from tracer.resources.lang import _
+from os.path import dirname
 
 
 class Applications:
 
-	DEFINITIONS = DATA_DIR + "/applications.xml"
+	DEFINITIONS = map(lambda x: x + "/applications.xml", [DATA_DIR] + USER_CONFIG_DIRS)
 
 	TYPES = {
 		"DAEMON"       :  "daemon",
@@ -43,7 +44,7 @@ class Applications:
 	@staticmethod
 	def find(app_name):
 		if not Applications._apps:
-			Applications._load()
+			Applications._load_definitions()
 
 		for app in Applications._apps:
 			if app.name == app_name:
@@ -56,15 +57,23 @@ class Applications:
 	@staticmethod
 	def all():
 		if not Applications._apps:
-			Applications._load()
+			Applications._load_definitions()
 
 		return Applications._apps
 
 	@staticmethod
-	def _load():
+	def _load_definitions():
+		Applications._apps = []
+		for file in Applications.DEFINITIONS:
+			try: Applications._load(file)
+			except PathNotFound as ex:
+				if not dirname(file) in USER_CONFIG_DIRS:
+					raise ex
+
+	@staticmethod
+	def _load(file):
 		try:
-			Applications._apps = []
-			f = open(Applications.DEFINITIONS)
+			f = open(file)
 			soup = BeautifulSoup(f.read())
 
 			for child in soup.applications.children:
@@ -73,17 +82,25 @@ class Applications:
 
 				if child.name == "app":
 					application = Application(child.attrs)
-					application.setdefault('type', Applications.DEFAULT_TYPE)
-					application.setdefault('helper', Applications._helper(application))
-					Applications._apps.append(application)
+					if application in Applications._apps:
+						i = Applications._apps.index(application)
+						Applications._apps[i].update(application)
+					else:
+						application.setdefault('type', Applications.DEFAULT_TYPE)
+						application.setdefault('helper', Applications._helper(application))
+						Applications._apps.append(application)
 
 				if child.name == "group":
 					for app in child.findChildren():
 						application = Application(app.attrs)
 						application.update(child.attrs)
-						application.setdefault('type', Applications.DEFAULT_TYPE)
-						application.setdefault('helper', Applications._helper(application))
-						Applications._apps.append(application)
+						if application in Applications._apps:
+							i = Applications._apps.index(application)
+							Applications._apps[i].update(application)
+						else:
+							application.setdefault('type', Applications.DEFAULT_TYPE)
+							application.setdefault('helper', Applications._helper(application))
+							Applications._apps.append(application)
 
 			f.close()
 
