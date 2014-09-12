@@ -37,5 +37,5 @@ DATA_DIR = __([
 
 USER_CONFIG_DIRS = [
 	'/etc/tracer',
-    expanduser('~') + '/.config/tracer',
+    expanduser('~' + os.getlogin()) + '/.config/tracer',
 ]
