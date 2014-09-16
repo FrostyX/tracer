@@ -10,12 +10,7 @@ class ProcessesList(list):
 
 	def exclude_type(self, app_type):
 		"""app_type -- see Applications.TYPES"""
-		without = []
-		for p in self:
-			a = Applications.find(p.name)
-			if a.type != app_type:
-				without.append(p)
-		return without
+		return self.exclude_types([app_type])
 
 	def exclude_types(self, app_types):
 		"""app_types -- see Applications.TYPES"""
