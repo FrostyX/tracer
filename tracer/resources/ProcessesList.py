@@ -47,6 +47,9 @@ class ProcessesList(list):
 	"""
 	Added methods
 	"""
+	def application(self, process):
+		return self._applications[process.pid]
+
 	def exclude_type(self, app_type):
 		"""app_type -- see Applications.TYPES"""
 		return self.exclude_types([app_type])
