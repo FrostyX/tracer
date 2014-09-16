@@ -11,7 +11,7 @@ class DefaultView(View):
 		note = self.args.session_count or self.args.static_count
 
 		if with_helpers or without_helpers:
-			print _("you_should_restart") + "\n"
+			print _("you_should_restart")
 
 		if len(with_helpers):
 			print "  " + _("restart_using_helpers")
