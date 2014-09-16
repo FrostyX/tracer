@@ -41,7 +41,15 @@ class DefaultController(object):
 		self.processes = ProcessesList(self.tracer.trace_running(self._user(args.user)))
 
 	def render(self):
-		self._print_all(self.processes, self.args)
+		filtered = self._restartable_processes(self.processes, self.args)
+
+		view = DefaultView()
+		view.assign("processes", filtered)
+		view.assign("args", self.args)
+		view.assign("total_count", len(self.processes))
+		view.assign("session_count", self.processes.count_type(Applications.TYPES['SESSION']))
+		view.assign("static_count", self.processes.count_type(Applications.TYPES['STATIC']))
+		view.render()
 
 	def render_helpers(self):
 		helper_controller = HelperController(self.args)
@@ -79,17 +87,6 @@ class DefaultController(object):
 				print _("wrong_app_number")
 
 			raw_input("\n" + _("press_enter"))
-
-	def _print_all(self, processes, args):
-		filtered = self._restartable_processes(processes, args)
-
-		view = DefaultView()
-		view.assign("processes", filtered)
-		view.assign("args", args)
-		view.assign("total_count", len(processes))
-		view.assign("session_count", processes.count_type(Applications.TYPES['SESSION']))
-		view.assign("static_count", processes.count_type(Applications.TYPES['STATIC']))
-		view.render()
 
 	def _restartable_processes(self, processes, args):
 		return processes.exclude_types([
