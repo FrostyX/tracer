@@ -110,7 +110,7 @@
 	   - KDE applications
 	  -->
 
-	<group helper="Run `kdeinit4` command">
+	<group helper="kdeinit4">
 		<app name="klauncher" />
 	</group>
 
