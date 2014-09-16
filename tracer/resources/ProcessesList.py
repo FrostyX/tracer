@@ -70,3 +70,17 @@ class ProcessesList(list):
 			if a.type == app_type:
 				count += 1
 		return count
+
+	def with_helpers(self):
+		processes = []
+		for p in self:
+			if self._applications[p.pid].helper:
+				processes.append(p)
+		return processes
+
+	def without_helpers(self):
+		processes = []
+		for p in self:
+			if not self._applications[p.pid].helper:
+				processes.append(p)
+		return processes
