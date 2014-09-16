@@ -34,6 +34,8 @@ LOCALE = {
 	"path_not_found"     : ("Problem occurred - neither one of {0} paths doesn't exist\n"
 				"Please contact maintainer of tracer package in your distribution ({1})."),
 	"you_should_restart" : "You should restart:",
+	"restart_using_helpers" : "Run these commands:",
+	"restart_manually"   : "Restart these applications manually:",
 	"nothing_to_restart" : "Nothing needs to be restarted",
 	"locked_database"    : "Package database is locked by another process",
 	"database_permissions": "You can't open package database due to insufficient permissions",
