@@ -11,7 +11,7 @@ class DefaultView(View):
 			print _("you_should_restart")
 
 		for process in self.args.processes:
-			print "  " + _(process.name)
+			print "  " + process.name
 
 		if not self.args.args.all:
 			view = NoteForHiddenView()
