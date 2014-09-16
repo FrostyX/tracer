@@ -41,6 +41,12 @@ parser.add_argument('-n', '--now',
 	help='when there are specified packages, dont look for time of their update. Use "now" instead'
 )
 
+parser.add_argument('-t', '--timestamp',
+	nargs=1,
+	dest='timestamp',
+	help='since when the updates should be'
+)
+
 parser.add_argument('-q', '--quiet',
 	dest='quiet',
 	action='store_true',

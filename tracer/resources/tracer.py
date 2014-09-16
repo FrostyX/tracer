@@ -37,6 +37,11 @@ class Tracer:
 	"""
 	_now = False
 
+	"""
+	Timestamp since when the updates should be
+	"""
+	timestamp = None
+
 	"""Instance of package manager class. Set by __init__"""
 	_PACKAGE_MANAGER = None
 
@@ -48,7 +53,8 @@ class Tracer:
 		if self.specified_packages and self.now:
 			return self.specified_packages
 
-		packages = self._PACKAGE_MANAGER.packages_newer_than(psutil.BOOT_TIME)
+		timestamp = self.timestamp if self.timestamp else psutil.BOOT_TIME
+		packages = self._PACKAGE_MANAGER.packages_newer_than(timestamp)
 		if self.specified_packages:
 			for package in packages:
 				if package not in self.specified_packages:
