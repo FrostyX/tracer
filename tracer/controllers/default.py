@@ -45,7 +45,7 @@ class DefaultController(object):
 
 	def render_helpers(self):
 		helper_controller = HelperController(self.args)
-		for process in self._processes(self.processes, self.args):
+		for process in self._restartable_processes(self.processes, self.args):
 			helper_controller.print_helper(process.name, self.args)
 			print ""
 
@@ -58,7 +58,7 @@ class DefaultController(object):
 
 	def render_interactive(self):
 		helper_controller = HelperController(self.args)
-		filtered = self._processes(self.processes, self.args)
+		filtered = self._restartable_processes(self.processes, self.args)
 
 		while True:
 			view = InteractiveView()
@@ -81,7 +81,7 @@ class DefaultController(object):
 			raw_input("\n" + _("press_enter"))
 
 	def _print_all(self, processes, args):
-		filtered = self._processes(processes, args)
+		filtered = self._restartable_processes(processes, args)
 
 		view = DefaultView()
 		view.assign("processes", filtered)
@@ -91,7 +91,7 @@ class DefaultController(object):
 		view.assign("static_count", processes.count_type(Applications.TYPES['STATIC']))
 		view.render()
 
-	def _processes(self, processes, args):
+	def _restartable_processes(self, processes, args):
 		return processes.exclude_types([
 			Applications.TYPES['STATIC'],
 			Applications.TYPES['SESSION']
