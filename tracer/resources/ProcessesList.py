@@ -5,9 +5,48 @@ from tracer.resources.applications import Applications
 
 class ProcessesList(list):
 
+	"""
+	`Application` objects for contained processes
+
+	_applications = {
+		process.pid: Application(name=process.name),
+		...
+	}
+	"""
+	_applications = {}
+
+	"""
+	Overrited methods
+	"""
 	def __init__(self, *args):
 		list.__init__(self, *args)
+		for process in self:
+			self._applications[process.pid] = Applications.find(process.name)
 
+	def append(self, x):
+		self._applications[x.pid] = Applications.find(x.name)
+		super(ProcessesList, self).append(x)
+
+	def insert(self, i, x):
+		self._applications[x.pid] = Applications.find(x.name)
+		super(ProcessesList, self).insert(i, x)
+
+	def extend(self, t):
+		for x in t:
+			self._applications[x.pid] = Applications.find(x.name)
+		super(ProcessesList, self).extend(t)
+
+	def remove(self, x):
+		del self._applications[x.pid]
+		super(ProcessesList, self).remove(x)
+
+	def pop(self, i=-1):
+		del self._applications[self[i].pid]
+		return super(ProcessesList, self).pop(i)
+
+	"""
+	Added methods
+	"""
 	def exclude_type(self, app_type):
 		"""app_type -- see Applications.TYPES"""
 		return self.exclude_types([app_type])
