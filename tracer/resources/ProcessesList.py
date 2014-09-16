@@ -56,7 +56,7 @@ class ProcessesList(list):
 
 	def exclude_types(self, app_types):
 		"""app_types -- see Applications.TYPES"""
-		without = []
+		without = ProcessesList()
 		for p in self:
 			a = Applications.find(p.name)
 			if a.type not in app_types:
@@ -72,14 +72,14 @@ class ProcessesList(list):
 		return count
 
 	def with_helpers(self):
-		processes = []
+		processes = ProcessesList()
 		for p in self:
 			if self._applications[p.pid].helper:
 				processes.append(p)
 		return processes
 
 	def without_helpers(self):
-		processes = []
+		processes = ProcessesList()
 		for p in self:
 			if not self._applications[p.pid].helper:
 				processes.append(p)
