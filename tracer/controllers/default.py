@@ -38,7 +38,7 @@ class DefaultController(object):
 		self.tracer = Tracer()
 		self.tracer.specified_packages = packages
 		self.tracer.now = args.now
-		self.tracer.timestamp = args.timestamp
+		self.tracer.timestamp = args.timestamp[0]
 		self.processes = ProcessesList(self.tracer.trace_running(self._user(args.user)))
 
 	def render(self):
