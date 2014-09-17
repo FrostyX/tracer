@@ -39,7 +39,7 @@ class Tracer(dnf.Plugin):
 	def transaction(self):
 		"""
 		Call after successful transaction
-		Warning, this code uses undocummented parts. See https://bugzilla.redhat.com/show_bug.cgi?id=1067156
+		See https://rpm-software-management.github.io/dnf/api_transaction.html
 		"""
 		items = []
 		for transaction_item in self.base.transaction:
