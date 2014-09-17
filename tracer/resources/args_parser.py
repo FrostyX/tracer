@@ -43,6 +43,7 @@ parser.add_argument('-n', '--now',
 
 parser.add_argument('-t', '--timestamp',
 	nargs=1,
+	default=[None],
 	dest='timestamp',
 	help='since when the updates should be'
 )
