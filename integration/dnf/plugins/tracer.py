@@ -21,6 +21,7 @@ from __future__ import absolute_import
 import sys
 sys.path.pop(0) # To avoid filename conflict
 
+import time
 import dnf.cli
 import subprocess
 from tracer.resources.lang import _
@@ -31,6 +32,7 @@ class Tracer(dnf.Plugin):
 	name = 'tracer'
 
 	def __init__(self, base, cli):
+		self.timestamp = time.time()
 		self.base = base
 		self.cli = cli
 		if self.cli is not None:
@@ -50,6 +52,9 @@ class Tracer(dnf.Plugin):
 		p = subprocess.Popen(args, stdout=subprocess.PIPE)
 		out = p.communicate()[0]
 		_print_output(out)
+
+		print "  " + _("for_more_informations")
+		print "      sudo tracer -iat " + str(self.timestamp)
 
 
 class TracerCommand(dnf.cli.Command):

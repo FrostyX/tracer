@@ -36,6 +36,7 @@ LOCALE = {
 	"you_should_restart" : "You should restart:",
 	"restart_using_helpers" : "* Some applications using:",
 	"restart_manually"   : "* These applications manually:",
+	"for_more_informations": "* For more information run:",
 	"nothing_to_restart" : "Nothing needs to be restarted",
 	"locked_database"    : "Package database is locked by another process",
 	"database_permissions": "You can't open package database due to insufficient permissions",
