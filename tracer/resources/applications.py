@@ -81,31 +81,27 @@ class Applications:
 					continue
 
 				if child.name == "app":
-					application = Application(child.attrs)
-					if application in Applications._apps:
-						i = Applications._apps.index(application)
-						Applications._apps[i].update(application)
-					else:
-						application.setdefault('type', Applications.DEFAULT_TYPE)
-						application.setdefault('helper', Applications._helper(application))
-						Applications._apps.append(application)
+					Applications._append_application(child.attrs)
 
 				if child.name == "group":
 					for app in child.findChildren():
-						application = Application(app.attrs)
-						application.update(child.attrs)
-						if application in Applications._apps:
-							i = Applications._apps.index(application)
-							Applications._apps[i].update(application)
-						else:
-							application.setdefault('type', Applications.DEFAULT_TYPE)
-							application.setdefault('helper', Applications._helper(application))
-							Applications._apps.append(application)
-
+						Applications._append_application(app.attrs, child.attrs)
 			f.close()
 
 		except IOError:
 			raise PathNotFound('DATA_DIR')
+
+	@staticmethod
+	def _append_application(default_attrs, specific_attrs={}):
+		application = Application(default_attrs)
+		application.update(specific_attrs)
+		if application in Applications._apps:
+			i = Applications._apps.index(application)
+			Applications._apps[i].update(application)
+		else:
+			application.setdefault('type', Applications.DEFAULT_TYPE)
+			application.setdefault('helper', Applications._helper(application))
+			Applications._apps.append(application)
 
 	@staticmethod
 	def _helper(app):
