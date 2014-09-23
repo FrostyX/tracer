@@ -1,5 +1,6 @@
 from __future__ import absolute_import
 
+import os
 from tracer.resources.applications import Applications
 
 
@@ -22,18 +23,22 @@ class ProcessesList(list):
 		list.__init__(self, *args)
 		for process in self:
 			self._applications[process.pid] = Applications.find(process.name)
+			self._set_application_sudo_helper(process)
 
 	def append(self, x):
 		self._applications[x.pid] = Applications.find(x.name)
+		self._set_application_sudo_helper(x)
 		super(ProcessesList, self).append(x)
 
 	def insert(self, i, x):
 		self._applications[x.pid] = Applications.find(x.name)
+		self._set_application_sudo_helper(x)
 		super(ProcessesList, self).insert(i, x)
 
 	def extend(self, t):
 		for x in t:
 			self._applications[x.pid] = Applications.find(x.name)
+			self._set_application_sudo_helper(x)
 		super(ProcessesList, self).extend(t)
 
 	def remove(self, x):
@@ -84,3 +89,9 @@ class ProcessesList(list):
 			if not self._applications[p.pid].helper:
 				processes.append(p)
 		return processes
+
+	def _set_application_sudo_helper(self, process):
+		if os.getlogin() != "root":
+			helper = self._applications[process.pid].helper
+			if helper and not helper.startswith("sudo "):
+				self._applications[process.pid].helper = "sudo " + helper
