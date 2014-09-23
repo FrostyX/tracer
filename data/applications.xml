@@ -76,6 +76,7 @@
 		<app name="proftpd" />
 		<app name="rhnsd" />
 		<app name="samba" />
+		<app name="smbd" helper="service smb restart" />
 		<app name="sendmail" />
 		<app name="sm-client" />
 		<app name="sshd" />
