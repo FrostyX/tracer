@@ -58,7 +58,7 @@ class HelperController(object):
 			elif started.seconds >= 0:
 				started_str = str(started.seconds) + " seconds"
 
-			try: affected_by = tr.who_affected(app_name) if args.verbose else None
+			try: affected_by = tr.who_affected(app_name)
 			except AccessDenied: affected_by = _("affected_by_forbidden")
 
 			view = HelperView()

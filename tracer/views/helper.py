@@ -32,7 +32,11 @@ class HelperView(View):
 		if self.args.application.helper:
 			print ""
 			print "    {title}:".format(title=_('how_to_restart'))
-			print "        {how_to_restart}".format(how_to_restart=self.args.application.helper)
+
+			if not self.args.affected_by:
+				print "        {app_name} does not need restarting".format(app_name=self.args.application.name)
+			else:
+				print "        {how_to_restart}".format(how_to_restart=self.args.application.helper)
 
 	def render_affected_by(self):
 
