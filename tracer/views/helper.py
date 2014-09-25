@@ -43,15 +43,22 @@ class HelperView(View):
 		indent = "    "
 		print indent + _("affected_by") + ":"
 
+		indent_level = 2
 		if type(self.args.affected_by) == str:
-			print 2 * indent + self.args.affected_by
+			print indent_level * indent + self.args.affected_by
 			return
 
-		for package in self.args.affected_by:
-			print 2 * indent + package
+		for process in self.args.affected_by:
+			if process != self.args.process:
+				print indent_level * indent + "{0} ({1})".format(process.name, process.pid)
+				indent_level += 1
 
-			if self.args.args.verbose < 2:
-				continue
+			for package in self.args.affected_by[process]:
+				print indent_level * indent + package
 
-			for file in self.args.affected_by[package]:
-				print 3 * indent + file
+				if self.args.args.verbose < 2:
+					continue
+
+				indent_level += 1
+				for file in self.args.affected_by[process][package]:
+					print indent_level * indent + file

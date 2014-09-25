@@ -110,8 +110,9 @@ class Tracer:
 
 	def who_affected(self, app_name):
 		"""
-		Returns list of packages or processes and their files who affected the process
-		[ {pkg_name : [file1, file2, ...]}, ... ]
+		Returns list of packages and their files who affected the process
+		Packages and files are wrapped with dict containing process as a key.
+		[ {process : {pkg_name : [file1, file2, ...]}, ... }, ... ]
 		"""
 		process = Memory.process_by_name(app_name)
 		packages = self._modified_packages()
@@ -132,7 +133,7 @@ class Tracer:
 				if process.create_time <= package.modified:
 					matching_files.add(package_file)
 
-			if matching_files: affected_by[package.name] = matching_files
+			if matching_files: affected_by[process] = {package.name : matching_files}
 		return affected_by
 
 	def _affecting_children(self, process, packages):
