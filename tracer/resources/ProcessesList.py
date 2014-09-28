@@ -22,23 +22,19 @@ class ProcessesList(list):
 	def __init__(self, *args):
 		list.__init__(self, *args)
 		for process in self:
-			self._applications[process.pid] = Applications.find(process.name)
-			self._set_application_sudo_helper(process)
+			self._add(process)
 
 	def append(self, x):
-		self._applications[x.pid] = Applications.find(x.name)
-		self._set_application_sudo_helper(x)
+		self._add(x)
 		super(ProcessesList, self).append(x)
 
 	def insert(self, i, x):
-		self._applications[x.pid] = Applications.find(x.name)
-		self._set_application_sudo_helper(x)
+		self._add(x)
 		super(ProcessesList, self).insert(i, x)
 
 	def extend(self, t):
 		for x in t:
-			self._applications[x.pid] = Applications.find(x.name)
-			self._set_application_sudo_helper(x)
+			self._add(x)
 		super(ProcessesList, self).extend(t)
 
 	def remove(self, x):
@@ -89,6 +85,10 @@ class ProcessesList(list):
 			if not self._applications[p.pid].helper:
 				processes.append(p)
 		return processes
+
+	def _add(self, x):
+		self._applications[x.pid] = Applications.find(x.name)
+		self._set_application_sudo_helper(x)
 
 	def _set_application_sudo_helper(self, process):
 		if os.getlogin() != "root":
