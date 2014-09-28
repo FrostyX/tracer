@@ -48,8 +48,6 @@ class Applications:
 
 		for app in Applications._apps:
 			if app.name == app_name:
-				#app.setdefault('type', Applications.DEFAULT_TYPE)
-				#app.setdefault('helper', Applications._helper(app))
 				return app
 
 		return Application({"name" : app_name, "type" : Applications.DEFAULT_TYPE, "helper" : None})
