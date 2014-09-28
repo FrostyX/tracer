@@ -50,7 +50,8 @@ class Applications:
 			if app.name == app_name:
 				return app
 
-		return Application({"name" : app_name, "type" : Applications.DEFAULT_TYPE, "helper" : None})
+		# Return the default application
+		return Application({"name" : app_name, "type" : Applications.DEFAULT_TYPE, "helper" : None, "ignore" : False})
 
 	@staticmethod
 	def all():
@@ -99,6 +100,7 @@ class Applications:
 		else:
 			application.setdefault('type', Applications.DEFAULT_TYPE)
 			application.setdefault('helper', Applications._helper(application))
+			application.setdefault('ignore', False)
 			Applications._apps.append(application)
 
 	@staticmethod
@@ -127,6 +129,9 @@ class Application:
 		See `Applications.TYPES` for possible values
 	helper : str
 		Describes how to restart the applications
+
+	ignore : bool
+		If True, the application won't be printed
 	"""
 
 	_attributes = None

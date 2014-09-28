@@ -33,6 +33,7 @@
   -     <app name="app_name1" type="daemon" />
   -     <app name="app_name2" helper="Run this command: app_name2 stop" />
   -     <app name="app_name3" rename="app_name_3" />
+  -     <app name="app_name4" ignore="ignore" />
   -
   -
   - Note that applications can be wrapped into group. In this case please set
