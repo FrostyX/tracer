@@ -18,6 +18,8 @@
 #
 
 import psutil
+import time
+import datetime
 
 
 class TracerProcess(psutil.Process):
@@ -52,3 +54,21 @@ class TracerProcess(psutil.Process):
 			exe = exe[0:exe.index(';')]
 
 		return exe
+
+	@property
+	def str_started_ago(self):
+		now = datetime.datetime.fromtimestamp(time.time())
+		started = datetime.datetime.fromtimestamp(self.create_time)
+		started = now - started
+
+		started_str = ""
+		if started.days > 0:
+			started_str = str(started.days) + " days"
+		elif started.seconds >= 60 * 60:
+			started_str = str(started.seconds / (60 * 60)) + " hours"
+		elif started.seconds >= 60:
+			started_str = str(started.seconds / 60) + " minutes"
+		elif started.seconds >= 0:
+			started_str = str(started.seconds) + " seconds"
+
+		return started_str

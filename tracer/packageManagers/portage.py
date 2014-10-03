@@ -94,7 +94,7 @@ class Portage(IPackageManager):
 
 	def provided_by(self, app_name):
 		"""Returns name of package which provides given application"""
-		process = Memory.process_by_name(app_name)
+		process = Memory.processes_by_name(app_name)[0]  # @TODO Reimplement for all processes
 		package = self._file_provided_by(process.exe)
 		if package:
 			if package.category == 'dev-lang':

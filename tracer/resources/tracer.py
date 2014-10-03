@@ -114,7 +114,7 @@ class Tracer:
 		Packages and files are wrapped with dict containing process as a key.
 		[ {process : {pkg_name : [file1, file2, ...]}, ... }, ... ]
 		"""
-		process = Memory.process_by_name(app_name)
+		process = Memory.processes_by_name(app_name)[0]  # @TODO Reimplement for all processes
 		packages = self._modified_packages()
 		affected_by = self._affecting_packages(process, packages)
 		affected_by.update(self._affecting_children(process, packages))

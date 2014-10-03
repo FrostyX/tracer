@@ -16,12 +16,20 @@ class HelperView(View):
 			print "    Package:     {app_name} is not provided by any package".format(app_name=self.args.application.name)
 
 		# State
-		print "    State:       {app_name} has been started by {user} {time} ago. PID - {pid}".format(
-				app_name=self.args.application.name,
-				user=self.args.process.username,
-				time=self.args.time,
-				pid=self.args.process.pid
-		)
+		indent = "    State:       "
+		i = 0
+		for process in self.args.processes:
+			print indent + "{app_name} has been started by {user} {time} ago. PID - {pid}".format(
+					app_name=self.args.application.name,
+					user=process.username,
+					time=process.str_started_ago,
+					pid=process.pid
+			)
+			indent = "                 "
+			i += 1
+			if i >= 3:
+				print "                 ..."
+				break
 
 		# Affected by
 		if self.args.args.verbose > 0:
@@ -49,7 +57,7 @@ class HelperView(View):
 			return
 
 		for process in self.args.affected_by:
-			if process != self.args.process:
+			if process not in self.args.processes:
 				print indent_level * indent + "{0} ({1})".format(process.name, process.pid)
 				indent_level += 1
 

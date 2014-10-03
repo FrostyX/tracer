@@ -133,17 +133,18 @@ def dump_memory(user=None):
 	return memory
 
 
-def process_by_name(name):
+def processes_by_name(name):
+	processes = []
 	for pid in psutil.get_pid_list():
 		try:
 			p = TracerProcess(pid)
 			if p.name == name:
-				return p
+				processes.append(p)
 
 		except psutil.NoSuchProcess: pass
 		except psutil.AccessDenied: pass
 
-	return None
+	return processes
 
 
 def all_processes(user=None):

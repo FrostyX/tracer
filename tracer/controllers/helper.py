@@ -16,8 +16,6 @@
 # 02110-1301, USA.
 #
 
-import time
-import datetime
 from psutil import AccessDenied
 
 import tracer.resources.memory as Memory
@@ -38,35 +36,21 @@ class HelperController(object):
 		self.print_helper(self.args.helper[0], self.args)
 
 	def print_helper(self, app_name, args):
-		process = Memory.process_by_name(app_name)
-		if process:
+		processes = Memory.processes_by_name(app_name)
+		if processes:
 			tr = Tracer()
 			package = tr.package_info(app_name)
 			app = Applications.find(app_name)
 
-			now = datetime.datetime.fromtimestamp(time.time())
-			started = datetime.datetime.fromtimestamp(process.create_time)
-			started = now - started
-
-			started_str = ""
-			if started.days > 0:
-				started_str = str(started.days) + " days"
-			elif started.seconds >= 60 * 60:
-				started_str = str(started.seconds / (60 * 60)) + " hours"
-			elif started.seconds >= 60:
-				started_str = str(started.seconds / 60) + " minutes"
-			elif started.seconds >= 0:
-				started_str = str(started.seconds) + " seconds"
 
 			try: affected_by = tr.who_affected(app_name)
 			except AccessDenied: affected_by = _("affected_by_forbidden")
 
 			view = HelperView()
 			view.assign("args", args)
-			view.assign("process", process)
+			view.assign("processes", processes)
 			view.assign("application", app)
 			view.assign("package", package)
-			view.assign("time", started_str)
 			view.assign("affected_by", affected_by)
 			view.render()
 		else:
