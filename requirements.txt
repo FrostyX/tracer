@@ -1,2 +1,2 @@
 psutil
-BeautifulSoup
+BeautifulSoup4
