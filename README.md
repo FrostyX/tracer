@@ -1,4 +1,4 @@
-# tracer [<img src="https://travis-ci.org/FrostyX/tracer.svg?branch=master" alt="Travis" align="right">](https://travis-ci.org/FrostyX/tracer)
+# Tracer [<img src="https://coveralls.io/repos/FrostyX/tracer/badge.png?branch=master" alt="Coverage Status" align="right">](https://coveralls.io/r/FrostyX/tracer?branch=master)[<img src="https://travis-ci.org/FrostyX/tracer.svg?branch=master" alt="Travis" align="right">](https://travis-ci.org/FrostyX/tracer)
 
 Tracer finds outdated running applications in your system
 
