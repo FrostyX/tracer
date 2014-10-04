@@ -1,4 +1,4 @@
-# tracer
+# tracer [<img src="https://travis-ci.org/FrostyX/tracer.svg?branch=master" alt="Travis" align="right">](https://travis-ci.org/FrostyX/tracer)
 
 Tracer finds outdated running applications in your system
 
