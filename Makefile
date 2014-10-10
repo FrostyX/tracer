@@ -1,3 +1,5 @@
+.PHONY: doc
+
 release: test
 	tito tag
 	@echo
@@ -7,6 +9,10 @@ packages: rpm
 
 test:
 	sudo unit2 discover ./tests/
+
+doc:
+	@echo Move to ./doc/ directory and run
+	@echo     make help
 
 #
 # RPM
