@@ -1,2 +1,3 @@
 psutil
 BeautifulSoup4
+sphinx_rtd_theme
