@@ -27,13 +27,13 @@ How does he do it? He simply finds all packages you have modified since you boot
 </table>
 
 ## Features
-- [Find outdated running applications](https://github.com/FrostyX/tracer/wiki/User-Guide#standard-usage)
-- [Show application informations and recommend a way how to restart it](https://github.com/FrostyX/tracer/wiki/User-Guide#helpers)
-- [Integration with DNF](https://github.com/FrostyX/tracer/wiki/User-Guide#fedora---dnf-plugin)
+- [Find outdated running applications](http://docs.tracer-package.com/en/latest/user-guide/#standard-usage)
+- [Show application informations and recommend a way how to restart it](http://docs.tracer-package.com/en/latest/user-guide/#helpers)
+- [Integration with DNF](http://docs.tracer-package.com/en/latest/user-guide/#fedora-dnf-plugin)
 - Specify a list of applications what should it look for (by pipe or arguments)
 - List applications and interactively show informations
 
-Please see [User Guide](https://github.com/FrostyX/tracer/wiki/User-Guide)
+Please see [User Guide](http://docs.tracer-package.com/en/latest/user-guide/)
 
 ## Requirements
 - Supported linux distribution - There are currently supported [Fedora](http://fedoraproject.org/), [Gentoo](http://www.gentoo.org/) and [Debian](https://www.debian.org/)
@@ -43,7 +43,7 @@ Please see [User Guide](https://github.com/FrostyX/tracer/wiki/User-Guide)
 
 
 ## Feedback
-Please report any bugs or feature requests to [issues](https://github.com/FrostyX/tracer/issues) on this repository. Pull requests are also welcome, but please visit [Developer Guide](https://github.com/FrostyX/tracer/wiki/Developer-Guide) first. If you rather want a talk or something, you can find me on `#gentoo.cs` or `#fedora-cs` `@freenode` or you can [mail me](mailto:frostyx@email.cz).
+Please report any bugs or feature requests to [issues](https://github.com/FrostyX/tracer/issues) on this repository. Pull requests are also welcome, but please visit [Developer Guide](http://docs.tracer-package.com/en/latest/developer-guide/) first. If you rather want a talk or something, you can find me on `#gentoo.cs` or `#fedora-cs` `@freenode` or you can [mail me](mailto:frostyx@email.cz).
 
 
 ## References
