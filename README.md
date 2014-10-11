@@ -4,6 +4,27 @@ Tracer finds outdated running applications in your system
 
 How does he do it? He simply finds all packages you have modified since you boot up. Then he traces their files in the jungle of your memory, ... senses them, and finally, finds them. In the end you will get list of packages what have been running while you updated or removed them.
 
+## Overview
+<table frame="void" rules="none">
+	<tbody valign="top">
+		<tr>
+			<th>Website:</th>
+			<td><a href="https://github.com/FrostyX/tracer">https://github.com/FrostyX/tracer</a></td>
+		</tr>
+		<tr>
+			<th>Source:</th>
+			<td><a href="https://github.com/FrostyX/tracer">https://github.com/FrostyX/tracer</a></td>
+		</tr>
+		<tr>
+			<th>Documentation:</th>
+			<td><a href="http://docs.tracer-package.com">http://docs.tracer-package.com</a></td>
+		</tr>
+		<tr>
+			<th>License:</th>
+			<td>GNU GPL v2.0</td>
+		</tr>
+	</tbody>
+</table>
 
 ## Features
 - [Find outdated running applications](https://github.com/FrostyX/tracer/wiki/User-Guide#standard-usage)
