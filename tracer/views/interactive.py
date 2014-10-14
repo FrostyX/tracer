@@ -13,6 +13,9 @@ class InteractiveView(View):
 			i += 1
 
 		if not self.args.args.all:
+			if self.args.processes and (self.args.session_count or self.args.static_count):
+				print ""
+
 			view = NoteForHiddenView()
 			view.assign("args", self.args.args)
 			view.assign("total_count", self.args.total_count)
@@ -20,4 +23,3 @@ class InteractiveView(View):
 			view.assign("static_count", self.args.static_count)
 			view.render()
 
-		print "\n" + _("prompt_help")

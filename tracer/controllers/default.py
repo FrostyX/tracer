@@ -78,6 +78,11 @@ class DefaultController(object):
 			view.assign("static_count", self.processes.count_type(Applications.TYPES['STATIC']))
 			view.render()
 
+			# If there are only hidden applications (any listed)
+			if view.get("total_count") == view.get("session_count") + view.get("static_count"):
+				break
+
+			print "\n" + _("prompt_help")
 			answer = raw_input("--> ")
 			try:
 				if answer == "q": return
