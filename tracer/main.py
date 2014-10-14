@@ -44,5 +44,5 @@ def run():
 
 	except (UnsupportedDistribution, PathNotFound, LockedDatabase) as ex:
 		print ex
-	except KeyboardInterrupt:
+	except (KeyboardInterrupt, EOFError):
 		print ""
