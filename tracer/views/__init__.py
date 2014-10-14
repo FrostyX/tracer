@@ -7,3 +7,6 @@ class View(object):
 
 	def assign(self, key, value):
 		self.args.__dict__[key] = value
+
+	def get(self, key):
+		return self.args.__dict__[key]
