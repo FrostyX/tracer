@@ -5,6 +5,9 @@ from tracer.views.note_for_hidden import NoteForHiddenView
 
 class InteractiveView(View):
 	def render(self):
+		if self.args.processes:
+			print _("you_should_restart")
+
 		i = 1
 		digits = len(str(len(self.args.processes)))
 		for process in self.args.processes:
