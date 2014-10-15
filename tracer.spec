@@ -1,5 +1,5 @@
 Name:		tracer
-Version:	0.4.4
+Version:	0.5.0
 Release:	1%{?dist}
 Summary:	finds outdated running applications in your system
 
@@ -65,6 +65,33 @@ cp -ar integration/dnf/plugins/tracer.py %{buildroot}/%{python2_sitelib}/dnf-plu
 %{python2_sitelib}/dnf-plugins/tracer.py*
 
 %changelog
+* Wed Oct 15 2014 Jakub Kadlčík <frostyx@email.cz> 0.5.0-1
+- Add sphinx documentation (frostyx@email.cz)
+- Add support for Travis CI and coveralls (frostyx@email.cz)
+- Print more lines of the state in helper (frostyx@email.cz)
+- Implement the application's 'ignore' property (frostyx@email.cz)
+- Return also list of packages affecting process children (frostyx@email.cz)
+- Dont print how to restart if application actually doesnt need it
+- Print sudo in helpers (frostyx@email.cz)
+- In DNF plugin print command for more informations (frostyx@email.cz)
+- Add timestamp argument (frostyx@email.cz)
+- UX improvements - immediately print how to restart (frostyx@email.cz)
+- Implement loading user-defined rules (frostyx@email.cz)
+- Implement loading user-defined applications (frostyx@email.cz)
+- Print 'how to restart' only when it has been set (frostyx@email.cz)
+- Use FilenameCleaner instead of _filename_without_version (frostyx@email.cz)
+- Deal with interpreted processes (frostyx@email.cz)
+- Add property 'category' to package (frostyx@email.cz)
+- Prevent from Ctrl+C traceback; Fix #14 (frostyx@email.cz)
+- Fix #new problem in process's exe; Related with 6c7bc46 (frostyx@email.cz)
+- Use Router to call the right controller and its method (frostyx@email.cz)
+- Recognize between locked database and insufficient permissions
+  (frostyx@email.cz)
+- Specify program path to avoid conflict; Fix #12 (frostyx@email.cz)
+- Refactor applications as objects instead of dicts (frostyx@email.cz)
+- Fix lot of PEP warnings (frostyx@email.cz)
+- Use MVC architecture (frostyx@email.cz)
+
 * Fri Aug 08 2014 Jakub Kadlčík <frostyx@email.cz> 0.4.4-1
 - Refactor determining whether application is running or not (frostyx@email.cz)
 - Add verbose mode (frostyx@email.cz)
