@@ -1,5 +1,19 @@
 .PHONY: doc
 
+help:
+	@echo "Please use \`make <target>' where <target> is one of these"
+	@echo "* General targets"
+	@echo "    test           to run all automated tests for this project"
+	@echo "    doc            to build documentation"
+	@echo "    release        to release new minor version"
+	@echo "    packages       to build packages for all distributions"
+	@echo ""
+	@echo "* Fedora targets"
+	@echo "    rpm            to build fedora package"
+	@echo "    rpm-test       to build fedora package locally"
+	@echo "    rpm-try        to build fedora package and install it"
+	@echo "    rpm-copr       to build fedora package through copr"
+
 release: test
 	tito tag
 	@echo
