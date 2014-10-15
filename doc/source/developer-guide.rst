@@ -56,7 +56,7 @@ Next, there is `Makefile`_ describing most of actions you might want to do.
 
 In general, managing versions
 
-::
+.. code-block:: bash
 
     make release
 
@@ -66,14 +66,14 @@ In general, managing versions
 Fedora
 ~~~~~~
 
-::
+.. code-block:: bash
 
     # Develop
-    [1] make rpm-test
-    [2] make rpm-try
+    make rpm-test                      # [1]
+    make rpm-try                       # [2]
 
     # Create official package
-    [3] make rpm
+    make rpm                           # [3]
 
 -  [1] Create RPM package from last commit.
 -  [2] Same as [1] but additionally install it.
