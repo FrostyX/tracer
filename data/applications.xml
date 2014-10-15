@@ -103,6 +103,7 @@
 		<app name="X" />
 		<app name="xmonad-i386-linux" />
 		<app name="kdeinit4: kdeinit4 Running..." />
+		<app name="plasma-desktop" />
 	</group>
 
 	<app name="console-kit-daemon" helper="service consolekit restart" />
