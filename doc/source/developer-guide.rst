@@ -60,6 +60,9 @@ In general, managing versions
 
     make release
 
+    # For specific version use
+    tito tag --use-version X.Y.Z
+
 Fedora
 ~~~~~~
 
