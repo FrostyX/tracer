@@ -18,13 +18,19 @@ class DefaultView(View):
 			for process in with_helpers.sorted("name"):
 				print "      " + with_helpers.application(process).helper
 
-			if without_helpers or note:
+			if without_helpers:
 				print ""
 
 		if len(without_helpers):
 			print "  " + _("restart_manually")
 			for process in without_helpers.sorted("name"):
 				print "      " + process.name
+
+			if note:
+				print ""
+
+		if with_helpers and not without_helpers and note:
+			print ""
 
 		if not self.args.args.all:
 			view = NoteForHiddenView()
