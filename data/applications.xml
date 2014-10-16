@@ -103,10 +103,13 @@
 		<app name="X" />
 		<app name="xmonad-i386-linux" />
 		<app name="kdeinit4: kdeinit4 Running..." />
+		<app name="plasma-desktop" />
+		<app name="korgac" />
 	</group>
 
 	<app name="console-kit-daemon" helper="service consolekit restart" />
 	<app name="dropbox" helper="dropbox stop; dropbox start" />
+	<app name="pulseaudio" helper="pulseaudio --kill; pulseaudio --start">
 
 	<!--
 	   - KDE applications
@@ -127,5 +130,6 @@
 	</group>
 
 	<app name="akonadi_control" helper="akonadictl restart" />
+	<app name="akonadiserver" helper="akonadictl restart" />
 
 </applications>
