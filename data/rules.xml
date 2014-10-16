@@ -35,6 +35,7 @@
   -->
 
 <rules>
+	<rule name="sd-pam" />
 
 	<!-- KDE -->
 	<rule name="akonadiserver" />
@@ -50,6 +51,8 @@
 	<rule name="akonadi_nepomuk_feeder" />
 	<rule name="akonadi_newmailnotifier_agent" />
 	<rule name="akonadi_sendlater_agent" />
+	<rule name="abrt-applet" />
+	<rule name="seapplet" />
 
 	<!-- Networking -->
 	<rule name="wicd" />
