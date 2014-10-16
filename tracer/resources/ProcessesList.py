@@ -2,6 +2,7 @@ from __future__ import absolute_import
 
 import os
 from tracer.resources.applications import Applications
+from operator import attrgetter
 
 
 class ProcessesList(list):
@@ -86,6 +87,9 @@ class ProcessesList(list):
 			if not self._applications[p.pid].helper:
 				processes.append(p)
 		return processes
+
+	def sorted(self, attribute):
+		return sorted(self, key=attrgetter(attribute))
 
 	def _add(self, x):
 		application = Applications.find(x.name)

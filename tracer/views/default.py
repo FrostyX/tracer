@@ -15,7 +15,7 @@ class DefaultView(View):
 
 		if len(with_helpers):
 			print "  " + _("restart_using_helpers")
-			for process in with_helpers:
+			for process in with_helpers.sorted("name"):
 				print "      " + with_helpers.application(process).helper
 
 			if without_helpers or note:
@@ -23,7 +23,7 @@ class DefaultView(View):
 
 		if len(without_helpers):
 			print "  " + _("restart_manually")
-			for process in without_helpers:
+			for process in without_helpers.sorted("name"):
 				print "      " + process.name
 
 		if not self.args.args.all:

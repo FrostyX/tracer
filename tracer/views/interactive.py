@@ -10,7 +10,7 @@ class InteractiveView(View):
 
 		i = 1
 		digits = len(str(len(self.args.processes)))
-		for process in self.args.processes:
+		for process in self.args.processes.sorted("name"):
 			n = "[{0}]".format(i).ljust(digits + 2)
 			print "{} {}".format(n, process.name)
 			i += 1
