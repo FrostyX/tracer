@@ -15,6 +15,7 @@ class DefaultView(View):
 
 		if len(with_helpers):
 			print "  " + _("restart_using_helpers")
+			# @TODO Sort by helper
 			for process in with_helpers.sorted("name"):
 				print "      " + with_helpers.application(process).helper
 
