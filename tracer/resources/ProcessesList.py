@@ -100,7 +100,7 @@ class ProcessesList(list):
 		return False
 
 	def _set_application_sudo_helper(self, process):
-		if os.getlogin() != "root":
+		if os.getlogin() != "root" and self._applications[process.pid].type == Applications.TYPES['DAEMON']:
 			helper = self._applications[process.pid].helper
 			if helper and not helper.startswith("sudo "):
 				self._applications[process.pid].helper = "sudo " + helper
