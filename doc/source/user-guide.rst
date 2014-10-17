@@ -100,7 +100,39 @@ First verbose level
     $[FrostyX  ~]-> sudo tracer -s gvim -v
     * gvim
         Package:     app-editors/gvim
-        Description: GUI version of the V
+        Description: GUI version of the Vim text editor
+        Type:        Application
+        State:       gvim has been started by frostyx 2 hours ago. PID - 8431
+
+        Affected by:
+            gnome-base/gvfs
+            x11-libs/libX11
+
+        How to restart:
+            Sorry, It's not known
+
+Second verbose level
+
+::
+
+    $[FrostyX  ~]-> sudo tracer -s gvim -vv
+    * gvim
+        Package:     app-editors/gvim
+        Description: GUI version of the Vim text editor
+        Type:        Application
+        State:       gvim has been started by frostyx 2 hours ago. PID - 8431
+
+        Affected by:
+            gnome-base/gvfs
+                /usr/lib/gvfs/libgvfscommon.so
+                /usr/lib/gio/modules/libgioremote-volume-monitor.so
+                /usr/lib/gio/modules/libgvfsdbus.so
+            x11-libs/libX11
+                /usr/lib/libX11.so
+                /usr/lib/libX11-xcb.so
+
+        How to restart:
+            Sorry, It's not known
 
 Distro-specific candy
 ---------------------
