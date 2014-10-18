@@ -1,5 +1,5 @@
 Name:		tracer
-Version:	0.5.0
+Version:	0.5.1
 Release:	1%{?dist}
 Summary:	finds outdated running applications in your system
 
@@ -65,6 +65,11 @@ cp -ar integration/dnf/plugins/tracer.py %{buildroot}/%{python2_sitelib}/dnf-plu
 %{python2_sitelib}/dnf-plugins/tracer.py*
 
 %changelog
+* Sat Oct 18 2014 Jakub Kadlčík <frostyx@email.cz> 0.5.1-1
+- Correct sentenses in note; Fix #18 (frostyx@email.cz)
+- Dont automatically assume 'sudo'; Fix #17 (frostyx@email.cz)
+- Sort applications alphabetically; Fix #16 (frostyx@email.cz)
+
 * Wed Oct 15 2014 Jakub Kadlčík <frostyx@email.cz> 0.5.0-1
 - Add sphinx documentation (frostyx@email.cz)
 - Add support for Travis CI and coveralls (frostyx@email.cz)
