@@ -72,12 +72,12 @@ class TracerCommand(dnf.cli.Command):
 
 
 def _print_output(out):
-	print _("you_should_restart")
 	if len(out) == 0:
+		print _("you_should_restart")
 		print "  " + _("nothing_to_restart")
 		return
 
 	# First line is _("you_should_restart")
 	# Last value is blank line
-	for line in out.split('\n')[1:-1]:
+	for line in out.split('\n')[:-1]:
 		print line
