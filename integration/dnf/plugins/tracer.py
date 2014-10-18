@@ -54,8 +54,8 @@ class Tracer(dnf.Plugin):
 		_print_output(out)
 
 		if len(out) != 0:
-			print "  " + _("for_more_informations")
-			print "      sudo tracer -iat " + str(self.timestamp)
+			print "\n" + _("for_more_informations")
+			print "    sudo tracer -iat " + str(self.timestamp)
 
 
 class TracerCommand(dnf.cli.Command):
