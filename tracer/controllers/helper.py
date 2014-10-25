@@ -33,7 +33,10 @@ class HelperController(object):
 		self.args = args
 
 	def render(self):
-		self.print_helper(self.args.helper[0], self.args)
+		for app_name in self.args.helper:
+			self.print_helper(app_name, self.args)
+			if app_name != self.args.helper[-1]:
+				print ""
 
 	def print_helper(self, app_name, args):
 		processes = Memory.processes_by_name(app_name)

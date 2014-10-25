@@ -62,7 +62,7 @@ parser.add_argument('-v', '--verbose',
 )
 
 parser.add_argument('-s', '--show',
-	nargs=1,
+	nargs='+',
 	dest='helper',
 	metavar='app_name',
 	help='show helper for given application'
