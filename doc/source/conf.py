@@ -231,8 +231,8 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    ('index', 'tracer', u'Tracer Documentation',
-     [u'FrostyX'], 1)
+    ('manpage', 'tracer', u'finds outdated running applications in your system',
+     [u'FrostyX <frostyx@email.cz>'], 8)
 ]
 
 # If true, show URL addresses after external links.

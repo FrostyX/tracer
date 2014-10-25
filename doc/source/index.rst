@@ -15,6 +15,7 @@ Docs
    user-guide
    developer-guide
    get-tracer
+   Manpage <manpage>
 
 Feedback
 --------

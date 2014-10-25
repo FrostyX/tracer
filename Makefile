@@ -5,6 +5,7 @@ help:
 	@echo "* General targets"
 	@echo "    test           to run all automated tests for this project"
 	@echo "    doc            to build documentation"
+	@echo "    man            to build manpage"
 	@echo "    release        to release new minor version"
 	@echo "    packages       to build packages for all distributions"
 	@echo ""
@@ -27,6 +28,9 @@ test:
 doc:
 	@echo Move to ./doc/ directory and run
 	@echo     make help
+
+man:
+	make --directory=doc man
 
 #
 # RPM

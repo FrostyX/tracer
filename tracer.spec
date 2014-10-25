@@ -14,6 +14,10 @@ URL:		https://github.com/FrostyX/tracer/wiki
 Source0:	%{name}-%{version}.tar.gz
 
 BuildRequires:	python2-devel
+BuildRequires:	make
+BuildRequires:	asciidoc
+BuildRequires:	python-sphinx_rtd_theme
+BuildRequires:	libxslt
 Requires:	python
 Requires:	python-beautifulsoup4
 Requires:	python-psutil
@@ -41,15 +45,18 @@ This is plugin for DNF which runs tracer after every successful transaction
 
 
 %build
+make man
 
 
 %install
 mkdir -p %{buildroot}/%{_bindir}
 mkdir -p %{buildroot}/%{_datadir}/tracer
+mkdir -p %{buildroot}%{_mandir}/man8
 mkdir -p %{buildroot}/%{python2_sitelib}/tracer
 cp -a bin/tracer.py %{buildroot}/%{_bindir}/tracer
 cp -a data/* %{buildroot}/%{_datadir}/tracer/
 cp -ar tracer/* tests %{buildroot}/%{python2_sitelib}/tracer/
+install -m644 doc/build/man/tracer.8 %{buildroot}/%{_mandir}/man8/
 
 mkdir -p %{buildroot}/%{python2_sitelib}/dnf-plugins
 cp -ar integration/dnf/plugins/tracer.py %{buildroot}/%{python2_sitelib}/dnf-plugins/tracer.py
@@ -57,6 +64,7 @@ cp -ar integration/dnf/plugins/tracer.py %{buildroot}/%{python2_sitelib}/dnf-plu
 
 %files
 %doc LICENSE README.md
+%doc %{_mandir}/man8/tracer.8*
 %{_bindir}/tracer
 %{_datadir}/tracer/
 %{python2_sitelib}/tracer/
