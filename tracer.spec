@@ -16,7 +16,7 @@ Source0:	%{name}-%{version}.tar.gz
 BuildRequires:	python2-devel
 BuildRequires:	make
 BuildRequires:	asciidoc
-BuildRequires:	python-sphinx_rtd_theme
+BuildRequires:	python-sphinx
 BuildRequires:	libxslt
 Requires:	python
 Requires:	python-beautifulsoup4
