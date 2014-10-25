@@ -21,6 +21,7 @@ from __future__ import absolute_import
 from bs4 import BeautifulSoup, element
 from tracer.paths import DATA_DIR, USER_CONFIG_DIRS
 from tracer.resources.exceptions import PathNotFound
+from tracer.resources.collections import ApplicationsCollection
 from tracer.resources.lang import _
 from os.path import dirname
 
@@ -62,7 +63,7 @@ class Applications:
 
 	@staticmethod
 	def _load_definitions():
-		Applications._apps = []
+		Applications._apps = ApplicationsCollection()
 		for file in Applications.DEFINITIONS:
 			try: Applications._load(file)
 			except PathNotFound as ex:

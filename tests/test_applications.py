@@ -2,11 +2,15 @@
 
 from __meta__ import *
 from tracer.resources.applications import Applications, Application
+from tracer.resources.collections import ApplicationsCollection
 
 from bs4 import BeautifulSoup
 from os.path import dirname, realpath
 
 class TestApplications(unittest.TestCase):
+
+	def test_apps_types(self):
+		self.assertIsInstance(Applications.all(), ApplicationsCollection)
 
 	def test_apps_attributes(self):
 		i = 1
