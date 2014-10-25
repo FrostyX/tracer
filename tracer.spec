@@ -1,5 +1,5 @@
 Name:		tracer
-Version:	0.5.2
+Version:	0.5.3
 Release:	1%{?dist}
 Summary:	finds outdated running applications in your system
 
@@ -73,6 +73,9 @@ cp -ar integration/dnf/plugins/tracer.py %{buildroot}/%{python2_sitelib}/dnf-plu
 %{python2_sitelib}/dnf-plugins/tracer.py*
 
 %changelog
+* Sat Oct 25 2014 Jakub Kadlčík <frostyx@email.cz> 0.5.3-1
+- Prevent traceback from theme (frostyx@email.cz)
+
 * Sat Oct 25 2014 Jakub Kadlčík <frostyx@email.cz> 0.5.2-1
 - Add manpage (8) (frostyx@email.cz)
 - Print helpers for all arguments passed to --show (frostyx@email.cz)
