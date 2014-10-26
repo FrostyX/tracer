@@ -18,6 +18,7 @@
 
 from __future__ import absolute_import
 
+from tracer.resources.processes import Processes
 from tracer.resources.psutils import TracerProcess
 from tracer.resources.FilenameCleaner import FilenameCleaner
 import psutil
@@ -91,9 +92,9 @@ def dump_memory(user=None):
 	Which describes that processes 1 to `n` is using file_1
 	"""
 	memory = {}
-	for process in all_processes(user):
+	for process in Processes.all().owned_by(user):
 		try:
-			for file in process_files(process.pid):
+			for file in process.files:
 				if file in memory:
 					memory[file].append(process)
 				else:
