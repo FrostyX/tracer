@@ -23,7 +23,6 @@ class Package:
 	name = None
 	modified = None
 	description = None
-	pkg_type = None
 	category = None
 
 	def __init__(self, name, modified=None):
