@@ -28,6 +28,26 @@ class ApplicationsCollection(list):
 	def sorted(self, attribute):
 		return sorted(self, key=attrgetter(attribute))
 
+	def with_helpers(self):
+		applications = filter(lambda app: app.helper, self)
+		return ApplicationsCollection(applications)
+
+	def without_helpers(self):
+		applications = filter(lambda app: not app.helper, self)
+		return ApplicationsCollection(applications)
+
+	def exclude_types(self, app_types):
+		"""app_types -- see Applications.TYPES"""
+		applications = filter(lambda app: app.type not in app_types, self)
+		return ApplicationsCollection(applications)
+
+	def count_type(self, app_type):
+		count = 0
+		for application in self:
+			if application.type == app_type:
+				count += 1
+		return count
+
 
 class ProcessesCollection(list):
 
