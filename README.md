@@ -2,7 +2,7 @@
 
 Tracer finds outdated running applications in your system
 
-How does he do it? He simply finds all packages you have modified since you boot up. Then he traces their files in the jungle of your memory, ... senses them, and finally, finds them. In the end you will get list of packages what have been running while you updated or removed them.
+Tracer determines which applications use outdated files and prints them. For special kind of applications such as services or daemons, it suggests a standard command to restart it. Detecting whether file is outdated or not is based on a simple algorithm. If application has loaded in memory any version of a file which is provided by any package updated since system was booted up, tracer consider this application as outdated.
 
 ## Overview
 <table frame="void" rules="none">
