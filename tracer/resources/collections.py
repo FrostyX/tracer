@@ -16,7 +16,10 @@
 # 02110-1301, USA.
 #
 
+from __future__ import absolute_import
+
 from operator import attrgetter
+from tracer.resources.system import System
 
 
 class ApplicationsCollection(list):
@@ -47,18 +50,16 @@ class PackagesCollection(list):
 
 	def __init__(self, *args):
 		list.__init__(self, *args)
-		# @TODO Fix import problem and move it to the top
-		#from system import package_manager
-		#self._package_manager = package_manager()
+		self._package_manager = System.package_manager()
 
 	def intersection(self, packages):
 		if packages is not None:
 			return PackagesCollection(set(self) & set(packages))
 		return self
 
-	#@property
-	#def files(self):
-	#	files = []
-	#	for package in self:
-	#		files.append(self._package_manager.package_files(package.name))
-	#	return files
+	@property
+	def files(self):
+		files = []
+		for package in self:
+			files.extend(self._package_manager.package_files(package.name))
+		return set(files)
