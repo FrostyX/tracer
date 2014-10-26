@@ -54,7 +54,7 @@ class PackagesCollection(list):
 
 	def intersection(self, packages):
 		if packages is not None:
-			return PackagesCollection(set(self) & set(packages))
+			return PackagesCollection(set(packages).intersection(self))
 		return self
 
 	@property
