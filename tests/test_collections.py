@@ -2,7 +2,8 @@
 
 from __meta__ import *
 from tracer.resources.applications import Application
-from tracer.resources.collections import ApplicationsCollection
+from tracer.resources.processes import Processes
+from tracer.resources.collections import ApplicationsCollection, ProcessesCollection
 
 
 class TestApplications(unittest.TestCase):
@@ -15,3 +16,9 @@ class TestApplications(unittest.TestCase):
 
 		self.assertEqual(collection.sorted('name'), ApplicationsCollection([a2, a1, a3]))
 		self.assertEqual(collection.sorted('helper'), ApplicationsCollection([a1, a3, a2]))
+
+	def test_processes_types(self):
+		processes = Processes.all()
+		self.assertIsInstance(processes, ProcessesCollection)
+		self.assertIsInstance(processes.owned_by('user'), ProcessesCollection)
+		self.assertIsInstance(processes.newer_than(1414006430.1), ProcessesCollection)

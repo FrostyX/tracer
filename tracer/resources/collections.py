@@ -23,3 +23,14 @@ class ApplicationsCollection(list):
 
 	def sorted(self, attribute):
 		return sorted(self, key=attrgetter(attribute))
+
+
+class ProcessesCollection(list):
+
+	def owned_by(self, user):
+		processes = filter(lambda process: process.username == user, self)
+		return ProcessesCollection(processes)
+
+	def newer_than(self, timestamp):
+		processes = filter(lambda process: process.create_time >= timestamp, self)
+		return ProcessesCollection(processes)
