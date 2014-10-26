@@ -33,7 +33,7 @@ LOCALE = {
 				"\n"
 				"Don't you have an GitHub account? Please report this issue on frostyx@email.cz" ),
 	"path_not_found"     : ("Problem occurred - neither one of {0} paths doesn't exist\n"
-				"Please contact maintainer of tracer package in your distribution ({1})."),
+				"Please contact maintainer of tracer package in your distribution."),
 	"you_should_restart" : "You should restart:",
 	"restart_using_helpers" : "* Some applications using:",
 	"restart_manually"   : "* These applications manually:",

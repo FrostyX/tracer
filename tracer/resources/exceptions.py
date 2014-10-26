@@ -49,14 +49,10 @@ class DatabasePermissions(OSError):
 		OSError.__init__(self, self.message)
 
 
-# @TODO Figure out why this import can't be above UnsupportedDistribution class
-from tracer.resources.system import System
-
-
 class PathNotFound(OSError):
 
 	@property
 	def message(self): return _("path_not_found")
 
 	def __init__(self, name):
-		OSError.__init__(self, self.message.format(name, System.distribution()))
+		OSError.__init__(self, self.message.format(name))
