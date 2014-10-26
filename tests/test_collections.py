@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 from __meta__ import *
-from tracer.resources.applications import Application
+from tracer.resources.applications import Applications, Application
 from tracer.resources.processes import Processes
 from tracer.resources.package import Package
 from tracer.resources.collections import ApplicationsCollection, ProcessesCollection, PackagesCollection
@@ -10,9 +10,10 @@ from tracer.resources.collections import ApplicationsCollection, ProcessesCollec
 class TestCollections(unittest.TestCase):
 
 	def test_applications_sorted(self):
-		a1 = Application({'name': 'foo', 'helper': 'bar'})
-		a2 = Application({'name': 'baz', 'helper': 'qux'})
-		a3 = Application({'name': 'quux', 'helper': 'corge'})
+		default_type = Applications.DEFAULT_TYPE
+		a1 = Application({'name': 'foo', 'helper': 'bar', 'type': default_type})
+		a2 = Application({'name': 'baz', 'helper': 'qux', 'type': default_type})
+		a3 = Application({'name': 'quux', 'helper': 'corge', 'type': default_type})
 		collection = ApplicationsCollection([a1, a2, a3])
 
 		self.assertEqual(collection.sorted('name'), ApplicationsCollection([a2, a1, a3]))
