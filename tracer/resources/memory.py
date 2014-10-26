@@ -19,66 +19,7 @@
 from __future__ import absolute_import
 
 from tracer.resources.processes import Processes
-from tracer.resources.psutils import TracerProcess
-from tracer.resources.FilenameCleaner import FilenameCleaner
 import psutil
-import os
-
-
-def process_files(pid):
-	"""
-	Returns list of files which are used by process with given pid
-	"""
-
-	files = []
-	p = TracerProcess(pid)
-
-	# Files from memory maps
-	for mmap in p.get_memory_maps():
-		file = mmap.path
-
-		# Doesnt matter what is after space cause filename ends with first space
-		try: file = file[:file.index(' ')]
-		except ValueError: pass
-
-		# On Gentoo, there is #new after some files in lsof
-		# i.e. /usr/bin/gvim#new (deleted)
-		if file.endswith('#new'):
-			file = file[0:-4]
-
-		# On Fedora, there is something like ;541350b3 after some files in lsof
-		# See issue #9
-		if ';' in file:
-			file = file[0:file.index(';')]
-
-		files.append(FilenameCleaner.strip(file))
-
-	# Process arguments
-	for arg in p.cmdline[1:]:
-		if os.path.isfile(arg):
-			files.append(arg)
-
-	return sorted(files)
-
-
-def processes_using_file(file, memory):
-	"""
-	Returns list of processes which have file loaded into memory
-	memory -- list given by self.processes_with_files()
-	return list of psutil.Process
-	@TODO This function should be hardly optimized
-	"""
-	used_by = []
-	for process in memory:
-		l = 0
-		r = len(process[1])
-		while l <= r:
-			m = (l + r) / 2
-			if m >= len(process[1]): break
-			if file == process[1][m]: used_by.append(process[0]); break
-			if file < process[1][m]:  r = m - 1
-			else: l = m + 1
-	return used_by
 
 
 def dump_memory(user=None):
@@ -104,30 +45,3 @@ def dump_memory(user=None):
 		except psutil.AccessDenied: pass
 
 	return memory
-
-
-def processes_by_name(name):
-	processes = []
-	for pid in psutil.get_pid_list():
-		try:
-			p = TracerProcess(pid)
-			if p.name == name:
-				processes.append(p)
-
-		except psutil.NoSuchProcess: pass
-		except psutil.AccessDenied: pass
-
-	return processes
-
-
-def all_processes(user=None):
-	processes = set()
-	for pid in psutil.get_pid_list():
-		try:
-			p = TracerProcess(pid)
-			if not user or p.username == user:
-				processes.add(p)
-		except psutil.NoSuchProcess: pass
-		except psutil.AccessDenied: pass
-
-	return processes
