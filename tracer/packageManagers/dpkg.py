@@ -18,6 +18,7 @@
 
 from ipackageManager import IPackageManager
 from tracer.resources.package import Package
+from tracer.resources.collections import PackagesCollection
 import subprocess
 import time
 import os
@@ -41,7 +42,7 @@ class Dpkg(IPackageManager):
 		Returns list of packages which were modified between unix_time and present
 		Requires root permissions.
 		"""
-		newer = []
+		newer = PackagesCollection()
 		log = open(self.dpkg_log, 'r')
 		for line in log:
 			line = line.split(" ")

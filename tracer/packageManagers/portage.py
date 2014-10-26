@@ -19,6 +19,7 @@
 from __future__ import absolute_import
 from .ipackageManager import IPackageManager
 from tracer.resources.package import Package
+from tracer.resources.collections import PackagesCollection
 from gentoolkit.helpers import FileOwner
 from psutil import AccessDenied
 from tracer.resources.applications import Applications
@@ -47,7 +48,7 @@ class Portage(IPackageManager):
 		if not os.access('/var/log/emerge.log', os.R_OK):
 			raise AccessDenied
 
-		newer = []
+		newer = PackagesCollection()
 		process = subprocess.Popen(['qlop', '-lC'], stdout=subprocess.PIPE)
 		packages = process.communicate()[0]
 		for package in packages.split('\n')[:-1]:

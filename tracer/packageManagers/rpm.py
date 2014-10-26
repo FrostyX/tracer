@@ -21,6 +21,7 @@ from __future__ import absolute_import
 from os import listdir
 from .ipackageManager import IPackageManager
 from tracer.resources.package import Package
+from tracer.resources.collections import PackagesCollection
 from tracer.resources.exceptions import LockedDatabase, DatabasePermissions
 from tracer.resources.applications import Applications
 import sqlite3
@@ -56,7 +57,7 @@ class Rpm(IPackageManager):
 		"""
 
 		try:
-			packages = []
+			packages = PackagesCollection()
 			sqlite = self._database_file()
 			conn = sqlite3.connect(sqlite)
 			conn.row_factory = sqlite3.Row
