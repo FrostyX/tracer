@@ -23,8 +23,8 @@ from tracer.paths import DATA_DIR, USER_CONFIG_DIRS
 from tracer.resources.exceptions import PathNotFound
 from tracer.resources.collections import ApplicationsCollection
 from tracer.resources.lang import _
-from os.path import dirname
 from tracer.resources.processes import Processes
+import os
 
 
 class Applications:
@@ -68,7 +68,7 @@ class Applications:
 		for file in Applications.DEFINITIONS:
 			try: Applications._load(file)
 			except PathNotFound as ex:
-				if not dirname(file) in USER_CONFIG_DIRS:
+				if not os.path.dirname(file) in USER_CONFIG_DIRS:
 					raise ex
 
 	@staticmethod
@@ -173,6 +173,14 @@ class Application:
 		if isinstance(values, Application):
 			values = values._attributes
 		self._attributes.update(values)
+
+	@property
+	def helper(self):
+		helper = self._attributes["helper"]
+		if os.getlogin() != "root" and self.type == Applications.TYPES["DAEMON"]:
+			if helper and not helper.startswith("sudo "):
+				helper = "sudo " + helper
+		return helper
 
 	@property
 	def instances(self):
