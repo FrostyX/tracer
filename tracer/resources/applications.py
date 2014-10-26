@@ -24,6 +24,8 @@ from tracer.resources.exceptions import PathNotFound
 from tracer.resources.collections import ApplicationsCollection
 from tracer.resources.lang import _
 from os.path import dirname
+from tracer.resources.processes import Processes
+from tracer.resources.collections import ProcessesCollection
 
 
 class Applications:
@@ -128,11 +130,15 @@ class Application:
 	name : str
 	type : str
 		See `Applications.TYPES` for possible values
+
 	helper : str
 		Describes how to restart the applications
 
 	ignore : bool
 		If True, the application won't be printed
+
+	instances : ProcessesCollection
+		Processes of this application
 	"""
 
 	_attributes = None
@@ -165,3 +171,8 @@ class Application:
 		if isinstance(values, Application):
 			values = values._attributes
 		self._attributes.update(values)
+
+	@property
+	def instances(self):
+		processes = filter(lambda process: process.name == self.name, Processes.all())
+		return ProcessesCollection(processes)
