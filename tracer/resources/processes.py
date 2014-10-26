@@ -87,6 +87,12 @@ class Process(psutil.Process):
 			p.__class__ = Process
 		return p
 
+	def get_children(self, recursive=False):
+		children = super(Process, self).get_children(recursive)
+		for child in children:
+			child.__class__ = Process
+		return ProcessesCollection(children)
+
 	@property
 	def exe(self):
 		# On Gentoo, there is #new after some files in lsof
