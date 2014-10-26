@@ -25,8 +25,6 @@ from tracer.resources.collections import ApplicationsCollection
 from tracer.resources.lang import _
 from os.path import dirname
 from tracer.resources.processes import Processes
-from tracer.resources.collections import ProcessesCollection
-from psutil import NoSuchProcess
 
 
 class Applications:
@@ -175,10 +173,4 @@ class Application:
 
 	@property
 	def instances(self):
-		processes = ProcessesCollection()
-		for process in Processes.all():
-			try:
-				if process.name == self.name:
-					processes.append(process)
-			except NoSuchProcess: pass
-		return processes
+		return Processes.all().filtered(lambda process: process.name == self.name)

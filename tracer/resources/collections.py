@@ -19,6 +19,7 @@
 from __future__ import absolute_import
 
 from operator import attrgetter
+from psutil import NoSuchProcess
 from tracer.resources.system import System
 
 
@@ -33,15 +34,22 @@ class ProcessesCollection(list):
 	def owned_by(self, user):
 		if not user:
 			return self
-		processes = filter(lambda process: process.username == user, self)
-		return ProcessesCollection(processes)
+		return self.filtered(lambda process: process.username == user)
 
 	def newer_than(self, timestamp):
-		processes = filter(lambda process: process.create_time >= timestamp, self)
-		return ProcessesCollection(processes)
+		return self.filtered(lambda process: process.create_time >= timestamp)
 
 	def unique(self):
 		return ProcessesCollection(set(self))
+
+	def filtered(self, function):
+		processes = ProcessesCollection()
+		for process in self:
+			try:
+				if function(process):
+					processes.append(process)
+			except NoSuchProcess: pass
+		return processes
 
 
 class PackagesCollection(list):
