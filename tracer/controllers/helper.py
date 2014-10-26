@@ -39,7 +39,7 @@ class HelperController(object):
 				print ""
 
 	def print_helper(self, app_name, args):
-		processes = Memory.processes_by_name(app_name)
+		processes = Applications.find(app_name).instances
 		if processes:
 			tr = Tracer()
 			package = tr.package_info(app_name)

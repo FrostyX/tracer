@@ -21,7 +21,7 @@ from .ipackageManager import IPackageManager
 from tracer.resources.package import Package
 from gentoolkit.helpers import FileOwner
 from psutil import AccessDenied
-import tracer.resources.memory as Memory
+from tracer.resources.applications import Applications
 import os
 import portage
 import subprocess
@@ -94,7 +94,7 @@ class Portage(IPackageManager):
 
 	def provided_by(self, app_name):
 		"""Returns name of package which provides given application"""
-		process = Memory.processes_by_name(app_name)[0]  # @TODO Reimplement for all processes
+		process = Applications.find(app_name).instances[0]  # @TODO Reimplement for all processes
 		package = self._file_provided_by(process.exe)
 		if package:
 			if package.category == 'dev-lang':

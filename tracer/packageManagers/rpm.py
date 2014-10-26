@@ -22,7 +22,7 @@ from os import listdir
 from .ipackageManager import IPackageManager
 from tracer.resources.package import Package
 from tracer.resources.exceptions import LockedDatabase, DatabasePermissions
-import tracer.resources.memory as Memory
+from tracer.resources.applications import Applications
 import sqlite3
 import subprocess
 import rpm
@@ -110,7 +110,7 @@ class Rpm(IPackageManager):
 	def provided_by(self, app_name):
 		"""Returns name of package which provides given application"""
 		# `rpm -qf ...` needs full path to binary, not only its name
-		process = Memory.processes_by_name(app_name)[0]  # @TODO Reimplement for all processes
+		process = Applications.find(app_name).instances[0]  # @TODO Reimplement for all processes
 		package = self._file_provided_by(process.exe)
 		if package:
 			# If package is interpreter, return the package providing that interpreted file

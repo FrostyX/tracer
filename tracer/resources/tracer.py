@@ -21,6 +21,7 @@ from __future__ import absolute_import
 import psutil
 from tracer.resources.rules import Rules
 from tracer.resources.FilenameCleaner import FilenameCleaner
+from tracer.resources.applications import Applications
 import tracer.resources.memory as Memory
 import tracer.resources.system as System
 
@@ -114,7 +115,7 @@ class Tracer:
 		Packages and files are wrapped with dict containing process as a key.
 		[ {process : {pkg_name : [file1, file2, ...]}, ... }, ... ]
 		"""
-		process = Memory.processes_by_name(app_name)[0]  # @TODO Reimplement for all processes
+		process = Applications.find(app_name).instances[0]  # @TODO Reimplement for all processes
 		packages = self._modified_packages()
 		affected_by = self._affecting_packages(process, packages)
 		affected_by.update(self._affecting_children(process, packages))
@@ -122,7 +123,7 @@ class Tracer:
 
 	def _affecting_packages(self, process, packages):
 		affected_by = {}
-		process_files = Memory.process_files(process.pid)
+		process_files = process.files
 		for package in packages:
 			matching_files = set()
 			for package_file in self._PACKAGE_MANAGER.package_files(package.name):
