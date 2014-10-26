@@ -19,7 +19,7 @@ class TestApplications(unittest.TestCase):
 		self.assertIsInstance(collection, ApplicationsCollection)
 
 	def test_processes_types(self):
-		processes = Processes.all()
-		self.assertIsInstance(processes, ProcessesCollection)
-		self.assertIsInstance(processes.owned_by('user'), ProcessesCollection)
-		self.assertIsInstance(processes.newer_than(1414006430.1), ProcessesCollection)
+		collection = Processes.all()
+		self.assertIsInstance(collection, ProcessesCollection)
+		self.assertIsInstance(collection.owned_by('user'), ProcessesCollection)
+		self.assertIsInstance(collection.newer_than(1414006430.1), ProcessesCollection)
