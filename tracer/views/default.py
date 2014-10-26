@@ -6,8 +6,8 @@ from tracer.views.note_for_hidden import NoteForHiddenView
 class DefaultView(View):
 	def render(self):
 
-		with_helpers = self.args.processes.with_helpers()
-		without_helpers = self.args.processes.without_helpers()
+		with_helpers = self.args.applications.with_helpers()
+		without_helpers = self.args.applications.without_helpers()
 		note = self.args.session_count or self.args.static_count
 
 		if with_helpers or without_helpers:
@@ -15,17 +15,16 @@ class DefaultView(View):
 
 		if len(with_helpers):
 			print "  " + _("restart_using_helpers")
-			# @TODO Sort by helper
-			for process in with_helpers.sorted("name"):
-				print "      " + with_helpers.application(process).helper
+			for application in with_helpers.sorted("helper"):
+				print "      " + application.helper
 
 			if without_helpers:
 				print ""
 
 		if len(without_helpers):
 			print "  " + _("restart_manually")
-			for process in without_helpers.sorted("name"):
-				print "      " + process.name
+			for application in without_helpers.sorted("name"):
+				print "      " + application.name
 
 			if note:
 				print ""

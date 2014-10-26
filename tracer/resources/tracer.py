@@ -22,6 +22,7 @@ import psutil
 from tracer.resources.rules import Rules
 from tracer.resources.FilenameCleaner import FilenameCleaner
 from tracer.resources.applications import Applications
+from tracer.resources.collections import ApplicationsCollection
 from tracer.resources.system import System
 import tracer.resources.memory as Memory
 
@@ -77,17 +78,18 @@ class Tracer(object):
 			for file in self._PACKAGE_MANAGER.package_files(package.name):
 
 				file = FilenameCleaner.strip(file)
-				try:
-					for p in memory[file]:
-						if p.pid in found:
-							continue
+				if not file in memory:
+					continue
 
-						if p.create_time <= package.modified:
-							found.append(p.pid)
-							p = self._apply_rules(p)
-							affected.add(p)
-				except KeyError: pass
-		return affected
+				for p in memory[file]:
+					if p.pid in found:
+						continue
+
+					if p.create_time <= package.modified:
+						found.append(p.pid)
+						p = self._apply_rules(p)
+						affected.add(Applications.find(p.name))
+		return ApplicationsCollection(affected)
 
 	def _apply_rules(self, process):
 		parent = process.parent

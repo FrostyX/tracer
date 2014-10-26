@@ -39,43 +39,43 @@ class DefaultController(object):
 		self.tracer.specified_packages = packages
 		self.tracer.now = args.now
 		self.tracer.timestamp = args.timestamp[0]
-		self.processes = ProcessesList(self.tracer.trace_affected(self._user(args.user)))
+		self.applications = self.tracer.trace_affected(self._user(args.user))
 
 	def render(self):
-		filtered = self._restartable_processes(self.processes, self.args)
+		filtered = self._restartable_applications(self.applications, self.args)
 
 		view = DefaultView()
-		view.assign("processes", filtered)
+		view.assign("applications", filtered)
 		view.assign("args", self.args)
-		view.assign("total_count", len(self.processes))
-		view.assign("session_count", self.processes.count_type(Applications.TYPES['SESSION']))
-		view.assign("static_count", self.processes.count_type(Applications.TYPES['STATIC']))
+		view.assign("total_count", len(self.applications))
+		view.assign("session_count", self.applications.count_type(Applications.TYPES['SESSION']))
+		view.assign("static_count", self.applications.count_type(Applications.TYPES['STATIC']))
 		view.render()
 
 	def render_helpers(self):
 		helper_controller = HelperController(self.args)
-		for process in self._restartable_processes(self.processes, self.args):
-			helper_controller.print_helper(process.name, self.args)
+		for application in self._restartable_applications(self.applications, self.args):
+			helper_controller.print_helper(application.name, self.args)
 			print ""
 
 		view = NoteForHiddenView()
 		view.assign("args", self.args)
-		view.assign("total_count", len(self.processes))
-		view.assign("session_count", self.processes.count_type(Applications.TYPES['SESSION']))
-		view.assign("static_count", self.processes.count_type(Applications.TYPES['STATIC']))
+		view.assign("total_count", len(self.applications))
+		view.assign("session_count", self.applications.count_type(Applications.TYPES['SESSION']))
+		view.assign("static_count", self.applications.count_type(Applications.TYPES['STATIC']))
 		view.render()
 
 	def render_interactive(self):
 		helper_controller = HelperController(self.args)
-		filtered = self._restartable_processes(self.processes, self.args)
+		filtered = self._restartable_applications(self.applications, self.args)
 
 		while True:
 			view = InteractiveView()
-			view.assign("processes", filtered)
+			view.assign("applications", filtered)
 			view.assign("args", self.args)
-			view.assign("total_count", len(self.processes))
-			view.assign("session_count", self.processes.count_type(Applications.TYPES['SESSION']))
-			view.assign("static_count", self.processes.count_type(Applications.TYPES['STATIC']))
+			view.assign("total_count", len(self.applications))
+			view.assign("session_count", self.applications.count_type(Applications.TYPES['SESSION']))
+			view.assign("static_count", self.applications.count_type(Applications.TYPES['STATIC']))
 			view.render()
 
 			# If there are only hidden applications (any listed)
@@ -94,11 +94,11 @@ class DefaultController(object):
 
 			raw_input("\n" + _("press_enter"))
 
-	def _restartable_processes(self, processes, args):
-		return processes.exclude_types([
+	def _restartable_applications(self, applications, args):
+		return applications.exclude_types([
 			Applications.TYPES['STATIC'],
 			Applications.TYPES['SESSION']
-		]) if not args.all else processes
+		]) if not args.all else applications
 
 	def _user(self, user):
 		if   user == '*':    return None

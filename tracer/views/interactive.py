@@ -5,18 +5,18 @@ from tracer.views.note_for_hidden import NoteForHiddenView
 
 class InteractiveView(View):
 	def render(self):
-		if self.args.processes:
+		if self.args.applications:
 			print _("you_should_restart")
 
 		i = 1
-		digits = len(str(len(self.args.processes)))
-		for process in self.args.processes.sorted("name"):
+		digits = len(str(len(self.args.applications)))
+		for application in self.args.applications.sorted("name"):
 			n = "[{0}]".format(i).ljust(digits + 2)
-			print "{} {}".format(n, process.name)
+			print "{} {}".format(n, application.name)
 			i += 1
 
 		if not self.args.args.all:
-			if self.args.processes and (self.args.session_count or self.args.static_count):
+			if self.args.applications and (self.args.session_count or self.args.static_count):
 				print ""
 
 			view = NoteForHiddenView()
