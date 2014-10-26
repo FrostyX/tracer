@@ -92,7 +92,7 @@ def dump_memory(user=None):
 	Which describes that processes 1 to `n` is using file_1
 	"""
 	memory = {}
-	for process in Processes.all().owned_by(user):
+	for process in Processes.all().owned_by(user).unique():
 		try:
 			for file in process.files:
 				if file in memory:

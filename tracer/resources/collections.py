@@ -36,3 +36,6 @@ class ProcessesCollection(list):
 	def newer_than(self, timestamp):
 		processes = filter(lambda process: process.create_time >= timestamp, self)
 		return ProcessesCollection(processes)
+
+	def unique(self):
+		return ProcessesCollection(set(self))
