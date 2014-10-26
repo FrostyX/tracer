@@ -26,27 +26,30 @@ import psutil
 from tracer.resources.exceptions import UnsupportedDistribution
 
 
-def distribution():
-	return platform.linux_distribution(full_distribution_name=False)[0]
+class System(object):
 
+	@staticmethod
+	def distribution():
+		return platform.linux_distribution(full_distribution_name=False)[0]
 
-def package_manager():
-	"""Returns instance of package manager according to installed linux distribution"""
-	d = distribution()
+	@staticmethod
+	def package_manager():
+		"""Returns instance of package manager according to installed linux distribution"""
+		d = System.distribution()
 
-	if   d == 'gentoo': from tracer.packageManagers.portage import Portage as P
-	elif d == 'fedora': from tracer.packageManagers.dnf import Dnf as P
-	elif d == 'debian': from tracer.packageManagers.dpkg import Dpkg as P
-	else: raise UnsupportedDistribution(d)
-	return P()
+		if   d == 'gentoo': from tracer.packageManagers.portage import Portage as P
+		elif d == 'fedora': from tracer.packageManagers.dnf import Dnf as P
+		elif d == 'debian': from tracer.packageManagers.dpkg import Dpkg as P
+		else: raise UnsupportedDistribution(d)
+		return P()
 
+	@staticmethod
+	def init_system():
+		"""
+		Returns name of init system you are using
+		e.g. init, systemd, upstart
+		"""
 
-def init_system():
-	"""
-	Returns name of init system you are using
-	e.g. init, systemd, upstart
-	"""
-
-	init = psutil.Process(1)
-	name = init.name.split(" ")[0]
-	return name
+		init = psutil.Process(1)
+		name = init.name.split(" ")[0]
+		return name

@@ -22,8 +22,8 @@ import psutil
 from tracer.resources.rules import Rules
 from tracer.resources.FilenameCleaner import FilenameCleaner
 from tracer.resources.applications import Applications
+from tracer.resources.system import System
 import tracer.resources.memory as Memory
-import tracer.resources.system as System
 
 
 class Tracer:
