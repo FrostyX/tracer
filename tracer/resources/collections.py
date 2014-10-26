@@ -28,6 +28,8 @@ class ApplicationsCollection(list):
 class ProcessesCollection(list):
 
 	def owned_by(self, user):
+		if not user:
+			return self
 		processes = filter(lambda process: process.username == user, self)
 		return ProcessesCollection(processes)
 

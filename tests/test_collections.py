@@ -23,3 +23,7 @@ class TestApplications(unittest.TestCase):
 		self.assertIsInstance(collection, ProcessesCollection)
 		self.assertIsInstance(collection.owned_by('user'), ProcessesCollection)
 		self.assertIsInstance(collection.newer_than(1414006430.1), ProcessesCollection)
+
+	def test_processes_none_user(self):
+		collection = Processes.all().owned_by(None)
+		self.assertGreater(len(collection), 0)
