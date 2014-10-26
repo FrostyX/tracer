@@ -3,8 +3,6 @@
 from __meta__ import *
 from tracer.resources.rules import Rules, Rule
 
-from bs4 import BeautifulSoup
-from os.path import dirname, realpath
 
 class TestRules(unittest.TestCase):
 
