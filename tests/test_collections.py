@@ -16,6 +16,7 @@ class TestApplications(unittest.TestCase):
 
 		self.assertEqual(collection.sorted('name'), ApplicationsCollection([a2, a1, a3]))
 		self.assertEqual(collection.sorted('helper'), ApplicationsCollection([a1, a3, a2]))
+		self.assertIsInstance(collection, ApplicationsCollection)
 
 	def test_processes_types(self):
 		processes = Processes.all()
