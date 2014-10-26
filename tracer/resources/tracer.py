@@ -98,10 +98,10 @@ class Tracer:
 
 		rule = Rules.find(parent.name)
 
-		if not rule or not rule["action"]:
+		if not rule or not rule.action:
 			return process
 
-		if rule["action"] == Rules.ACTIONS["CALL-PARENT"]:
+		if rule.action == Rules.ACTIONS["CALL-PARENT"]:
 			return self._apply_rules(parent)
 
 		# Only PRINT action left

@@ -44,7 +44,7 @@ class Rules:
 			Rules._load_definitions()
 
 		for rule in Rules._rules:
-			if rule["name"] == app_name:
+			if rule.name == app_name:
 				return rule
 
 	@staticmethod
@@ -70,7 +70,7 @@ class Rules:
 			soup = BeautifulSoup(f.read())
 
 			for rule in soup.find_all("rule"):
-				r = rule.attrs
+				r = Rule(rule.attrs)
 				if r in Rules._rules:
 					i = Rules._rules.index(r)
 					Rules._rules[i].update(r)
@@ -83,3 +83,46 @@ class Rules:
 		except IOError:
 			raise PathNotFound('DATA_DIR')
 
+
+class Rule(object):
+
+	"""
+	Represent the rule defined in `rules.xml`
+
+	Attributes
+	----------
+	name : str
+	action : str
+		See `Rules.ACTIONS` for possible values
+	"""
+
+	_attributes = None
+
+	def __init__(self, attributes_dict):
+		self._attributes = attributes_dict
+
+	def __eq__(self, other):
+		return isinstance(other, Rule) and self.name == other.name
+
+	def __getattr__(self, item):
+		return self._attributes[item]
+
+	def __len__(self):
+		return len(self._attributes)
+
+	def __contains__(self, item):
+		return item in self._attributes
+
+	def __str__(self):
+		return "<Rule: " + self._attributes["name"] + ">"
+
+	def __repr__(self):
+		return self.__str__() + "\n"
+
+	def setdefault(self, key, value):
+		self._attributes.setdefault(key, value)
+
+	def update(self, values):
+		if isinstance(values, Rule):
+			values = values._attributes
+		self._attributes.update(values)
