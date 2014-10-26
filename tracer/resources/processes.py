@@ -28,13 +28,13 @@ class Processes(object):
 
 	@staticmethod
 	def all():
-		processes = set()
+		processes = ProcessesCollection()
 		for pid in psutil.get_pid_list():
 			try:
-				processes.add(Process(pid))
+				processes.append(Process(pid))
 			except psutil.NoSuchProcess: pass
 			except psutil.AccessDenied: pass
-		return ProcessesCollection(processes)
+		return processes
 
 
 class Process(psutil.Process):
