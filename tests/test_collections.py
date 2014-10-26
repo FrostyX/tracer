@@ -6,7 +6,7 @@ from tracer.resources.processes import Processes
 from tracer.resources.collections import ApplicationsCollection, ProcessesCollection
 
 
-class TestApplications(unittest.TestCase):
+class TestCollections(unittest.TestCase):
 
 	def test_applications_sorted(self):
 		a1 = Application({'name': 'foo', 'helper': 'bar'})
