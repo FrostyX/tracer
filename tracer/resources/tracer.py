@@ -26,7 +26,7 @@ from tracer.resources.system import System
 import tracer.resources.memory as Memory
 
 
-class Tracer:
+class Tracer(object):
 	"""Tracer finds outdated running applications in your system"""
 
 	"""List of packages that only should be traced"""
@@ -56,10 +56,7 @@ class Tracer:
 
 		timestamp = self.timestamp if self.timestamp else psutil.BOOT_TIME
 		packages = self._PACKAGE_MANAGER.packages_newer_than(timestamp)
-		if self.specified_packages:
-			for package in packages:
-				if package not in self.specified_packages:
-					packages.remove(package)
+		packages = packages.intersection(self.specified_packages)
 		return packages
 
 	def package_info(self, app_name):
@@ -72,7 +69,7 @@ class Tracer:
 		"""
 
 		memory = Memory.dump_memory(user)
-		packages = self.specified_packages if self.specified_packages and self._now else self._modified_packages()
+		packages = self._modified_packages()
 
 		affected = set()
 		found = []
@@ -152,7 +149,8 @@ class Tracer:
 
 	@specified_packages.setter
 	def specified_packages(self, packages):
-		self._specified_packages = packages
+		if packages:
+			self._specified_packages = packages
 
 	@property
 	def now(self):
