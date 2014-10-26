@@ -80,34 +80,6 @@ def processes_using_file(file, memory):
 	return used_by
 
 
-def files_in_memory():
-	"""
-	Returns list of all files loaded in memory
-	"""
-	files = []
-	for pid in psutil.get_pid_list():
-		try:
-			files += process_files(pid)
-		except psutil.NoSuchProcess:
-			pass
-
-	return set(files)
-
-
-def processes_with_files():
-	"""
-	Returns multidimensional list with this pattern - list[psutil.Process][files]
-	"""
-	processes = []
-	for p in all_processes():
-		try:
-			processes.append([p, process_files(p.pid)])
-		except psutil.NoSuchProcess: pass
-		except psutil.AccessDenied: pass
-
-	return processes
-
-
 def dump_memory(user=None):
 	"""
 	Returns memory in BTree structure
