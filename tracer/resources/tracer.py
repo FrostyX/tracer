@@ -65,7 +65,7 @@ class Tracer:
 	def package_info(self, app_name):
 		return self._PACKAGE_MANAGER.package_info(app_name)
 
-	def trace_running(self, user=None):
+	def trace_affected(self, user=None):
 		"""
 		Returns list of processes which uses some files that have been modified
 		@TODO This function should be hardly optimized
@@ -74,7 +74,7 @@ class Tracer:
 		memory = Memory.dump_memory(user)
 		packages = self.specified_packages if self.specified_packages and self._now else self._modified_packages()
 
-		running = set()
+		affected = set()
 		found = []
 		for package in packages:
 			for file in self._PACKAGE_MANAGER.package_files(package.name):
@@ -88,9 +88,9 @@ class Tracer:
 						if p.create_time <= package.modified:
 							found.append(p.pid)
 							p = self._apply_rules(p)
-							running.add(p)
+							affected.add(p)
 				except KeyError: pass
-		return running
+		return affected
 
 	def _apply_rules(self, process):
 		parent = process.parent
