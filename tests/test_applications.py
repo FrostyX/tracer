@@ -4,8 +4,6 @@ from __meta__ import *
 from tracer.resources.applications import Applications, Application
 from tracer.resources.collections import ApplicationsCollection, ProcessesCollection
 
-from bs4 import BeautifulSoup
-from os.path import dirname, realpath
 
 class TestApplications(unittest.TestCase):
 
