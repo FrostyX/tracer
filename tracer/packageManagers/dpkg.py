@@ -22,7 +22,7 @@ from __future__ import absolute_import
 from tracer.resources.system import System
 if System.distribution() == "debian":
 
-	from ipackageManager import IPackageManager
+	from .ipackageManager import IPackageManager
 	from tracer.resources.package import Package
 	from tracer.resources.collections import PackagesCollection
 	import subprocess
