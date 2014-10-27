@@ -6,7 +6,7 @@ Summary:	finds outdated running applications in your system
 BuildArch:	noarch
 Group:		Applications/System
 License:	GPLv2
-URL:		https://github.com/FrostyX/tracer/wiki
+URL:		http://tracer-package.com/
 # Sources can be obtained by
 # git clone git@github.com:FrostyX/tracer.git
 # cd tracer
