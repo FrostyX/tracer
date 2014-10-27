@@ -2,7 +2,7 @@
 
 Tracer finds outdated running applications in your system
 
-Tracer determines which applications use outdated files and prints them. For special kind of applications such as services or daemons, it suggests a standard command to restart it. Detecting whether file is outdated or not is based on a simple algorithm. If application has loaded in memory any version of a file which is provided by any package updated since system was booted up, tracer consider this application as outdated.
+Tracer determines which applications use outdated files and prints them. For special kind of applications such as services or daemons, it suggests a standard command to restart it. Detecting whether file is outdated or not is based on a simple idea. If application has loaded in memory any version of a file which is provided by any package updated since system was booted up, tracer consider this application as outdated.
 
 ## Overview
 <table frame="void" rules="none">
