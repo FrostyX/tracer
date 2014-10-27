@@ -16,10 +16,15 @@
 # 02110-1301, USA.
 #
 
-from rpm import Rpm
+from __future__ import absolute_import
 
 
-class Yum(Rpm):
+from tracer.resources.system import System
+if System.distribution() == "fedora":
 
-	@property
-	def history_path(self): return '/var/lib/yum/history/'
+	from tracer.packageManagers.rpm import Rpm
+
+	class Yum(Rpm):
+
+		@property
+		def history_path(self): return '/var/lib/yum/history/'
