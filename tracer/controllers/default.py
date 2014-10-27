@@ -23,7 +23,6 @@ from tracer.views.note_for_hidden import NoteForHiddenView
 from tracer.resources.lang import _
 from tracer.resources.tracer import Tracer
 from tracer.resources.applications import Applications
-from tracer.resources.ProcessesList import ProcessesList
 from tracer.controllers.helper import HelperController
 
 
