@@ -20,7 +20,7 @@ Please note that for DNF also exists plugin which calls tracer after every succe
 
 ::
 
-    dnf install dnf-tracer-plugin
+    dnf install dnf-plugin-tracer
 
 Take a look into User Guide at :ref:`dnf-plugin`.
 

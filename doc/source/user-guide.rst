@@ -144,7 +144,7 @@ Fedora - DNF plugin
 
 There is plugin for new fedora package manager - DNF. It calls tracer after every successful transaction. Please note that it checks only packages in actual transaction, so if you run ``tracer`` from command line, you can actually get longer list.
 
-If you want this feature, install the ``dnf-tracer-plugin`` package.
+If you want this feature, install the ``dnf-plugin-tracer`` package.
 
 ::
 
