@@ -38,7 +38,7 @@ Requires:	dnf >= 0.4.9
 %description -n dnf-tracer-plugin
 Tracer finds outdated running applications in your system.
 
-This is plugin for DNF which runs tracer after every successful transaction
+This is plugin for DNF which runs tracer after every successful transaction.
 
 %prep
 %setup -q
