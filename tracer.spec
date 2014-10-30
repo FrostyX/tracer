@@ -44,7 +44,7 @@ This is plugin for DNF which runs tracer after every successful transaction.
 
 
 %build
-make man
+make %{?_smp_mflags} man
 
 
 %install
