@@ -23,8 +23,6 @@ Requires:	python-beautifulsoup4
 Requires:	python-psutil
 
 %description
-Tracer finds outdated running applications in your system.
-
 Tracer determines which applications use outdated files and prints them. For
 special kind of applications such as services or daemons, it suggests a standard
 command to restart it. Detecting whether file is outdated or not is based on a
