@@ -1,5 +1,5 @@
 Name:		tracer
-Version:	0.5.3
+Version:	0.5.4
 Release:	1%{?dist}
 Summary:	Finds outdated running applications in your system
 
@@ -72,6 +72,11 @@ cp -ar integration/dnf/plugins/tracer.py %{buildroot}/%{python2_sitelib}/dnf-plu
 %{python2_sitelib}/dnf-plugins/tracer.py*
 
 %changelog
+* Thu Oct 30 2014 Jakub Kadlčík <frostyx@email.cz> 0.5.4-1
+- Rename DNF plugin to dnf-plugin-tracer (frostyx@email.cz)
+- Trace affected applications instead of processes (frostyx@email.cz)
+- Rewrite the description (frostyx@email.cz)
+
 * Sat Oct 25 2014 Jakub Kadlčík <frostyx@email.cz> 0.5.3-1
 - Prevent traceback from theme (frostyx@email.cz)
 
