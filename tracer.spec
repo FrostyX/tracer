@@ -14,7 +14,6 @@ URL:		http://tracer-package.com/
 Source0:	%{name}-%{version}.tar.gz
 
 BuildRequires:	python2-devel
-BuildRequires:	make
 BuildRequires:	asciidoc
 BuildRequires:	python-sphinx
 BuildRequires:	libxslt
