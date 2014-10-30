@@ -1,7 +1,7 @@
 Name:		tracer
 Version:	0.5.3
 Release:	1%{?dist}
-Summary:	finds outdated running applications in your system
+Summary:	Finds outdated running applications in your system
 
 BuildArch:	noarch
 Group:		Applications/System
