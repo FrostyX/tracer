@@ -1,4 +1,3 @@
-#!/usr/bin/python
 #-*- coding: utf-8 -*-
 # router.py
 # Router chooses the right controller and its method and calls it

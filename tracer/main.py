@@ -1,4 +1,3 @@
-#!/usr/bin/python
 #-*- coding: utf-8 -*-
 # main.py
 # Tracer finds outdated running applications in your system

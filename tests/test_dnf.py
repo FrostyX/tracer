@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-
 from __meta__ import *
 try:
 	from tracer.packageManagers.ipackageManager import IPackageManager

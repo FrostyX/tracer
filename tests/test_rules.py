@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-
 from __meta__ import *
 from tracer.resources.rules import Rules, Rule
 

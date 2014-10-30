@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-
 from __meta__ import *
 import tracer.resources.lang as Lang
 import os
