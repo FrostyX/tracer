@@ -1,8 +1,8 @@
 from __meta__ import *
 from tracer.resources.applications import Applications, Application
-from tracer.resources.processes import Processes
+from tracer.resources.processes import Processes, AffectedProcess
 from tracer.resources.package import Package
-from tracer.resources.collections import ApplicationsCollection, ProcessesCollection, PackagesCollection
+from tracer.resources.collections import ApplicationsCollection, ProcessesCollection, PackagesCollection, AffectedProcessesCollection
 
 
 class TestCollections(unittest.TestCase):
@@ -27,6 +27,20 @@ class TestCollections(unittest.TestCase):
 	def test_processes_none_user(self):
 		collection = Processes.all().owned_by(None)
 		self.assertGreater(len(collection), 0)
+
+	def test_processes_update(self):
+		p1 = AffectedProcess()
+		p2 = AffectedProcess()
+		p1.name = "p1"
+		p2.name = "p1"
+		p2.files = set(['foo', 'bar', 'baz'])
+
+		c = AffectedProcessesCollection()
+		c.update([p1])
+		c.update([p2])
+
+		self.assertIn(p1, c)
+		self.assertIn('bar', c[c.index(p1)].files)
 
 	def test_packages_intersection(self):
 		p1 = Package("foo")

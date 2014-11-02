@@ -72,6 +72,16 @@ class ProcessesCollection(list):
 		return processes
 
 
+class AffectedProcessesCollection(ProcessesCollection):
+
+	def update(self, iterable):
+		for x in iterable:
+			if x in self:
+				self[self.index(x)].update(x)
+			else:
+				self.append(x)
+
+
 class PackagesCollection(list):
 
 	_package_manager = None

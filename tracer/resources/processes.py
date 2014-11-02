@@ -124,3 +124,12 @@ class Process(psutil.Process):
 			started_str = str(started.seconds) + " seconds"
 
 		return started_str
+
+
+class AffectedProcess(Process):
+	packages = set()
+	files = set()
+
+	def update(self, process):
+		self.files = self.files.union(process.files)
+		self.packages = self.packages.union(process.packages)
