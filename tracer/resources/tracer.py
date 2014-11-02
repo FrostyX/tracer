@@ -108,7 +108,7 @@ class Tracer(object):
 		# PRINT rule is defined for parent process
 		return parent
 
-	def who_affected(self, app_name):
+	def trace_application(self, app_name):
 		"""
 		Returns list of packages and their files who affected the process
 		Packages and files are wrapped with dict containing process as a key.

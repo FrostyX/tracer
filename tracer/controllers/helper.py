@@ -46,7 +46,7 @@ class HelperController(object):
 			app = Applications.find(app_name)
 
 
-			try: affected_by = tr.who_affected(app_name)
+			try: affected_by = tr.trace_application(app_name)
 			except AccessDenied: affected_by = _("affected_by_forbidden")
 
 			view = HelperView()
