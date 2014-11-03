@@ -40,8 +40,7 @@ class Processes(object):
 class Process(psutil.Process):
 	def __eq__(self, process):
 		"""For our purposes, two processes are equal when they have same name"""
-		return (isinstance(process, self.__class__)
-		        and self.name == process.name)
+		return self.name == process.name
 
 	def __ne__(self, process):
 		return not self.__eq__(process)
@@ -127,8 +126,12 @@ class Process(psutil.Process):
 
 
 class AffectedProcess(Process):
-	packages = set()
-	files = set()
+	packages = None
+	files = None
+
+	def __init__(self):
+		self.packages = set()
+		self.files = set()
 
 	def update(self, process):
 		self.files = self.files.union(process.files)

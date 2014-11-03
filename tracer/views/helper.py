@@ -61,12 +61,14 @@ class HelperView(View):
 				print indent_level * indent + "{0} ({1})".format(process.name, process.pid)
 				indent_level += 1
 
-			for package in self.args.affected_by[process]:
-				print indent_level * indent + package
+			for package in process.packages:
+				print indent_level * indent + package.name
 
 				if self.args.args.verbose < 2:
 					continue
 
 				indent_level += 1
-				for file in self.args.affected_by[process][package]:
+				for file in package.files:
 					print indent_level * indent + file
+
+				indent_level -= 1

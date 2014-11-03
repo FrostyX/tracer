@@ -22,7 +22,8 @@ import psutil
 from tracer.resources.rules import Rules
 from tracer.resources.FilenameCleaner import FilenameCleaner
 from tracer.resources.applications import Applications
-from tracer.resources.collections import ApplicationsCollection
+from tracer.resources.processes import AffectedProcess
+from tracer.resources.collections import ApplicationsCollection, AffectedProcessesCollection
 from tracer.resources.system import System
 import tracer.resources.memory as Memory
 
@@ -110,18 +111,18 @@ class Tracer(object):
 
 	def trace_application(self, app_name):
 		"""
-		Returns list of packages and their files who affected the process
-		Packages and files are wrapped with dict containing process as a key.
-		[ {process : {pkg_name : [file1, file2, ...]}, ... }, ... ]
+		Returns collection of processes where each of them contains
+		packages which affected it. Packages contains only files matching
+		with the particular process
 		"""
 		process = Applications.find(app_name).instances[0]  # @TODO Reimplement for all processes
 		packages = self._modified_packages()
-		affected_by = self._affecting_packages(process, packages)
-		affected_by.update(self._affecting_children(process, packages))
-		return affected_by
+		processes = self._affecting_processes(process, packages)
+		processes.update(self._affecting_children(process, packages))
+		return processes
 
-	def _affecting_packages(self, process, packages):
-		affected_by = {}
+	def _affecting_processes(self, process, packages):
+		collection = AffectedProcessesCollection()
 		process_files = process.files
 		for package in packages:
 			matching_files = set()
@@ -133,17 +134,24 @@ class Tracer(object):
 				if process.create_time <= package.modified:
 					matching_files.add(package_file)
 
-			if matching_files: affected_by[process] = {package.name : matching_files}
-		return affected_by
+			if matching_files:
+				aff_pkg = package
+				aff_pkg.files = matching_files
+
+				affected = AffectedProcess()
+				affected.__dict__.update(process.__dict__)
+				affected.packages.update([aff_pkg])
+				collection.update([affected])
+		return collection
 
 	def _affecting_children(self, process, packages):
 		if not Rules.find(process.name):
 			return {}
 
-		affected_by = {}
+		processes = AffectedProcessesCollection()
 		for child in process.get_children():
-			affected_by.update(self._affecting_packages(child, packages))
-		return affected_by
+			processes.update(self._affecting_processes(child, packages))
+		return processes
 
 	@property
 	def specified_packages(self):
