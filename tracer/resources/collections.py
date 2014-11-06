@@ -51,6 +51,9 @@ class ApplicationsCollection(list):
 
 class ProcessesCollection(list):
 
+	def sorted(self, attribute):
+		return sorted(self, key=attrgetter(attribute))
+
 	def owned_by(self, user):
 		if not user:
 			return self
