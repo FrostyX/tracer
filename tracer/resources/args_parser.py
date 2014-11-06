@@ -86,6 +86,13 @@ parser.add_argument('--version',
 	help='print program version'
 )
 
+parser.add_argument('--show-resource',
+	nargs=1,
+	choices=['packages', 'processes', 'rules', 'applications', 'system'],
+	dest='resource',
+	help='provide informations about selected resource'
+)
+
 user = parser.add_mutually_exclusive_group()
 user.add_argument("-u", "--user",
 	nargs=1,

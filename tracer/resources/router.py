@@ -23,6 +23,7 @@ from tracer.version import __version__
 from tracer.resources.lang import _
 from tracer.controllers.default import DefaultController
 from tracer.controllers.helper import HelperController
+from tracer.controllers.resource import ResourceController
 
 
 class Router:
@@ -44,6 +45,10 @@ class Router:
 
 		elif os.getuid() != 0:
 			print _("root_only")
+
+		elif self.args.resource:
+			controller = ResourceController(self.args)
+			controller.render()
 
 		else:
 			controller = DefaultController(self.args, self.packages)
