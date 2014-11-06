@@ -23,10 +23,13 @@ from psutil import NoSuchProcess
 from tracer.resources.system import System
 
 
-class ApplicationsCollection(list):
+class Collection(list):
 
 	def sorted(self, attribute):
 		return sorted(self, key=attrgetter(attribute))
+
+
+class ApplicationsCollection(Collection):
 
 	def with_helpers(self):
 		applications = filter(lambda app: app.helper, self)
@@ -49,10 +52,7 @@ class ApplicationsCollection(list):
 		return count
 
 
-class ProcessesCollection(list):
-
-	def sorted(self, attribute):
-		return sorted(self, key=attrgetter(attribute))
+class ProcessesCollection(Collection):
 
 	def owned_by(self, user):
 		if not user:
@@ -85,7 +85,7 @@ class AffectedProcessesCollection(ProcessesCollection):
 				self.append(x)
 
 
-class PackagesCollection(list):
+class PackagesCollection(Collection):
 
 	_package_manager = None
 
