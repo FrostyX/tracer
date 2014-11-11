@@ -43,12 +43,14 @@ class Tracer(dnf.Plugin):
 		Call after successful transaction
 		See https://rpm-software-management.github.io/dnf/api_transaction.html
 		"""
-		items = []
-		for transaction_item in self.base.transaction:
-			item = transaction_item.installed.name if transaction_item.installed else transaction_item.erased.name
-			items.append(item)
+		installed = set([package.name for package in self.base.transaction.install_set])
+		erased = set([package.name for package in self.base.transaction.remove_set])
 
-		args = ['tracer', '-n'] + items
+		# Don't run tracer when uninstalling it
+		if "tracer" in erased - installed:
+			return
+
+		args = ['tracer', '-n'] + list(installed | erased)
 		p = subprocess.Popen(args, stdout=subprocess.PIPE)
 		out = p.communicate()[0]
 		_print_output(out)
