@@ -44,6 +44,11 @@ class ApplicationsCollection(Collection):
 		applications = filter(lambda app: app.type not in app_types, self)
 		return ApplicationsCollection(applications)
 
+	def filter_types(self, app_types):
+		"""app_types -- see Applications.TYPES"""
+		applications = filter(lambda app: app.type in app_types, self)
+		return ApplicationsCollection(applications)
+
 	def count_type(self, app_type):
 		count = 0
 		for application in self:
