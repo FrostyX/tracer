@@ -77,12 +77,11 @@ if System.distribution() == "debian":
 					files.append(file)
 			return files
 
-		def package_info(self, app_name):
-			"""Returns package object with all attributes"""
-			name = self.provided_by(app_name)
+		def load_package_info(self, package):
+			"""From database load informations about given package and set them to it"""
 			description = None
 
-			process = subprocess.Popen(['dpkg', '-s', name], stdout=subprocess.PIPE)
+			process = subprocess.Popen(['dpkg', '-s', package.name], stdout=subprocess.PIPE)
 			out = process.communicate()[0]
 			out = out.split('\n')
 
@@ -90,9 +89,7 @@ if System.distribution() == "debian":
 				if line.startswith("Description:"):
 					description = line.split("Description:")[1].strip()
 
-			package = Package(name)
 			package.description = description
-			return package
 
 		def provided_by(self, app_name):
 			"""Returns name of package which provides given application"""
@@ -100,4 +97,4 @@ if System.distribution() == "debian":
 			process = subprocess.Popen(command, stdout=subprocess.PIPE)
 			pkg_name = process.communicate()[0]
 			pkg_name = pkg_name.split('\n')[0]
-			return pkg_name.split(':')[0]
+			return Package(pkg_name.split(':')[0])

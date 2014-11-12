@@ -18,7 +18,7 @@
 
 from psutil import AccessDenied
 
-import tracer.resources.memory as Memory
+from tracer.resources.system import System
 from tracer.views.helper import HelperView
 from tracer.resources.lang import _
 from tracer.resources.tracer import Tracer
@@ -41,10 +41,12 @@ class HelperController(object):
 	def print_helper(self, app_name, args):
 		processes = Applications.find(app_name).instances
 		if processes:
-			tr = Tracer()
-			package = tr.package_info(app_name)
-			app = Applications.find(app_name)
+			manager = System.package_manager()
+			package = manager.provided_by(app_name)
 
+			tr = Tracer()
+			tr.load_package_info(package)
+			app = Applications.find(app_name)
 
 			try: affected_by = tr.trace_application(app_name)
 			except AccessDenied: affected_by = _("affected_by_forbidden")

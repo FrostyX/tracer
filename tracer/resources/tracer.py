@@ -61,8 +61,8 @@ class Tracer(object):
 		packages = packages.intersection(self.specified_packages)
 		return packages
 
-	def package_info(self, app_name):
-		return self._PACKAGE_MANAGER.package_info(app_name)
+	def load_package_info(self, package):
+		self._PACKAGE_MANAGER.load_package_info(package)
 
 	def trace_affected(self, user=None):
 		"""

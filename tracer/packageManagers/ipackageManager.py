@@ -34,8 +34,8 @@ class IPackageManager:
 		"""Returns list of files provided by package"""
 		raise NotImplementedError
 
-	def package_info(self, app_name):
-		"""Returns package object with all attributes"""
+	def load_package_info(self, package):
+		"""From database load informations about given package and set them to it"""
 		raise NotImplementedError
 
 	def provided_by(self, app_name):

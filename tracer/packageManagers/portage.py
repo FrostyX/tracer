@@ -75,15 +75,14 @@ if System.distribution() == "gentoo":
 			contents = vartree.dbapi.aux_get(cpv, ['CONTENTS'])[0].split('\n')[:-1]
 			return [x.split()[1] for x in contents]
 
-		def package_info(self, app_name):
-			"""Returns package object with all attributes"""
+		def load_package_info(self, package):
+			"""From database load informations about given package and set them to it"""
 			description = None
-			name = self.provided_by(app_name)
-			if not name:
+			if not package:
 				return None
 
-			category = name.split('/')[0]
-			process = subprocess.Popen(['eix', '-e', name], stdout=subprocess.PIPE)
+			category = package.name.split('/')[0]
+			process = subprocess.Popen(['eix', '-e', package.name], stdout=subprocess.PIPE)
 			out = process.communicate()[0]
 			out = out.split('\n')
 
@@ -92,13 +91,11 @@ if System.distribution() == "gentoo":
 				if line.startswith("Description:"):
 					description = line.split("Description:")[1].strip()
 
-			package = Package(name)
 			package.description = description
 			package.category = category
-			return package
 
 		def provided_by(self, app_name):
-			"""Returns name of package which provides given application"""
+			"""Returns a package which provides given application"""
 			process = Applications.find(app_name).instances[0]  # @TODO Reimplement for all processes
 			package = self._file_provided_by(process.exe)
 			if package:
@@ -106,8 +103,8 @@ if System.distribution() == "gentoo":
 					for arg in process.cmdline[1:]:
 						if os.path.isfile(arg):
 							package = self._file_provided_by(arg)
-							return package.name if package else None
-				return package.name
+							return package if package else None
+				return package
 			return None
 
 		def _file_provided_by(self, file):

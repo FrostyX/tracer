@@ -87,15 +87,14 @@ if System.distribution() == "fedora":
 				return files.split('\n')[:-1]
 			return []
 
-		def package_info(self, app_name):
-			"""Returns package object with all attributes"""
+		def load_package_info(self, package):
+			"""From database load informations about given package and set them to it"""
 			description = None
 			category = None
-			name = self.provided_by(app_name)
-			if not name:
+			if not package:
 				return None
 
-			process = subprocess.Popen(['rpm', '-qi', name], stdout=subprocess.PIPE)
+			process = subprocess.Popen(['rpm', '-qi', package.name], stdout=subprocess.PIPE)
 			out = process.communicate()[0]
 			out = out.split('\n')
 
@@ -106,10 +105,8 @@ if System.distribution() == "fedora":
 				if line.startswith("Group"):
 					category = line.split("Group       :")[1].strip()
 
-			package = Package(name)
 			package.description = description
 			package.category = category
-			return package
 
 		def provided_by(self, app_name):
 			"""Returns name of package which provides given application"""
@@ -122,8 +119,8 @@ if System.distribution() == "fedora":
 					for arg in process.cmdline[1:]:
 						if os.path.isfile(arg):
 							package = self._file_provided_by(arg)
-							return package.name if package else None
-				return package.name
+							return package if package else None
+				return package
 			return None
 
 		def _file_provided_by(self, file):
