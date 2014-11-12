@@ -61,9 +61,6 @@ class Tracer(object):
 		packages = packages.intersection(self.specified_packages)
 		return packages
 
-	def load_package_info(self, package):
-		self._PACKAGE_MANAGER.load_package_info(package)
-
 	def trace_affected(self, user=None):
 		"""
 		Returns list of processes which uses some files that have been modified

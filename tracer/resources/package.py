@@ -16,6 +16,9 @@
 # 02110-1301, USA.
 #
 
+from __future__ import absolute_import
+from tracer.resources.system import System
+
 
 class Package:
 	"""Represents linux package"""
@@ -45,3 +48,6 @@ class Package:
 
 	def __hash__(self):
 		return hash(self.name)
+
+	def load_info(self):
+		System.package_manager().load_package_info(self)

@@ -43,9 +43,10 @@ class HelperController(object):
 		if processes:
 			manager = System.package_manager()
 			package = manager.provided_by(app_name)
+			if package:
+				package.load_info()
 
 			tr = Tracer()
-			tr.load_package_info(package)
 			app = Applications.find(app_name)
 
 			try: affected_by = tr.trace_application(app_name)
