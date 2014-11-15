@@ -68,7 +68,11 @@ class ProcessesCollection(Collection):
 		return self.filtered(lambda process: process.create_time >= timestamp)
 
 	def unique(self):
-		return ProcessesCollection(set(self))
+		unique = set()
+		for process in self:
+			try: unique.add(process)
+			except NoSuchProcess: pass
+		return ProcessesCollection(unique)
 
 	def filtered(self, function):
 		processes = ProcessesCollection()
