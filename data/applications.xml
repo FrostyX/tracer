@@ -46,6 +46,19 @@
   -         <app name="app_name3" />
   -     </group>
   -
+  - Helpers:
+  -     Obviously you can specify the helper and set the command for restarting
+  -     the application. I.e. helper="myapp restart".
+  -     What is actually more interesting is that you can add various arguments.
+  -
+  -     <app name="app_name" helper="kill {PID}" />
+  -
+  - Helper arguments:
+  -     * {PNAME} - Name of the process
+  -     * {NAME}  - Name of the application
+  -     * {PID}   - Process ID
+  -     * {EXE}   - Process binary
+  -
   -->
 
 <applications>

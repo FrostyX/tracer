@@ -1,6 +1,7 @@
 from . import View
 from tracer.resources.lang import _
 from tracer.views.note_for_hidden import NoteForHiddenView
+import re
 
 
 class DefaultView(View):
@@ -16,7 +17,10 @@ class DefaultView(View):
 		if len(with_helpers):
 			print "  " + _("restart_using_helpers")
 			for application in with_helpers.sorted("helper"):
-				print "      " + application.helper
+				helpers = "; ".join(application.helpers)
+				if application.helper_contains_formating and not application.helper_contains_name:
+					helpers += "  # {}".format(application.name)
+				print "      " + helpers
 
 			if without_helpers:
 				print ""

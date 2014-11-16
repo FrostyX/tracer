@@ -25,6 +25,7 @@ from tracer.resources.collections import ApplicationsCollection
 from tracer.resources.lang import _
 from tracer.resources.processes import Processes
 import os
+import re
 
 
 class Applications:
@@ -174,6 +175,7 @@ class Application:
 			values = values._attributes
 		self._attributes.update(values)
 
+	# @TODO rename to helper_format
 	@property
 	def helper(self):
 		helper = self._attributes["helper"]
@@ -181,6 +183,36 @@ class Application:
 			if helper and not helper.startswith("sudo "):
 				helper = "sudo " + helper
 		return helper
+
+	@property
+	def helper_contains_formating(self):
+		return bool(re.search("\{.*\}", self.helper))
+
+	@property
+	def helper_contains_name(self):
+		return bool(re.search("\{NAME\}", self.helper))
+
+	@property
+	def helpers(self):
+		"""
+		Return the list of helpers which describes how to restart the application.
+		When no ``helper_format`` was described, empty list will be returned.
+		If ``helper_format`` contains process specific arguments such a {PID}, etc.
+		list will contain helper for every application instance.
+		In other cases, there will be just one helper in the list.
+		"""
+		helpers = []
+		if not self.helper_contains_formating:
+			helpers.append(self.helper)
+		else:
+			for process in self.instances:
+				helpers.append(self.helper.format(
+					NAME=self.name,
+					PNAME=process.name,
+					PID=process.pid,
+					EXE=process.exe,
+				))
+		return helpers
 
 	@property
 	def instances(self):
