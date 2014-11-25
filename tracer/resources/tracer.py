@@ -63,7 +63,7 @@ class Tracer(object):
 
 	def trace_affected(self, user=None):
 		"""
-		Returns list of processes which uses some files that have been modified
+		Returns collection of applications which uses some files that have been modified
 		@TODO This function should be hardly optimized
 		"""
 
