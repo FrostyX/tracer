@@ -112,10 +112,11 @@ class Tracer(object):
 		packages which affected it. Packages contains only files matching
 		with the particular process
 		"""
-		process = Applications.find(app_name).instances[0]  # @TODO Reimplement for all processes
 		packages = self._modified_packages()
-		processes = self._affecting_processes(process, packages)
-		processes.update(self._affecting_children(process, packages))
+		processes = AffectedProcessesCollection()
+		for process in Applications.find(app_name).instances:
+			processes.update(self._affecting_processes(process, packages))
+			processes.update(self._affecting_children(process, packages))
 		return processes
 
 	def _affecting_processes(self, process, packages):
