@@ -205,7 +205,7 @@ class Application:
 		if not self.helper_contains_formating:
 			helpers.append(self.helper)
 		else:
-			for process in self.instances:
+			for process in self.affected_instances:
 				helpers.append(self.helper.format(
 					NAME=self.name,
 					PNAME=process.name,
@@ -217,3 +217,9 @@ class Application:
 	@property
 	def instances(self):
 		return Processes.all().filtered(lambda process: process.name == self.name)
+
+	@property
+	def affected_instances(self):
+		# @TODO Fix circular dependency and move it up
+		from tracer.resources.tracer import Tracer
+		return Tracer().trace_application(self.name)

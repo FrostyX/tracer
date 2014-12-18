@@ -40,7 +40,7 @@ class Processes(object):
 class Process(psutil.Process):
 	def __eq__(self, process):
 		"""For our purposes, two processes are equal when they have same name"""
-		return self.name == process.name
+		return self.pid == process.pid
 
 	def __ne__(self, process):
 		return not self.__eq__(process)
