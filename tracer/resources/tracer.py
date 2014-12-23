@@ -70,7 +70,7 @@ class Tracer(object):
 		memory = Memory.dump_memory(user)
 		packages = self._modified_packages()
 
-		affected = set()
+		affected = {}
 		found = []
 		for package in packages:
 			for file in self._PACKAGE_MANAGER.package_files(package.name):
@@ -86,8 +86,13 @@ class Tracer(object):
 					if p.create_time <= package.modified:
 						found.append(p.pid)
 						p = self._apply_rules(p)
-						affected.add(Applications.find(p.name))
-		return ApplicationsCollection(affected)
+						a = Applications.find(p.name)
+
+						if a.name not in affected:
+							affected[a.name] = a
+							affected[a.name].affected_instances = AffectedProcessesCollection()
+						affected[a.name].affected_instances.append(p)
+		return ApplicationsCollection(affected.values())
 
 	def _apply_rules(self, process):
 		parent = process.parent

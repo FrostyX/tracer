@@ -46,7 +46,7 @@ class Process(psutil.Process):
 		return not self.__eq__(process)
 
 	def __hash__(self):
-		return hash(self.name)
+		return hash(self.pid)
 
 	@property
 	def files(self):

@@ -218,8 +218,4 @@ class Application:
 	def instances(self):
 		return Processes.all().filtered(lambda process: process.name == self.name)
 
-	@property
-	def affected_instances(self):
-		# @TODO Fix circular dependency and move it up
-		from tracer.resources.tracer import Tracer
-		return Tracer().trace_application(self.name)
+	affected_instances = None
