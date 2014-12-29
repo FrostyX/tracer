@@ -129,7 +129,8 @@ class AffectedProcess(Process):
 	packages = None
 	files = None
 
-	def __init__(self):
+	def __init__(self, pid=None):
+		Process.__init__(self, pid)
 		self.packages = set()
 		self.files = set()
 
