@@ -19,12 +19,9 @@
 from __future__ import absolute_import
 
 import psutil
-from tracer.resources.rules import Rules
 from tracer.resources.FilenameCleaner import FilenameCleaner
-from tracer.resources.applications import Applications
 from tracer.resources.processes import AffectedProcess
 from tracer.resources.collections import ApplicationsCollection, AffectedProcessesCollection
-from tracer.resources.system import System
 import tracer.resources.memory as Memory
 
 
@@ -48,8 +45,14 @@ class Tracer(object):
 	"""Instance of package manager class. Set by __init__"""
 	_PACKAGE_MANAGER = None
 
-	def __init__(self):
-		self._PACKAGE_MANAGER = System.package_manager()
+	"""Objects responsible for providing applications and rules settings form config files"""
+	_rules = None
+	_applications = None
+
+	def __init__(self, package_manager, rules, applications):
+		self._PACKAGE_MANAGER = package_manager
+		self._rules = rules
+		self._applications = applications
 
 	def _modified_packages(self):
 		"""Returns list of packages what tracer should care about"""
@@ -86,7 +89,7 @@ class Tracer(object):
 					if p.create_time <= package.modified:
 						found.append(p.pid)
 						p = self._apply_rules(p)
-						a = Applications.find(p.name)
+						a = self._applications.find(p.name)
 
 						if a.name not in affected:
 							affected[a.name] = a
@@ -99,12 +102,12 @@ class Tracer(object):
 		if not parent:
 			return process
 
-		rule = Rules.find(parent.name)
+		rule = self._rules.find(parent.name)
 
 		if not rule or not rule.action:
 			return process
 
-		if rule.action == Rules.ACTIONS["CALL-PARENT"]:
+		if rule.action == self._rules.ACTIONS["CALL-PARENT"]:
 			return self._apply_rules(parent)
 
 		# Only PRINT action left
@@ -119,7 +122,7 @@ class Tracer(object):
 		"""
 		packages = self._modified_packages()
 		processes = AffectedProcessesCollection()
-		for process in Applications.find(app_name).instances:
+		for process in self._applications.find(app_name).instances:
 			processes.update(self._affecting_processes(process, packages))
 			processes.update(self._affecting_children(process, packages))
 		return processes
@@ -148,7 +151,7 @@ class Tracer(object):
 		return collection
 
 	def _affecting_children(self, process, packages):
-		if not Rules.find(process.name):
+		if not self._rules.find(process.name):
 			return {}
 
 		processes = AffectedProcessesCollection()

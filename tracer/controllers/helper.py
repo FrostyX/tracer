@@ -23,6 +23,7 @@ from tracer.views.helper import HelperView
 from tracer.resources.lang import _
 from tracer.resources.tracer import Tracer
 from tracer.resources.applications import Applications
+from tracer.resources.rules import Rules
 
 
 class HelperController(object):
@@ -46,7 +47,7 @@ class HelperController(object):
 			if package:
 				package.load_info()
 
-			tr = Tracer()
+			tr = Tracer(System.package_manager(), Rules, Applications)
 			app = Applications.find(app_name)
 
 			try: affected_by = tr.trace_application(app_name)

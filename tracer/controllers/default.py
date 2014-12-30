@@ -22,7 +22,9 @@ from tracer.views.interactive import InteractiveView
 from tracer.views.note_for_hidden import NoteForHiddenView
 from tracer.resources.lang import _
 from tracer.resources.tracer import Tracer
+from tracer.resources.system import System
 from tracer.resources.applications import Applications
+from tracer.resources.rules import Rules
 from tracer.controllers.helper import HelperController
 
 
@@ -34,7 +36,7 @@ class DefaultController(object):
 
 	def __init__(self, args, packages):
 		self.args = args
-		self.tracer = Tracer()
+		self.tracer = Tracer(System.package_manager(), Rules, Applications)
 		self.tracer.specified_packages = packages
 		self.tracer.now = args.now
 		self.tracer.timestamp = args.timestamp[0]
