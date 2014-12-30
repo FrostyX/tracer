@@ -52,6 +52,10 @@ if System.distribution() == "fedora":
 			Requires root permissions.
 			"""
 
+			# Package manager wasn't used yet
+			if not os.path.exists(self.history_path):
+				return PackagesCollection([])
+
 			sql = """
 				SELECT pkgtups.name
 				FROM trans_data_pkgs JOIN pkgtups ON trans_data_pkgs.pkgtupid=pkgtups.pkgtupid
