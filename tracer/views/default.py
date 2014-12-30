@@ -58,7 +58,8 @@ class DefaultView(View):
 		else:
 			blocks.append({"content": note_content()})
 
-		print _("you_should_restart")
 		view = BlocksView()
 		view.assign("blocks", blocks)
+		if view.has_content():
+			print _("you_should_restart")
 		view.render()

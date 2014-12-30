@@ -34,3 +34,7 @@ class BlocksView(View):
 			if block["content"]:
 				return True
 		return False
+
+	def has_content(self):
+		"""Return True if at least one block's content is not empty"""
+		return self.next(-1)
