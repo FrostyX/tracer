@@ -29,13 +29,13 @@ class Tracer(object):
 	"""Tracer finds outdated running applications in your system"""
 
 	"""List of packages that only should be traced"""
-	_specified_packages = None
+	specified_packages = None
 
 	"""
 	When true, tracer pretends that specified packages have been updated just now.
 	Benefit of this is absolutely no need for openning the package history database
 	"""
-	_now = False
+	now = False
 
 	"""
 	Timestamp since when the updates should be
@@ -158,20 +158,3 @@ class Tracer(object):
 		for child in process.get_children():
 			processes.update(self._affecting_processes(child, packages))
 		return processes
-
-	@property
-	def specified_packages(self):
-		return self._specified_packages
-
-	@specified_packages.setter
-	def specified_packages(self, packages):
-		if packages:
-			self._specified_packages = packages
-
-	@property
-	def now(self):
-		return self._now
-
-	@now.setter
-	def now(self, value):
-		self._now = value

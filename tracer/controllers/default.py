@@ -37,9 +37,11 @@ class DefaultController(object):
 	def __init__(self, args, packages):
 		self.args = args
 		self.tracer = Tracer(System.package_manager(), Rules, Applications)
-		self.tracer.specified_packages = packages
 		self.tracer.now = args.now
 		self.tracer.timestamp = args.timestamp[0]
+		if packages:
+			self.tracer.specified_packages = packages
+
 		self.applications = self.tracer.trace_affected(self._user(args.user))
 
 	def render(self):
