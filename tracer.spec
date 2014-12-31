@@ -1,5 +1,5 @@
 Name:		tracer
-Version:	0.5.4
+Version:	0.5.5
 Release:	1%{?dist}
 Summary:	Finds outdated running applications in your system
 
@@ -72,6 +72,19 @@ cp -ar integration/dnf/plugins/tracer.py %{buildroot}/%{python2_sitelib}/dnf-plu
 %{python2_sitelib}/dnf-plugins/tracer.py*
 
 %changelog
+* Wed Dec 31 2014 Jakub Kadlčík <frostyx@email.cz> 0.5.5-1
+- On Fedora, use DNF and YUM at once; (RhBug:1168807) (frostyx@email.cz)
+- Return empty collection if DNF wasn't used yet; (RhBug:1168807)
+  (frostyx@email.cz)
+- Rewrite default view using blocks Print blocks of session and static
+  applications when `-a`; Fix #23 (frostyx@email.cz)
+- Implement helper arguments functionality; Close #21 (frostyx@email.cz)
+- Make set step by step; Fix #25 (frostyx@email.cz)
+- Don't run tracer when uninstalling it; Fix #24 (frostyx@email.cz)
+- Add fedora-git releaser (frostyx@email.cz)
+- Implement '--show-resource' parameter (frostyx@email.cz)
+- Use parallel make (frostyx@email.cz)
+
 * Thu Oct 30 2014 Jakub Kadlčík <frostyx@email.cz> 0.5.4-1
 - Rename DNF plugin to dnf-plugin-tracer (frostyx@email.cz)
 - Trace affected applications instead of processes (frostyx@email.cz)
