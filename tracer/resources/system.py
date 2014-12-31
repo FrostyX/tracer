@@ -21,9 +21,11 @@
 from __future__ import absolute_import
 
 # WARNING: There are imports in package_manager()
+import importlib
 import platform
 import psutil
 from tracer.resources.exceptions import UnsupportedDistribution
+from tracer.resources.PackageManager import PackageManager
 
 
 class System(object):
@@ -35,13 +37,27 @@ class System(object):
 	@staticmethod
 	def package_manager():
 		"""Returns instance of package manager according to installed linux distribution"""
-		d = System.distribution()
 
-		if   d == 'gentoo': from tracer.packageManagers.portage import Portage as P
-		elif d == 'fedora': from tracer.packageManagers.dnf import Dnf as P
-		elif d == 'debian': from tracer.packageManagers.dpkg import Dpkg as P
-		else: raise UnsupportedDistribution(d)
-		return P()
+		def get_instance(pair):
+			# WARNING: Imports here
+			path, name = pair
+			module = importlib.import_module(path)
+			return getattr(module, name)()
+
+		managers = {
+			"gentoo": [("tracer.packageManagers.portage", "Portage")],
+			"debian": [("tracer.packageManagers.dpkg", "Dpkg")],
+			"fedora": [
+				("tracer.packageManagers.dnf", "Dnf"),
+				("tracer.packageManagers.yum", "Yum"),
+			],
+		}
+
+		distro = System.distribution()
+		if distro not in managers:
+			raise UnsupportedDistribution(distro)
+
+		return PackageManager(*map(get_instance, managers[distro]))
 
 	@staticmethod
 	def init_system():
