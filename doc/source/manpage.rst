@@ -52,6 +52,13 @@ USERS
 
     -e, --everyone
 
+DEBUG
+~~~~~
+::
+
+    --show-resource=<option>
+                          options: packages | processes | rules | applications | system
+                          dump informations that tracer can use
 
 EXAMPLES
 --------
