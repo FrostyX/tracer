@@ -144,7 +144,7 @@ class Tracer(object):
 				aff_pkg = package
 				aff_pkg.files = matching_files
 
-				affected = AffectedProcess()
+				affected = AffectedProcess(process.pid)
 				affected.__dict__.update(process.__dict__)
 				affected.packages.update([aff_pkg])
 				collection.update([affected])
