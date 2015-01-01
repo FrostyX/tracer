@@ -29,6 +29,7 @@ class FilenameCleaner(object):
 
 	@staticmethod
 	def strip(filename):
+		filename = FilenameCleaner._strip_abnormalities(filename)
 		try:
 			slash = filename.rindex('/')
 			dirname = filename[:slash]
@@ -41,6 +42,24 @@ class FilenameCleaner(object):
 
 		except IndexError: pass
 		except ValueError: pass
+		return filename
+
+	@staticmethod
+	def _strip_abnormalities(filename):
+		# Doesnt matter what is after space cause filename ends with first space
+		try: filename = filename[:filename.index(' ')]
+		except ValueError: pass
+
+		# On Gentoo, there is #new after some files in lsof
+		# i.e. /usr/bin/gvim#new (deleted)
+		if filename.endswith('#new'):
+			filename = filename[0:-4]
+
+		# On Fedora, there is something like ;541350b3 after some files in lsof
+		# See issue #9
+		if ';' in filename:
+			filename = filename[0:filename.index(';')]
+
 		return filename
 
 	@staticmethod

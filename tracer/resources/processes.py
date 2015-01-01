@@ -54,23 +54,7 @@ class Process(psutil.Process):
 
 		# Files from memory maps
 		for mmap in self.get_memory_maps():
-			file = mmap.path
-
-			# Doesnt matter what is after space cause filename ends with first space
-			try: file = file[:file.index(' ')]
-			except ValueError: pass
-
-			# On Gentoo, there is #new after some files in lsof
-			# i.e. /usr/bin/gvim#new (deleted)
-			if file.endswith('#new'):
-				file = file[0:-4]
-
-			# On Fedora, there is something like ;541350b3 after some files in lsof
-			# See issue #9
-			if ';' in file:
-				file = file[0:file.index(';')]
-
-			files.append(FilenameCleaner.strip(file))
+			files.append(FilenameCleaner.strip(mmap.path))
 
 		# Process arguments
 		for arg in self.cmdline[1:]:
