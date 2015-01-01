@@ -60,6 +60,11 @@ class FilenameCleaner(object):
 		if ';' in filename:
 			filename = filename[0:filename.index(';')]
 
+		# On Fedora, there is something like .#prelink#.N3n7Rk (deleted) after some files in lsof
+		# See issue #9
+		if '.#prelink#.' in filename:
+			filename = filename[0:filename.rindex('.#prelink#.')]
+
 		return filename
 
 	@staticmethod

@@ -16,3 +16,7 @@ class TestFilenameCleaner(TestCase):
 		self.assertEqual("/usr/lib64/kde4/kded_networkmanagement.so",
 			self.cleaner.strip("/usr/lib64/kde4/kded_networkmanagement.so;53c7cd86")
 		)
+
+		self.assertEqual("/usr/lib64/firefox/plugin-container",
+			 self.cleaner.strip("/usr/lib64/firefox/plugin-container.#prelink#.N3n7Rk (deleted)")
+		)
