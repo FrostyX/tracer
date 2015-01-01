@@ -1,5 +1,5 @@
 Name:		tracer
-Version:	0.5.5
+Version:	0.5.6
 Release:	1%{?dist}
 Summary:	Finds outdated running applications in your system
 
@@ -72,6 +72,12 @@ cp -ar integration/dnf/plugins/tracer.py %{buildroot}/%{python2_sitelib}/dnf-plu
 %{python2_sitelib}/dnf-plugins/tracer.py*
 
 %changelog
+* Thu Jan 01 2015 Jakub Kadlčík <frostyx@email.cz> 0.5.6-1
+- Sort applications in interactive controler To fix the issue that [number]
+  doesn't correspond to printed application (frostyx@email.cz)
+- Strip .#prelink#. from filenames; See #19 (frostyx@email.cz)
+- Add argument forgotten in dcf0178 (frostyx@email.cz)
+
 * Wed Dec 31 2014 Jakub Kadlčík <frostyx@email.cz> 0.5.5-1
 - On Fedora, use DNF and YUM at once; (RhBug:1168807) (frostyx@email.cz)
 - Return empty collection if DNF wasn't used yet; (RhBug:1168807)
