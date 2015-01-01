@@ -62,6 +62,7 @@
 	<rule name="chromium" />
 	<rule name="chrome-sandbox" />
 	<rule name="plugin-container" />
+	<rule name="firefox" />
 
 	<rule name="urxvt" />
 	<rule name="xmonad-i386-linux" />
