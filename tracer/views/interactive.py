@@ -10,7 +10,7 @@ class InteractiveView(View):
 
 		i = 1
 		digits = len(str(len(self.args.applications)))
-		for application in self.args.applications.sorted("name"):
+		for application in self.args.applications:
 			n = "[{0}]".format(i).ljust(digits + 2)
 			print "{} {}".format(n, application.name)
 			i += 1

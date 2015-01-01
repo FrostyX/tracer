@@ -70,7 +70,7 @@ class DefaultController(object):
 
 	def render_interactive(self):
 		helper_controller = HelperController(self.args)
-		filtered = self._restartable_applications(self.applications, self.args)
+		filtered = self._restartable_applications(self.applications, self.args).sorted("name")
 
 		while True:
 			view = InteractiveView()
