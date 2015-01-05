@@ -3,7 +3,6 @@ from tracer.resources.lang import _
 from tracer.resources.applications import Applications
 from tracer.views.note_for_hidden import NoteForHiddenView
 from tracer.views.blocks import BlocksView
-import sys
 import StringIO
 import re
 
@@ -37,14 +36,12 @@ class DefaultView(View):
 
 		def note_content():
 			content = StringIO.StringIO()
-			sys.stdout = content
-			view = NoteForHiddenView()
+			view = NoteForHiddenView(content)
 			view.assign("args", self.args.args)
 			view.assign("total_count", self.args.total_count)
 			view.assign("session_count", self.args.session_count)
 			view.assign("static_count", self.args.static_count)
 			view.render()
-			sys.stdout = sys.__stdout__
 			return content.getvalue()
 
 		blocks = [
@@ -58,8 +55,8 @@ class DefaultView(View):
 		else:
 			blocks.append({"content": note_content()})
 
-		view = BlocksView()
+		view = BlocksView(self.out)
 		view.assign("blocks", blocks)
 		if view.has_content():
-			print _("you_should_restart")
+			print >>self.out, _("you_should_restart")
 		view.render()
