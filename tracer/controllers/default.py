@@ -45,14 +45,9 @@ class DefaultController(object):
 		self.applications = self.tracer.trace_affected(self._user(args.user))
 
 	def render(self):
-		filtered = self._restartable_applications(self.applications, self.args)
-
 		view = DefaultView()
-		view.assign("applications", filtered)
+		view.assign("applications", self.applications)
 		view.assign("args", self.args)
-		view.assign("total_count", len(self.applications))
-		view.assign("session_count", self.applications.count_type(Applications.TYPES['SESSION']))
-		view.assign("static_count", self.applications.count_type(Applications.TYPES['STATIC']))
 		view.render()
 
 	def render_helpers(self):

@@ -38,9 +38,9 @@ class DefaultView(View):
 			content = StringIO.StringIO()
 			view = NoteForHiddenView(content)
 			view.assign("args", self.args.args)
-			view.assign("total_count", self.args.total_count)
-			view.assign("session_count", self.args.session_count)
-			view.assign("static_count", self.args.static_count)
+			view.assign("total_count", len(self.args.applications))
+			view.assign("session_count", self.args.applications.count_type(Applications.TYPES["SESSION"]))
+			view.assign("static_count", self.args.applications.count_type(Applications.TYPES["STATIC"]))
 			view.render()
 			return content.getvalue()
 
