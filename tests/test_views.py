@@ -197,6 +197,22 @@ class TestViews(unittest.TestCase):
 			"  - 1 processes requiring reboot\n"
 		))
 
+	def test_default_note_only(self):
+		view = DefaultView(self.out)
+		view.assign("args", ArgsMock())
+		view.assign("applications", ApplicationsCollection([
+			Application({"type": "session", "name": "foo", "helper": "h1"}),
+			Application({"type": "session", "name": "bar", "helper": "h2"}),
+			Application({"type": "static",  "name": "baz", "helper": "h3"}),
+		]))
+		view.render()
+		self.assertEquals(self.out.getvalue(), (
+			"You should restart:\n"
+			"There are:\n"
+			"  - 2 processes requiring restart of your session (i.e. Logging out & Logging in again)\n"
+			"  - 1 processes requiring reboot\n"
+		))
+
 
 class ArgsMock(object):
 	all = quiet = None
