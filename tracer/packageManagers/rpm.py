@@ -20,7 +20,7 @@ from __future__ import absolute_import
 
 
 from tracer.resources.system import System
-if System.distribution() == "fedora":
+if System.distribution() in ["fedora", "centos"]:
 
 	from os import listdir
 	from .ipackageManager import IPackageManager
