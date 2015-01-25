@@ -65,7 +65,7 @@ class ProcessesCollection(Collection):
 		return self.filtered(lambda process: process.username == user)
 
 	def newer_than(self, timestamp):
-		return self.filtered(lambda process: process.create_time >= timestamp)
+		return self.filtered(lambda process: process.create_time() >= timestamp)
 
 	def unique(self):
 		unique = set()

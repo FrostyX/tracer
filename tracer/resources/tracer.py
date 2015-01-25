@@ -86,7 +86,7 @@ class Tracer(object):
 					if p.pid in found:
 						continue
 
-					if p.create_time <= package.modified:
+					if p.create_time() <= package.modified:
 						found.append(p.pid)
 						p = self._apply_rules(p)
 						a = self._applications.find(p.name)
@@ -137,7 +137,7 @@ class Tracer(object):
 				if not package_file in process_files:
 					continue
 
-				if process.create_time <= package.modified:
+				if process.create_time() <= package.modified:
 					matching_files.add(package_file)
 
 			if matching_files:

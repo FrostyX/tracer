@@ -98,7 +98,7 @@ class Process(psutil.Process):
 	@property
 	def str_started_ago(self):
 		now = datetime.datetime.fromtimestamp(time.time())
-		started = datetime.datetime.fromtimestamp(self.create_time)
+		started = datetime.datetime.fromtimestamp(self.create_time())
 		started = now - started
 
 		started_str = ""
