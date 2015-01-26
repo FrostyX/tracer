@@ -65,7 +65,7 @@ class Process(psutil.Process):
 
 	@property
 	def parent(self):
-		p = super(Process, self).parent
+		p = super(Process, self).parent()
 		if p:
 			p.__class__ = Process
 		return p
@@ -80,7 +80,7 @@ class Process(psutil.Process):
 	def exe(self):
 		# On Gentoo, there is #new after some files in lsof
 		# i.e. /usr/bin/gvim#new (deleted)
-		exe = super(Process, self).exe
+		exe = super(Process, self).exe()
 		if exe.endswith('#new'):
 			exe = exe[0:-4]
 

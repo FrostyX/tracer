@@ -216,6 +216,6 @@ class Application:
 
 	@property
 	def instances(self):
-		return Processes.all().filtered(lambda process: process.name == self.name)
+		return Processes.all().filtered(lambda process: process.name() == self.name)
 
 	affected_instances = None

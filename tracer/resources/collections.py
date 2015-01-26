@@ -62,7 +62,7 @@ class ProcessesCollection(Collection):
 	def owned_by(self, user):
 		if not user:
 			return self
-		return self.filtered(lambda process: process.username == user)
+		return self.filtered(lambda process: process.username() == user)
 
 	def newer_than(self, timestamp):
 		return self.filtered(lambda process: process.create_time() >= timestamp)

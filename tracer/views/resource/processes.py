@@ -8,4 +8,4 @@ class ProcessesView(View):
 		print 100 * "-"
 		# @FIXME sorting doesn't work correctly
 		for process in self.args.processes.sorted("create_time"):
-			print line.format(process.pid, process.str_started_ago, process.username, process.name)
+			print line.format(process.pid, process.str_started_ago, process.username(), process.name())

@@ -21,7 +21,7 @@ class HelperView(View):
 		for process in self.args.processes:
 			print indent + "{app_name} has been started by {user} {time} ago. PID - {pid}".format(
 					app_name=self.args.application.name,
-					user=process.username,
+					user=process.username(),
 					time=process.str_started_ago,
 					pid=process.pid
 			)
@@ -59,7 +59,7 @@ class HelperView(View):
 
 		for process in self.args.affected_by:
 			if process not in self.args.processes:
-				print indent_level * indent + "{0} ({1})".format(process.name, process.pid)
+				print indent_level * indent + "{0} ({1})".format(process.name(), process.pid)
 				indent_level += 1
 
 			for package in process.packages:

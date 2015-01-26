@@ -89,7 +89,7 @@ class Tracer(object):
 					if p.create_time() <= package.modified:
 						found.append(p.pid)
 						p = self._apply_rules(p)
-						a = self._applications.find(p.name)
+						a = self._applications.find(p.name())
 
 						if a.name not in affected:
 							affected[a.name] = a
@@ -151,7 +151,7 @@ class Tracer(object):
 		return collection
 
 	def _affecting_children(self, process, packages):
-		if not self._rules.find(process.name):
+		if not self._rules.find(process.name()):
 			return {}
 
 		processes = AffectedProcessesCollection()

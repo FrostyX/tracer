@@ -68,5 +68,5 @@ class System(object):
 		"""
 
 		init = psutil.Process(1)
-		name = init.name.split(" ")[0]
+		name = init.name().split(" ")[0]
 		return name
