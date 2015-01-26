@@ -99,19 +99,11 @@ if System.distribution() in ["fedora", "centos"]:
 			if not package:
 				return None
 
-			process = subprocess.Popen(['rpm', '-qi', package.name], stdout=subprocess.PIPE)
-			out = process.communicate()[0]
-			out = out.split('\n')
-
-			for line in out:
-				if line.startswith("Summary"):
-					description = line.split("Summary     :")[1].strip()
-
-				if line.startswith("Group"):
-					category = line.split("Group       :")[1].strip()
-
-			package.description = description
-			package.category = category
+			ts = rpm.TransactionSet()
+			mi = ts.dbMatch("name", package.name)
+			package_hdr = mi.next()
+			package.description = package_hdr[rpm.RPMTAG_DESCRIPTION]
+			package.category = package_hdr[rpm.RPMTAG_GROUP]
 
 		def provided_by(self, app_name):
 			"""Returns name of package which provides given application"""
