@@ -29,16 +29,6 @@ simple idea. If application has loaded in memory any version of a file
 which is provided by any package updated since system was booted up, tracer
 consider this application as outdated.
 
-%package -n dnf-plugin-tracer
-Summary:	DNF plugin for %{name}
-Requires:	%{name} = %{version}-%{release}
-Requires:	dnf >= 0.4.9
-
-%description -n dnf-plugin-tracer
-Tracer finds outdated running applications in your system.
-
-This is plugin for DNF which runs tracer after every successful transaction.
-
 %prep
 %setup -q
 
@@ -57,9 +47,6 @@ cp -a data/* %{buildroot}/%{_datadir}/tracer/
 cp -ar tracer/* tests %{buildroot}/%{python2_sitelib}/tracer/
 install -m644 doc/build/man/tracer.8 %{buildroot}/%{_mandir}/man8/
 
-mkdir -p %{buildroot}/%{python2_sitelib}/dnf-plugins
-cp -ar integration/dnf/plugins/tracer.py %{buildroot}/%{python2_sitelib}/dnf-plugins/tracer.py
-
 
 %files
 %doc LICENSE README.md
@@ -67,9 +54,6 @@ cp -ar integration/dnf/plugins/tracer.py %{buildroot}/%{python2_sitelib}/dnf-plu
 %{_bindir}/tracer
 %{_datadir}/tracer/
 %{python2_sitelib}/tracer/
-
-%files -n dnf-plugin-tracer
-%{python2_sitelib}/dnf-plugins/tracer.py*
 
 %changelog
 * Thu Jan 01 2015 Jakub Kadlčík <frostyx@email.cz> 0.5.6-1
