@@ -29,7 +29,6 @@ if System.distribution() in ["fedora", "centos"]:
 	from tracer.resources.exceptions import LockedDatabase, DatabasePermissions
 	from tracer.resources.applications import Applications
 	import sqlite3
-	import subprocess
 	import rpm
 	import os
 
@@ -122,27 +121,15 @@ if System.distribution() in ["fedora", "centos"]:
 
 		def _file_provided_by(self, file):
 			"""Returns name of package which provides given file"""
-			command = ['rpm', '-qf', file, "--queryformat", "%{NAME}"]
-			process = subprocess.Popen(command, stdout=subprocess.PIPE)
-			pkg_name = process.communicate()[0]
-
-			# File is not provided by any package
-			if len(pkg_name.split(" ")) > 1:
-				return None
-
-			p = Package(pkg_name)
-			p.category = self._package_category(pkg_name)
-			return p
-
-		def _package_category(self, pkg_name):
-			"""Returns category of given package name; @TODO Use package_info as soon as possible"""
 			ts = rpm.TransactionSet()
-			mi = ts.dbMatch("name", pkg_name)
-			try:
-				package_hdr = mi.next()
-				return package_hdr[rpm.RPMTAG_GROUP]
-			except StopIteration:
+			db = ts.dbMatch("basenames", file)
+			if db.count() == 0:
 				return None
+
+			pkg = db.next()
+			p = Package(pkg[rpm.RPMTAG_NAME])
+			p.category = pkg[rpm.RPMTAG_GROUP]
+			return p
 
 		def _transactions_newer_than(self, unix_time):
 			"""
