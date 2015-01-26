@@ -86,9 +86,10 @@ if System.distribution() in ["fedora", "centos"]:
 			See also: http://docs.fedoraproject.org/en-US/Fedora_Draft_Documentation/0.1/html/RPM_Guide/ch04s02s03.html
 			"""
 			if self._is_installed(pkg_name):
-				process = subprocess.Popen(['rpm', '-ql', pkg_name], stdout=subprocess.PIPE)
-				files = process.communicate()[0]
-				return files.split('\n')[:-1]
+				ts = rpm.TransactionSet()
+				mi = ts.dbMatch("name", pkg_name)
+				fi = rpm.fi(mi.next())
+				return [f[0] for f in fi]
 			return []
 
 		def load_package_info(self, package):
