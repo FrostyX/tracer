@@ -19,7 +19,7 @@ BuildRequires:	python-sphinx
 BuildRequires:	libxslt
 Requires:	python
 Requires:	python-beautifulsoup4
-Requires:	python-psutil
+Requires:	python-psutil >= 2.0.0
 
 %description
 Tracer determines which applications use outdated files and prints them. For

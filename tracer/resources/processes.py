@@ -57,12 +57,7 @@ class Process(psutil.Process):
 			files.append(FilenameCleaner.strip(mmap.path))
 
 		# Process arguments
-		# this trick is for compatibility for 1.2.x psutil
-		try:
-			cmdline = self.cmdline()
-		except TypeError:
-			cmdline = self.cmdline
-		for arg in cmdline[1:]:
+		for arg in self.cmdline()[1:]:
 			if os.path.isfile(arg):
 				files.append(arg)
 
