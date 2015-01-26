@@ -29,7 +29,6 @@ if System.distribution() in ["fedora", "centos"]:
 	from tracer.resources.exceptions import LockedDatabase, DatabasePermissions
 	from tracer.resources.applications import Applications
 	import sqlite3
-	import subprocess
 	import rpm
 	import os
 
@@ -86,9 +85,10 @@ if System.distribution() in ["fedora", "centos"]:
 			See also: http://docs.fedoraproject.org/en-US/Fedora_Draft_Documentation/0.1/html/RPM_Guide/ch04s02s03.html
 			"""
 			if self._is_installed(pkg_name):
-				process = subprocess.Popen(['rpm', '-ql', pkg_name], stdout=subprocess.PIPE)
-				files = process.communicate()[0]
-				return files.split('\n')[:-1]
+				ts = rpm.TransactionSet()
+				mi = ts.dbMatch("name", pkg_name)
+				fi = rpm.fi(mi.next())
+				return [f[0] for f in fi]
 			return []
 
 		def load_package_info(self, package):
@@ -98,19 +98,11 @@ if System.distribution() in ["fedora", "centos"]:
 			if not package:
 				return None
 
-			process = subprocess.Popen(['rpm', '-qi', package.name], stdout=subprocess.PIPE)
-			out = process.communicate()[0]
-			out = out.split('\n')
-
-			for line in out:
-				if line.startswith("Summary"):
-					description = line.split("Summary     :")[1].strip()
-
-				if line.startswith("Group"):
-					category = line.split("Group       :")[1].strip()
-
-			package.description = description
-			package.category = category
+			ts = rpm.TransactionSet()
+			mi = ts.dbMatch("name", package.name)
+			package_hdr = mi.next()
+			package.description = package_hdr[rpm.RPMTAG_DESCRIPTION]
+			package.category = package_hdr[rpm.RPMTAG_GROUP]
 
 		def provided_by(self, app_name):
 			"""Returns name of package which provides given application"""
@@ -129,28 +121,15 @@ if System.distribution() in ["fedora", "centos"]:
 
 		def _file_provided_by(self, file):
 			"""Returns name of package which provides given file"""
-			command = ['rpm', '-qf', file, "--queryformat", "%{NAME}"]
-			process = subprocess.Popen(command, stdout=subprocess.PIPE)
-			pkg_name = process.communicate()[0]
-
-			# File is not provided by any package
-			if len(pkg_name.split(" ")) > 1:
+			ts = rpm.TransactionSet()
+			db = ts.dbMatch("basenames", file)
+			if db.count() == 0:
 				return None
 
-			p = Package(pkg_name)
-			p.category = self._package_category(pkg_name)
+			pkg = db.next()
+			p = Package(pkg[rpm.RPMTAG_NAME])
+			p.category = pkg[rpm.RPMTAG_GROUP]
 			return p
-
-		def _package_category(self, pkg_name):
-			"""Returns category of given package name; @TODO Use package_info as soon as possible"""
-			process = subprocess.Popen(['rpm', '-qi', pkg_name], stdout=subprocess.PIPE)
-			out = process.communicate()[0]
-			out = out.split('\n')
-
-			for line in out:
-				if line.startswith("Group"):
-					return line.split("Group       :")[1].strip()
-			return None
 
 		def _transactions_newer_than(self, unix_time):
 			"""
