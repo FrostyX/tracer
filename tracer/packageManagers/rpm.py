@@ -136,14 +136,13 @@ if System.distribution() in ["fedora", "centos"]:
 
 		def _package_category(self, pkg_name):
 			"""Returns category of given package name; @TODO Use package_info as soon as possible"""
-			process = subprocess.Popen(['rpm', '-qi', pkg_name], stdout=subprocess.PIPE)
-			out = process.communicate()[0]
-			out = out.split('\n')
-
-			for line in out:
-				if line.startswith("Group"):
-					return line.split("Group       :")[1].strip()
-			return None
+			ts = rpm.TransactionSet()
+			mi = ts.dbMatch("name", pkg_name)
+			try:
+				package_hdr = mi.next()
+				return package_hdr[rpm.RPMTAG_GROUP]
+			except StopIteration:
+				return None
 
 		def _transactions_newer_than(self, unix_time):
 			"""
