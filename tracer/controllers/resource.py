@@ -56,13 +56,13 @@ class ResourceController(object):
 		view.render()
 
 	def render_packages(self):
-		timestamp = self.args.timestamp[0] if self.args.timestamp[0] else psutil.BOOT_TIME
+		timestamp = self.args.timestamp[0] if self.args.timestamp[0] else psutil.boot_time()
 		manager = System.package_manager()
 		packages = manager.packages_newer_than(timestamp)
 
 		view = PackagesView()
 		view.assign('packages', packages)
-		view.assign('boot_time', psutil.BOOT_TIME)
+		view.assign('boot_time', psutil.boot_time())
 		view.render()
 
 	def render_rules(self):
@@ -76,7 +76,7 @@ class ResourceController(object):
 		view.render()
 
 	def render_system(self):
-		uptime = datetime.now() - datetime.fromtimestamp(psutil.BOOT_TIME)
+		uptime = datetime.now() - datetime.fromtimestamp(psutil.boot_time())
 		uptime = str(uptime).split('.')[0]
 
 		users = set([user.name for user in psutil.get_users()])

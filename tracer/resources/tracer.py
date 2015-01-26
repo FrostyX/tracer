@@ -59,7 +59,7 @@ class Tracer(object):
 		if self.specified_packages and self.now:
 			return self.specified_packages
 
-		timestamp = self.timestamp if self.timestamp else psutil.BOOT_TIME
+		timestamp = self.timestamp if self.timestamp else psutil.boot_time()
 		packages = self._PACKAGE_MANAGER.packages_newer_than(timestamp)
 		packages = packages.intersection(self.specified_packages)
 		return packages
