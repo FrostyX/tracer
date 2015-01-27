@@ -18,7 +18,7 @@
 
 from __future__ import absolute_import
 
-from operator import attrgetter
+from operator import attrgetter, methodcaller
 from psutil import NoSuchProcess
 from tracer.resources.system import System
 
@@ -26,7 +26,10 @@ from tracer.resources.system import System
 class Collection(list):
 
 	def sorted(self, attribute):
-		return sorted(self, key=attrgetter(attribute))
+		try:
+			return sorted(self, key=methodcaller(attribute))
+		except TypeError:
+			return sorted(self, key=attrgetter(attribute))
 
 
 class ApplicationsCollection(Collection):
