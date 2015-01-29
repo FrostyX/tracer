@@ -65,6 +65,9 @@ EXAMPLES
 
 ::
 
+    Show your applications which needs restarting (basic usage)
+        tracer
+
     Show informations about application
         tracer --show mysqld
 
