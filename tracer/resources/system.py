@@ -70,3 +70,9 @@ class System(object):
 		init = psutil.Process(1)
 		name = init.name().split(" ")[0]
 		return name
+
+	@staticmethod
+	def boot_time():
+		# psutil-2.x.x is not backward compatible to psutil-1.x.x
+		try: return psutil.boot_time()
+		except AttributeError: psutil.get_boot_time()

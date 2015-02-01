@@ -18,7 +18,7 @@
 
 from __future__ import absolute_import
 
-import psutil
+from tracer.resources.system import System
 from tracer.resources.FilenameCleaner import FilenameCleaner
 from tracer.resources.processes import AffectedProcess
 from tracer.resources.collections import ApplicationsCollection, AffectedProcessesCollection
@@ -59,7 +59,7 @@ class Tracer(object):
 		if self.specified_packages and self.now:
 			return self.specified_packages
 
-		timestamp = self.timestamp if self.timestamp else psutil.boot_time()
+		timestamp = self.timestamp if self.timestamp else System.boot_time()
 		packages = self._PACKAGE_MANAGER.packages_newer_than(timestamp)
 		packages = packages.intersection(self.specified_packages)
 		return packages
