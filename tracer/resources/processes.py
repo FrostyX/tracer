@@ -37,7 +37,41 @@ class Processes(object):
 		return processes
 
 
-class Process(psutil.Process):
+class ProcessWrapper(psutil.Process):
+	"""
+	Wrapper for ``psutil.Process class``
+	Library ``psutil`` is not backward compatible from version 2.x.x to 1.x.x.
+
+	Purpose of this class is cover incompatibility in ``psutil.Process`` class and
+	provide interface of new version. It allows using new interface even with
+	old version of ``psutil``.
+	"""
+
+	def name(self):
+		return self._attr("name")
+
+	def exe(self):
+		return self._attr("exe")
+
+	def cmdline(self):
+		return self._attr("cmdline")
+
+	def parent(self):
+		return self._attr("parent")
+
+	def username(self):
+		return self._attr("username")
+
+	def create_time(self):
+		return self._attr("create_time")
+
+	def _attr(self, name):
+		attr = getattr(super(ProcessWrapper, self), name)
+		try: return attr()
+		except TypeError: return attr
+
+
+class Process(ProcessWrapper):
 	def __eq__(self, process):
 		"""For our purposes, two processes are equal when they have same name"""
 		return self.pid == process.pid
