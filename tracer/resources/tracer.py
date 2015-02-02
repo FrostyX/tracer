@@ -110,8 +110,8 @@ class Tracer(object):
 		if rule.action == self._rules.ACTIONS["CALL-PARENT"]:
 			return self._apply_rules(parent)
 
-		# Only PRINT action left
-		# PRINT rule is defined for parent process
+		# Only RETURN action left
+		# RETURN rule is defined for parent process
 		return parent
 
 	def trace_application(self, app_name):

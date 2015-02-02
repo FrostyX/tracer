@@ -30,7 +30,7 @@ class Rules:
 
 	ACTIONS = {
 		"CALL-PARENT"  :  "call-parent",
-		"PRINT"        :  "print",
+		"RETURN"        :  "return",
 	}
 	_DEFAULT_ACTION = ACTIONS["CALL-PARENT"]
 	_rules = None

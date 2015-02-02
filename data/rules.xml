@@ -4,7 +4,7 @@
   -
   - When process is found, tracer looks into this file and searches for its parent rules.
   - If rule is found, action is performed. These two actions can be done:
-  -     * Print the actual process
+  -     * Return the actual process
   -     * Find the rule for parent process
   -
   -
@@ -30,7 +30,8 @@
   -     'call-parent'
   -
   - Available actions:
-  -     'call-parent', 'print'
+  -     'call-parent' - Use it for parts of the application (i.e. chrome-sandbox)
+  -     'return' - Use it for the whole application (i.e. chromium)
   -
   -->
 
@@ -38,8 +39,9 @@
 	<rule name="sd-pam" />
 
 	<!-- KDE -->
+	<rule name="kwin" action="return" />
+	<rule name="seapplet" action="return" />
 	<rule name="akonadiserver" />
-	<rule name="kwin" />
 	<rule name="ksmserver" />
 	<rule name="akonadi_agent_launcher" />
 	<rule name="akonadi_archivemail_agent" />
@@ -52,19 +54,18 @@
 	<rule name="akonadi_newmailnotifier_agent" />
 	<rule name="akonadi_sendlater_agent" />
 	<rule name="abrt-applet" />
-	<rule name="seapplet" />
 
 	<!-- Networking -->
-	<rule name="wicd" />
+	<rule name="wicd" action="return" />
 
 	<!-- Web browsers -->
-	<rule name="chrome" />
-	<rule name="chromium" />
+	<rule name="chrome" action="return" />
+	<rule name="chromium" action="return" />
+	<rule name="firefox" action="return" />
 	<rule name="chrome-sandbox" />
 	<rule name="plugin-container" />
-	<rule name="firefox" />
 
-	<rule name="urxvt" />
+	<rule name="urxvt" action="return" />
 	<rule name="xmonad-i386-linux" />
 
 </rules>
