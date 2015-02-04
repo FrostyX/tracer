@@ -104,6 +104,13 @@ class Process(ProcessWrapper):
 			p.__class__ = Process
 		return p
 
+	def username(self):
+		# User who run the process can be deleted
+		try:
+			return super(Process, self).username()
+		except KeyError:
+			return None
+
 	def get_children(self, recursive=False):
 		children = super(Process, self).get_children(recursive)
 		for child in children:
