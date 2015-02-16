@@ -23,7 +23,7 @@ release: test
 packages: rpm
 
 test:
-	sudo unit2 discover ./tests/
+	nosetests
 
 doc:
 	@echo Move to ./doc/ directory and run
