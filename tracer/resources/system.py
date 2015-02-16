@@ -75,4 +75,4 @@ class System(object):
 	def boot_time():
 		# psutil-2.x.x is not backward compatible to psutil-1.x.x
 		try: return psutil.boot_time()
-		except AttributeError: psutil.get_boot_time()
+		except AttributeError: return psutil.get_boot_time()
