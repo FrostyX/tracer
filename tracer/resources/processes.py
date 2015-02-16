@@ -37,7 +37,7 @@ class Processes(object):
 		return processes
 
 
-class ProcessWrapper(psutil.Process):
+class ProcessWrapper(object):
 	"""
 	Wrapper for ``psutil.Process class``
 	Library ``psutil`` is not backward compatible from version 2.x.x to 1.x.x.
@@ -46,6 +46,11 @@ class ProcessWrapper(psutil.Process):
 	provide interface of new version. It allows using new interface even with
 	old version of ``psutil``.
 	"""
+
+	_process = None
+
+	def __init__(self, pid=None):
+		self._process = psutil.Process(pid)
 
 	def name(self):
 		return self._attr("name")
@@ -66,9 +71,12 @@ class ProcessWrapper(psutil.Process):
 		return self._attr("create_time")
 
 	def _attr(self, name):
-		attr = getattr(super(ProcessWrapper, self), name)
+		attr = getattr(self._process, name)
 		try: return attr()
 		except TypeError: return attr
+
+	def __getattr__(self, item):
+		return getattr(self._process, item)
 
 
 class Process(ProcessWrapper):
