@@ -81,11 +81,11 @@ class ResourceController(object):
 
 		users = set([user.name for user in psutil.get_users()])
 		user = os.getlogin()
-		package_manager = System.package_manager().__class__.__name__
+		package_managers = System.package_manager().names()
 
 		view = SystemView()
 		view.assign('distribution', System.distribution())
-		view.assign('package_manager', package_manager)
+		view.assign('package_managers', package_managers)
 		view.assign('init', System.init_system())
 		view.assign('uptime', uptime)
 		view.assign('user', user)

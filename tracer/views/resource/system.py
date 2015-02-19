@@ -5,7 +5,7 @@ class SystemView(View):
 	def render(self):
 		line = "{0:<20}{1}"
 		print line.format("Distribution:", self.args.distribution)
-		print line.format("Package Manager:", self.args.package_manager)
+		print line.format("Package Manager:", ", ".join(self.args.package_managers))
 		print line.format("Init system:", self.args.init)
 		print line.format("Uptime:", self.args.uptime)
 		print line.format("User:", self.args.user)

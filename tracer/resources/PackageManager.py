@@ -37,6 +37,9 @@ class PackageManager:
 	def __init__(self, *instances):
 		self.package_managers = instances
 
+	def names(self):
+		return map(lambda x: x.__class__.__name__ ,self.package_managers)
+
 	def packages_newer_than(self, unix_time):
 		"""
 		Returns list of packages which were modified between unix_time and present
