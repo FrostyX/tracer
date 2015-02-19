@@ -31,6 +31,11 @@ class TestRules(unittest.TestCase):
 	def test_app_with_no_rule(self):
 		self.assertIsNone(Rules.find("NON_EXISTING_APPLICATION"))
 
+	def test_representations(self):
+		rule = Rule({"name": "foo"})
+		self.assertEquals(str(rule), "<Rule: foo>")
+		self.assertEquals(repr(rule), "<Rule: foo>")
+
 
 if __name__ == '__main__':
 	unittest.main()
