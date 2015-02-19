@@ -44,6 +44,18 @@ class TestApplications(unittest.TestCase):
 		self.assertEquals(str(rule), "<Application: foo>")
 		self.assertEquals(repr(rule), "<Application: foo>")
 
+	def test_contains_name(self):
+		a1 = Application({"name": "foo", "type": "applicaiton", "helper": "some helper"})
+		a2 = Application({"name": "foo", "type": "application", "helper": "some helper with {NAME} argument"})
+		self.assertFalse(a1.helper_contains_name)
+		self.assertTrue(a2.helper_contains_name)
+
+	def test_contains_formating(self):
+		a1 = Application({"name": "foo", "type": "applicaiton", "helper": "some helper"})
+		a3 = Application({"name": "foo", "type": "application", "helper": "some helper with {FOO} argument"})
+		self.assertFalse(a1.helper_contains_formating)
+		self.assertTrue(a3.helper_contains_formating)
+
 	def _count(self, app_name, apps):
 		count = 0
 		for a in apps:
