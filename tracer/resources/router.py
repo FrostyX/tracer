@@ -21,9 +21,7 @@ from __future__ import absolute_import
 import os
 from tracer.version import __version__
 from tracer.resources.lang import _
-from tracer.controllers.default import DefaultController
-from tracer.controllers.helper import HelperController
-from tracer.controllers.resource import ResourceController
+# WARNING: There are local imports in dispatch method
 
 
 class Router:
@@ -37,6 +35,7 @@ class Router:
 
 	def dispatch(self):
 		if self.args.helper:
+			from tracer.controllers.helper import HelperController
 			controller = HelperController(self.args)
 			controller.render()
 
@@ -47,10 +46,12 @@ class Router:
 			print _("root_only")
 
 		elif self.args.resource:
+			from tracer.controllers.resource import ResourceController
 			controller = ResourceController(self.args)
 			controller.render()
 
 		else:
+			from tracer.controllers.default import DefaultController
 			controller = DefaultController(self.args, self.packages)
 			if self.args.helpers:
 				controller.render_helpers()
