@@ -39,6 +39,11 @@ class TestApplications(unittest.TestCase):
 		self.assertEqual(app.helper, None)
 		self.assertEqual(len(app), 4, "Application {0} has unsupported attribute".format(app.name))
 
+	def test_representations(self):
+		rule = Application({"name": "foo"})
+		self.assertEquals(str(rule), "<Application: foo>")
+		self.assertEquals(repr(rule), "<Application: foo>")
+
 	def _count(self, app_name, apps):
 		count = 0
 		for a in apps:
