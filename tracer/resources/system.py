@@ -26,6 +26,7 @@ import platform
 import psutil
 from tracer.resources.exceptions import UnsupportedDistribution
 from tracer.resources.PackageManager import PackageManager
+from tracer.resources.processes import Process
 
 
 class System(object):
@@ -67,7 +68,7 @@ class System(object):
 		e.g. init, systemd, upstart
 		"""
 
-		init = psutil.Process(1)
+		init = Process(1)
 		name = init.name().split(" ")[0]
 		return name
 
