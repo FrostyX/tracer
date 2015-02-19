@@ -45,7 +45,7 @@ class HelperController(object):
 			manager = System.package_manager()
 			package = manager.provided_by(app_name)
 			if package:
-				package.load_info()
+				package.load_info(System.package_manager())
 
 			tr = Tracer(System.package_manager(), Rules, Applications)
 			app = Applications.find(app_name)

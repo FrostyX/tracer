@@ -20,7 +20,6 @@ from __future__ import absolute_import
 
 from operator import attrgetter, methodcaller
 from psutil import NoSuchProcess
-from tracer.resources.system import System
 
 
 class Collection(list):
@@ -103,7 +102,6 @@ class PackagesCollection(Collection):
 
 	def __init__(self, *args):
 		list.__init__(self, *args)
-		self._package_manager = System.package_manager()
 
 	def intersection(self, packages):
 		if packages is not None:

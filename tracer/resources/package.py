@@ -17,7 +17,6 @@
 #
 
 from __future__ import absolute_import
-from tracer.resources.system import System
 
 
 class Package:
@@ -49,5 +48,5 @@ class Package:
 	def __hash__(self):
 		return hash(self.name)
 
-	def load_info(self):
-		System.package_manager().load_package_info(self)
+	def load_info(self, package_manager):
+		package_manager.load_package_info(self)
