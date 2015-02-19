@@ -28,7 +28,7 @@ import os
 import re
 
 
-class Applications:
+class Applications(object):
 
 	DEFINITIONS = map(lambda x: x + "/applications.xml", [DATA_DIR] + USER_CONFIG_DIRS)
 
@@ -40,9 +40,6 @@ class Applications:
 	}
 	DEFAULT_TYPE = TYPES["APPLICATION"]
 	_apps = None
-
-	def __init__(self):
-		pass
 
 	@staticmethod
 	def find(app_name):

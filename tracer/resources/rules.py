@@ -24,7 +24,7 @@ from tracer.resources.exceptions import PathNotFound
 from os.path import dirname
 
 
-class Rules:
+class Rules(object):
 
 	DEFINITIONS = map(lambda x: x + "/rules.xml", [DATA_DIR] + USER_CONFIG_DIRS)
 
@@ -34,9 +34,6 @@ class Rules:
 	}
 	_DEFAULT_ACTION = ACTIONS["CALL-PARENT"]
 	_rules = None
-
-	def __init__(self):
-		pass
 
 	@staticmethod
 	def find(app_name):
