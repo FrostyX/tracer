@@ -1,5 +1,5 @@
 Name:		tracer
-Version:	0.5.6
+Version:	0.5.7
 Release:	1%{?dist}
 Summary:	Finds outdated running applications in your system
 
@@ -56,6 +56,15 @@ install -m644 doc/build/man/tracer.8 %{buildroot}/%{_mandir}/man8/
 %{python2_sitelib}/tracer/
 
 %changelog
+* Fri Feb 20 2015 Jakub Kadlčík <frostyx@email.cz> 0.5.7-1
+- Update informations about DNF plugin (frostyx@email.cz)
+- Prevent traceback when deleted user; See #33 (frostyx@email.cz)
+- Rename 'print' action to 'return' and set it to rules (frostyx@email.cz)
+- Add ProcessWrapper to ensure psutil compatibility (frostyx@email.cz)
+- Drop dnf plugin (moved to dnf-plugins-extras) (i.gnatenko.brain@gmail.com)
+- Use rpm-python library instead of calling rpm commands (i.gnatenko.brain@gmail.com)
+- Use Yum as package manager on CentOS (frostyx@email.cz)
+
 * Thu Jan 01 2015 Jakub Kadlčík <frostyx@email.cz> 0.5.6-1
 - Sort applications in interactive controler To fix the issue that [number]
   doesn't correspond to printed application (frostyx@email.cz)
