@@ -80,6 +80,13 @@ class ProcessWrapper(object):
 
 
 class Process(ProcessWrapper):
+	"""
+	For class properties and methods, please see
+	http://pythonhosted.org/psutil/#process-class
+
+	Bellow listed are only reimplemented ones.
+	"""
+
 	def __eq__(self, process):
 		"""For our purposes, two processes are equal when they have same name"""
 		return self.pid == process.pid
@@ -107,12 +114,16 @@ class Process(ProcessWrapper):
 
 	@property
 	def parent(self):
+		"""The parent process casted from ``psutil.Process`` to tracer ``Process``"""
 		p = super(Process, self).parent()
 		if p:
 			p.__class__ = Process
 		return p
 
 	def username(self):
+		"""The user who owns the process. If user was deleted in the meantime,
+		``None`` is returned instead."""
+
 		# User who run the process can be deleted
 		try:
 			return super(Process, self).username()
@@ -120,6 +131,8 @@ class Process(ProcessWrapper):
 			return None
 
 	def get_children(self, recursive=False):
+		"""The collection of process's children. Each of them casted from ``psutil.Process``
+		to tracer ``Process``."""
 		children = super(Process, self).get_children(recursive)
 		for child in children:
 			child.__class__ = Process
@@ -127,6 +140,9 @@ class Process(ProcessWrapper):
 
 	@property
 	def exe(self):
+		"""The absolute path to process executable. Cleaned from arbitrary strings
+		which appears on the end."""
+
 		# On Gentoo, there is #new after some files in lsof
 		# i.e. /usr/bin/gvim#new (deleted)
 		exe = super(Process, self).exe()
@@ -141,6 +157,12 @@ class Process(ProcessWrapper):
 
 	@property
 	def str_started_ago(self):
+		"""
+		The time of how long process is running. Returned as string
+		in format ``XX unit`` where unit is one of
+		``days`` | ``hours`` | ``minutes`` | ``seconds``
+		"""
+
 		now = datetime.datetime.fromtimestamp(time.time())
 		started = datetime.datetime.fromtimestamp(self.create_time())
 		started = now - started

@@ -22,8 +22,8 @@ from __future__ import absolute_import
 class Package:
 	"""Represents linux package"""
 
-	name = None
-	modified = None
+	name = None  #: Name of the package
+	modified = None  #: UNIX timestamp of the modification
 	description = None
 	category = None
 
