@@ -112,7 +112,7 @@ if System.distribution() in ["fedora", "centos"]:
 			if package:
 				# If package is interpreter, return the package providing that interpreted file
 				if package.category == 'Development/Languages':
-					for arg in process.cmdline[1:]:
+					for arg in process.cmdline()[1:]:
 						if os.path.isfile(arg):
 							package = self._file_provided_by(arg)
 							return package if package else None
