@@ -1,5 +1,5 @@
 Name:		tracer
-Version:	0.5.7
+Version:	0.5.8
 Release:	1%{?dist}
 Summary:	Finds outdated running applications in your system
 
@@ -56,6 +56,11 @@ install -m644 doc/build/man/tracer.8 %{buildroot}/%{_mandir}/man8/
 %{python2_sitelib}/tracer/
 
 %changelog
+* Mon Feb 23 2015 Jakub Kadlčík <frostyx@email.cz> 0.5.8-1
+- There is children instead of get_children in psutil2 (frostyx@email.cz)
+- ProcessWrapper provides api of new version, so use it (frostyx@email.cz)
+- Get summary instead of description; Fix mistake from dfae2b6
+
 * Fri Feb 20 2015 Jakub Kadlčík <frostyx@email.cz> 0.5.7-1
 - Update informations about DNF plugin (frostyx@email.cz)
 - Prevent traceback when deleted user; See #33 (frostyx@email.cz)
