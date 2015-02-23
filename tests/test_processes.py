@@ -8,7 +8,7 @@ class TestProcesses(unittest.TestCase):
 
 	def test_children(self):
 		process = Processes.all()[0]
-		children = process.get_children()
+		children = process.children()
 		self.assertIsInstance(children, ProcessesCollection)
 
 		for child in children:

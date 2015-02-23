@@ -70,6 +70,10 @@ class ProcessWrapper(object):
 	def create_time(self):
 		return self._attr("create_time")
 
+	def children(self, recursive=False):
+		try: return self._process.children()
+		except AttributeError: return self._process.get_children()
+
 	def _attr(self, name):
 		attr = getattr(self._process, name)
 		try: return attr()
@@ -130,10 +134,10 @@ class Process(ProcessWrapper):
 		except KeyError:
 			return None
 
-	def get_children(self, recursive=False):
+	def children(self, recursive=False):
 		"""The collection of process's children. Each of them casted from ``psutil.Process``
 		to tracer ``Process``."""
-		children = super(Process, self).get_children(recursive)
+		children = super(Process, self).children(recursive)
 		for child in children:
 			child.__class__ = Process
 		return ProcessesCollection(children)
