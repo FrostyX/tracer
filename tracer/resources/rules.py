@@ -101,6 +101,9 @@ class Rule(object):
 	def __eq__(self, other):
 		return isinstance(other, Rule) and self.name == other.name
 
+	def __ne__(self, other):
+		return not self.__eq__(other)
+
 	def __getattr__(self, item):
 		return self._attributes[item]
 

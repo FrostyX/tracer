@@ -146,6 +146,9 @@ class Application:
 	def __eq__(self, other):
 		return isinstance(other, Application) and self.name == other.name
 
+	def __ne__(self, other):
+		return not self.__eq__(other)
+
 	def __hash__(self):
 		return hash(self.name)
 
