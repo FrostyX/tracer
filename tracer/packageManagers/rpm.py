@@ -101,7 +101,7 @@ if System.distribution() in ["fedora", "centos"]:
 			ts = rpm.TransactionSet()
 			mi = ts.dbMatch("name", package.name)
 			package_hdr = mi.next()
-			package.description = package_hdr[rpm.RPMTAG_DESCRIPTION]
+			package.description = package_hdr[rpm.RPMTAG_SUMMARY]
 			package.category = package_hdr[rpm.RPMTAG_GROUP]
 
 		def provided_by(self, app_name):
