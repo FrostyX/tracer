@@ -22,7 +22,6 @@ from tracer.resources.system import System
 from tracer.resources.FilenameCleaner import FilenameCleaner
 from tracer.resources.processes import AffectedProcess
 from tracer.resources.collections import ApplicationsCollection, AffectedProcessesCollection
-import tracer.resources.memory as Memory
 
 
 class Tracer(object):
@@ -45,14 +44,18 @@ class Tracer(object):
 	"""Instance of package manager class. Set by __init__"""
 	_PACKAGE_MANAGER = None
 
+	"""Structure representing all processes and files they use. See ``tracer.resources.memory.dump_memory``"""
+	_memory = None
+
 	"""Objects responsible for providing applications and rules settings form config files"""
 	_rules = None
 	_applications = None
 
-	def __init__(self, package_manager, rules, applications):
+	def __init__(self, package_manager, rules, applications, memory=None):
 		self._PACKAGE_MANAGER = package_manager
 		self._rules = rules
 		self._applications = applications
+		self._memory = memory
 
 	def _modified_packages(self):
 		"""Returns list of packages what tracer should care about"""
@@ -70,7 +73,7 @@ class Tracer(object):
 		@TODO This function should be hardly optimized
 		"""
 
-		memory = Memory.dump_memory(user)
+		memory = self._memory(user)
 		packages = self._modified_packages()
 
 		affected = {}

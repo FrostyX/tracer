@@ -19,6 +19,7 @@
 from psutil import AccessDenied
 
 from tracer.resources.system import System
+from tracer.resources.memory import dump_memory
 from tracer.views.helper import HelperView
 from tracer.resources.lang import _
 from tracer.resources.tracer import Tracer
