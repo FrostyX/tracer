@@ -2,8 +2,11 @@ from __meta__ import *
 
 import StringIO
 from tracer.views.default import DefaultView
-from tracer.resources.applications import Application
+from tracer.views.helper import HelperView
+from tracer.resources.applications import Applications, Application
 from tracer.resources.collections import ApplicationsCollection
+from tracer.resources.package import Package
+from test_tracer import ProcessMock, AffectedProcessMock
 
 
 class TestViews(unittest.TestCase):
@@ -213,10 +216,71 @@ class TestViews(unittest.TestCase):
 			"  - 1 processes requiring reboot\n"
 		))
 
+	def test_helper(self):
+		processes = [
+			ProcessMock(2, "foo", 1234, ["file1", "file2"]),
+			ProcessMock(3, "foo", 5678, ["file2", "file3"]),
+		]
+
+		package = Package("foopackage")
+		package.modified = None
+		package.description = "Foo package description"
+		package.category = "categ"
+		package.files = ["file1", "file2"]
+
+		a1 = AffectedProcessMock(2)
+		a1.packages = set([package])
+		affected_by = [a1]
+
+		view = HelperView(self.out)
+		view.assign("args", ArgsMock(verbose=2))
+		view.assign("processes", processes)
+		view.assign("application", Applications.find("foo"))
+		view.assign("package", package)
+		view.assign("affected_by", affected_by)
+		view.render()
+		self.assertEquals(self.out.getvalue(), (
+			"* foo\n"
+			"    Package:     foopackage\n"
+			"    Description: Foo package description\n"
+			"    Type:        Application\n"
+			"    State:       foo has been started by None some-time ago. PID - 2\n"
+			"                 foo has been started by None some-time ago. PID - 3\n"
+			"\n"
+			"    Affected by:\n"
+			"        foopackage\n"
+			"            file1\n"
+			"            file2\n"
+		))
+
 
 class ArgsMock(object):
 	all = quiet = None
 
-	def __init__(self, all=False, quiet=False):
+	def __init__(self, all=False, quiet=False, user=False, verbose=False):
 		self.all = all
 		self.quiet = quiet
+		self.user = user
+		self.verbose = verbose
+
+
+class ProcessMock(object):
+	def __init__(self, pid, name, create_time, files):
+		self.parent = None
+		self.pid = pid
+		self.files = files
+		self._name = name
+		self._create_time = create_time
+		self.str_started_ago = "some-time"
+
+	def name(self):
+		return self._name
+
+	def create_time(self):
+		return self._create_time
+
+	def children(self):
+		return []
+
+	def username(self):
+		return None
