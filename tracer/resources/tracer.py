@@ -117,7 +117,7 @@ class Tracer(object):
 		# RETURN rule is defined for parent process
 		return parent
 
-	def trace_application(self, app_name):
+	def trace_application(self, app_name, affected_process_factory=AffectedProcess):
 		"""
 		Returns collection of processes where each of them contains
 		packages which affected it. Packages contains only files matching
@@ -126,11 +126,11 @@ class Tracer(object):
 		packages = self._modified_packages()
 		processes = AffectedProcessesCollection()
 		for process in self._applications.find(app_name).instances:
-			processes.update(self._affecting_processes(process, packages))
-			processes.update(self._affecting_children(process, packages))
+			processes.update(self._affecting_processes(process, packages, affected_process_factory))
+			processes.update(self._affecting_children(process, packages, affected_process_factory))
 		return processes
 
-	def _affecting_processes(self, process, packages):
+	def _affecting_processes(self, process, packages, affected_process_factory=AffectedProcess):
 		collection = AffectedProcessesCollection()
 		process_files = process.files
 		for package in packages:
@@ -147,17 +147,17 @@ class Tracer(object):
 				aff_pkg = package
 				aff_pkg.files = matching_files
 
-				affected = AffectedProcess(process.pid)
+				affected = affected_process_factory(process.pid)
 				affected.__dict__.update(process.__dict__)
 				affected.packages.update([aff_pkg])
 				collection.update([affected])
 		return collection
 
-	def _affecting_children(self, process, packages):
+	def _affecting_children(self, process, packages, affected_process_factory):
 		if not self._rules.find(process.name()):
 			return {}
 
 		processes = AffectedProcessesCollection()
 		for child in process.children():
-			processes.update(self._affecting_processes(child, packages))
+			processes.update(self._affecting_processes(child, packages, affected_process_factory))
 		return processes

@@ -1,19 +1,34 @@
 from __meta__ import *
 from tracer.resources.tracer import Tracer
-from tracer.resources.collections import ProcessesCollection, PackagesCollection, ApplicationsCollection
 from tracer.resources.rules import Rules
-from tracer.resources.applications import Applications
+from tracer.resources.applications import Applications, Application
+from tracer.resources.processes import AffectedProcess
+from tracer.resources.collections import \
+	ProcessesCollection, \
+	PackagesCollection, \
+	ApplicationsCollection, \
+	AffectedProcessesCollection
 
 
 class TestRules(unittest.TestCase):
 	def setUp(self):
 		self.tracer = Tracer(PackageManagerMock(), Rules, Applications, memory=dump_memory_mock)
 		self.tracer.timestamp = 5555  # Sure, it should be a UNIX timestamp value
+		Application.processes_factory = ProcessesMock
 
 	def test_trace_affected(self):
 		affected = self.tracer.trace_affected()
 		self.assertSetEqual(set(affected), set([Applications.find("baz"), Applications.find("qux")]))
 		self.assertIsInstance(affected, ApplicationsCollection)
+
+	def test_trace_application(self):
+		affected = self.tracer.trace_application("baz", AffectedProcessMock)
+		self.assertIsInstance(affected, AffectedProcessesCollection)
+		self.assertEqual(len(affected), 1)
+
+		process = affected[0]
+		self.assertIsInstance(process, AffectedProcess)
+		self.assertEqual(process.pid, 4)  # pid of "baz" in our mock
 
 
 class ProcessMock(object):
@@ -29,6 +44,17 @@ class ProcessMock(object):
 
 	def create_time(self):
 		return self._create_time
+
+	def children(self):
+		return []
+
+
+class AffectedProcessMock(AffectedProcess):
+	def __init__(self, pid=None):
+		# Do not run the parent __init__
+		self.pid = pid
+		self.packages = set()
+		self.files = set()
 
 
 class ProcessesMock(object):
