@@ -136,8 +136,16 @@ class Application:
 
 	instances : ProcessesCollection
 		Processes of this application
+
+
+	Class attributes
+	----------------
+	processes_factory : Processes
+		Class providing list of running processes
+
 	"""
 
+	processes_factory = Processes
 	_attributes = None
 
 	def __init__(self, attributes_dict):
@@ -216,6 +224,6 @@ class Application:
 
 	@property
 	def instances(self):
-		return Processes.all().filtered(lambda process: process.name() == self.name)
+		return self.processes_factory.all().filtered(lambda process: process.name() == self.name)
 
 	affected_instances = None
