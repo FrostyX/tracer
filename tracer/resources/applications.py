@@ -120,28 +120,13 @@ class Applications(object):
 class Application:
 
 	"""
-	Represent the application defined in `applications.xml`
+	Represent the application defined in ``applications.xml``
 
-	Attributes
-	----------
-	name : str
-	type : str
-		See `Applications.TYPES` for possible values
-
-	helper : str
-		Describes how to restart the applications
-
-	ignore : bool
-		If True, the application won't be printed
-
-	instances : ProcessesCollection
-		Processes of this application
-
-
-	Class attributes
-	----------------
-	processes_factory : Processes
-		Class providing list of running processes
+	:param str name: The name of the application
+	:param str type: See ``Applications.TYPES`` for possible values
+	:param str helper: Describes how to restart the applications
+	:param bool ignore: If ``True``, the application won't be printed
+	:param Processes processes_factory: Class providing list of running processes
 
 	"""
 
@@ -205,7 +190,7 @@ class Application:
 		"""
 		Return the list of helpers which describes how to restart the application.
 		When no ``helper_format`` was described, empty list will be returned.
-		If ``helper_format`` contains process specific arguments such a {PID}, etc.
+		If ``helper_format`` contains process specific arguments such a ``{PID}``, etc.
 		list will contain helper for every application instance.
 		In other cases, there will be just one helper in the list.
 		"""
@@ -224,6 +209,10 @@ class Application:
 
 	@property
 	def instances(self):
+		"""
+		Return collection of processes with same name as application.
+		I.e. running instances of the application
+		"""
 		return self.processes_factory.all().filtered(lambda process: process.name() == self.name)
 
 	affected_instances = None
