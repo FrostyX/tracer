@@ -31,6 +31,7 @@ import os
 extensions = [
     'sphinx.ext.coverage',
     'sphinx.ext.viewcode',
+    'sphinx.ext.autodoc',
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -268,3 +269,6 @@ texinfo_documents = [
 
 # If true, do not generate a @detailmenu in the "Top" node's menu.
 #texinfo_no_detailmenu = False
+
+# -- Autodoc --------------------------------------------------------------
+sys.path.insert(0, os.path.abspath("../../"))
