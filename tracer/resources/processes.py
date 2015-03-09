@@ -85,7 +85,9 @@ class ProcessWrapper(object):
 
 class Process(ProcessWrapper):
 	"""
-	For class properties and methods, please see
+	Represent the process instance uniquely identifiable through PID
+
+	For all class properties and methods, please see
 	http://pythonhosted.org/psutil/#process-class
 
 	Bellow listed are only reimplemented ones.
