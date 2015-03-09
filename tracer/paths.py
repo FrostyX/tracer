@@ -37,5 +37,9 @@ DATA_DIR = __([
 
 USER_CONFIG_DIRS = [
 	'/etc/tracer',
-    expanduser('~' + os.getlogin()) + '/.config/tracer',
 ]
+
+try:
+	USER_CONFIG_DIRS.append(expanduser('~' + os.getlogin()) + '/.config/tracer')
+except OSError:
+	pass

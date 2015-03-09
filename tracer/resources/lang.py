@@ -44,6 +44,7 @@ _LOCALE = None
 for lang in _system_languages():
 	try: _LOCALE = _locale(lang); break
 	except ImportError: pass
+	except AttributeError: pass
 
 
 # Whenever you want print some language-specific text, use this function
