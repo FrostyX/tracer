@@ -24,7 +24,6 @@ from __future__ import absolute_import
 import importlib
 import platform
 import psutil
-from tracer.resources.exceptions import UnsupportedDistribution
 from tracer.resources.PackageManager import PackageManager
 from tracer.resources.processes import Process
 
@@ -57,7 +56,7 @@ class System(object):
 
 		distro = System.distribution()
 		if distro not in managers:
-			raise UnsupportedDistribution(distro)
+			return None
 
 		return PackageManager(*map(get_instance, managers[distro]))
 

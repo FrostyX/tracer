@@ -22,6 +22,7 @@ from tracer.resources.system import System
 from tracer.resources.FilenameCleaner import FilenameCleaner
 from tracer.resources.processes import AffectedProcess
 from tracer.resources.collections import ApplicationsCollection, AffectedProcessesCollection
+from tracer.resources.exceptions import UnsupportedDistribution
 
 
 class Tracer(object):
@@ -52,6 +53,9 @@ class Tracer(object):
 	_applications = None
 
 	def __init__(self, package_manager, rules, applications, memory=None):
+		if not package_manager:
+			raise UnsupportedDistribution(System.distribution())
+
 		self._PACKAGE_MANAGER = package_manager
 		self._rules = rules
 		self._applications = applications
