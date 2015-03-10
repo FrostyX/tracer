@@ -5,8 +5,7 @@ from tracer.query import Query, Lazy
 class TestQuery(unittest.TestCase):
 
 	def setUp(self):
-		self.query = Query()
-		self.query._tracer = TracerMock()
+		self.query = Query(tracer=TracerMock)
 
 	def test_affected_applications(self):
 		apps_query = self.query.affected_applications()

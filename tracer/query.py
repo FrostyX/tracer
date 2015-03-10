@@ -40,7 +40,8 @@ class Query(object):
 
 	"""
 
-	_tracer = Tracer(System.package_manager(), Rules, Applications, dump_memory)
+	def __init__(self, tracer=Tracer):
+		self._tracer = tracer(System.package_manager(), Rules, Applications, dump_memory)
 
 	def affected_applications(self, user=None):
 		"""
