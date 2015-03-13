@@ -10,7 +10,7 @@ There are few ways how to get tracer. Recommended is installing it through linux
 Fedora
 ------
 
-Fedora is intended as primary system, so there shouldn’t be a problem. You can simply add repository for `F19`_ or `F20`_ saving it as ``/etc/yum.repos.d/tracer.repo``. Then install tracer using
+Fedora is intended as the primary system, so there shouldn’t be a problem. You can simply install tracer using
 
 ::
 
@@ -20,7 +20,7 @@ Please note that for DNF also exists plugin which calls tracer after every succe
 
 ::
 
-    dnf install dnf-plugin-tracer
+    dnf install dnf-plugins-extras-tracer
 
 Take a look into User Guide at :ref:`dnf-plugin`.
 
