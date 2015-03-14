@@ -17,6 +17,7 @@ BuildRequires:	python2-devel
 BuildRequires:	asciidoc
 BuildRequires:	python-sphinx
 BuildRequires:	libxslt
+Requires:	rpm-python
 Requires:	python
 Requires:	python-beautifulsoup4
 Requires:	python-psutil
