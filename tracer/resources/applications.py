@@ -109,10 +109,10 @@ class Applications(object):
 			return "service {0} restart".format(app.name)
 
 		elif app.type == Applications.TYPES["STATIC"]:
-			return _("static_restart")
+			return _("You will have to reboot your computer")
 
 		elif app.type == Applications.TYPES["SESSION"]:
-			return _("session_restart")
+			return _("You will have to log out & log in again")
 
 		return None
 

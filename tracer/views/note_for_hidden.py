@@ -8,13 +8,15 @@ class NoteForHiddenView(View):
 		if not self.args.args.quiet and (self.args.session_count > 0 or self.args.static_count > 0):
 
 			if self.args.session_count + self.args.static_count == self.args.total_count:
-				print >>self.out, _("note_unlisted_apps_short")
+				print >>self.out, _("There are:")
 			else:
-				print >>self.out, _("note_unlisted_apps")
+				print >>self.out, _("Additionally to those process above, there are:")
 
 			if self.args.session_count > 0:
-				print >>self.out, _("requires_session").format(self.args.session_count)
+				print >>self.out, "  - " + \
+					_("{0} processes requiring restart of your session (i.e. Logging out & Logging in again)")\
+						.format(self.args.session_count)
 
 			if self.args.static_count > 0:
-				print >>self.out, _("requires_reboot").format(self.args.static_count)
+				print >>self.out, "  - " + _("{0} processes requiring reboot").format(self.args.static_count)
 

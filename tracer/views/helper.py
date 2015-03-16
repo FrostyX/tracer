@@ -39,7 +39,7 @@ class HelperView(View):
 		# How to restart
 		if self.args.application.helper:
 			print >>self.out, ""
-			print >>self.out, "    {title}:".format(title=_('how_to_restart'))
+			print >>self.out, "    {title}:".format(title=_('How to restart'))
 
 			if not self.args.affected_by:
 				print >>self.out, "        {app_name} does not need restarting".format(app_name=self.args.application.name)
@@ -50,7 +50,7 @@ class HelperView(View):
 	def render_affected_by(self):
 
 		indent = "    "
-		print >>self.out, indent + _("affected_by") + ":"
+		print >>self.out, indent + _("Affected by") + ":"
 
 		indent_level = 2
 		if type(self.args.affected_by) == str:

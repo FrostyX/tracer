@@ -45,18 +45,24 @@ class DefaultView(View):
 			return content.getvalue()
 
 		blocks = [
-			{"title": "  " + _("restart_using_helpers"), "content": with_helpers_content()},
-			{"title": "  " + _("restart_manually"), "content": without_helpers_content()},
+			{"title": "  * " + _("Some applications using:"), "content": with_helpers_content()},
+			{"title": "  * " + _("These applications manually:"), "content": without_helpers_content()},
 		]
 
 		if self.args.args.all:
-			blocks.append({"title": "  " + _("restart_session"), "content": unrestartable_content(Applications.TYPES["SESSION"])})
-			blocks.append({"title": "  " + _("restart_rebooting"), "content": unrestartable_content(Applications.TYPES["STATIC"])})
+			blocks.append({
+				"title": "  * " + _("These applications restarting your session:"),
+				"content": unrestartable_content(Applications.TYPES["SESSION"])
+			})
+			blocks.append({
+				"title": "  * " + _("These applications rebooting your computer:"),
+				"content": unrestartable_content(Applications.TYPES["STATIC"])
+			})
 		else:
 			blocks.append({"content": note_content()})
 
 		view = BlocksView(self.out)
 		view.assign("blocks", blocks)
 		if view.has_content():
-			print >>self.out, _("you_should_restart")
+			print >>self.out, _("You should restart:")
 		view.render()

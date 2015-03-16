@@ -81,7 +81,7 @@ class DefaultController(object):
 			if view.get("total_count") == view.get("session_count") + view.get("static_count"):
 				break
 
-			print "\n" + _("prompt_help")
+			print "\n" + _("Press application number for help or 'q' to quit")
 			answer = raw_input("--> ")
 			try:
 				if answer == "q": return
@@ -89,9 +89,9 @@ class DefaultController(object):
 				helper_controller.print_helper(filtered[int(answer) - 1].name, self.args)
 
 			except (SyntaxError, IndexError, ValueError):
-				print _("wrong_app_number")
+				print _("Wrong application number")
 
-			raw_input("\n" + _("press_enter"))
+			raw_input("\n-- " + _("Press enter to get list of applications") + " --")
 
 	def _restartable_applications(self, applications, args):
 		return applications.exclude_types([

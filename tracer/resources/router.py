@@ -43,7 +43,7 @@ class Router:
 			print __version__
 
 		elif os.getuid() != 0:
-			print _("root_only")
+			print _("Only root can use this application")
 
 		elif self.args.resource:
 			from tracer.controllers.resource import ResourceController

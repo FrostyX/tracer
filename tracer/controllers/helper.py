@@ -52,7 +52,7 @@ class HelperController(object):
 			app = Applications.find(app_name)
 
 			try: affected_by = tr.trace_application(app_name)
-			except AccessDenied: affected_by = _("affected_by_forbidden")
+			except AccessDenied: affected_by = _("You don't have enough permissions")
 
 			view = HelperView()
 			view.assign("args", args)
@@ -62,4 +62,4 @@ class HelperController(object):
 			view.assign("affected_by", affected_by)
 			view.render()
 		else:
-			print _("app_not_running").format(app_name)
+			print _("Application called {0} is not running").format(app_name)

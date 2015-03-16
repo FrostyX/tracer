@@ -6,7 +6,7 @@ from tracer.views.note_for_hidden import NoteForHiddenView
 class InteractiveView(View):
 	def render(self):
 		if self.args.applications:
-			print _("you_should_restart")
+			print _("You should restart:")
 
 		i = 1
 		digits = len(str(len(self.args.applications)))

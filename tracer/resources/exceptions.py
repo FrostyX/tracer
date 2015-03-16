@@ -25,7 +25,14 @@ from tracer.resources.lang import _
 class UnsupportedDistribution(OSError):
 
 	@property
-	def message(self): return _("unsupported_distro")
+	def message(self):
+		return _(
+			"You are running unsupported linux distribution\n"
+			"\n"
+			"Please visit https://github.com/FrostyX/tracer/issues\n"
+			"and create new issue called 'Unknown or unsupported linux distribution: {0} (v{1})' if there isn't such.\n"
+			"\n"
+			"Don't you have an GitHub account? Please report this issue on frostyx@email.cz")
 
 	def __init__(self, distro):
 		OSError.__init__(self, self.message.format(distro, __version__))
@@ -34,7 +41,8 @@ class UnsupportedDistribution(OSError):
 class LockedDatabase(OSError):
 
 	@property
-	def message(self): return _("locked_database")
+	def message(self):
+		return _("Package database is locked by another process")
 
 	def __init__(self):
 		OSError.__init__(self, self.message)
@@ -43,7 +51,8 @@ class LockedDatabase(OSError):
 class DatabasePermissions(OSError):
 
 	@property
-	def message(self): return _("database_permissions")
+	def message(self):
+		return _("You can't open package database due to insufficient permissions")
 
 	def __init__(self):
 		OSError.__init__(self, self.message)
@@ -52,7 +61,10 @@ class DatabasePermissions(OSError):
 class PathNotFound(OSError):
 
 	@property
-	def message(self): return _("path_not_found")
+	def message(self):
+		return _(
+			"Problem occurred - neither one of {0} paths doesn't exist\n"
+			"Please contact maintainer of tracer package in your distribution.")
 
 	def __init__(self, name):
 		OSError.__init__(self, self.message.format(name))

@@ -16,38 +16,12 @@
 # 02110-1301, USA.
 #
 
-DEFAULT_LANG = "en"
 
-# WARNING: There are imports in package_manager()
-from os import environ
-from os.path import dirname, realpath
-parentdir = dirname(dirname(realpath(__file__)))
-_LANG_PATH = parentdir + "/lang/"
+from __future__ import absolute_import
 
+import gettext
+from tracer.paths import LANG_DIR
 
-# Languages supported by system, sorted by priority
-def _system_languages():
-	lang = []
-	for l in environ.get('LANG', '').split(':'):
-		lang.append(l.split("_")[0])
-
-	lang.append(DEFAULT_LANG)
-	return lang
-
-
-# Import language locale (throws ImportError)
-def _locale(lang):
-	return __import__("tracer.lang.%s" % lang, fromlist=["LOCALE"]).LOCALE
-
-# Import a dictionary containing all localization lines for system language
-_LOCALE = None
-for lang in _system_languages():
-	try: _LOCALE = _locale(lang); break
-	except ImportError: pass
-	except AttributeError: pass
-
-
-# Whenever you want print some language-specific text, use this function
-def _(string_label):
-	try: return _LOCALE[string_label]
-	except KeyError: return string_label
+gettext.bindtextdomain('tracer', LANG_DIR)
+gettext.textdomain('tracer')
+_ = gettext.gettext
