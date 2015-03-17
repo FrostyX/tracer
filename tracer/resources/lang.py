@@ -20,8 +20,8 @@
 from __future__ import absolute_import
 
 import gettext
+import locale
 from tracer.paths import LANG_DIR
 
-gettext.bindtextdomain('tracer', LANG_DIR)
-gettext.textdomain('tracer')
-_ = gettext.gettext
+t = gettext.translation('tracer', fallback=True, localedir=LANG_DIR)
+_ = t.ugettext
