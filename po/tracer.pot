@@ -1,0 +1,125 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# 
+# Translators:
+msgid ""
+msgstr ""
+"Project-Id-Version: tracer\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-03-16 16:30+0100\n"
+"PO-Revision-Date: 2015-03-16 15:31+0000\n"
+"Last-Translator: Jakub Kadlčík <frostyx@email.cz>\n"
+"Language-Team: English (http://www.transifex.com/projects/p/tracer/language/en/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: ../tracer/resources/exceptions.py:30
+#, python-brace-format
+msgid ""
+"You are running unsupported linux distribution\n"
+"\n"
+"Please visit https://github.com/FrostyX/tracer/issues\n"
+"and create new issue called 'Unknown or unsupported linux distribution: {0} (v{1})' if there isn't such.\n"
+"\n"
+"Don't you have an GitHub account? Please report this issue on frostyx@email.cz"
+msgstr "You are running unsupported linux distribution\n\nPlease visit https://github.com/FrostyX/tracer/issues\nand create new issue called 'Unknown or unsupported linux distribution: {0} (v{1})' if there isn't such.\n\nDon't you have an GitHub account? Please report this issue on frostyx@email.cz"
+
+#: ../tracer/resources/exceptions.py:45
+msgid "Package database is locked by another process"
+msgstr "Package database is locked by another process"
+
+#: ../tracer/resources/exceptions.py:55
+msgid "You can't open package database due to insufficient permissions"
+msgstr "You can't open package database due to insufficient permissions"
+
+#: ../tracer/resources/exceptions.py:66
+#, python-brace-format
+msgid ""
+"Problem occurred - neither one of {0} paths doesn't exist\n"
+"Please contact maintainer of tracer package in your distribution."
+msgstr "Problem occurred - neither one of {0} paths doesn't exist\nPlease contact maintainer of tracer package in your distribution."
+
+#: ../tracer/resources/applications.py:112
+msgid "You will have to reboot your computer"
+msgstr "You will have to reboot your computer"
+
+#: ../tracer/resources/applications.py:115
+msgid "You will have to log out & log in again"
+msgstr "You will have to log out & log in again"
+
+#: ../tracer/resources/router.py:46
+msgid "Only root can use this application"
+msgstr "Only root can use this application"
+
+#: ../tracer/views/default.py:48
+msgid "Some applications using:"
+msgstr "Some applications using:"
+
+#: ../tracer/views/default.py:49
+msgid "These applications manually:"
+msgstr "These applications manually:"
+
+#: ../tracer/views/default.py:54
+msgid "These applications restarting your session:"
+msgstr "These applications restarting your session:"
+
+#: ../tracer/views/default.py:58
+msgid "These applications rebooting your computer:"
+msgstr "These applications rebooting your computer:"
+
+#: ../tracer/views/default.py:67 ../tracer/views/interactive.py:9
+msgid "You should restart:"
+msgstr "You should restart:"
+
+#: ../tracer/views/helper.py:42
+msgid "How to restart"
+msgstr "How to restart"
+
+#: ../tracer/views/helper.py:53
+msgid "Affected by"
+msgstr "Affected by"
+
+#: ../tracer/views/note_for_hidden.py:11
+msgid "There are:"
+msgstr "There are:"
+
+#: ../tracer/views/note_for_hidden.py:13
+msgid "Additionally to those process above, there are:"
+msgstr "Additionally to those process above, there are:"
+
+#: ../tracer/views/note_for_hidden.py:17
+#, python-brace-format
+msgid ""
+"{0} processes requiring restart of your session (i.e. Logging out & Logging "
+"in again)"
+msgstr "{0} processes requiring restart of your session (i.e. Logging out & Logging in again)"
+
+#: ../tracer/views/note_for_hidden.py:21
+#, python-brace-format
+msgid "{0} processes requiring reboot"
+msgstr "{0} processes requiring reboot"
+
+#: ../tracer/controllers/default.py:84
+msgid "Press application number for help or 'q' to quit"
+msgstr "Press application number for help or 'q' to quit"
+
+#: ../tracer/controllers/default.py:92
+msgid "Wrong application number"
+msgstr "Wrong application number"
+
+#: ../tracer/controllers/default.py:94
+msgid "Press enter to get list of applications"
+msgstr "Press enter to get list of applications"
+
+#: ../tracer/controllers/helper.py:55
+msgid "You don't have enough permissions"
+msgstr "You don't have enough permissions"
+
+#: ../tracer/controllers/helper.py:65
+#, python-brace-format
+msgid "Application called {0} is not running"
+msgstr "Application called {0} is not running"
