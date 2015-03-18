@@ -17,6 +17,7 @@ BuildRequires:	python2-devel
 BuildRequires:	asciidoc
 BuildRequires:	python-sphinx
 BuildRequires:	libxslt
+BuildRequires:	gettext
 Requires:	rpm-python
 Requires:	python
 Requires:	python-beautifulsoup4
@@ -47,9 +48,11 @@ cp -a bin/tracer.py %{buildroot}/%{_bindir}/tracer
 cp -a data/* %{buildroot}/%{_datadir}/tracer/
 cp -ar tracer/* tests %{buildroot}/%{python2_sitelib}/tracer/
 install -m644 doc/build/man/tracer.8 %{buildroot}/%{_mandir}/man8/
+make DESTDIR=%{buildroot}/usr/share/ mo
+%find_lang %{name}
 
 
-%files
+%files -f %{name}.lang
 %doc LICENSE README.md
 %doc %{_mandir}/man8/tracer.8*
 %{_bindir}/tracer
