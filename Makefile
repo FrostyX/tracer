@@ -1,5 +1,7 @@
 .PHONY: doc
 
+DESTDIR=build
+
 help:
 	@echo "Please use \`make <target>' where <target> is one of these"
 	@echo "* General targets"
@@ -31,6 +33,26 @@ doc:
 
 man:
 	make --directory=doc man
+
+
+#
+# Localizations
+#
+
+pot:
+	cd po && find ../tracer -iname "*.py" | \
+	xargs xgettext --from-code=UTF-8 --output=tracer.pot
+
+tx-push: pot
+	tx push -s
+
+tx-pull:
+	tx pull -s
+
+mo:
+	mkdir -p $(DESTDIR)/locale/cs/LC_MESSAGES/
+	msgcat po/cs.po | msgfmt -o $(DESTDIR)/locale/cs/LC_MESSAGES/tracer.mo -
+
 
 #
 # RPM
