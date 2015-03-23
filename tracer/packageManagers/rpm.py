@@ -56,10 +56,15 @@ if System.distribution() in ["fedora", "centos"]:
 				return PackagesCollection([])
 
 			sql = """
-				SELECT pkgtups.name
-				FROM trans_data_pkgs JOIN pkgtups ON trans_data_pkgs.pkgtupid=pkgtups.pkgtupid
-				WHERE trans_data_pkgs.tid = ?
-				ORDER BY pkgtups.pkgtupid
+				SELECT DISTINCT pkgtups.name, trans_end.timestamp AS end
+
+				FROM trans_beg JOIN trans_end JOIN trans_data_pkgs JOIN pkgtups
+				ON trans_beg.tid=trans_end.tid
+				AND trans_data_pkgs.tid=trans_beg.tid
+				AND trans_data_pkgs.pkgtupid=pkgtups.pkgtupid
+
+				WHERE  trans_beg.timestamp > ?
+				ORDER BY pkgtups.name
 			"""
 
 			try:
@@ -68,11 +73,10 @@ if System.distribution() in ["fedora", "centos"]:
 				conn = sqlite3.connect(sqlite)
 				conn.row_factory = sqlite3.Row
 				cursor = conn.cursor()
+				cursor.execute(sql, [unix_time])
 
-				for tran in self._transactions_newer_than(unix_time):
-					cursor.execute(sql, [tran['tid']])
-					for pkg in cursor.fetchall():
-						packages.append(Package(pkg['name'], tran['end']))
+				for result in cursor.fetchall():
+					packages.append(Package(result['name'], result['end']))
 
 				return packages
 
@@ -132,26 +136,6 @@ if System.distribution() in ["fedora", "centos"]:
 			p = Package(pkg[rpm.RPMTAG_NAME])
 			p.category = pkg[rpm.RPMTAG_GROUP]
 			return p
-
-		def _transactions_newer_than(self, unix_time):
-			"""
-			Returns list of transactions which ran between unix_time and present.
-			Requires root permissions.
-			"""
-
-			sql = """
-				SELECT trans_beg.tid, trans_beg.timestamp AS beg, trans_end.timestamp AS end
-				FROM trans_beg JOIN trans_end ON trans_beg.tid=trans_end.tid
-				WHERE beg > ?
-				ORDER BY trans_beg.tid
-			"""
-
-			sqlite = self._database_file()
-			conn = sqlite3.connect(sqlite)
-			conn.row_factory = sqlite3.Row
-			cursor = conn.cursor()
-			cursor.execute(sql, [unix_time])
-			return cursor.fetchall()
 
 		def _database_file(self):
 			"""
