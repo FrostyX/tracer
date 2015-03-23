@@ -89,6 +89,8 @@ if System.distribution() in ["fedora", "centos"]:
 				mi = ts.dbMatch("name", pkg_name)
 				fi = rpm.fi(mi.next())
 				return [f[0] for f in fi]
+
+			# Tracer will not find uninstalled applications
 			return []
 
 		def load_package_info(self, package):
