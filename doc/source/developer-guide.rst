@@ -43,6 +43,13 @@ There is an example code following our coding style
         def _transactions_newer_than(self, unix_time):
             ...
 
+Localization
+------------
+
+The default language for the program is english. For translations to other languages, we need contributors. If you are using Tracer and want to help us, you could translate it to languages, that you know. There are only few strings in the code, so its the matter of minutes.
+
+Please see the Tracer on `transifex`_.
+
 Packaging
 ---------
 
@@ -88,3 +95,4 @@ Fedora
 .. _frostyx/tracer: https://copr.fedoraproject.org/coprs/frostyx/tracer/
 .. _F19: https://copr.fedoraproject.org/coprs/frostyx/tracer/repo/fedora-19-i386/frostyx-tracer-fedora-19-i386.repo
 .. _F20: https://copr.fedoraproject.org/coprs/frostyx/tracer/repo/fedora-20-i386/frostyx-tracer-fedora-20-i386.repo
+.. _transifex: https://www.transifex.com/organization/frostyx/dashboard/tracer
