@@ -1,6 +1,7 @@
 import os
 import shutil
 from distutils.core import setup
+from tracer.version import __version__
 
 
 if not os.path.exists('build/pip'):
@@ -9,7 +10,7 @@ shutil.copyfile('bin/tracer.py', 'build/tracer')
 
 setup(
 	name='tracer',
-	version='0.5.8',
+	version=__version__,
 	author='FrostyX',
 	author_email='frostyx@email.cz',
 	url='http://tracer-package.com/',
