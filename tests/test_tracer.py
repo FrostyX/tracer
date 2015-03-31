@@ -33,7 +33,6 @@ class TestRules(unittest.TestCase):
 
 class ProcessMock(object):
 	def __init__(self, pid, name, create_time, files):
-		self.parent = None
 		self.pid = pid
 		self.files = files
 		self._name = name
@@ -47,6 +46,9 @@ class ProcessMock(object):
 
 	def children(self):
 		return []
+
+	def parent(self):
+		return None
 
 
 class AffectedProcessMock(AffectedProcess):
