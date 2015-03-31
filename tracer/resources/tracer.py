@@ -105,11 +105,11 @@ class Tracer(object):
 		return ApplicationsCollection(affected.values())
 
 	def _apply_rules(self, process):
-		parent = process.parent
+		parent = process.parent()
 		if not parent:
 			return process
 
-		rule = self._rules.find(parent.name)
+		rule = self._rules.find(parent.name())
 
 		if not rule or not rule.action:
 			return process

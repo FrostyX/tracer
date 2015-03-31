@@ -52,6 +52,9 @@ class ProcessWrapper(object):
 	def __init__(self, pid=None):
 		self._process = psutil.Process(pid)
 
+	def __nonzero__(self):
+		return bool(self._process)
+
 	def name(self):
 		return self._attr("name")
 
@@ -118,13 +121,11 @@ class Process(ProcessWrapper):
 
 		return sorted(files)
 
-	@property
 	def parent(self):
 		"""The parent process casted from ``psutil.Process`` to tracer ``Process``"""
-		p = super(Process, self).parent()
-		if p:
-			p.__class__ = Process
-		return p
+		if self.ppid():
+			return Process(self.ppid())
+		return None
 
 	def username(self):
 		"""The user who owns the process. If user was deleted in the meantime,
@@ -140,9 +141,7 @@ class Process(ProcessWrapper):
 		"""The collection of process's children. Each of them casted from ``psutil.Process``
 		to tracer ``Process``."""
 		children = super(Process, self).children(recursive)
-		for child in children:
-			child.__class__ = Process
-		return ProcessesCollection(children)
+		return ProcessesCollection([Process(child.pid) for child in children])
 
 	@property
 	def exe(self):
