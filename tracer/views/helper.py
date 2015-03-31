@@ -48,16 +48,17 @@ class HelperView(View):
 					print >>self.out, "        {how_to_restart}".format(how_to_restart=helper)
 
 	def render_affected_by(self):
-
+		default_level = 2
 		indent = "    "
 		print >>self.out, indent + _("Affected by") + ":"
 
-		indent_level = 2
 		if type(self.args.affected_by) == str:
-			print >>self.out, indent_level * indent + self.args.affected_by
+			print >>self.out, default_level * indent + self.args.affected_by
 			return
 
 		for process in self.args.affected_by:
+			indent_level = default_level
+
 			if process not in self.args.processes:
 				print >>self.out, indent_level * indent + "{0} ({1})".format(process.name(), process.pid)
 				indent_level += 1
