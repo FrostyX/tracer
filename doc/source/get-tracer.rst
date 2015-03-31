@@ -37,11 +37,17 @@ So far I have ``tracer.ebuild`` in my `personal overlay`_. Please take note that
 Git
 ---
 
-First of all check tracer’s `requirements`_ and install them. Next download the code.
+You can download the code by running this command:
 
 ::
 
     git clone git@github.com:FrostyX/tracer.git
+
+
+1) Manuall installation
+~~~~~~~~~~~~~~~~~~~~~~~
+
+First of all check tracer's `requirements`_ and install them.
 
 Now you should be able to run it by ``tracer/bin/tracer.py``, but becaue it is so unhandy I will recommend you to make symlink into ``$PATH`` directory. For instance
 
@@ -50,6 +56,17 @@ Now you should be able to run it by ``tracer/bin/tracer.py``, but becaue it is s
     sudo ln -s tracer/bin/tracer.py /usr/local/bin/tracer
 
 and then run it just by ``tracer`` command.
+
+2) Automated installation
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Previous paragraph can be done by running
+
+::
+
+    sudo pip install ./tracer/
+    # or
+    pip install --user ./tracer/
 
 
 .. _F19: https://copr.fedoraproject.org/coprs/frostyx/tracer/repo/fedora-19-i386/frostyx-tracer-fedora-19-i386.repo
