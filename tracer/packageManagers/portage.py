@@ -55,7 +55,7 @@ if System.distribution() == "gentoo":
 			newer = PackagesCollection()
 			process = subprocess.Popen(['qlop', '-lC'], stdout=subprocess.PIPE)
 			packages = process.communicate()[0]
-			for package in packages.split('\n')[:-1]:
+			for package in str(packages).split('\n')[:-1]:
 				package = package.split(" >>> ")
 
 				# There actually should be %e instead of %d
@@ -84,7 +84,7 @@ if System.distribution() == "gentoo":
 			category = package.name.split('/')[0]
 			process = subprocess.Popen(['eix', '-e', package.name], stdout=subprocess.PIPE)
 			out = process.communicate()[0]
-			out = out.split('\n')
+			out = str(out).split('\n')
 
 			for line in out:
 				line = line.strip()

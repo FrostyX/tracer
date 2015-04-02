@@ -72,7 +72,7 @@ if System.distribution() == "debian":
 			command = ['dpkg-query', '-L', pkg_name]
 			process = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=fnull)
 			out = process.communicate()[0]
-			for file in out.split('\n')[:-1]:
+			for file in str(out).split('\n')[:-1]:
 				if os.path.isfile(file):
 					files.append(file)
 			return files
@@ -83,7 +83,7 @@ if System.distribution() == "debian":
 
 			process = subprocess.Popen(['dpkg', '-s', package.name], stdout=subprocess.PIPE)
 			out = process.communicate()[0]
-			out = out.split('\n')
+			out = str(out).split('\n')
 
 			for line in out:
 				if line.startswith("Description:"):
@@ -96,5 +96,5 @@ if System.distribution() == "debian":
 			command = ['dlocate', '-S', app_name]
 			process = subprocess.Popen(command, stdout=subprocess.PIPE)
 			pkg_name = process.communicate()[0]
-			pkg_name = pkg_name.split('\n')[0]
+			pkg_name = str(pkg_name).split('\n')[0]
 			return Package(pkg_name.split(':')[0])
