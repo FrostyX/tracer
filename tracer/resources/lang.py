@@ -19,9 +19,17 @@
 
 from __future__ import absolute_import
 
-import gettext
 import locale
+import gettext
+from gettext import NullTranslations
+from sys import version_info
 from tracer.paths import LANG_DIR
+
+# python 3 compabillity settings
+if version_info.major >= 3:
+	# u?gettext dont exists in python3 NullTranslations
+	NullTranslations.ugettext = NullTranslations.gettext
+	NullTranslations.ungettext = NullTranslations.ngettext
 
 t = gettext.translation('tracer', fallback=True, localedir=LANG_DIR)
 _ = t.ugettext
