@@ -22,5 +22,5 @@ class NoteForHiddenView(View):
 				)
 
 			if self.args.static_count > 0:
-				print >>self.out, "  - " + _("{0} processes requiring reboot").format(self.args.static_count)
+				print("  - " + _("{0} processes requiring reboot").format(self.args.static_count), file=self.out)
 
