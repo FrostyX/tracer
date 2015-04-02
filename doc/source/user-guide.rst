@@ -16,13 +16,13 @@ Standard way to use tracer is just running the ``sudo tracer`` command. I am wor
     $[FrostyX  ~]-> sudo tracer
     You should restart:
       * Some applications using:
-          sudo service mpd restart
           sudo service apache2 restart
+          sudo service mpd restart
 
       * These applications manually:
           chromium
-          gvim
           dolphin
+          gvim
 
     Additionally to those process above, there are:
       - 6 processes requiring restarting your session (i.e. Logging out & Logging in again)
