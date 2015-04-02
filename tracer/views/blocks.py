@@ -1,3 +1,5 @@
+from __future__ import print_function
+
 from . import View
 import sys
 
@@ -20,11 +22,11 @@ class BlocksView(View):
 		for index, block in enumerate(self.args.blocks):
 			if block["content"]:
 				if "title" in block:
-					print >>self.out, block["title"]
+					print(block["title"], file=self.out)
 				self.out.write(block["content"])
 
 				if self.next(index):
-					print >>self.out, ""
+					print("", file=self.out)
 
 	def next(self, index):
 		"""Return True if there is any nonempty block after given index"""

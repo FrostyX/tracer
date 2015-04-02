@@ -38,7 +38,7 @@ class HelperController(object):
 		for app_name in self.args.helper:
 			self.print_helper(app_name, self.args)
 			if app_name != self.args.helper[-1]:
-				print ""
+				print("")
 
 	def print_helper(self, app_name, args):
 		processes = Applications.find(app_name).instances
@@ -62,4 +62,4 @@ class HelperController(object):
 			view.assign("affected_by", affected_by)
 			view.render()
 		else:
-			print _("Application called {0} is not running").format(app_name)
+			print(_("Application called {0} is not running").format(app_name))

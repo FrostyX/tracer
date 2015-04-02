@@ -55,7 +55,7 @@ class DefaultController(object):
 		helper_controller = HelperController(self.args)
 		for application in self._restartable_applications(self.applications, self.args):
 			helper_controller.print_helper(application.name, self.args)
-			print ""
+			print("")
 
 		view = NoteForHiddenView()
 		view.assign("args", self.args)
@@ -81,7 +81,7 @@ class DefaultController(object):
 			if view.get("total_count") == view.get("session_count") + view.get("static_count"):
 				break
 
-			print "\n" + _("Press application number for help or 'q' to quit")
+			print("\n" + _("Press application number for help or 'q' to quit"))
 			answer = raw_input("--> ")
 			try:
 				if answer == "q": return
@@ -89,7 +89,7 @@ class DefaultController(object):
 				helper_controller.print_helper(filtered[int(answer) - 1].name, self.args)
 
 			except (SyntaxError, IndexError, ValueError):
-				print _("Wrong application number")
+				print(_("Wrong application number"))
 
 			raw_input("\n-- " + _("Press enter to get list of applications") + " --")
 

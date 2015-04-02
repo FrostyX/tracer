@@ -42,6 +42,6 @@ def run():
 		return router.dispatch()
 
 	except (UnsupportedDistribution, PathNotFound, LockedDatabase) as ex:
-		print ex
+		print(ex)
 	except (KeyboardInterrupt, EOFError):
-		print ""
+		print("")

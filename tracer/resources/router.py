@@ -40,10 +40,10 @@ class Router:
 			controller.render()
 
 		elif self.args.version:
-			print __version__
+			print(__version__)
 
 		elif os.getuid() != 0:
-			print _("Only root can use this application")
+			print(_("Only root can use this application"))
 
 		elif self.args.resource:
 			from tracer.controllers.resource import ResourceController

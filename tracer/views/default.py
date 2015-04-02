@@ -1,3 +1,5 @@
+from __future__ import print_function
+
 from . import View
 from tracer.resources.lang import _
 from tracer.resources.applications import Applications
@@ -64,5 +66,5 @@ class DefaultView(View):
 		view = BlocksView(self.out)
 		view.assign("blocks", blocks)
 		if view.has_content():
-			print >>self.out, _("You should restart:")
+			print(_("You should restart:"), file=self.out)
 		view.render()
