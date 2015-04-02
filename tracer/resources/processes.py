@@ -16,8 +16,8 @@
 # 02110-1301, USA.
 #
 
-from collections import ProcessesCollection
-from FilenameCleaner import FilenameCleaner
+from .collections import ProcessesCollection
+from .FilenameCleaner import FilenameCleaner
 import psutil
 import datetime
 import time
