@@ -5,7 +5,7 @@ from tracer.resources.lang import _
 from tracer.resources.applications import Applications
 from tracer.views.note_for_hidden import NoteForHiddenView
 from tracer.views.blocks import BlocksView
-import StringIO
+from io import StringIO
 import re
 
 

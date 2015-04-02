@@ -1,6 +1,6 @@
 from __meta__ import *
 
-import StringIO
+from io import StringIO
 from tracer.views.default import DefaultView
 from tracer.views.helper import HelperView
 from tracer.resources.applications import Applications, Application
