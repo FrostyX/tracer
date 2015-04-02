@@ -1,3 +1,4 @@
+from __future__ import unicode_literals
 from __meta__ import *
 
 from io import StringIO

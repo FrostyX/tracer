@@ -1,3 +1,5 @@
+from __future__ import unicode_literals
+
 from . import View
 from tracer.resources.lang import _
 from tracer.views.note_for_hidden import NoteForHiddenView
