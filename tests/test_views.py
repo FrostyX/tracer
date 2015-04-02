@@ -12,7 +12,7 @@ from test_tracer import ProcessMock, AffectedProcessMock
 class TestViews(unittest.TestCase):
 
 	def setUp(self):
-		self.out = StringIO.StringIO()
+		self.out = StringIO()
 
 	def test_default_none(self):
 		view = DefaultView(self.out)

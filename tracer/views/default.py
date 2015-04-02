@@ -37,7 +37,7 @@ class DefaultView(View):
 			return content
 
 		def note_content():
-			content = StringIO.StringIO()
+			content = StringIO()
 			view = NoteForHiddenView(content)
 			view.assign("args", self.args.args)
 			view.assign("total_count", len(self.args.applications))
