@@ -84,6 +84,7 @@ class ResourceController(object):
 		package_managers = System.package_manager().names()
 
 		view = SystemView()
+		view.assign('python', System.python_version())
 		view.assign('distribution', System.distribution())
 		view.assign('package_managers', package_managers)
 		view.assign('init', System.init_system())

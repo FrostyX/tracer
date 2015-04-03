@@ -4,6 +4,7 @@ from .. import View
 class SystemView(View):
 	def render(self):
 		line = "{0:<20}{1}"
+		print(line.format("Python:", self.args.python))
 		print(line.format("Distribution:", self.args.distribution))
 		print(line.format("Package Manager:", ", ".join(self.args.package_managers)))
 		print(line.format("Init system:", self.args.init))

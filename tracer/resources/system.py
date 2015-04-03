@@ -24,6 +24,7 @@ from __future__ import absolute_import
 import importlib
 import platform
 import psutil
+from sys import version_info
 from tracer.resources.PackageManager import PackageManager
 from tracer.resources.processes import Process
 
@@ -76,3 +77,7 @@ class System(object):
 		# psutil-2.x.x is not backward compatible to psutil-1.x.x
 		try: return psutil.boot_time()
 		except AttributeError: return psutil.get_boot_time()
+
+	@staticmethod
+	def python_version():
+		return "{}.{}.{}".format(version_info.major, version_info.minor, version_info.micro)
