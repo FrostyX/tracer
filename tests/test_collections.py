@@ -48,6 +48,6 @@ class TestCollections(unittest.TestCase):
 		p4 = Package("qux", 123)
 		p5 = Package("qux")
 		c1 = PackagesCollection([p1, p2, p3, p4])
-		self.assertEqual(c1.intersection([p1, p3]), PackagesCollection([p1, p3]))
+		self.assertEqual(c1.intersection([p1, p3]).sorted("name"), PackagesCollection([p1, p3]).sorted("name"))
 		self.assertEqual(c1.intersection(None), c1)
 		self.assertIsNotNone(c1.intersection([p5])[0].modified)
