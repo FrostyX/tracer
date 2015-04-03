@@ -176,11 +176,11 @@ class Process(ProcessWrapper):
 		if started.days > 0:
 			started_str = str(started.days) + " days"
 		elif started.seconds >= 60 * 60:
-			started_str = str(started.seconds / (60 * 60)) + " hours"
+			started_str = str(int(started.seconds / (60 * 60))) + " hours"
 		elif started.seconds >= 60:
-			started_str = str(started.seconds / 60) + " minutes"
+			started_str = str(int(started.seconds / 60)) + " minutes"
 		elif started.seconds >= 0:
-			started_str = str(started.seconds) + " seconds"
+			started_str = str(int(started.seconds)) + " seconds"
 
 		return started_str
 
