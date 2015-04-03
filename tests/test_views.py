@@ -1,5 +1,5 @@
 from __future__ import unicode_literals
-from __meta__ import *
+from .__meta__ import *
 
 from io import StringIO
 from tracer.views.default import DefaultView
@@ -7,7 +7,7 @@ from tracer.views.helper import HelperView
 from tracer.resources.applications import Applications, Application
 from tracer.resources.collections import ApplicationsCollection
 from tracer.resources.package import Package
-from test_tracer import ProcessMock, AffectedProcessMock
+from .test_tracer import ProcessMock, AffectedProcessMock
 
 
 class TestViews(unittest.TestCase):

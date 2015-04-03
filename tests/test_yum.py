@@ -1,4 +1,4 @@
-from __meta__ import *
+from .__meta__ import *
 try:
 	from tracer.packageManagers.ipackageManager import IPackageManager
 	from tracer.packageManagers.yum import Yum

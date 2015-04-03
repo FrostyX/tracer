@@ -1,4 +1,4 @@
-from __meta__ import *
+from .__meta__ import *
 from tracer.resources.processes import Processes, Process
 from tracer.resources.collections import ProcessesCollection
 

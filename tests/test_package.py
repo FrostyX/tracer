@@ -1,4 +1,4 @@
-from __meta__ import *
+from .__meta__ import *
 from tracer.resources.package import Package
 
 

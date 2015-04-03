@@ -1,4 +1,4 @@
-from __meta__ import *
+from .__meta__ import *
 from tracer.resources.applications import Applications, Application
 from tracer.resources.processes import Processes, AffectedProcess
 from tracer.resources.package import Package

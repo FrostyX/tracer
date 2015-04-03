@@ -1,4 +1,4 @@
-from __meta__ import *
+from .__meta__ import *
 import tracer.resources.lang as lang
 import os
 

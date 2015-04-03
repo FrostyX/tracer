@@ -1,4 +1,4 @@
-from __meta__ import *
+from .__meta__ import *
 from tracer.resources.tracer import Tracer
 from tracer.resources.rules import Rules
 from tracer.resources.applications import Applications, Application
