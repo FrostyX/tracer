@@ -17,6 +17,7 @@
 #
 
 from __future__ import absolute_import
+from __future__ import unicode_literals
 
 
 from tracer.resources.system import System
@@ -55,7 +56,7 @@ if System.distribution() == "gentoo":
 			newer = PackagesCollection()
 			process = subprocess.Popen(['qlop', '-lC'], stdout=subprocess.PIPE)
 			packages = process.communicate()[0]
-			for package in str(packages).split('\n')[:-1]:
+			for package in packages.decode().split('\n')[:-1]:
 				package = package.split(" >>> ")
 
 				# There actually should be %e instead of %d
@@ -84,7 +85,7 @@ if System.distribution() == "gentoo":
 			category = package.name.split('/')[0]
 			process = subprocess.Popen(['eix', '-e', package.name], stdout=subprocess.PIPE)
 			out = process.communicate()[0]
-			out = str(out).split('\n')
+			out = out.decode().split('\n')
 
 			for line in out:
 				line = line.strip()
