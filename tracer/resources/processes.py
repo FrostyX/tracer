@@ -64,6 +64,9 @@ class ProcessWrapper(object):
 	def cmdline(self):
 		return self._attr("cmdline")
 
+	def ppid(self):
+		return self._attr("ppid")
+
 	def parent(self):
 		return self._attr("parent")
 
