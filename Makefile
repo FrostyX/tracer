@@ -16,6 +16,12 @@ help:
 	@echo "    rpm-test       to build fedora package locally"
 	@echo "    rpm-try        to build fedora package and install it"
 	@echo "    rpm-copr       to build fedora package through copr"
+	@echo ""
+	@echo "* Localization targets"
+	@echo "    pot            to generate .pot file from the code"
+	@echo "    tx-push        to push .pot file to transifex.com"
+	@echo "    tx-pull        to pull translated .po files from transifex.com"
+	@echo "    mo             to build .mo files"
 
 release: test
 	tito tag
@@ -51,6 +57,7 @@ tx-pull:
 
 mo:
 	mkdir -p $(DESTDIR)/locale/cs/LC_MESSAGES/
+	@# @TODO Rewrite next line to scan all languages
 	msgcat po/cs.po | msgfmt -o $(DESTDIR)/locale/cs/LC_MESSAGES/tracer.mo -
 
 
