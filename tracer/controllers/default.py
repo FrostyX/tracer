@@ -91,7 +91,7 @@ class DefaultController(object):
 			except (SyntaxError, IndexError, ValueError):
 				print(_("Wrong application number"))
 
-			raw_input("\n-- " + _("Press enter to get list of applications") + " --")
+			raw_input("\n-- " + _("Press <enter> to get list of applications") + " --")
 
 	def _restartable_applications(self, applications, args):
 		return applications.exclude_types([

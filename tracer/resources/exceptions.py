@@ -63,7 +63,7 @@ class PathNotFound(OSError):
 	@property
 	def message(self):
 		return _(
-			"Problem occurred - neither one of {0} paths doesn't exist\n"
+			"Problem occurred - neither one of {0} paths exists\n"
 			"Please contact maintainer of tracer package in your distribution.")
 
 	def __init__(self, name):
