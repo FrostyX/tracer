@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: tracer\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-03-16 16:30+0100\n"
-"PO-Revision-Date: 2015-04-04 23:23+0000\n"
+"POT-Creation-Date: 2015-04-05 14:32+0200\n"
+"PO-Revision-Date: 2015-04-05 12:35+0000\n"
 "Last-Translator: Jakub Kadlčík <frostyx@email.cz>\n"
 "Language-Team: Czech (http://www.transifex.com/projects/p/tracer/language/cs/)\n"
 "MIME-Version: 1.0\n"
@@ -17,6 +17,39 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Language: cs\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+
+#: ../tracer/controllers/default.py:84
+msgid "Press application number for help or 'q' to quit"
+msgstr "Pro zobrazení nápovědy zadejte číslo aplikace. Nebo 'q' pro ukončení"
+
+#: ../tracer/controllers/default.py:92
+msgid "Wrong application number"
+msgstr "Neplatné číslo aplikace"
+
+#: ../tracer/controllers/default.py:94
+msgid "Press <enter> to get list of applications"
+msgstr "Pro vypsání seznamu aplikací stisknete <enter>"
+
+#: ../tracer/controllers/helper.py:55
+msgid "You don't have enough permissions"
+msgstr "Nemáte dostatečné oprávnění"
+
+#: ../tracer/controllers/helper.py:65
+#, python-brace-format
+msgid "Application called {0} is not running"
+msgstr "Aplikace s názvem {0} není v tuto chvíli spuštěna"
+
+#: ../tracer/resources/applications.py:112
+msgid "You will have to reboot your computer"
+msgstr "Bude potřeba restartovat počítač"
+
+#: ../tracer/resources/applications.py:115
+msgid "You will have to log out & log in again"
+msgstr "Bude potřeba odhlášení a opětovné přihlášení do systému"
+
+#: ../tracer/resources/router.py:46
+msgid "Only root can use this application"
+msgstr "Tato aplikace vyžaduje oprávnění uživatele root"
 
 #: ../tracer/resources/exceptions.py:30
 #, python-brace-format
@@ -40,87 +73,54 @@ msgstr "Pro otevření databáze balíčků nemáte dostatečné oprávnění "
 #: ../tracer/resources/exceptions.py:66
 #, python-brace-format
 msgid ""
-"Problem occurred - neither one of {0} paths doesn't exist\n"
+"Problem occurred - neither one of {0} paths exists\n"
 "Please contact maintainer of tracer package in your distribution."
 msgstr "Vyskytl se problém - ani jedno z {0} umístění neexistuje.\nProsím kontaktuje správce balíčku tracer pro vaši distribuci."
 
-#: ../tracer/resources/applications.py:112
-msgid "You will have to reboot your computer"
-msgstr "Bude potřeba restartovat počítač"
-
-#: ../tracer/resources/applications.py:115
-msgid "You will have to log out & log in again"
-msgstr "Bude potřeba odhlášení a opětovné přihlášení do systému"
-
-#: ../tracer/resources/router.py:46
-msgid "Only root can use this application"
-msgstr "Tato aplikace vyžaduje oprávnění uživatele root"
-
-#: ../tracer/views/default.py:48
-msgid "Some applications using:"
-msgstr "Některé aplikace pomocí:"
-
-#: ../tracer/views/default.py:49
-msgid "These applications manually:"
-msgstr "Následující aplikace ručně:"
-
-#: ../tracer/views/default.py:54
-msgid "These applications restarting your session:"
-msgstr "Následující aplikace restartováním vašeho sezení:"
-
-#: ../tracer/views/default.py:58
-msgid "These applications rebooting your computer:"
-msgstr "Následující aplikace restartováním počítače:"
-
-#: ../tracer/views/default.py:67 ../tracer/views/interactive.py:9
+#: ../tracer/views/interactive.py:11 ../tracer/views/default.py:70
 msgid "You should restart:"
 msgstr "Bylo by vhodné restartovat:"
 
-#: ../tracer/views/helper.py:42
+#: ../tracer/views/default.py:51
+msgid "Some applications using:"
+msgstr "Některé aplikace pomocí:"
+
+#: ../tracer/views/default.py:52
+msgid "These applications manually:"
+msgstr "Následující aplikace ručně:"
+
+#: ../tracer/views/default.py:57
+msgid "These applications restarting your session:"
+msgstr "Následující aplikace restartováním vašeho sezení:"
+
+#: ../tracer/views/default.py:61
+msgid "These applications rebooting your computer:"
+msgstr "Následující aplikace restartováním počítače:"
+
+#: ../tracer/views/helper.py:46
 msgid "How to restart"
 msgstr "Jak restartovat"
 
-#: ../tracer/views/helper.py:53
+#: ../tracer/views/helper.py:57
 msgid "Affected by"
 msgstr "Ovlivněno kvůi"
 
-#: ../tracer/views/note_for_hidden.py:11
+#: ../tracer/views/note_for_hidden.py:13
 msgid "There are:"
 msgstr "Nalezeno:"
 
-#: ../tracer/views/note_for_hidden.py:13
+#: ../tracer/views/note_for_hidden.py:15
 msgid "Additionally to those process above, there are:"
 msgstr "Kromě aplikací vypsaných výše, je zde:"
 
-#: ../tracer/views/note_for_hidden.py:17
+#: ../tracer/views/note_for_hidden.py:19
 #, python-brace-format
 msgid ""
 "{0} processes requiring restart of your session (i.e. Logging out & Logging "
 "in again)"
 msgstr "{0} procesů vyžadujících restart vašeho sezení (i.e. odhlášení a opětovné přihlášení)"
 
-#: ../tracer/views/note_for_hidden.py:21
+#: ../tracer/views/note_for_hidden.py:25
 #, python-brace-format
 msgid "{0} processes requiring reboot"
 msgstr "{0} procesů vyžadujících reboot"
-
-#: ../tracer/controllers/default.py:84
-msgid "Press application number for help or 'q' to quit"
-msgstr "Pro zobrazení nápovědy zadejte číslo aplikace. Nebo 'q' pro ukončení"
-
-#: ../tracer/controllers/default.py:92
-msgid "Wrong application number"
-msgstr "Neplatné číslo aplikace"
-
-#: ../tracer/controllers/default.py:94
-msgid "Press enter to get list of applications"
-msgstr "Pro vypsání seznamu aplikací stisknete <enter>"
-
-#: ../tracer/controllers/helper.py:55
-msgid "You don't have enough permissions"
-msgstr "Nemáte dostatečné oprávnění"
-
-#: ../tracer/controllers/helper.py:65
-#, python-brace-format
-msgid "Application called {0} is not running"
-msgstr "Aplikace s názvem {0} není v tuto chvíli spuštěna"
