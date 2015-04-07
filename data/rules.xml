@@ -55,6 +55,9 @@
 	<rule name="akonadi_sendlater_agent" />
 	<rule name="abrt-applet" />
 
+	<!-- MATE -->
+	<rule name="mate-session" />
+
 	<!-- Networking -->
 	<rule name="wicd" action="return" />
 

@@ -122,7 +122,7 @@
 
 	<app name="console-kit-daemon" helper="service consolekit restart" />
 	<app name="dropbox" helper="dropbox stop; dropbox start" />
-	<app name="pulseaudio" helper="pulseaudio --kill; pulseaudio --start">
+	<app name="pulseaudio" helper="pulseaudio --kill; pulseaudio --start" />
 
 	<!--
 	   - KDE applications
@@ -144,5 +144,22 @@
 
 	<app name="akonadi_control" helper="akonadictl restart" />
 	<app name="akonadiserver" helper="akonadictl restart" />
+
+	<!--
+	   - MATE applications
+	  -->
+	<group type="session">
+		<app name="gnome-keyring-daemon" />
+		<app name="gvfs-gphoto2-volume-monitor" />
+		<app name="gvfs-mtp-volume-monitor" />
+		<app name="gvfsd-fuse" />
+		<app name="gvfsd-trash" />
+		<app name="imsettings-daemon" />
+		<app name="mate-session" />
+		<app name="clock-applet" />
+		<app name="notification-area-applet" />
+		<app name="wnck-applet" />
+		<app name="dconf-service" />
+	</group>
 
 </applications>
