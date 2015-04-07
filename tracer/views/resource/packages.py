@@ -1,3 +1,5 @@
+from __future__ import unicode_literals
+
 from .. import View
 from datetime import datetime
 
