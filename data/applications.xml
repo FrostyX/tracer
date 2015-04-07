@@ -102,10 +102,7 @@
 		<app name="dbus-daemon" />
 		<app name="polkitd" />
 		<app name="udisksd" />
-		<app name="gvfsd" />
-		<app name="gvfs-afc-volume-monitor" />
 		<app name="gvfsd-metadata" />
-		<app name="gvfs-udisks2-volume-monitor" />
 		<app name="at-spi-bus-launcher" />
 		<app name="gconfd-2" />
 		<app name="upowerd" />
@@ -118,6 +115,9 @@
 		<app name="kdeinit4: kdeinit4 Running..." />
 		<app name="plasma-desktop" />
 		<app name="korgac" />
+		<app name="gvfsd" />
+		<app name="gvfs-udisks2-volume-monitor" />
+		<app name="gvfs-afc-volume-monitor" />
 	</group>
 
 	<app name="console-kit-daemon" helper="service consolekit restart" />
