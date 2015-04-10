@@ -36,7 +36,7 @@ class Router:
 	def dispatch(self):
 		if self.args.helper:
 			from tracer.controllers.helper import HelperController
-			controller = HelperController(self.args)
+			controller = HelperController(self.args, self.packages)
 			controller.render()
 
 		elif self.args.version:

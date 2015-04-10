@@ -30,9 +30,11 @@ from tracer.resources.rules import Rules
 class HelperController(object):
 
 	args = None
+	packages = None
 
-	def __init__(self, args):
+	def __init__(self, args, packages):
 		self.args = args
+		self.packages = packages
 
 	def render(self):
 		for app_name in self.args.helper:
@@ -49,6 +51,10 @@ class HelperController(object):
 				package.load_info(System.package_manager())
 
 			tr = Tracer(System.package_manager(), Rules, Applications)
+			tr.now = self.args.now
+			if self.packages:
+				tr.specified_packages = self.packages
+
 			app = Applications.find(app_name)
 
 			try: affected_by = tr.trace_application(app_name)
