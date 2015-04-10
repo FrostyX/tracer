@@ -41,12 +41,13 @@ class HelperView(View):
 			self.render_affected_by()
 
 		# How to restart
-		if self.args.application.helper:
+		if self.args.application.helper or self.args.affects:
 			print("", file=self.out)
 			print("    {title}:".format(title=_('How to restart')), file=self.out)
-
 			if not self.args.affected_by:
 				print("        {app_name} does not need restarting".format(app_name=self.args.application.name), file=self.out)
+			elif self.args.affects:
+				print("        ", _("It's a part of application called {0}").format(self.args.affects), file=self.out)
 			else:
 				for helper in self.args.application.helpers:
 					print("        {how_to_restart}".format(how_to_restart=helper), file=self.out)
