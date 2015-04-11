@@ -76,13 +76,3 @@
 	<rule name="xmonad-i386-linux" action="return" />
 
 </rules>
-
-<!--
-  - @TODO - Deal with these applications:
-  -    + Manages desktop:
-  -        * Thunar
-  -        * Nautilus
-  -
-  -    + Test and add:
-  -
-  -->
