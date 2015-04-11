@@ -96,6 +96,8 @@
 		<app name="sshd" />
 		<app name="vixie-cron" />
 		<app name="wicd" />
+		<app name="firewalld" />
+		<app name="accounts-daemon" />
 	</group>
 
 	<group type="static">
@@ -124,6 +126,15 @@
 	<app name="dropbox" helper="dropbox stop; dropbox start" />
 	<app name="pulseaudio" helper="pulseaudio --kill; pulseaudio --start" />
 
+
+	<!--
+	   - Login Managers
+	   -->
+	<group type="static">
+		<app name="lightdm" />
+	</group>
+
+
 	<!--
 	   - KDE applications
 	  -->
@@ -145,6 +156,7 @@
 	<app name="akonadi_control" helper="akonadictl restart" />
 	<app name="akonadiserver" helper="akonadictl restart" />
 
+
 	<!--
 	   - MATE applications
 	  -->
@@ -161,6 +173,7 @@
 		<app name="wnck-applet" />
 		<app name="dconf-service" />
 	</group>
+
 
 	<!--
 	   - Xfce applications
