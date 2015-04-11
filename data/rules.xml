@@ -58,6 +58,10 @@
 	<!-- MATE -->
 	<rule name="mate-session" />
 
+	<!-- Xfce -->
+	<rule name="xfce4-session" />
+	<rule name="xfce4-terminal" action="return" />
+
 	<!-- Networking -->
 	<rule name="wicd" action="return" />
 

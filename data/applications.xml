@@ -162,4 +162,17 @@
 		<app name="dconf-service" />
 	</group>
 
+	<!--
+	   - Xfce applications
+	  -->
+	<group type="session">
+		<app name="xfce4-notifyd" />
+		<app name="xfce4-power-manager" />
+		<app name="xfce4-session" />
+		<app name="xfconfd" />
+		<app name="xfsettingsd" />
+		<app name="panel-2-actions" />
+		<app name="panel-6-systray" />
+	</group>
+
 </applications>
