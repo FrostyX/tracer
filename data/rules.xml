@@ -62,6 +62,10 @@
 	<rule name="xfce4-session" />
 	<rule name="xfce4-terminal" action="return" />
 
+	<!-- LXDE -->
+	<rule name="lxsession" />
+	<rule name="lxdm-binary" action="return"/>
+
 	<!-- Networking -->
 	<rule name="wicd" action="return" />
 

@@ -114,12 +114,14 @@
 		<app name="dbus-launch" />
 		<app name="X" />
 		<app name="xmonad-i386-linux" />
+		<app name="openbox" />
 		<app name="kdeinit4: kdeinit4 Running..." />
 		<app name="plasma-desktop" />
 		<app name="korgac" />
 		<app name="gvfsd" />
 		<app name="gvfs-udisks2-volume-monitor" />
 		<app name="gvfs-afc-volume-monitor" />
+		<app name="nm-applet" />
 	</group>
 
 	<app name="console-kit-daemon" helper="service consolekit restart" />
@@ -186,6 +188,18 @@
 		<app name="xfsettingsd" />
 		<app name="panel-2-actions" />
 		<app name="panel-6-systray" />
+	</group>
+
+
+	<!--
+	   - LXDE applications
+	  -->
+	<group type="session">
+		<app name="lxdm-binary" />
+		<app name="clipit" />
+		<app name="pcmanfm" />
+		<app name="pnmixer" />
+		<app name="lxpolkit" />
 	</group>
 
 </applications>
