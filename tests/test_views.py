@@ -239,6 +239,7 @@ class TestViews(unittest.TestCase):
 		view.assign("application", Applications.find("foo"))
 		view.assign("package", package)
 		view.assign("affected_by", affected_by)
+		view.assign("affects", None)
 		view.render()
 		self.assertEquals(self.out.getvalue(), (
 			"* foo\n"
