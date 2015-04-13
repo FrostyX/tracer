@@ -59,7 +59,7 @@ class HelperController(object):
 			except AccessDenied: affected_by = _("You don't have enough permissions")
 
 			app = Applications.find(app_name)
-			affects = affected_by[-1].name() if affected_by and affected_by[-1].name() != app.name else None
+			affects = self._affects(app, affected_by)
 
 			view = HelperView()
 			view.assign("args", args)
@@ -71,3 +71,16 @@ class HelperController(object):
 			view.render()
 		else:
 			print(_("Application called {0} is not running").format(app_name))
+
+	def _affects(self, app, affected_by):
+		if not affected_by:
+			return None
+
+		last = affected_by[-1].name()
+		if last == app.name:
+			return None
+
+		if last not in [p.parent().name() for p in app.instances]:
+			return None
+
+		return last
