@@ -21,7 +21,7 @@ class TestApplications(unittest.TestCase):
 			if "type" in a and a.type not in Applications.TYPES.values():
 				self.fail("Unknown type in application: " + a.type)
 
-			self.assertEqual(len(a), 4, "Application {0} has unsupported attribute".format(a.name))
+			self.assertEqual(len(a), 5, "Application {0} has unsupported attribute".format(a.name))
 
 			i += 1
 
@@ -37,7 +37,8 @@ class TestApplications(unittest.TestCase):
 		self.assertEquals(app.name, app_name)
 		self.assertEqual(app.type, Applications.DEFAULT_TYPE)
 		self.assertEqual(app.helper, None)
-		self.assertEqual(len(app), 4, "Application {0} has unsupported attribute".format(app.name))
+		self.assertEqual(app.note, None)
+		self.assertEqual(len(app), 5, "Application {0} has unsupported attribute".format(app.name))
 
 	def test_representations(self):
 		rule = Application({"name": "foo"})

@@ -51,7 +51,13 @@ class Applications(object):
 				return app
 
 		# Return the default application
-		return Application({"name" : app_name, "type" : Applications.DEFAULT_TYPE, "helper" : None, "ignore" : False})
+		return Application({
+			"name": app_name,
+			"type": Applications.DEFAULT_TYPE,
+			"helper": None,
+			"note": None,
+			"ignore": False,
+		})
 
 	@staticmethod
 	def all():
@@ -100,6 +106,7 @@ class Applications(object):
 		else:
 			application.setdefault('type', Applications.DEFAULT_TYPE)
 			application.setdefault('helper', Applications._helper(application))
+			application.setdefault('note', None)
 			application.setdefault('ignore', False)
 			Applications._apps.append(application)
 
@@ -125,6 +132,7 @@ class Application:
 	:param str name: The name of the application
 	:param str type: See ``Applications.TYPES`` for possible values
 	:param str helper: Describes how to restart the applications
+	:param bool note: Provides additional informations to the ``helper``
 	:param bool ignore: If ``True``, the application won't be printed
 	:param Processes processes_factory: Class providing list of running processes
 

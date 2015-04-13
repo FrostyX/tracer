@@ -52,6 +52,9 @@ class HelperView(View):
 				for helper in self.args.application.helpers:
 					print("        {how_to_restart}".format(how_to_restart=helper), file=self.out)
 
+				if self.args.application.note:
+					print("\n       - " + self.args.application.note)
+
 	def render_affected_by(self):
 		default_level = 2
 		indent = "    "

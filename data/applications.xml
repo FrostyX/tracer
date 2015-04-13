@@ -59,6 +59,14 @@
   -     * {PID}   - Process ID
   -     * {EXE}   - Process binary
   -
+  - Helper note:
+  -     It's possible to set additional helper note which is shown only when
+  -     displaying application's details. It should contain additional
+  -     explanation to command used as helper or any important imformation.
+  -
+  -     <app name="app_name" type="session"
+  -          note="It cares of desktop, so you can't close it directly" />
+  -
   -->
 
 <applications>
@@ -197,7 +205,7 @@
 	<group type="session">
 		<app name="lxdm-binary" />
 		<app name="clipit" />
-		<app name="pcmanfm" />
+		<app name="pcmanfm" note="It cares about desktop icons and can't be restarted directly." />
 		<app name="pnmixer" />
 		<app name="lxpolkit" />
 	</group>
