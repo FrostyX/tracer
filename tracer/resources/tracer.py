@@ -164,4 +164,5 @@ class Tracer(object):
 		processes = AffectedProcessesCollection()
 		for child in process.children():
 			processes.update(self._affecting_processes(child, packages, affected_process_factory))
+			processes.update(self._affecting_children(child, packages, affected_process_factory))
 		return processes
