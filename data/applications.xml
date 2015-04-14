@@ -34,6 +34,7 @@
   -     <app name="app_name2" helper="Run this command: app_name2 stop" />
   -     <app name="app_name3" rename="app_name_3" />
   -     <app name="app_name4" ignore="ignore" />
+  -     <app name="app_name5" rename="app_name1" />
   -
   -
   - Note that applications can be wrapped into group. In this case please set
@@ -135,6 +136,9 @@
 	<app name="console-kit-daemon" helper="service consolekit restart" />
 	<app name="dropbox" helper="dropbox stop; dropbox start" />
 	<app name="pulseaudio" helper="pulseaudio --kill; pulseaudio --start" />
+
+	<app name="abrt-dump-journal-oops" rename="abrtd" />
+	<app name="abrt-watch-log" rename="abrtd" />
 
 
 	<!--

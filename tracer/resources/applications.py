@@ -48,7 +48,7 @@ class Applications(object):
 
 		for app in Applications._apps:
 			if app.name == app_name:
-				return app
+				return app if "rename" not in app else Applications.find(app.rename)
 
 		# Return the default application
 		return Application({
