@@ -91,7 +91,7 @@ if System.distribution() in ["fedora", "centos"]:
 			if self._is_installed(pkg_name):
 				ts = rpm.TransactionSet()
 				mi = ts.dbMatch("name", pkg_name)
-				fi = rpm.fi(mi.next())
+				fi = rpm.fi(next(mi))
 				return [f[0] for f in fi]
 
 			# Tracer will not find uninstalled applications
@@ -106,9 +106,9 @@ if System.distribution() in ["fedora", "centos"]:
 
 			ts = rpm.TransactionSet()
 			mi = ts.dbMatch("name", package.name)
-			package_hdr = mi.next()
-			package.description = package_hdr[rpm.RPMTAG_SUMMARY]
-			package.category = package_hdr[rpm.RPMTAG_GROUP]
+			package_hdr = next(mi)
+			package.description = package_hdr[rpm.RPMTAG_SUMMARY].decode()
+			package.category = package_hdr[rpm.RPMTAG_GROUP].decode()
 
 		def provided_by(self, app_name):
 			"""Returns name of package which provides given application"""
@@ -132,9 +132,9 @@ if System.distribution() in ["fedora", "centos"]:
 			if db.count() == 0:
 				return None
 
-			pkg = db.next()
-			p = Package(pkg[rpm.RPMTAG_NAME])
-			p.category = pkg[rpm.RPMTAG_GROUP]
+			pkg = next(db)
+			p = Package(pkg[rpm.RPMTAG_NAME].decode())
+			p.category = pkg[rpm.RPMTAG_GROUP].decode()
 			return p
 
 		def _database_file(self):
