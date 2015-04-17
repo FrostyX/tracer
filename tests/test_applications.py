@@ -21,7 +21,8 @@ class TestApplications(unittest.TestCase):
 			if "type" in a and a.type not in Applications.TYPES.values():
 				self.fail("Unknown type in application: " + a.type)
 
-			self.assertEqual(len(a), 5, "Application {0} has unsupported attribute".format(a.name))
+			n = 6 if "rename" in a else 5
+			self.assertEqual(len(a), n, "Application {0} has unsupported attribute".format(a.name))
 
 			i += 1
 
