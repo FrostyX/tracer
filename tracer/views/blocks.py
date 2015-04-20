@@ -23,11 +23,11 @@ class BlocksView(View):
 		for index, block in enumerate(self.args.blocks):
 			if block["content"]:
 				if "title" in block:
-					print(block["title"], file=self.out)
-				self.out.write(block["content"])
+					self.print(block["title"])
+				self.print(block["content"], end="")
 
 				if self.next(index):
-					print("", file=self.out)
+					self.print("")
 
 	def next(self, index):
 		"""Return True if there is any nonempty block after given index"""

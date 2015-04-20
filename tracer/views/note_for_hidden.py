@@ -10,17 +10,16 @@ class NoteForHiddenView(View):
 		if not self.args.args.quiet and (self.args.session_count > 0 or self.args.static_count > 0):
 
 			if self.args.session_count + self.args.static_count == self.args.total_count:
-				print(_("There are:"), file=self.out)
+				self.print(_("There are:"))
 			else:
-				print(_("Additionally to those process above, there are:"), file=self.out)
+				self.print(_("Additionally to those process above, there are:"))
 
 			if self.args.session_count > 0:
-				print("  - " + \
+				self.print("  - " + \
 					_("{0} processes requiring restart of your session (i.e. Logging out & Logging in again)")\
-						.format(self.args.session_count),
-					file=self.out
+						.format(self.args.session_count)
 				)
 
 			if self.args.static_count > 0:
-				print("  - " + _("{0} processes requiring reboot").format(self.args.static_count), file=self.out)
+				self.print("  - " + _("{0} processes requiring reboot").format(self.args.static_count))
 

@@ -6,7 +6,8 @@ from tracer.resources.lang import _
 from tracer.resources.applications import Applications
 from tracer.views.note_for_hidden import NoteForHiddenView
 from tracer.views.blocks import BlocksView
-from io import StringIO
+from tracer.resources.pycomp import StringIO
+from sys import version_info
 import re
 
 
@@ -45,7 +46,7 @@ class DefaultView(View):
 			view.assign("session_count", self.args.applications.count_type(Applications.TYPES["SESSION"]))
 			view.assign("static_count", self.args.applications.count_type(Applications.TYPES["STATIC"]))
 			view.render()
-			return content.getvalue()
+			return content.getvalue() if version_info.major >= 3 else content.getvalue().decode("utf8")
 
 		blocks = [
 			{"title": "  * " + _("Some applications using:"), "content": with_helpers_content()},
@@ -67,5 +68,5 @@ class DefaultView(View):
 		view = BlocksView(self.out)
 		view.assign("blocks", blocks)
 		if view.has_content():
-			print(_("You should restart:"), file=self.out)
+			self.print(_("You should restart:"))
 		view.render()

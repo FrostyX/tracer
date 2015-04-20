@@ -1,7 +1,8 @@
 from __future__ import unicode_literals
 from .__meta__ import *
 
-from io import StringIO
+
+from tracer.resources.pycomp import StringIO
 from tracer.views.default import DefaultView
 from tracer.views.helper import HelperView
 from tracer.resources.applications import Applications, Application
