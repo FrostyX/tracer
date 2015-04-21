@@ -47,7 +47,7 @@ class HelperView(View):
 			if not self.args.affected_by:
 				self.print("        {app_name} does not need restarting".format(app_name=self.args.application.name))
 			elif self.args.affects:
-				self.print("        ", _("It's a part of application called {0}").format(self.args.affects))
+				self.print("        " + _("It's a part of application called {0}").format(self.args.affects))
 			else:
 				for helper in self.args.application.helpers:
 					self.print("        {how_to_restart}".format(how_to_restart=helper))
