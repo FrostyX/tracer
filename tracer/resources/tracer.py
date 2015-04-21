@@ -109,12 +109,16 @@ class Tracer(object):
 		if not parent:
 			return process
 
-		rule = self._rules.find(parent.name())
+		c_rule = self._rules.find(process.name())
+		p_rule = self._rules.find(parent.name())
 
-		if not rule or not rule.action:
+		if c_rule and c_rule.action == self._rules.ACTIONS["RETURN"]:
 			return process
 
-		if rule.action == self._rules.ACTIONS["CALL-PARENT"]:
+		if not p_rule or not p_rule.action:
+			return process
+
+		if p_rule.action == self._rules.ACTIONS["CALL-PARENT"]:
 			return self._apply_rules(parent)
 
 		# Only RETURN action left
