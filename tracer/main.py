@@ -34,7 +34,7 @@ def run():
 
 	# All input packages enchanced by actual time (as modified time)
 	packages = []
-	for package in args.packages + stdin_packages:
+	for package in args.packages + args.pkgs + stdin_packages:
 		packages.append(Package(package, time.time() if args.now else None))
 
 	try:

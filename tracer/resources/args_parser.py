@@ -23,9 +23,18 @@ parser = argparse.ArgumentParser(
 	description='Tracer finds outdated running applications in your system',
 )
 
-parser.add_argument('packages',
+# Obsolete
+parser.add_argument('pkgs',
 	nargs='*',
 	type=str,
+	help='Obsolete: Use --packages instead'
+)
+
+parser.add_argument('--packages',
+	dest='packages',
+	nargs='*',
+	type=str,
+	default=[],
 	help='packages that only should be traced'
 )
 
