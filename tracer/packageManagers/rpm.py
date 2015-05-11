@@ -142,8 +142,7 @@ if System.distribution() in ["fedora", "centos"]:
 			Returns path to yum history database file
 			Requires root permissions.
 			"""
-
-			for file in listdir(self.history_path):
+			for file in sorted(listdir(self.history_path), reverse=True):
 				if file.startswith("history-") and file.endswith(".sqlite"):
 					return self.history_path + file
 
