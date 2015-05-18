@@ -76,6 +76,7 @@
 	<rule name="chrome-sandbox" />
 	<rule name="plugin-container" />
 
+	<rule name="pidgin" action="return" />
 	<rule name="urxvt" action="return" />
 	<rule name="xmonad-i386-linux" action="return" />
 
