@@ -1,5 +1,5 @@
 Name:		tracer
-Version:	0.5.8
+Version:	0.5.9
 Release:	1%{?dist}
 Summary:	Finds outdated running applications in your system
 
@@ -60,6 +60,22 @@ make DESTDIR=%{buildroot}/usr/share/ mo
 %{python2_sitelib}/tracer/
 
 %changelog
+* Mon May 18 2015 Jakub Kadlčík <frostyx@email.cz> 0.5.9-1
+- Pick the most recent sqlite database (RhBug:1214961) (frostyx@email.cz)
+- Obsolete positional arguments with --packages (frostyx@email.cz)
+- Implement application rename functionality (frostyx@email.cz)
+- Add LXDE applications (frostyx@email.cz)
+- Add Xfce applications (frostyx@email.cz)
+- Add MATE applications (frostyx@email.cz)
+- Print if application affects something else (frostyx@email.cz)
+- Add Czech translation (frostyx@email.cz)
+- Use localization system and transifex
+- Print python version in system view (frostyx@email.cz)
+- Implement Python3 support
+- Add setup.py script for pip (frostyx@email.cz)
+- Add dependency to 'rpm-python' (frostyx@email.cz)
+- Add small API
+
 * Mon Feb 23 2015 Jakub Kadlčík <frostyx@email.cz> 0.5.8-1
 - There is children instead of get_children in psutil2 (frostyx@email.cz)
 - ProcessWrapper provides api of new version, so use it (frostyx@email.cz)
