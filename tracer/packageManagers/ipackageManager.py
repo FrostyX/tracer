@@ -17,9 +17,9 @@
 #
 
 
-class IPackageManager:
+class IPackageManager(object):
 
-	def __init__(self):
+	def __init__(self, **kwargs):
 		"""This class is 'interface' so you can't create an instance"""
 		raise NotImplementedError
 

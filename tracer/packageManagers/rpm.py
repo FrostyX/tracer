@@ -39,8 +39,8 @@ if System.distribution() in ["fedora", "centos"]:
 		"""
 
 		# noinspection PyMissingConstructor
-		def __init__(self):
-			pass
+		def __init__(self, **kwargs):
+			self.opts = kwargs
 
 		@property
 		def history_path(self): return NotImplemented

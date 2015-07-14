@@ -41,8 +41,8 @@ if System.distribution() == "gentoo":
 		"""
 
 		# noinspection PyMissingConstructor
-		def __init__(self):
-			pass
+		def __init__(self, **kwargs):
+			self.opts = kwargs
 
 		def packages_newer_than(self, unix_time):
 			"""

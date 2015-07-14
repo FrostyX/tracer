@@ -36,8 +36,8 @@ if System.distribution() == "debian":
 		"""
 
 		# noinspection PyMissingConstructor
-		def __init__(self):
-			pass
+		def __init__(self, **kwargs):
+			self.opts = kwargs
 
 		@property
 		def dpkg_log(self): return '/var/log/dpkg.log'
