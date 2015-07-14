@@ -114,3 +114,12 @@ class PackagesCollection(Collection):
 		for package in self:
 			files.extend(self._package_manager.package_files(package.name))
 		return set(files)
+
+	def unique_newest(self):
+		packages = {}
+		for p in self:
+			if p.name in packages:
+				if packages[p.name].modified > p.modified:
+					continue
+			packages[p.name] = p
+		return PackagesCollection(packages.values())

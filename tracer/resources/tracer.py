@@ -86,7 +86,7 @@ class Tracer(object):
 
 		affected = {}
 		found = []
-		for package in packages:
+		for package in packages.unique_newest():
 			for file in self._PACKAGE_MANAGER.package_files(package.name):
 
 				file = FilenameCleaner.strip(file)
