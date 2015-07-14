@@ -27,6 +27,10 @@ import psutil
 from sys import version_info
 from tracer.resources.PackageManager import PackageManager
 from tracer.resources.processes import Process
+from tracer.resources.args_parser import parser
+
+
+args = parser.parse_args()
 
 
 class System(object):
@@ -43,7 +47,7 @@ class System(object):
 			# WARNING: Imports here
 			path, name = pair
 			module = importlib.import_module(path)
-			return getattr(module, name)()
+			return getattr(module, name)(erased=args.erased)
 
 		managers = {
 			"gentoo": [("tracer.packageManagers.portage", "Portage")],

@@ -22,9 +22,21 @@ from __future__ import absolute_import
 from tracer.resources.system import System
 if System.distribution() == "fedora":
 
+	import subprocess
 	from tracer.packageManagers.rpm import Rpm
 
 	class Dnf(Rpm):
 
 		@property
 		def history_path(self): return '/var/lib/dnf/history/'
+
+		def package_files(self, pkg_name):
+			if self._is_installed(pkg_name):
+				return super(Dnf, self).package_files(pkg_name)
+
+			if not self.opts["erased"]:
+				return []
+
+			process = subprocess.Popen(["dnf", "repoquery", "-q", "-l", pkg_name], stdout=subprocess.PIPE)
+			out = process.communicate()[0]
+			return out.decode().split("\n")

@@ -126,3 +126,10 @@ user.add_argument("-e", "--everyone",
 	action="store_const",
 	const='*'
 )
+
+user.add_argument("--erased",
+	dest="erased",
+	action="store_true",
+	help="print even section with erased packages (DNF only)",
+	default=False
+)
