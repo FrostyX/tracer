@@ -32,7 +32,7 @@ class HelperController(object):
 	args = None
 	packages = None
 
-	def __init__(self, args, packages):
+	def __init__(self, args, packages=None):
 		self.args = args
 		self.packages = packages
 
