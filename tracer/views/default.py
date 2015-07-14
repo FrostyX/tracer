@@ -16,7 +16,7 @@ class DefaultView(View):
 
 		def with_helpers_content():
 			content = ""
-			types = [Applications.TYPES["SESSION"], Applications.TYPES["STATIC"]]
+			types = [Applications.TYPES["SESSION"], Applications.TYPES["STATIC"], Applications.TYPES["ERASED"]]
 			applications = self.args.applications.with_helpers().exclude_types(types).sorted("helper")
 			for application in applications:
 				helpers = "; ".join(application.helpers)
@@ -27,7 +27,14 @@ class DefaultView(View):
 
 		def without_helpers_content():
 			content = ""
-			for application in self.args.applications.without_helpers().sorted("name"):
+			apps = self.args.applications.exclude_types(Applications.TYPES["ERASED"]).without_helpers().sorted("name")
+			for application in apps:
+				content += "      " + application.name + "\n"
+			return content
+
+		def erased_content():
+			content = ""
+			for application in self.args.applications.filter_types([Applications.TYPES["ERASED"]]).sorted("name"):
 				content += "      " + application.name + "\n"
 			return content
 
@@ -51,6 +58,7 @@ class DefaultView(View):
 		blocks = [
 			{"title": "  * " + _("Some applications using:"), "content": with_helpers_content()},
 			{"title": "  * " + _("These applications manually:"), "content": without_helpers_content()},
+			{"title": "  * " + _("Uninstalled applications:"), "content": erased_content()},
 		]
 
 		if self.args.args.all:

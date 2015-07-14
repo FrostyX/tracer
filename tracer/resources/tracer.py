@@ -23,6 +23,7 @@ from tracer.resources.FilenameCleaner import FilenameCleaner
 from tracer.resources.processes import AffectedProcess
 from tracer.resources.collections import ApplicationsCollection, AffectedProcessesCollection
 from tracer.resources.exceptions import UnsupportedDistribution
+from tracer.resources.applications import Applications
 
 
 class Tracer(object):
@@ -55,7 +56,10 @@ class Tracer(object):
 	"""Observer object responsible for calling desired hooks"""
 	_hooks_observer = None
 
-	def __init__(self, package_manager, rules, applications, memory=None, hooks_observer=None):
+	"""Should tracer find even erased applications?"""
+	_erased = False
+
+	def __init__(self, package_manager, rules, applications, memory=None, hooks_observer=None, erased=False):
 		if not package_manager:
 			raise UnsupportedDistribution(System.distribution())
 
@@ -64,6 +68,7 @@ class Tracer(object):
 		self._applications = applications
 		self._memory = memory
 		self._hooks_observer = hooks_observer
+		self._erased = erased
 
 	def _modified_packages(self):
 		"""Returns list of packages what tracer should care about"""
@@ -103,6 +108,8 @@ class Tracer(object):
 						a = self._applications.find(p.name())
 
 						if a.name not in affected:
+							if self._erased and not self._PACKAGE_MANAGER.provided_by(a.name):
+								a.type = Applications.TYPES["ERASED"]
 							affected[a.name] = a
 							affected[a.name].affected_instances = AffectedProcessesCollection()
 							self._call_hook(a)

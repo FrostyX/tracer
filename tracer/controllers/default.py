@@ -38,7 +38,7 @@ class DefaultController(object):
 
 	def __init__(self, args, packages):
 		self.args = args
-		self.tracer = Tracer(System.package_manager(), Rules, Applications, memory=dump_memory, hooks_observer=HooksObserver())
+		self.tracer = Tracer(System.package_manager(), Rules, Applications, memory=dump_memory, hooks_observer=HooksObserver(), erased=args.erased)
 		self.tracer.now = args.now
 		self.tracer.timestamp = args.timestamp[0]
 		if packages:

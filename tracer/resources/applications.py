@@ -36,7 +36,8 @@ class Applications(object):
 		"DAEMON"       :  "daemon",
 		"STATIC"       :  "static",
 		"SESSION"      :  "session",
-		"APPLICATION"  :  "application"
+		"APPLICATION"  :  "application",
+		"ERASED"       :  "erased"
 	}
 	DEFAULT_TYPE = TYPES["APPLICATION"]
 	_apps = None
