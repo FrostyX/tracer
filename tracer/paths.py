@@ -39,6 +39,10 @@ USER_CONFIG_DIRS = [
 	'/etc/tracer',
 ]
 
+HOOKS_DIRS = [
+	'/etc/tracer/hooks',
+]
+
 LANG_DIR = __([
 	PROJECT_DIR + '/build/' + 'locale',
 	'/usr/share/locale',
@@ -46,5 +50,6 @@ LANG_DIR = __([
 
 try:
 	USER_CONFIG_DIRS.append(expanduser('~' + os.getlogin()) + '/.config/tracer')
+	HOOKS_DIRS.append(expanduser('~' + os.getlogin()) + '/.config/tracer/hooks')
 except OSError:
 	pass

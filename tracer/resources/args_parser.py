@@ -89,6 +89,12 @@ parser.add_argument('-a', '--all',
 	help='list even session and unrestartable applications'
 )
 
+parser.add_argument('--hooks-only',
+	dest='hooks_only',
+	action='store_true',
+	help='do not print traced applications, only run their hooks'
+)
+
 parser.add_argument('--version',
 	dest='version',
 	action='store_true',

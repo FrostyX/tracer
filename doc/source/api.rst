@@ -14,6 +14,19 @@ Quering
     :members:
 
 
+Hooks
+-----
+
+Tracer also provides API for user-defined hooks. They can be defined as a simple functions decorated by
+``@hooks.match("app_name")``. Tracer will search for them in directories ``~/.config/tracer/hooks/``
+and ``/etc/tracer/hooks/``. Such hook will be called when tracer determines, that linked application needs restarting.
+
+.. autofunction:: tracer.hooks.match
+
+.. note::
+   If you want to run tracer's hooks and print no other output, use ``tracer --hooks-only``
+
+
 Data structures
 ---------------
 

@@ -52,7 +52,10 @@ class Tracer(object):
 	_rules = None
 	_applications = None
 
-	def __init__(self, package_manager, rules, applications, memory=None):
+	"""Observer object responsible for calling desired hooks"""
+	_hooks_observer = None
+
+	def __init__(self, package_manager, rules, applications, memory=None, hooks_observer=None):
 		if not package_manager:
 			raise UnsupportedDistribution(System.distribution())
 
@@ -60,6 +63,7 @@ class Tracer(object):
 		self._rules = rules
 		self._applications = applications
 		self._memory = memory
+		self._hooks_observer = hooks_observer
 
 	def _modified_packages(self):
 		"""Returns list of packages what tracer should care about"""
@@ -101,6 +105,7 @@ class Tracer(object):
 						if a.name not in affected:
 							affected[a.name] = a
 							affected[a.name].affected_instances = AffectedProcessesCollection()
+							self._call_hook(a)
 						affected[a.name].affected_instances.append(p)
 		return ApplicationsCollection(affected.values())
 
@@ -124,6 +129,10 @@ class Tracer(object):
 		# Only RETURN action left
 		# RETURN rule is defined for parent process
 		return parent
+
+	def _call_hook(self, app):
+		if self._hooks_observer:
+			self._hooks_observer(app.name)
 
 	def trace_application(self, app_name, affected_process_factory=AffectedProcess):
 		"""

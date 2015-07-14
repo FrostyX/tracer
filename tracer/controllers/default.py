@@ -17,6 +17,7 @@
 #
 
 import os
+from tracer.hooks import HooksObserver
 from tracer.views.default import DefaultView
 from tracer.views.interactive import InteractiveView
 from tracer.views.note_for_hidden import NoteForHiddenView
@@ -37,7 +38,7 @@ class DefaultController(object):
 
 	def __init__(self, args, packages):
 		self.args = args
-		self.tracer = Tracer(System.package_manager(), Rules, Applications, memory=dump_memory)
+		self.tracer = Tracer(System.package_manager(), Rules, Applications, memory=dump_memory, hooks_observer=HooksObserver())
 		self.tracer.now = args.now
 		self.tracer.timestamp = args.timestamp[0]
 		if packages:
@@ -46,10 +47,11 @@ class DefaultController(object):
 		self.applications = self.tracer.trace_affected(self._user(args.user))
 
 	def render(self):
-		view = DefaultView()
-		view.assign("applications", self.applications)
-		view.assign("args", self.args)
-		view.render()
+		if not self.args.hooks_only:
+			view = DefaultView()
+			view.assign("applications", self.applications)
+			view.assign("args", self.args)
+			view.render()
 
 	def render_helpers(self):
 		helper_controller = HelperController(self.args)
