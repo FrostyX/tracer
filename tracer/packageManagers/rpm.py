@@ -143,7 +143,6 @@ if System.distribution() in ["fedora", "centos"]:
 				if file.startswith("history-") and file.endswith(".sqlite"):
 					return self.history_path + file
 
-
 		@staticmethod
 		def _is_installed(pkg_name):
 			"""Returns True if package is installed"""
