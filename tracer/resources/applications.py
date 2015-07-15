@@ -80,7 +80,7 @@ class Applications(object):
 	def _load(file):
 		try:
 			f = open(file)
-			soup = BeautifulSoup(f.read())
+			soup = BeautifulSoup(f.read(), "lxml")
 
 			for child in soup.applications.children:
 				if not isinstance(child, element.Tag):

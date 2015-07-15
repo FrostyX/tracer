@@ -64,7 +64,7 @@ class Rules(object):
 	def _load(file):
 		try:
 			f = open(file)
-			soup = BeautifulSoup(f.read())
+			soup = BeautifulSoup(f.read(), "lxml")
 
 			for rule in soup.find_all("rule"):
 				r = Rule(rule.attrs)
