@@ -1,5 +1,5 @@
 Name:		tracer
-Version:	0.5.9
+Version:	0.6.0
 Release:	1%{?dist}
 Summary:	Finds outdated running applications in your system
 
@@ -60,6 +60,13 @@ make DESTDIR=%{buildroot}/usr/share/ mo
 %{python2_sitelib}/tracer/
 
 %changelog
+* Mon Jul 27 2015 Jakub Kadlčík <frostyx@email.cz> 0.6.0-1
+- Fix warning on new BeautifulSoup4-4.4.0 (RhBug:1240115) (frostyx@email.cz)
+- Add block with uninstalled packages (frostyx@email.cz)
+- Find provided files only once per package name Significant performance
+  improvement (frostyx@email.cz)
+- Implement hooks functionality (frostyx@email.cz)
+
 * Mon May 18 2015 Jakub Kadlčík <frostyx@email.cz> 0.5.9-1
 - Pick the most recent sqlite database (RhBug:1214961) (frostyx@email.cz)
 - Obsolete positional arguments with --packages (frostyx@email.cz)
