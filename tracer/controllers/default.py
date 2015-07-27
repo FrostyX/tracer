@@ -30,6 +30,13 @@ from tracer.resources.rules import Rules
 from tracer.controllers.helper import HelperController
 
 
+# compatibility with Py2 and Py3 - rename raw_input() to input() on Py2
+try:
+	input = raw_input
+except NameError:
+	pass
+
+
 class DefaultController(object):
 
 	args = None
@@ -84,7 +91,7 @@ class DefaultController(object):
 				break
 
 			print("\n" + _("Press application number for help or 'q' to quit"))
-			answer = raw_input("--> ")
+			answer = input("--> ")
 			try:
 				if answer == "q": return
 				elif int(answer) <= 0 or int(answer) > len(filtered): raise IndexError
@@ -93,7 +100,7 @@ class DefaultController(object):
 			except (SyntaxError, IndexError, ValueError):
 				print(_("Wrong application number"))
 
-			raw_input("\n-- " + _("Press <enter> to get list of applications") + " --")
+			input("\n-- " + _("Press <enter> to get list of applications") + " --")
 
 	def _restartable_applications(self, applications, args):
 		return applications.exclude_types([
