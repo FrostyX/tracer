@@ -34,7 +34,7 @@ if System.distribution() == "fedora":
 			if self._is_installed(pkg_name):
 				return super(Dnf, self).package_files(pkg_name)
 
-			if not self.opts["erased"]:
+			if "erased" not in self.opts or not self.opts["erased"]:
 				return []
 
 			process = subprocess.Popen(["dnf", "repoquery", "-q", "-l", pkg_name], stdout=subprocess.PIPE)
