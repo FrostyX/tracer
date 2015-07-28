@@ -29,7 +29,7 @@ class Processes(object):
 	@staticmethod
 	def all():
 		processes = ProcessesCollection()
-		for pid in psutil.get_pid_list():
+		for pid in psutil.pids():
 			try:
 				processes.append(Process(pid))
 			except psutil.NoSuchProcess: pass
@@ -114,7 +114,7 @@ class Process(ProcessWrapper):
 		files = []
 
 		# Files from memory maps
-		for mmap in self.get_memory_maps():
+		for mmap in self.memory_maps():
 			files.append(FilenameCleaner.strip(mmap.path))
 
 		# Process arguments
