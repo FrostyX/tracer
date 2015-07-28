@@ -6,7 +6,7 @@ python:
   - "3.3"
 
 install:
-  - pip install .
+  - pip install .  # See setup.py
   - pip install coveralls
 
 script: nosetests -v -d --with-coverage --cover-package=tracer --cover-inclusive
