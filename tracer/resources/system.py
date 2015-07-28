@@ -27,10 +27,6 @@ import psutil
 from sys import version_info
 from tracer.resources.PackageManager import PackageManager
 from tracer.resources.processes import Process
-from tracer.resources.args_parser import parser
-
-
-args = parser.parse_args()
 
 
 class System(object):
@@ -40,14 +36,14 @@ class System(object):
 		return platform.linux_distribution(full_distribution_name=False)[0]
 
 	@staticmethod
-	def package_manager():
+	def package_manager(**kwargs):
 		"""Returns instance of package manager according to installed linux distribution"""
 
 		def get_instance(pair):
 			# WARNING: Imports here
 			path, name = pair
 			module = importlib.import_module(path)
-			return getattr(module, name)(erased=args.erased)
+			return getattr(module, name)(**kwargs)
 
 		managers = {
 			"gentoo": [("tracer.packageManagers.portage", "Portage")],
