@@ -23,6 +23,7 @@ setup(
 		"BeautifulSoup4",
 		"sphinx_rtd_theme",
 		"Pygments",
+		"lxml",
 	],
 
 	packages=[
