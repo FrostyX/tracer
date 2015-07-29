@@ -101,6 +101,7 @@ class Applications(object):
 	def _append_application(default_attrs, specific_attrs={}):
 		application = Application(default_attrs)
 		application.update(specific_attrs)
+
 		if application in Applications._apps:
 			i = Applications._apps.index(application)
 			Applications._apps[i].update(application)
@@ -177,10 +178,18 @@ class Application:
 			values = values._attributes
 		self._attributes.update(values)
 
+	@property
+	def type(self):
+		return Applications.TYPES["DAEMON"] if self.has_service_file else self._attributes["type"]
+
+	@property
+	def has_service_file(self):
+		return os.path.isfile("/usr/lib/systemd/system/{0}.service".format(self.name))
+
 	# @TODO rename to helper_format
 	@property
 	def helper(self):
-		helper = self._attributes["helper"]
+		helper = self._attributes["helper"] if self._attributes["helper"] else Applications._helper(self)
 		if os.getlogin() != "root" and self.type == Applications.TYPES["DAEMON"]:
 			if helper and not helper.startswith("sudo "):
 				helper = "sudo " + helper
