@@ -21,7 +21,7 @@ from __future__ import absolute_import
 from tracer.resources.system import System
 from tracer.resources.FilenameCleaner import FilenameCleaner
 from tracer.resources.processes import AffectedProcess
-from tracer.resources.collections import ApplicationsCollection, AffectedProcessesCollection
+from tracer.resources.collections import ApplicationsCollection, AffectedProcessesCollection, PackagesCollection
 from tracer.resources.exceptions import UnsupportedDistribution
 from tracer.resources.applications import Applications
 
@@ -73,7 +73,7 @@ class Tracer(object):
 	def _modified_packages(self):
 		"""Returns list of packages what tracer should care about"""
 		if self.specified_packages and self.now:
-			return self.specified_packages
+			return PackagesCollection(self.specified_packages)
 
 		timestamp = self.timestamp if self.timestamp else System.boot_time()
 		packages = self._PACKAGE_MANAGER.packages_newer_than(timestamp)
