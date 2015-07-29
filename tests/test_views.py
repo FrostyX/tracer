@@ -11,6 +11,20 @@ from tracer.resources.package import Package
 from .test_tracer import ProcessMock, AffectedProcessMock
 
 
+import tracer.views.default
+import tracer.views.helper
+import tracer.views.note_for_hidden
+
+import gettext
+t = gettext.translation('tracer', fallback=True, languages=["en"])
+_ = t.ugettext
+
+# Mock the gettext function to use only english
+tracer.views.default._ = _
+tracer.views.helper._ = _
+tracer.views.note_for_hidden._ = _
+
+
 class TestViews(unittest.TestCase):
 
 	def setUp(self):
