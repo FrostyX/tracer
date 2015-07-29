@@ -59,6 +59,8 @@ class DefaultController(object):
 			self.tracer.specified_packages = packages
 
 		self.applications = self.tracer.trace_affected(self._user(args.user))
+		if self.args.daemons_only:
+			self.applications = self.applications.filter_types([Applications.TYPES["DAEMON"]])
 
 	def render(self):
 		if not self.args.hooks_only:
