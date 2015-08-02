@@ -85,13 +85,6 @@ class ProcessesCollection(Collection):
 			except NoSuchProcess: pass
 		return processes
 
-	def unique_names(self):
-		processes = {}
-		for p in self:
-			if p.name() not in processes:
-				processes[p.name()] = p
-		return self.__class__(processes.values())
-
 
 class AffectedProcessesCollection(ProcessesCollection):
 

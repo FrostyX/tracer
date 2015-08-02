@@ -64,7 +64,7 @@ class HelperView(View):
 			self.print(default_level * indent + self.args.affected_by)
 			return
 
-		for process in self.args.affected_by.unique_names():
+		for process in self.args.affected_by:
 			indent_level = default_level
 
 			if process not in self.args.processes:
