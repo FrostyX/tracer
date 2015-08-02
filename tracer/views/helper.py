@@ -64,6 +64,7 @@ class HelperView(View):
 			self.print(default_level * indent + self.args.affected_by)
 			return
 
+		printed_packages = set()
 		for process in self.args.affected_by:
 			indent_level = default_level
 
@@ -72,7 +73,9 @@ class HelperView(View):
 				indent_level += 1
 
 			for package in process.packages:
-				self.print(indent_level * indent + package.name)
+				if package.name not in printed_packages or indent_level > 2:
+					self.print(indent_level * indent + package.name)
+					printed_packages.add(package.name)
 
 				if self.args.args.verbose < 2:
 					continue
