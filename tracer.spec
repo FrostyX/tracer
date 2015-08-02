@@ -1,5 +1,5 @@
 Name:		tracer
-Version:	0.6.0
+Version:	0.6.1
 Release:	1%{?dist}
 Summary:	Finds outdated running applications in your system
 
@@ -60,6 +60,14 @@ make DESTDIR=%{buildroot}/usr/share/ mo
 %{python2_sitelib}/tracer/
 
 %changelog
+* Sun Aug 02 2015 Jakub Kadlčík <frostyx@email.cz> 0.6.1-1
+- Print unique package names in Affected by section; Fix #36 (frostyx@email.cz)
+- Implement services autodetect functionality (frostyx@email.cz)
+- Add equivalent --services-only and --daemons-only arguments
+  (frostyx@email.cz)
+- Fix testing views on non-english systems (frostyx@email.cz)
+- Fix compatibility issues on psutil-3; Fix #41 (frostyx@email.cz)
+
 * Mon Jul 27 2015 Jakub Kadlčík <frostyx@email.cz> 0.6.0-1
 - Fix warning on new BeautifulSoup4-4.4.0 (RhBug:1240115) (frostyx@email.cz)
 - Add block with uninstalled packages (frostyx@email.cz)
