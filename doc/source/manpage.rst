@@ -36,6 +36,11 @@ MODES
 
     -a, --all             list even session and unrestartable applications
 
+    --daemons-only, --services-only
+                          list only daemons/services
+
+    --hooks-only          do not print traced applications, only run their hooks
+
     -t TIMESTAMP, --timestamp TIMESTAMP
                           since when the updates should be
 
