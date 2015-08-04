@@ -24,8 +24,8 @@ If you want to contribute and write some code, I will strictly insist on these r
 
   -  There is no way how to correctly align with tabs
 
-3. Use ``camelCase`` for naming files, ``CamelCase`` for classes, ``underscore\_case`` for methods and variables
-4. There are no access modifiers, so use prefix ``\_`` for private things
+3. Use ``camelCase`` for naming files, ``CamelCase`` for classes, ``underscore_case`` for methods and variables
+4. There are no access modifiers, so use prefix ``_`` for private things
 
 There is an example code following our coding style
 
