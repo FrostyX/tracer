@@ -197,7 +197,7 @@ There is little possibility that you can encounter different type of error. Some
       File "/usr/local/bin/tracer", line 88, in _print_all_interactive
         answer = raw_input("--> ")
 
-It is python traceback. My apologies, you shoudln’t see it. The best thing you can do, is openning new issue in `tracer’s issue tracker`_. Please describe how can I reproduce this issue or what did you do when error occured. Please post complete error message too.
+It is python traceback. My apologies, you shouldn’t see it. The best thing you can do, is openning new issue in `tracer’s issue tracker`_. Please describe how can I reproduce this issue or what did you do when error occured. Please post complete error message too.
 
 Troubleshooting
 ---------------
