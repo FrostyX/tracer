@@ -1,5 +1,5 @@
 Name:		tracer
-Version:	0.6.1
+Version:	0.6.2
 Release:	1%{?dist}
 Summary:	Finds outdated running applications in your system
 
@@ -60,6 +60,9 @@ make DESTDIR=%{buildroot}/usr/share/ mo
 %{python2_sitelib}/tracer/
 
 %changelog
+* Wed Aug 05 2015 Jakub Kadlčík <frostyx@email.cz> 0.6.2-1
+- Add --daemons-only and --hooks-only into manpage (frostyx@email.cz)
+
 * Sun Aug 02 2015 Jakub Kadlčík <frostyx@email.cz> 0.6.1-1
 - Print unique package names in Affected by section; Fix #36 (frostyx@email.cz)
 - Implement services autodetect functionality (frostyx@email.cz)
