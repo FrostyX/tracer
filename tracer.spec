@@ -1,5 +1,5 @@
 Name:		tracer
-Version:	0.6.2
+Version:	0.6.3
 Release:	1%{?dist}
 Summary:	Finds outdated running applications in your system
 
@@ -60,6 +60,10 @@ make DESTDIR=%{buildroot}/usr/share/ mo
 %{python2_sitelib}/tracer/
 
 %changelog
+* Mon Aug 10 2015 Jakub Kadlčík <frostyx@email.cz> 0.6.3-1
+- Add compatibility layer for psutil.pids(); Fix 1251687
+- Don't release for F20 anymore
+
 * Wed Aug 05 2015 Jakub Kadlčík <frostyx@email.cz> 0.6.2-1
 - Add --daemons-only and --hooks-only into manpage (frostyx@email.cz)
 
