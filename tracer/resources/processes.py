@@ -26,10 +26,18 @@ import os
 
 class Processes(object):
 
+	# psutil 3.x to 1.x backward compatibility
+	@staticmethod
+	def pids():
+		try:
+			return psutil.pids()
+		except AttributeError:
+			return psutil.get_pid_list()
+
 	@staticmethod
 	def all():
 		processes = ProcessesCollection()
-		for pid in psutil.pids():
+		for pid in Processes.pids():
 			try:
 				processes.append(Process(pid))
 			except psutil.NoSuchProcess: pass
@@ -87,6 +95,11 @@ class ProcessWrapper(object):
 
 	def __getattr__(self, item):
 		return getattr(self._process, item)
+
+	# psutil 3.x to 1.x backward compatibility
+	def memory_maps(self, grouped=True):
+		try: return self._process.memory_maps(grouped=grouped)
+		except AttributeError: return self._process.get_memory_maps()
 
 
 class Process(ProcessWrapper):
