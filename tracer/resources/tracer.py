@@ -18,6 +18,7 @@
 
 from __future__ import absolute_import
 
+from psutil import NoSuchProcess
 from tracer.resources.system import System
 from tracer.resources.FilenameCleaner import FilenameCleaner
 from tracer.resources.processes import AffectedProcess
@@ -102,18 +103,22 @@ class Tracer(object):
 					if p.pid in found:
 						continue
 
-					if p.create_time() <= package.modified:
-						found.append(p.pid)
-						p = self._apply_rules(p)
-						a = self._applications.find(p.name())
+					try:
+						if p.create_time() <= package.modified:
+							found.append(p.pid)
+							p = self._apply_rules(p)
+							a = self._applications.find(p.name())
 
-						if a.name not in affected:
-							if self._erased and not self._PACKAGE_MANAGER.provided_by(a.name):
-								a.type = Applications.TYPES["ERASED"]
-							affected[a.name] = a
-							affected[a.name].affected_instances = AffectedProcessesCollection()
-							self._call_hook(a)
-						affected[a.name].affected_instances.append(p)
+							if a.name not in affected:
+								if self._erased and not self._PACKAGE_MANAGER.provided_by(a.name):
+									a.type = Applications.TYPES["ERASED"]
+								affected[a.name] = a
+								affected[a.name].affected_instances = AffectedProcessesCollection()
+								self._call_hook(a)
+							affected[a.name].affected_instances.append(p)
+					except NoSuchProcess:
+						pass
+
 		return ApplicationsCollection(affected.values())
 
 	def _apply_rules(self, process):
