@@ -1,5 +1,5 @@
 Name:		tracer
-Version:	0.6.3
+Version:	0.6.4
 Release:	1%{?dist}
 Summary:	Finds outdated running applications in your system
 
@@ -60,6 +60,9 @@ make DESTDIR=%{buildroot}/usr/share/ mo
 %{python2_sitelib}/tracer/
 
 %changelog
+* Sun Aug 16 2015 Jakub Kadlčík <frostyx@email.cz> 0.6.4-1
+- Catch NoSuchProcess to fix #43 (RhBug:1215561) (frostyx@email.cz)
+
 * Mon Aug 10 2015 Jakub Kadlčík <frostyx@email.cz> 0.6.3-1
 - Add compatibility layer for psutil.pids(); Fix 1251687
 - Don't release for F20 anymore
