@@ -19,6 +19,7 @@
 
 import os
 from os.path import dirname, realpath, expanduser
+from tracer.resources.system import System
 
 
 def __(paths):
@@ -49,7 +50,8 @@ LANG_DIR = __([
 ])
 
 try:
-	USER_CONFIG_DIRS.append(expanduser('~' + os.getlogin()) + '/.config/tracer')
-	HOOKS_DIRS.append(expanduser('~' + os.getlogin()) + '/.config/tracer/hooks')
+	user = System.user()
+	USER_CONFIG_DIRS.append(expanduser('~' + user) + '/.config/tracer')
+	HOOKS_DIRS.append(expanduser('~' + user) + '/.config/tracer/hooks')
 except OSError:
 	pass

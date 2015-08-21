@@ -21,6 +21,8 @@
 from __future__ import absolute_import
 
 # WARNING: There are imports in package_manager()
+import os
+import pwd
 import importlib
 import platform
 import psutil
@@ -81,3 +83,10 @@ class System(object):
 	@staticmethod
 	def python_version():
 		return "{}.{}.{}".format(version_info.major, version_info.minor, version_info.micro)
+
+	@staticmethod
+	def user():
+		# getlogin is prefered because it return current username even
+		# if python process is executed with sudo
+		try: return os.getlogin()
+		except OSError: return pwd.getpwuid(os.getuid())[0]

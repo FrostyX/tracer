@@ -119,5 +119,5 @@ class DefaultController(object):
 
 	def _user(self, user):
 		if   user == '*':    return None
-		elif not user:       return os.getlogin()
+		elif not user:       return System.user()
 		else: return user[0]

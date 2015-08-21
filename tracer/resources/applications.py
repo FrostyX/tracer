@@ -24,6 +24,7 @@ from tracer.resources.exceptions import PathNotFound
 from tracer.resources.collections import ApplicationsCollection
 from tracer.resources.lang import _
 from tracer.resources.processes import Processes
+from tracer.resources.system import System
 import os
 import re
 
@@ -190,7 +191,7 @@ class Application:
 	@property
 	def helper(self):
 		helper = self._attributes["helper"] if self._attributes["helper"] else Applications._helper(self)
-		if os.getlogin() != "root" and self.type == Applications.TYPES["DAEMON"]:
+		if System.user() != "root" and self.type == Applications.TYPES["DAEMON"]:
 			if helper and not helper.startswith("sudo "):
 				helper = "sudo " + helper
 		return helper

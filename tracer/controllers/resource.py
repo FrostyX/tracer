@@ -80,7 +80,6 @@ class ResourceController(object):
 		uptime = str(uptime).split('.')[0]
 
 		users = set([user.name for user in psutil.get_users()])
-		user = os.getlogin()
 		package_managers = System.package_manager().names()
 
 		view = SystemView()
@@ -89,7 +88,7 @@ class ResourceController(object):
 		view.assign('package_managers', package_managers)
 		view.assign('init', System.init_system())
 		view.assign('uptime', uptime)
-		view.assign('user', user)
+		view.assign('user', System.user())
 		view.assign('users', users)
 		view.assign('version', __version__)
 		view.assign('rules_count', len(Rules.all()))
