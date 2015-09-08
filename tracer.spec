@@ -1,5 +1,5 @@
 Name:		tracer
-Version:	0.6.5
+Version:	0.6.6
 Release:	1%{?dist}
 Summary:	Finds outdated running applications in your system
 
@@ -60,6 +60,9 @@ make DESTDIR=%{buildroot}/usr/share/ mo
 %{python2_sitelib}/tracer/
 
 %changelog
+* Tue Sep 08 2015 Jakub Kadlčík <frostyx@email.cz> 0.6.6-1
+- Release new packages even for Fedora 23 (frostyx@email.cz)
+
 * Sat Aug 22 2015 Jakub Kadlčík <frostyx@email.cz> 0.6.5-1
 - Fix OSError from os.getlogin() (RhBug:1251352) (frostyx@email.cz)
 
