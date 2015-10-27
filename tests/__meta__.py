@@ -6,5 +6,6 @@ os.sys.path.insert(0, parentdir)
 import sys
 import platform
 import unittest
+from tracer.resources.system import System
 
-DISTRO = platform.linux_distribution(full_distribution_name=False)[0]
+DISTRO = System.distribution()

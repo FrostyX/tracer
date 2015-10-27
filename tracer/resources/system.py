@@ -35,7 +35,18 @@ class System(object):
 
 	@staticmethod
 	def distribution():
-		return platform.linux_distribution(full_distribution_name=False)[0]
+		# Checks if /etc/os-release exists, and if it does,
+		# use it to divine the name of the distribution
+		# Otherwise, revert to using platform.linux_distribution()
+		if os.path.isfile("/etc/os-release"):
+			with open("/etc/os-release") as os_release_file:
+				os_release_data = {}
+				for line in os_release_file:
+					os_release_key, os_release_value = line.rstrip().split("=")
+					os_release_data[os_release_key] = os_release_value.strip('"')
+				return os_release_data["ID"]
+		else:
+			return platform.linux_distribution(full_distribution_name=False)[0]
 
 	@staticmethod
 	def package_manager(**kwargs):
