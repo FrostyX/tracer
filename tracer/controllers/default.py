@@ -17,6 +17,7 @@
 #
 
 import os
+import sys
 from tracer.hooks import HooksObserver
 from tracer.views.default import DefaultView
 from tracer.views.interactive import InteractiveView
@@ -109,7 +110,8 @@ class DefaultController(object):
 			except (SyntaxError, IndexError, ValueError):
 				print(_("Wrong application number"))
 
-			input("\n-- " + _("Press <enter> to get list of applications") + " --")
+			sys.stdout.write("\n-- " + _("Press <enter> to get list of applications") + " --")
+			input()
 
 	def _restartable_applications(self, applications, args):
 		return applications.exclude_types([
