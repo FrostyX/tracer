@@ -16,7 +16,10 @@ Source0:	%{name}-%{version}.tar.gz
 BuildRequires:	python2-devel
 BuildRequires:	asciidoc
 BuildRequires:	python-sphinx
-BuildRequires:	libxslt
+BuildRequires:	python-beautifulsoup4
+BuildRequires:	python-psutil
+BuildRequires:	python-pygments
+BuildRequires:	python-lxml
 BuildRequires:	gettext
 Requires:	rpm-python
 Requires:	python
