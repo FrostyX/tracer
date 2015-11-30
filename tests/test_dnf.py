@@ -4,7 +4,7 @@ try:
 	from tracer.packageManagers.dnf import Dnf
 except ImportError: pass
 
-@unittest.skipIf(DISTRO != 'fedora', "Skipping tests because they are distro-specific")
+@unittest.skipIf((DISTRO != 'fedora') and (DISTRO != 'mageia'), "Skipping tests because they are distro-specific")
 class TestDnf(unittest.TestCase):
 	def setUp(self):
 		self.manager = Dnf()
