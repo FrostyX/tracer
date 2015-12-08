@@ -69,6 +69,7 @@ class DefaultController(object):
 			view.assign("applications", self.applications)
 			view.assign("args", self.args)
 			view.render()
+		exit(self.status_code())
 
 	def render_helpers(self):
 		helper_controller = HelperController(self.args)
@@ -112,6 +113,28 @@ class DefaultController(object):
 
 			sys.stdout.write("\n-- " + _("Press <enter> to get list of applications") + " --")
 			input()
+
+	def status_code(self):
+		"""
+		0   - No affected applications
+		101 - Found some affected applications
+		102 - Found some affected daemons
+		103 - Session restart needed
+		104 - Reboot needed
+		"""
+		code = 0
+		if len(self.applications) > 0:
+			code = 101
+
+		if self.applications.count_type(Applications.TYPES['DAEMON']):
+			code = 102
+
+		if self.applications.count_type(Applications.TYPES['SESSION']):
+			code = 103
+
+		if self.applications.count_type(Applications.TYPES['STATIC']):
+			code = 104
+		return code
 
 	def _restartable_applications(self, applications, args):
 		return applications.exclude_types([

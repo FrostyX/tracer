@@ -27,6 +27,22 @@ and ``/etc/tracer/hooks/``. Such hook will be called when tracer determines, tha
    If you want to run tracer's hooks and print no other output, use ``tracer --hooks-only``
 
 
+Exit codes
+----------
+
+In some use-cases you may want to examine Tracer's results through exit codes (also known as status codes). See their
+meanings:
+
+=======  ================================
+1-99     Error exit codes
+0        No affected applications
+101      Found some affected applications
+102      Found some affected daemons
+103      Session restart needed
+104      Reboot needed
+=======  ================================
+
+
 Data structures
 ---------------
 

@@ -43,5 +43,6 @@ def run():
 
 	except (UnsupportedDistribution, PathNotFound, LockedDatabase) as ex:
 		print(ex)
+		exit(1)
 	except (KeyboardInterrupt, EOFError):
 		print("")
