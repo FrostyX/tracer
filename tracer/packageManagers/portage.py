@@ -27,7 +27,7 @@ if System.distribution() == "gentoo":
 	from tracer.resources.package import Package
 	from tracer.resources.collections import PackagesCollection
 	from gentoolkit.helpers import FileOwner
-	from psutil import AccessDenied
+	from tracer.resources.exceptions import DatabasePermissions
 	from tracer.resources.applications import Applications
 	import os
 	import portage
@@ -51,7 +51,7 @@ if System.distribution() == "gentoo":
 			"""
 
 			if not os.access('/var/log/emerge.log', os.R_OK):
-				raise AccessDenied
+				raise DatabasePermissions
 
 			newer = PackagesCollection()
 			process = subprocess.Popen(['qlop', '-lC'], stdout=subprocess.PIPE)
