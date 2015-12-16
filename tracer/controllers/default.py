@@ -144,5 +144,6 @@ class DefaultController(object):
 
 	def _user(self, user):
 		if   user == '*':    return None
+		elif user == 'root': return user
 		elif not user:       return System.user()
 		else: return user[0]
