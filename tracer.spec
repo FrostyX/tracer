@@ -1,5 +1,5 @@
 Name:		tracer
-Version:	0.6.6
+Version:	0.6.7
 Release:	1%{?dist}
 Summary:	Finds outdated running applications in your system
 
@@ -63,6 +63,15 @@ make DESTDIR=%{buildroot}/usr/share/ mo
 %{python2_sitelib}/tracer/
 
 %changelog
+* Wed Dec 16 2015 Jakub Kadlčík <frostyx@email.cz> 0.6.7-1
+- Recognize root user from -r or --root arguments; Fix #51 (frostyx@email.cz)
+- Don't force root, rather catch exceptions; See #49 (frostyx@email.cz)
+- Use non-zero exit codes to indicate various situations; See #46
+  (frostyx@email.cz)
+- Fix unicode error from raw_input (RhBug:1279409) (frostyx@email.cz)
+- Change distro name retrieval to try to  read /etc/os-release first
+  (ngompa13@gmail.com)
+
 * Tue Sep 08 2015 Jakub Kadlčík <frostyx@email.cz> 0.6.6-1
 - Release new packages even for Fedora 23 (frostyx@email.cz)
 
