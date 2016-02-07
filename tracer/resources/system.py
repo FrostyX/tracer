@@ -41,9 +41,12 @@ class System(object):
 		if os.path.isfile("/etc/os-release"):
 			with open("/etc/os-release") as os_release_file:
 				os_release_data = {}
-				for line in os_release_file:
-					os_release_key, os_release_value = line.rstrip().split("=")
-					os_release_data[os_release_key] = os_release_value.strip('"')
+
+				# Remove empty lines and trailing spaces
+				lines = [line.rstrip() for line in os_release_file if line.rstrip()]
+				for line in lines:
+						os_release_key, os_release_value = line.split("=")
+						os_release_data[os_release_key] = os_release_value.strip('"')
 				return os_release_data["ID"]
 		else:
 			return platform.linux_distribution(full_distribution_name=False)[0]
@@ -63,6 +66,7 @@ class System(object):
 			"debian": [("tracer.packageManagers.dpkg", "Dpkg")],
 			"centos": [("tracer.packageManagers.yum", "Yum")],
 			"mageia": [("tracer.packageManagers.dnf", "Dnf")],
+			"arch":   [("tracer.packageManagers.alpm", "Alpm")],
 			"fedora": [
 				("tracer.packageManagers.dnf", "Dnf"),
 				("tracer.packageManagers.yum", "Yum"),
@@ -73,7 +77,7 @@ class System(object):
 		if distro not in managers:
 			return None
 
-		return PackageManager(*map(get_instance, managers[distro]))
+		return PackageManager(*list(map(get_instance, managers[distro])))
 
 	@staticmethod
 	def init_system():
