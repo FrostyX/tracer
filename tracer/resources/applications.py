@@ -116,7 +116,10 @@ class Applications(object):
 	@staticmethod
 	def _helper(app):
 		if app.type == Applications.TYPES["DAEMON"]:
-			return "service {0} restart".format(app.name)
+			if System.init_system() == "systemd" and System.distribution() == "arch":
+				return "systemctl restart {0}".format(app.name)
+			else:
+				return "service {0} restart".format(app.name)
 
 		elif app.type == Applications.TYPES["STATIC"]:
 			return _("You will have to reboot your computer")
