@@ -9,4 +9,4 @@ class ApplicationsView(View):
 		print(line.format("Application", "Type", "Ignore", "Helper"))
 		print(120 * "-")
 		for application in self.args.applications:
-			print(line.format(application.name, application.type, application.ignore, application.helper))
+			print(line.format(application.name, application.type, application.ignore, application.helper or ""))
