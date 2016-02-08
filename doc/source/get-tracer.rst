@@ -34,6 +34,12 @@ So far I have ``tracer.ebuild`` in my `personal overlay`_. Please take note that
     layman -a frostyx
     emerge tracer
 
+
+Archlinux
+---------
+
+An unofficial tracer package can be found in the `AUR`_: https://aur.archlinux.org/packages/tracer
+
 Git
 ---
 
@@ -73,3 +79,4 @@ Previous paragraph can be done by running
 .. _F20: https://copr.fedoraproject.org/coprs/frostyx/tracer/repo/fedora-20-i386/frostyx-tracer-fedora-20-i386.repo
 .. _personal overlay: https://github.com/frostyx/gentoo-overlay
 .. _requirements: https://github.com/FrostyX/tracer#requirements
+.. _AUR: https://wiki.archlinux.org/index.php/Arch_User_Repository
