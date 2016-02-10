@@ -42,7 +42,7 @@ class System(object):
 			with open("/etc/os-release") as os_release_file:
 				os_release_data = {}
 				for line in os_release_file:
-                                        try:
+					try:
 						os_release_key, os_release_value = line.rstrip().split("=")
 						os_release_data[os_release_key] = os_release_value.strip('"')
 					except ValueError:
