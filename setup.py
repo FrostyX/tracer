@@ -32,6 +32,7 @@ setup(
 		'tracer.packageManagers',
 		'tracer.resources',
 		'tracer.views',
+		'tracer.views.resource',
 		'data',
 	],
 

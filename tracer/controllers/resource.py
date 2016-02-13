@@ -79,7 +79,10 @@ class ResourceController(object):
 		uptime = datetime.now() - datetime.fromtimestamp(System.boot_time())
 		uptime = str(uptime).split('.')[0]
 
-		users = set([user.name for user in psutil.get_users()])
+		try:
+			users = set([user.name for user in psutil.get_users()])
+		except AttributeError:
+			users = set([user.name for user in psutil.users()])
 		package_managers = System.package_manager().names()
 
 		view = SystemView()
