@@ -1,5 +1,5 @@
 Name:		tracer
-Version:	0.6.7
+Version:	0.6.8
 Release:	1%{?dist}
 Summary:	Finds outdated running applications in your system
 
@@ -63,6 +63,10 @@ make DESTDIR=%{buildroot}/usr/share/ mo
 %{python2_sitelib}/tracer/
 
 %changelog
+* Wed Feb 17 2016 Jakub Kadlčík <frostyx@email.cz> 0.6.8-1
+- Fix /etc/os-release issues on CentOS (tingping@tingping.se)
+- Add support for Arch Linux (tingping@tingping.se)
+
 * Wed Dec 16 2015 Jakub Kadlčík <frostyx@email.cz> 0.6.7-1
 - Recognize root user from -r or --root arguments; Fix #51 (frostyx@email.cz)
 - Don't force root, rather catch exceptions; See #49 (frostyx@email.cz)
