@@ -2,7 +2,7 @@
 # pycomp.py
 # Compatibility layer between python2 and python3
 #
-# Copyright (C) 2013 Jakub Kadlčík
+# Copyright (C) 2013 Jakub Kadlcik
 #
 # This copyrighted material is made available to anyone wishing to use,
 # modify, copy, or redistribute it subject to the terms and conditions of

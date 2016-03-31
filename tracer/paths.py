@@ -3,7 +3,7 @@
 # Module for defining paths to project directories. They are different when
 # project is developed on git and when project is installed as a linux package
 #
-# Copyright (C) 2014 Jakub Kadlčík
+# Copyright (C) 2014 Jakub Kadlcik
 #
 # This copyrighted material is made available to anyone wishing to use,
 # modify, copy, or redistribute it subject to the terms and conditions of

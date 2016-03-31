@@ -3,7 +3,7 @@
 # tracer.py
 # Tracer finds outdated running applications in your system
 #
-# Copyright (C) 2013 Jakub Kadlčík
+# Copyright (C) 2013 Jakub Kadlcik
 #
 # This copyrighted material is made available to anyone wishing to use,
 # modify, copy, or redistribute it subject to the terms and conditions of
