@@ -13,18 +13,31 @@ URL:		http://tracer-package.com/
 # tito build --tgz
 Source0:	%{name}-%{version}.tar.gz
 
-BuildRequires:	python2-devel
 BuildRequires:	asciidoc
+BuildRequires:	gettext
+%if 0%{?with_python3}
+BuildRequires:	python3-devel
+BuildRequires:	python3-sphinx
+BuildRequires:	python3-beautifulsoup4
+BuildRequires:	python3-psutil
+BuildRequires:	python3-pygments
+BuildRequires:	python3-lxml
+Requires:	rpm-python3
+Requires:	python3
+Requires:	python3-beautifulsoup4
+Requires:	python3-psutil
+%else
+BuildRequires:	python2-devel
 BuildRequires:	python-sphinx
 BuildRequires:	python-beautifulsoup4
 BuildRequires:	python-psutil
 BuildRequires:	python-pygments
 BuildRequires:	python-lxml
-BuildRequires:	gettext
 Requires:	rpm-python
 Requires:	python
 Requires:	python-beautifulsoup4
 Requires:	python-psutil
+%endif
 
 %description
 Tracer determines which applications use outdated files and prints them. For

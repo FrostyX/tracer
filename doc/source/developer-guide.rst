@@ -4,7 +4,7 @@ Developer Guide
 Python
 ------
 
-Tracer is build on Python 2.7 because this version is most spread on linux systems. Besides basic python, tracer requires its few packages:
+Tracer is written in Python and it is compatible with its both 2.7 and 3.x versions. Besides standard python interpreter, tracer requires its few packages:
 
 - `psutil`_ - For getting informations about processes, memory, etc
 - `beautifulsoup`_ - For parsing user defined xml files such as ``data/applications.xml`` and ``data/rules.xml``
