@@ -79,3 +79,6 @@ rpm-copr:
 rpm-copr-test:
 	tito release copr-frostyx-test
 
+rpm-fedora:
+	tito release fedora-git
+
