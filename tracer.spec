@@ -15,8 +15,9 @@ Source0:	%{name}-%{version}.tar.gz
 
 BuildRequires:	asciidoc
 BuildRequires:	gettext
-%if 0%{?with_python3}
+BuildRequires:	python2-devel
 BuildRequires:	python3-devel
+%if 0%{?with_python3}
 BuildRequires:	python3-sphinx
 BuildRequires:	python3-beautifulsoup4
 BuildRequires:	python3-psutil
@@ -27,7 +28,6 @@ Requires:	python3
 Requires:	python3-beautifulsoup4
 Requires:	python3-psutil
 %else
-BuildRequires:	python2-devel
 BuildRequires:	python-sphinx
 BuildRequires:	python-beautifulsoup4
 BuildRequires:	python-psutil
@@ -60,9 +60,11 @@ mkdir -p %{buildroot}/%{_bindir}
 mkdir -p %{buildroot}/%{_datadir}/tracer
 mkdir -p %{buildroot}%{_mandir}/man8
 mkdir -p %{buildroot}/%{python2_sitelib}/tracer
+mkdir -p %{buildroot}/%{python3_sitelib}/tracer
 cp -a bin/tracer.py %{buildroot}/%{_bindir}/tracer
 cp -a data/* %{buildroot}/%{_datadir}/tracer/
 cp -ar tracer/* tests %{buildroot}/%{python2_sitelib}/tracer/
+cp -ar tracer/* tests %{buildroot}/%{python3_sitelib}/tracer/
 install -m644 doc/build/man/tracer.8 %{buildroot}/%{_mandir}/man8/
 make DESTDIR=%{buildroot}/usr/share/ mo
 %find_lang %{name}
@@ -74,6 +76,7 @@ make DESTDIR=%{buildroot}/usr/share/ mo
 %{_bindir}/tracer
 %{_datadir}/tracer/
 %{python2_sitelib}/tracer/
+%{python3_sitelib}/tracer/
 
 %changelog
 * Wed Feb 17 2016 Jakub Kadlčík <frostyx@email.cz> 0.6.8-1
