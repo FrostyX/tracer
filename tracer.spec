@@ -1,5 +1,5 @@
 Name:		tracer
-Version:	0.6.8
+Version:	0.6.9
 Release:	1%{?dist}
 Summary:	Finds outdated running applications in your system
 
@@ -79,6 +79,9 @@ make DESTDIR=%{buildroot}/usr/share/ mo
 %{python3_sitelib}/tracer/
 
 %changelog
+* Thu Apr 14 2016 Jakub Kadlčík <frostyx@email.cz> 0.6.9-1
+- Declare official python3 support (frostyx@email.cz)
+
 * Wed Feb 17 2016 Jakub Kadlčík <frostyx@email.cz> 0.6.8-1
 - Fix /etc/os-release issues on CentOS (tingping@tingping.se)
 - Add support for Arch Linux (tingping@tingping.se)
