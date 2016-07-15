@@ -13,21 +13,14 @@ URL:		http://tracer-package.com/
 # tito build --tgz
 Source0:	%{name}-%{version}.tar.gz
 
-BuildRequires:	asciidoc
-BuildRequires:	gettext
 BuildRequires:	python2-devel
 BuildRequires:	python3-devel
-%if 0%{?with_python3}
-BuildRequires:	python3-sphinx
-BuildRequires:	python3-beautifulsoup4
-BuildRequires:	python3-psutil
-BuildRequires:	python3-pygments
-BuildRequires:	python3-lxml
-Requires:	rpm-python3
-Requires:	python3
-Requires:	python3-beautifulsoup4
-Requires:	python3-psutil
-%else
+BuildRequires:	asciidoc
+BuildRequires:	gettext
+Requires:	python3-%{name} = %{version}-%{release}
+
+%package -n python2-%{name}
+Summary:		%{summary}
 BuildRequires:	python-sphinx
 BuildRequires:	python-beautifulsoup4
 BuildRequires:	python-psutil
@@ -37,7 +30,21 @@ Requires:	rpm-python
 Requires:	python
 Requires:	python-beautifulsoup4
 Requires:	python-psutil
-%endif
+%{?python_provide:%python_provide python2-%{name}}
+
+%package -n python3-%{name}
+Summary:		%{summary}
+BuildRequires:	python3-sphinx
+BuildRequires:	python3-beautifulsoup4
+BuildRequires:	python3-psutil
+BuildRequires:	python3-pygments
+BuildRequires:	python3-lxml
+Requires:	rpm-python3
+Requires:	python3
+Requires:	python3-beautifulsoup4
+Requires:	python3-psutil
+%{?python_provide:%python_provide python3-%{name}}
+
 
 %description
 Tracer determines which applications use outdated files and prints them. For
@@ -47,21 +54,41 @@ simple idea. If application has loaded in memory any version of a file
 which is provided by any package updated since system was booted up, tracer
 consider this application as outdated.
 
+%description -n python2-%{name}
+Python 2 package for %{name}
+
+%description -n python3-%{name}
+Python 3 package for %{name}
+
+
 %prep
 %setup -q
 
 
 %build
+%py2_build
+%py3_build
 make %{?_smp_mflags} man
+sed "s/\/usr\/bin\/python/\/usr\/bin\/python2/" bin/tracer.py > bin/tracer-2
+sed "s/\/usr\/bin\/python/\/usr\/bin\/python3/" bin/tracer.py > bin/tracer-3
+sed "s/\/usr\/bin\/python/\/usr\/bin\/python3/" bin/tracer.py > bin/tracer
+chmod +x bin/tracer-2 bin/tracer-3 bin/tracer
 
 
 %install
+# @TODO use following macros
+# %%py2_install
+# %%py3_install
 mkdir -p %{buildroot}/%{_bindir}
 mkdir -p %{buildroot}/%{_datadir}/tracer
-mkdir -p %{buildroot}%{_mandir}/man8
+mkdir -p %{buildroot}/%{_mandir}/man8
 mkdir -p %{buildroot}/%{python2_sitelib}/tracer
 mkdir -p %{buildroot}/%{python3_sitelib}/tracer
-cp -a bin/tracer.py %{buildroot}/%{_bindir}/tracer
+
+cp -a bin/tracer-2 %{buildroot}/%{_bindir}/
+cp -a bin/tracer-3 %{buildroot}/%{_bindir}/
+cp -a bin/tracer %{buildroot}/%{_bindir}/
+
 cp -a data/* %{buildroot}/%{_datadir}/tracer/
 cp -ar tracer/* tests %{buildroot}/%{python2_sitelib}/tracer/
 cp -ar tracer/* tests %{buildroot}/%{python3_sitelib}/tracer/
@@ -70,13 +97,24 @@ make DESTDIR=%{buildroot}/usr/share/ mo
 %find_lang %{name}
 
 
-%files -f %{name}.lang
-%doc LICENSE README.md
+%files
+%files -n python2-%{name} -f %{name}.lang
+%license LICENSE
+%doc README.md
+%{python2_sitelib}/tracer
+%{_bindir}/tracer-2
+%{_datadir}/tracer/
 %doc %{_mandir}/man8/tracer.8*
+
+%files -n python3-%{name} -f %{name}.lang
+%license LICENSE
+%doc README.md
+%{python3_sitelib}/tracer
+%{_bindir}/tracer-3
 %{_bindir}/tracer
 %{_datadir}/tracer/
-%{python2_sitelib}/tracer/
-%{python3_sitelib}/tracer/
+%doc %{_mandir}/man8/tracer.8*
+
 
 %changelog
 * Thu Apr 14 2016 Jakub Kadlčík <frostyx@email.cz> 0.6.9-1
