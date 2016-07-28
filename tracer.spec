@@ -17,10 +17,10 @@ BuildRequires:	python2-devel
 BuildRequires:	python3-devel
 BuildRequires:	asciidoc
 BuildRequires:	gettext
-Requires:	python3-%{name} = %{version}-%{release}
 
 %package -n python2-%{name}
 Summary:		%{summary}
+Provides:		%{name} = %{version}-%{release}
 BuildRequires:	python-sphinx
 BuildRequires:	python-beautifulsoup4
 BuildRequires:	python-psutil
@@ -55,10 +55,20 @@ which is provided by any package updated since system was booted up, tracer
 consider this application as outdated.
 
 %description -n python2-%{name}
-Python 2 package for %{name}
+Tracer determines which applications use outdated files and prints them. For
+special kind of applications such as services or daemons, it suggests a standard
+command to restart it. Detecting whether file is outdated or not is based on a
+simple idea. If application has loaded in memory any version of a file
+which is provided by any package updated since system was booted up, tracer
+consider this application as outdated.
 
 %description -n python3-%{name}
-Python 3 package for %{name}
+Tracer determines which applications use outdated files and prints them. For
+special kind of applications such as services or daemons, it suggests a standard
+command to restart it. Detecting whether file is outdated or not is based on a
+simple idea. If application has loaded in memory any version of a file
+which is provided by any package updated since system was booted up, tracer
+consider this application as outdated.
 
 
 %prep
@@ -71,8 +81,7 @@ Python 3 package for %{name}
 make %{?_smp_mflags} man
 sed "s/\/usr\/bin\/python/\/usr\/bin\/python2/" bin/tracer.py > bin/tracer-2
 sed "s/\/usr\/bin\/python/\/usr\/bin\/python3/" bin/tracer.py > bin/tracer-3
-sed "s/\/usr\/bin\/python/\/usr\/bin\/python3/" bin/tracer.py > bin/tracer
-chmod +x bin/tracer-2 bin/tracer-3 bin/tracer
+chmod +x bin/tracer-2 bin/tracer-3
 
 
 %install
@@ -87,7 +96,7 @@ mkdir -p %{buildroot}/%{python3_sitelib}/tracer
 
 cp -a bin/tracer-2 %{buildroot}/%{_bindir}/
 cp -a bin/tracer-3 %{buildroot}/%{_bindir}/
-cp -a bin/tracer %{buildroot}/%{_bindir}/
+ln -s %{_bindir}/tracer-2 %{buildroot}/%{_bindir}/tracer
 
 cp -a data/* %{buildroot}/%{_datadir}/tracer/
 cp -ar tracer/* tests %{buildroot}/%{python2_sitelib}/tracer/
@@ -97,12 +106,12 @@ make DESTDIR=%{buildroot}/usr/share/ mo
 %find_lang %{name}
 
 
-%files
 %files -n python2-%{name} -f %{name}.lang
 %license LICENSE
 %doc README.md
 %{python2_sitelib}/tracer
 %{_bindir}/tracer-2
+%{_bindir}/tracer
 %{_datadir}/tracer/
 %doc %{_mandir}/man8/tracer.8*
 
@@ -111,7 +120,6 @@ make DESTDIR=%{buildroot}/usr/share/ mo
 %doc README.md
 %{python3_sitelib}/tracer
 %{_bindir}/tracer-3
-%{_bindir}/tracer
 %{_datadir}/tracer/
 %doc %{_mandir}/man8/tracer.8*
 
