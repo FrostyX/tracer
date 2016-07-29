@@ -81,7 +81,7 @@ if System.distribution() in ["fedora", "centos", "mageia"]:
 				return packages
 
 			except sqlite3.OperationalError as e:
-				raise LockedDatabase() if e.message == 'database is locked' else DatabasePermissions()
+				raise LockedDatabase() if str(e) == 'database is locked' else DatabasePermissions()
 
 		def package_files(self, pkg_name):
 			"""
