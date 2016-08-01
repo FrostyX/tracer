@@ -24,6 +24,7 @@ from tracer.resources.router import Router
 from tracer.resources.args_parser import parser
 from tracer.resources.package import Package
 from tracer.resources.exceptions import UnsupportedDistribution, PathNotFound, LockedDatabase, DatabasePermissions
+from tracer.resources.lang import _
 
 
 def run():
@@ -48,7 +49,7 @@ def run():
 		exit(1)
 	except DatabasePermissions as ex:
 		ex.print()
-		print("You will probably need to run tracer as root")
+		print(_("You will probably need to run tracer as root"))
 		exit(1)
 	except (KeyboardInterrupt, EOFError):
 		print("")
