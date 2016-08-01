@@ -1,48 +1,48 @@
-Name:		tracer
-Version:	0.6.10
-Release:	1%{?dist}
-Summary:	Finds outdated running applications in your system
+Name:       tracer
+Version:    0.6.10
+Release:    1%{?dist}
+Summary:    Finds outdated running applications in your system
 
-BuildArch:	noarch
-Group:		Applications/System
-License:	GPLv2
-URL:		http://tracer-package.com/
+BuildArch:  noarch
+Group:      Applications/System
+License:    GPLv2
+URL:        http://tracer-package.com/
 # Sources can be obtained by
 # git clone git@github.com:FrostyX/tracer.git
 # cd tracer
 # tito build --tgz
-Source0:	%{name}-%{version}.tar.gz
+Source0:    %{name}-%{version}.tar.gz
 
-BuildRequires:	python2-devel
-BuildRequires:	python3-devel
-BuildRequires:	asciidoc
-BuildRequires:	gettext
+BuildRequires:  python2-devel
+BuildRequires:  python3-devel
+BuildRequires:  asciidoc
+BuildRequires:  gettext
 
 %package -n python2-%{name}
-Summary:		%{summary}
-Provides:		%{name} = %{version}-%{release}
-BuildRequires:	python-sphinx
-BuildRequires:	python-beautifulsoup4
-BuildRequires:	python-psutil
-BuildRequires:	python-pygments
-BuildRequires:	python-lxml
-Requires:	rpm-python
-Requires:	python
-Requires:	python-beautifulsoup4
-Requires:	python-psutil
+Summary:        %{summary}
+Provides:       %{name} = %{version}-%{release}
+BuildRequires:  python-sphinx
+BuildRequires:  python-beautifulsoup4
+BuildRequires:  python-psutil
+BuildRequires:  python-pygments
+BuildRequires:  python-lxml
+Requires:       rpm-python
+Requires:       python
+Requires:       python-beautifulsoup4
+Requires:       python-psutil
 %{?python_provide:%python_provide python2-%{name}}
 
 %package -n python3-%{name}
-Summary:		%{summary}
-BuildRequires:	python3-sphinx
-BuildRequires:	python3-beautifulsoup4
-BuildRequires:	python3-psutil
-BuildRequires:	python3-pygments
-BuildRequires:	python3-lxml
-Requires:	rpm-python3
-Requires:	python3
-Requires:	python3-beautifulsoup4
-Requires:	python3-psutil
+Summary:        %{summary}
+BuildRequires:  python3-sphinx
+BuildRequires:  python3-beautifulsoup4
+BuildRequires:  python3-psutil
+BuildRequires:  python3-pygments
+BuildRequires:  python3-lxml
+Requires:       rpm-python3
+Requires:       python3
+Requires:       python3-beautifulsoup4
+Requires:       python3-psutil
 %{?python_provide:%python_provide python3-%{name}}
 
 
