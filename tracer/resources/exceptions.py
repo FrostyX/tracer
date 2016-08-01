@@ -17,12 +17,20 @@
 #
 
 from __future__ import absolute_import
+from __future__ import print_function
 
+from sys import version_info
 from tracer.version import __version__
 from tracer.resources.lang import _
 
 
-class UnsupportedDistribution(OSError):
+class Printable(object):
+	message = None
+	def print(self):
+		print(self.message.encode("utf-8") if version_info.major == 2 else self.message)
+
+
+class UnsupportedDistribution(OSError, Printable):
 
 	@property
 	def message(self):
@@ -38,7 +46,7 @@ class UnsupportedDistribution(OSError):
 		OSError.__init__(self, self.message.format(distro, __version__))
 
 
-class LockedDatabase(OSError):
+class LockedDatabase(OSError, Printable):
 
 	@property
 	def message(self):
@@ -48,7 +56,7 @@ class LockedDatabase(OSError):
 		OSError.__init__(self, self.message)
 
 
-class DatabasePermissions(OSError):
+class DatabasePermissions(OSError, Printable):
 
 	@property
 	def message(self):
@@ -58,7 +66,7 @@ class DatabasePermissions(OSError):
 		OSError.__init__(self, self.message)
 
 
-class PathNotFound(OSError):
+class PathNotFound(OSError, Printable):
 
 	@property
 	def message(self):

@@ -16,6 +16,8 @@
 # 02110-1301, USA.
 #
 
+from __future__ import print_function
+
 import sys
 import time
 from tracer.resources.router import Router
@@ -42,10 +44,10 @@ def run():
 		return router.dispatch()
 
 	except (UnsupportedDistribution, PathNotFound, LockedDatabase) as ex:
-		print(ex)
+		ex.print()
 		exit(1)
 	except DatabasePermissions as ex:
-		print(ex)
+		ex.print()
 		print("You will probably need to run tracer as root")
 		exit(1)
 	except (KeyboardInterrupt, EOFError):
