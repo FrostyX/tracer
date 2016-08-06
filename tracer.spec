@@ -1,5 +1,5 @@
 Name:       tracer
-Version:    0.6.10
+Version:    0.6.11
 Release:    1%{?dist}
 Summary:    Finds outdated running applications in your system
 
@@ -126,6 +126,11 @@ make DESTDIR=%{buildroot}/usr/share/ mo
 
 
 %changelog
+* Sat Aug 06 2016 Jakub Kadlčík <frostyx@email.cz> 0.6.11-1
+- Release even for F25 (frostyx@email.cz)
+- Obsolete old tracer version (frostyx@email.cz)
+- :retab the specfile (frostyx@email.cz)
+
 * Mon Aug 01 2016 Jakub Kadlčík <frostyx@email.cz> 0.6.10-1
 - Split RPM package into separate python2 and python3 subpackages
   (frostyx@email.cz)
