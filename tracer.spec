@@ -21,6 +21,7 @@ BuildRequires:  gettext
 %package -n python2-%{name}
 Summary:        %{summary}
 Provides:       %{name} = %{version}-%{release}
+Obsoletes:      %{name} <= %{version}-%{release}
 BuildRequires:  python-sphinx
 BuildRequires:  python-beautifulsoup4
 BuildRequires:  python-psutil
