@@ -20,7 +20,7 @@ from __future__ import absolute_import
 
 
 from tracer.resources.system import System
-if System.distribution() in ["fedora", "centos"]:
+if System.distribution() in ["fedora", "rhel", "centos"]:
 
 	from tracer.packageManagers.rpm import Rpm
 
