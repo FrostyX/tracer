@@ -1,20 +1,15 @@
+%global rel 1
+
 Name:       tracer
 Version:    0.6.11
-Release:    1%{?dist}
+Release:    %{rel}%{?dist}
 Summary:    Finds outdated running applications in your system
 
 BuildArch:  noarch
-Group:      Applications/System
-License:    GPLv2
+License:    GPLv2+
 URL:        http://tracer-package.com/
-# Sources can be obtained by
-# git clone git@github.com:FrostyX/tracer.git
-# cd tracer
-# tito build --tgz
-Source0:    %{name}-%{version}.tar.gz
+Source0:    https://github.com/FrostyX/tracer/archive/%{name}-%{version}-%{rel}.tar.gz
 
-BuildRequires:  python2-devel
-BuildRequires:  python3-devel
 BuildRequires:  asciidoc
 BuildRequires:  gettext
 
@@ -22,58 +17,51 @@ BuildRequires:  gettext
 Summary:        %{summary}
 Provides:       %{name} = %{version}-%{release}
 Obsoletes:      %{name} <= %{version}-%{release}
+BuildRequires:  python2-devel
 BuildRequires:  python-sphinx
 BuildRequires:  python-beautifulsoup4
 BuildRequires:  python-psutil
 BuildRequires:  python-pygments
 BuildRequires:  python-lxml
 Requires:       rpm-python
-Requires:       python
 Requires:       python-beautifulsoup4
 Requires:       python-psutil
 %{?python_provide:%python_provide python2-%{name}}
 
 %package -n python3-%{name}
 Summary:        %{summary}
+BuildRequires:  python3-devel
 BuildRequires:  python3-sphinx
 BuildRequires:  python3-beautifulsoup4
 BuildRequires:  python3-psutil
 BuildRequires:  python3-pygments
 BuildRequires:  python3-lxml
 Requires:       rpm-python3
-Requires:       python3
 Requires:       python3-beautifulsoup4
 Requires:       python3-psutil
 %{?python_provide:%python_provide python3-%{name}}
 
 
-%description
-Tracer determines which applications use outdated files and prints them. For
-special kind of applications such as services or daemons, it suggests a standard
-command to restart it. Detecting whether file is outdated or not is based on a
-simple idea. If application has loaded in memory any version of a file
-which is provided by any package updated since system was booted up, tracer
+%global _description \
+Tracer determines which applications use outdated files and prints them. For\
+special kind of applications such as services or daemons, it suggests a standard\
+command to restart it. Detecting whether file is outdated or not is based on a\
+simple idea. If application has loaded in memory any version of a file\
+which is provided by any package updated since system was booted up, tracer\
 consider this application as outdated.
 
-%description -n python2-%{name}
-Tracer determines which applications use outdated files and prints them. For
-special kind of applications such as services or daemons, it suggests a standard
-command to restart it. Detecting whether file is outdated or not is based on a
-simple idea. If application has loaded in memory any version of a file
-which is provided by any package updated since system was booted up, tracer
-consider this application as outdated.
+%description %{_description}
 
-%description -n python3-%{name}
-Tracer determines which applications use outdated files and prints them. For
-special kind of applications such as services or daemons, it suggests a standard
-command to restart it. Detecting whether file is outdated or not is based on a
-simple idea. If application has loaded in memory any version of a file
-which is provided by any package updated since system was booted up, tracer
-consider this application as outdated.
+%description -n python2-%{name} %{_description}
 
+Python 2 version.
+
+%description -n python3-%{name} %{_description}
+
+Python 3 version.
 
 %prep
-%setup -q
+%autosetup -n %{name}-%{name}-%{version}-%{rel}
 
 
 %build
@@ -97,7 +85,7 @@ mkdir -p %{buildroot}/%{python3_sitelib}/tracer
 
 cp -a bin/tracer-2 %{buildroot}/%{_bindir}/
 cp -a bin/tracer-3 %{buildroot}/%{_bindir}/
-ln -s %{_bindir}/tracer-2 %{buildroot}/%{_bindir}/tracer
+ln -s %{_bindir}/tracer-3 %{buildroot}/%{_bindir}/tracer
 
 cp -a data/* %{buildroot}/%{_datadir}/tracer/
 cp -ar tracer/* tests %{buildroot}/%{python2_sitelib}/tracer/
@@ -112,16 +100,16 @@ make DESTDIR=%{buildroot}/usr/share/ mo
 %doc README.md
 %{python2_sitelib}/tracer
 %{_bindir}/tracer-2
-%{_bindir}/tracer
 %{_datadir}/tracer/
 %doc %{_mandir}/man8/tracer.8*
 
 %files -n python3-%{name} -f %{name}.lang
 %license LICENSE
 %doc README.md
-%{python3_sitelib}/tracer
-%{_bindir}/tracer-3
-%{_datadir}/tracer/
+%{python3_sitelib}/%{name}/
+%{_bindir}/tracer
+%{_bindir}/%{name}-3
+%{_datadir}/%{name}/
 %doc %{_mandir}/man8/tracer.8*
 
 
