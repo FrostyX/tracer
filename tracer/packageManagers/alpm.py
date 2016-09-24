@@ -18,7 +18,7 @@
 from __future__ import absolute_import
 
 from tracer.resources.system import System
-if System.distribution() in ["arch"]:
+if System.distribution() in ["arch", "archarm"]:
 
 	import bisect
 	from .ipackageManager import IPackageManager
