@@ -4,7 +4,7 @@ try:
 	from tracer.packageManagers.alpm import Alpm
 except ImportError: pass
 
-@unittest.skipIf(DISTRO != "arch", "Skipping tests because they are distro-specific")
+@unittest.skipIf((DISTRO != "arch" && DISTRO != "archarm"), "Skipping tests because they are distro-specific")
 class TestAlpm(unittest.TestCase):
 	def setUp(self):
 		self.manager = Alpm()

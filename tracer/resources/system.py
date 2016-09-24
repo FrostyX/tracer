@@ -62,13 +62,14 @@ class System(object):
 			return getattr(module, name)(**kwargs)
 
 		managers = {
-			"gentoo": [("tracer.packageManagers.portage", "Portage")],
-			"debian": [("tracer.packageManagers.dpkg", "Dpkg")],
-			"rhel":   [("tracer.packageManagers.yum", "Yum")],
-			"centos": [("tracer.packageManagers.yum", "Yum")],
-			"mageia": [("tracer.packageManagers.dnf", "Dnf")],
-			"arch":   [("tracer.packageManagers.alpm", "Alpm")],
-			"fedora": [
+			"gentoo":  [("tracer.packageManagers.portage", "Portage")],
+			"debian":  [("tracer.packageManagers.dpkg", "Dpkg")],
+			"rhel":    [("tracer.packageManagers.yum", "Yum")],
+			"centos":  [("tracer.packageManagers.yum", "Yum")],
+			"mageia":  [("tracer.packageManagers.dnf", "Dnf")],
+			"arch":    [("tracer.packageManagers.alpm", "Alpm")],
+			"archarm": [("tracer.packageManagers.alpm", "Alpm")],
+			"fedora":  [
 				("tracer.packageManagers.dnf", "Dnf"),
 				("tracer.packageManagers.yum", "Yum"),
 			],
