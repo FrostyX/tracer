@@ -1,2 +1,6 @@
 # See setup.py
--e .
+psutil
+BeautifulSoup4
+sphinx_rtd_theme
+Pygments
+lxml
