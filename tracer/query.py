@@ -43,6 +43,19 @@ class Query(object):
 	def __init__(self, tracer=Tracer):
 		self._tracer = tracer(System.package_manager(), Rules, Applications, dump_memory)
 
+	def from_packages(self, packages):
+		"""List of ``Package`` that only should be traced"""
+		self._tracer.specified_packages = packages
+		return self
+
+	def now(self):
+		"""
+		Pretend that specified packages have been updated just now.
+		Benefit of this is absolutely no need for openning the package history database
+		"""
+		self._tracer.now = True
+		return self
+
 	def affected_applications(self, user=None):
 		"""
 		Return list of applications which use some outdated files
