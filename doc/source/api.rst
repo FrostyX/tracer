@@ -10,7 +10,7 @@ future. In API could be a little changes too, but they will be documented
 Quering
 -------
 
-.. autoclass:: tracer.query.Query
+.. autoclass:: tracer.Query
     :members:
 
 
@@ -52,18 +52,18 @@ use case requires some which are not listed below, please let me know to cover t
 Packages
 ~~~~~~~~
 
-.. autoclass:: tracer.resources.package.Package
+.. autoclass:: tracer.Package
    :members:
 
 
 Applications
 ~~~~~~~~~~~~
 
-.. autoclass:: tracer.resources.applications.Application
+.. autoclass:: tracer.Application
    :members:
    :exclude-members: processes_factory helper
 
-.. autoclass:: tracer.resources.processes.Process
+.. autoclass:: tracer.Process
    :inherited-members:
    :members:
    :exclude-members: str_started_ago
