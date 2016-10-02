@@ -9,6 +9,7 @@ python:
   - "nightly"
 
 install:
+  - pip install -r requirements.txt
   - pip install .  # See setup.py
   - pip install coveralls
 
