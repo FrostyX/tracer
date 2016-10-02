@@ -24,14 +24,6 @@ setup(
 	long_description=open('README.md').read(),
 	install_requires=install_requires,
 
-	install_requires=[
-		"psutil",
-		"BeautifulSoup4",
-		"sphinx_rtd_theme",
-		"Pygments",
-		"lxml",
-	],
-
 	packages=[
 		'tracer',
 		'tracer.controllers',
