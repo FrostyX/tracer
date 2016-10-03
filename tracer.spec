@@ -1,14 +1,16 @@
-%global rel 1
-
 Name:       tracer
 Version:    0.6.11
-Release:    %{rel}%{?dist}
+Release:    1%{?dist}
 Summary:    Finds outdated running applications in your system
 
 BuildArch:  noarch
 License:    GPLv2+
 URL:        http://tracer-package.com/
-Source0:    https://github.com/FrostyX/tracer/archive/%{name}-%{version}-%{rel}.tar.gz
+# Sources can be obtained by
+# git clone git@github.com:FrostyX/tracer.git
+# cd tracer
+# tito build --tgz
+Source0:    %{name}-%{version}.tar.gz
 
 BuildRequires:  asciidoc
 BuildRequires:  gettext
@@ -61,56 +63,47 @@ Python 2 version.
 Python 3 version.
 
 %prep
-%autosetup -n %{name}-%{name}-%{version}-%{rel}
-
+%setup -q
+sed -i -e '1s|^#!.*$|#!%{__python3}|' bin/%{name}.py
 
 %build
 %py2_build
 %py3_build
 make %{?_smp_mflags} man
-sed "s/\/usr\/bin\/python/\/usr\/bin\/python2/" bin/tracer.py > bin/tracer-2
-sed "s/\/usr\/bin\/python/\/usr\/bin\/python3/" bin/tracer.py > bin/tracer-3
-chmod +x bin/tracer-2 bin/tracer-3
-
 
 %install
 # @TODO use following macros
 # %%py2_install
 # %%py3_install
-mkdir -p %{buildroot}/%{_bindir}
-mkdir -p %{buildroot}/%{_datadir}/tracer
-mkdir -p %{buildroot}/%{_mandir}/man8
-mkdir -p %{buildroot}/%{python2_sitelib}/tracer
-mkdir -p %{buildroot}/%{python3_sitelib}/tracer
 
-cp -a bin/tracer-2 %{buildroot}/%{_bindir}/
-cp -a bin/tracer-3 %{buildroot}/%{_bindir}/
-ln -s %{_bindir}/tracer-3 %{buildroot}/%{_bindir}/tracer
+mkdir -p %{buildroot}%{_datadir}/%{name}/
+cp -a data/* %{buildroot}%{_datadir}/%{name}/
 
-cp -a data/* %{buildroot}/%{_datadir}/tracer/
-cp -ar tracer/* tests %{buildroot}/%{python2_sitelib}/tracer/
-cp -ar tracer/* tests %{buildroot}/%{python3_sitelib}/tracer/
-install -m644 doc/build/man/tracer.8 %{buildroot}/%{_mandir}/man8/
-make DESTDIR=%{buildroot}/usr/share/ mo
+mkdir -p %{buildroot}%{python2_sitelib}/%{name}/
+cp -ar %{name}/* tests %{buildroot}%{python2_sitelib}/%{name}/
+mkdir -p %{buildroot}%{python3_sitelib}/%{name}/
+cp -ar %{name}/* tests %{buildroot}%{python3_sitelib}/%{name}/
+
+install -Dpm0755 bin/%{name}.py %{buildroot}%{_bindir}/%{name}
+install -Dpm0644 doc/build/man/%{name}.8 %{buildroot}%{_mandir}/man8/%{name}.8
+
+make DESTDIR=%{buildroot}%{_datadir} mo
 %find_lang %{name}
 
 
 %files -n python2-%{name} -f %{name}.lang
 %license LICENSE
 %doc README.md
-%{python2_sitelib}/tracer
-%{_bindir}/tracer-2
-%{_datadir}/tracer/
-%doc %{_mandir}/man8/tracer.8*
+%{_datadir}/%{name}/
+%{python2_sitelib}/%{name}/
 
 %files -n python3-%{name} -f %{name}.lang
 %license LICENSE
 %doc README.md
-%{python3_sitelib}/%{name}/
-%{_bindir}/tracer
-%{_bindir}/%{name}-3
 %{_datadir}/%{name}/
-%doc %{_mandir}/man8/tracer.8*
+%{python3_sitelib}/%{name}/
+%{_bindir}/%{name}
+%{_mandir}/man8/%{name}.8*
 
 
 %changelog
