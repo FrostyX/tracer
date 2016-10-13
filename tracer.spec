@@ -105,15 +105,14 @@ This is the Python 3 version.
 make %{?_smp_mflags} man
 
 %py2_build
-sed "s/\/usr\/bin\/python/\/usr\/bin\/python2/" bin/tracer.py > bin/tracer-2
-chmod +x bin/tracer-2
+sed "s/\/usr\/bin\/python/\/usr\/bin\/python2/" bin/tracer.py > bin/tracer
 
 %if %{with python3}
 %py3_build
-sed "s/\/usr\/bin\/python/\/usr\/bin\/python3/" bin/tracer.py > bin/tracer-3
-chmod +x bin/tracer-3
+sed "s/\/usr\/bin\/python/\/usr\/bin\/python3/" bin/tracer.py > bin/tracer
 %endif
 
+chmod +x bin/tracer
 
 %install
 # @TODO use following macros
@@ -124,17 +123,12 @@ mkdir -p %{buildroot}/%{_datadir}/tracer
 mkdir -p %{buildroot}/%{_mandir}/man8
 
 mkdir -p %{buildroot}/%{python2_sitelib}/tracer
-cp -a bin/tracer-2 %{buildroot}/%{_bindir}/
+cp -a bin/tracer %{buildroot}/%{_bindir}/
 cp -ar tracer/* tests %{buildroot}/%{python2_sitelib}/tracer/
 
 %if %{with python3}
 mkdir -p %{buildroot}/%{python3_sitelib}/tracer
-cp -a bin/tracer-3 %{buildroot}/%{_bindir}/
 cp -ar tracer/* tests %{buildroot}/%{python3_sitelib}/tracer/
-ln -s %{_bindir}/tracer-3 %{buildroot}/%{_bindir}/tracer
-%else
-ln -s %{_bindir}/tracer-2 %{buildroot}/%{_bindir}/tracer
-%endif
 
 cp -a data/* %{buildroot}/%{_datadir}/tracer/
 install -m644 doc/build/man/tracer.8 %{buildroot}/%{_mandir}/man8/
@@ -154,13 +148,11 @@ make DESTDIR=%{buildroot}/usr/share/ mo
 %files -n python2-%{name}
 %license LICENSE
 %{python2_sitelib}/tracer
-%{_bindir}/tracer-2
 
 %if %{with python3}
 %files -n python3-%{name}
 %license LICENSE
 %{python3_sitelib}/tracer
-%{_bindir}/tracer-3
 %endif
 
 
