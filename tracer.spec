@@ -1,3 +1,9 @@
+%if 0%{?rhel} && 0%{?rhel} <= 7
+%bcond_with python3
+%else
+%bcond_without python3
+%endif
+
 Name:       tracer
 Version:    0.6.11
 Release:    1%{?dist}
@@ -15,10 +21,28 @@ Source0:    %{name}-%{version}.tar.gz
 BuildRequires:  asciidoc
 BuildRequires:  gettext
 
+%global _description \
+Tracer determines which applications use outdated files and prints them. For\
+special kind of applications such as services or daemons, it suggests a standard\
+command to restart it. Detecting whether file is outdated or not is based on a\
+simple idea. If application has loaded in memory any version of a file\
+which is provided by any package updated since system was booted up, tracer\
+consider this application as outdated.
+
+%description %{_description}
+
+%package common
+Summary:        Common files for %{name}
+
+%description common
+%{summary}.
+
 %package -n python2-%{name}
 Summary:        %{summary}
+%if ! %{with python3}
 Provides:       %{name} = %{version}-%{release}
-Obsoletes:      %{name} <= %{version}-%{release}
+Obsoletes:      %{name} <= 0.6.11
+%endif
 BuildRequires:  python2-devel
 BuildRequires:  python-sphinx
 BuildRequires:  python-beautifulsoup4
@@ -30,6 +54,11 @@ Requires:       python-beautifulsoup4
 Requires:       python-psutil
 %{?python_provide:%python_provide python2-%{name}}
 
+%description -n python2-%{name} %{_description}
+
+Python 2 version.
+
+%if %{with python3}
 %package -n python3-%{name}
 Summary:        %{summary}
 BuildRequires:  python3-devel
@@ -42,33 +71,27 @@ Requires:       rpm-python3
 Requires:       python3-beautifulsoup4
 Requires:       python3-psutil
 %{?python_provide:%python_provide python3-%{name}}
-
-
-%global _description \
-Tracer determines which applications use outdated files and prints them. For\
-special kind of applications such as services or daemons, it suggests a standard\
-command to restart it. Detecting whether file is outdated or not is based on a\
-simple idea. If application has loaded in memory any version of a file\
-which is provided by any package updated since system was booted up, tracer\
-consider this application as outdated.
-
-%description %{_description}
-
-%description -n python2-%{name} %{_description}
-
-Python 2 version.
+Provides:       %{name} = %{version}-%{release}
+Obsoletes:      %{name} <= 0.6.11
 
 %description -n python3-%{name} %{_description}
 
 Python 3 version.
+%endif
 
 %prep
 %setup -q
+%if %{with python3}
 sed -i -e '1s|^#!.*$|#!%{__python3}|' bin/%{name}.py
+%else
+sed -i -e '1s|^#!.*$|#!%{__python2}|' bin/%{name}.py
+%endif
 
 %build
 %py2_build
+%if %{with python3}
 %py3_build
+%endif
 make %{?_smp_mflags} man
 
 %install
@@ -81,8 +104,10 @@ cp -a data/* %{buildroot}%{_datadir}/%{name}/
 
 mkdir -p %{buildroot}%{python2_sitelib}/%{name}/
 cp -ar %{name}/* tests %{buildroot}%{python2_sitelib}/%{name}/
+%if %{with python3}
 mkdir -p %{buildroot}%{python3_sitelib}/%{name}/
 cp -ar %{name}/* tests %{buildroot}%{python3_sitelib}/%{name}/
+%endif
 
 install -Dpm0755 bin/%{name}.py %{buildroot}%{_bindir}/%{name}
 install -Dpm0644 doc/build/man/%{name}.8 %{buildroot}%{_mandir}/man8/%{name}.8
@@ -90,18 +115,19 @@ install -Dpm0644 doc/build/man/%{name}.8 %{buildroot}%{_mandir}/man8/%{name}.8
 make DESTDIR=%{buildroot}%{_datadir} mo
 %find_lang %{name}
 
-
-%files -n python2-%{name} -f %{name}.lang
+%files common -f %{name}.lang
 %license LICENSE
 %doc README.md
 %{_datadir}/%{name}/
+
+%files -n python2-%{name}
 %{python2_sitelib}/%{name}/
 
-%files -n python3-%{name} -f %{name}.lang
-%license LICENSE
-%doc README.md
-%{_datadir}/%{name}/
+%if %{with python3}
+%files -n python3-%{name}
 %{python3_sitelib}/%{name}/
+%endif
+
 %{_bindir}/%{name}
 %{_mandir}/man8/%{name}.8*
 
