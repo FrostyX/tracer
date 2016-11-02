@@ -117,9 +117,9 @@ class Applications(object):
 	def _helper(app):
 		if app.type == Applications.TYPES["DAEMON"]:
 			if System.init_system() == "systemd":
-				return "systemctl restart {0}".format(app.name)
+				return "systemctl restart {0}".format(app.real_name)
 			else:
-				return "service {0} restart".format(app.name)
+				return "service {0} restart".format(app.real_name)
 
 		elif app.type == Applications.TYPES["STATIC"]:
 			return _("You will have to reboot your computer")
@@ -183,12 +183,26 @@ class Application:
 		self._attributes.update(values)
 
 	@property
+	def real_name(self):
+		# @TODO ideally have just name, but it is really slow because of huge (probably bug) usage
+		if self.is_interpreted:
+			for arg in self.instances[0].cmdline()[1:]:
+				if os.path.isfile(arg):
+					return os.path.basename(arg)
+		return self._attributes["name"]
+
+	@property
+	def is_interpreted(self):
+		# @TODO implement better detection of interpreted processes
+		return self.instances and self.instances[0].name() in ["python"]
+
+	@property
 	def type(self):
 		return Applications.TYPES["DAEMON"] if self.has_service_file else self._attributes["type"]
 
 	@property
 	def has_service_file(self):
-		return os.path.isfile("/usr/lib/systemd/system/{0}.service".format(self.name))
+		return os.path.isfile("/usr/lib/systemd/system/{0}.service".format(self.real_name))
 
 	# @TODO rename to helper_format
 	@property
@@ -235,6 +249,6 @@ class Application:
 		Return collection of processes with same name as application.
 		I.e. running instances of the application
 		"""
-		return self.processes_factory.all().filtered(lambda process: process.name() == self.name)
+		return self.processes_factory.all().filtered(lambda process: process.name() == self._attributes["name"])
 
 	affected_instances = None

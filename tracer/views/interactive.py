@@ -14,7 +14,7 @@ class InteractiveView(View):
 		digits = len(str(len(self.args.applications)))
 		for application in self.args.applications:
 			n = "[{0}]".format(i).ljust(digits + 2)
-			print("{} {}".format(n, application.name))
+			print("{} {}".format(n, application.real_name))
 			i += 1
 
 		if not self.args.args.all:
