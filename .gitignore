@@ -40,3 +40,6 @@ nosetests.xml
 
 # Dolphin
 .directory
+
+# Virt
+.vagrant
