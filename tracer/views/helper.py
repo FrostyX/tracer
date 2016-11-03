@@ -8,7 +8,7 @@ from tracer.resources.lang import _
 class HelperView(View):
 	def render(self):
 
-		self.print("* {app_name}".format(app_name=self.args.application.real_name))
+		self.print("* {app_name}".format(app_name=self.args.application.name))
 
 		# Package informations
 		if self.args.package:
@@ -17,14 +17,14 @@ class HelperView(View):
 			self.print("    Type:        {type}"            .format(type=self.args.application.type.capitalize()))
 		else:
 			self.print("    Package:     {app_name} is not provided by any package"
-				.format(app_name=self.args.application.real_name))
+				.format(app_name=self.args.application.name))
 
 		# State
 		indent = "    State:       "
 		i = 0
 		for process in self.args.processes:
 			self.print(indent + "{app_name} has been started by {user} {time} ago. PID - {pid}".format(
-					app_name=self.args.application.real_name,
+					app_name=self.args.application.name,
 					user=process.username(),
 					time=process.str_started_ago,
 					pid=process.pid
@@ -45,7 +45,7 @@ class HelperView(View):
 			self.print("")
 			self.print("    {title}:".format(title=_('How to restart')))
 			if not self.args.affected_by:
-				self.print("        {app_name} does not need restarting".format(app_name=self.args.application.real_name))
+				self.print("        {app_name} does not need restarting".format(app_name=self.args.application.name))
 			elif self.args.affects:
 				self.print("        " + _("It's a part of application called {0}").format(self.args.affects))
 			else:

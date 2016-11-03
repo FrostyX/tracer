@@ -70,12 +70,12 @@ if System.distribution() in ["arch", "archarm"]:
 			package.modified = pkg.installdate
 			# Don't have categories
 
-		def provided_by(self, app_name):
+		def provided_by(self, app):
 			"""
 			Returns name of package which provides given application
 			"""
 			# We need a full path to the binary
-			process = Applications.find(app_name).instances[0]
+			process = app.instances[0]
 			return self._file_provided_by(process.exe)
 
 		@staticmethod

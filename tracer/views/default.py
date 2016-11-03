@@ -29,13 +29,13 @@ class DefaultView(View):
 			content = ""
 			apps = self.args.applications.exclude_types(Applications.TYPES["ERASED"]).without_helpers().sorted("name")
 			for application in apps:
-				content += "      " + application.real_name + "\n"
+				content += "      " + application.name + "\n"
 			return content
 
 		def erased_content():
 			content = ""
 			for application in self.args.applications.filter_types([Applications.TYPES["ERASED"]]).sorted("name"):
-				content += "      " + application.real_name + "\n"
+				content += "      " + application.name + "\n"
 			return content
 
 		def unrestartable_content(app_type):

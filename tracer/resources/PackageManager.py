@@ -58,6 +58,6 @@ class PackageManager:
 		"""From database load informations about given package and set them to it"""
 		return self.package_managers[0].load_package_info(package)
 
-	def provided_by(self, app_name):
+	def provided_by(self, app):
 		"""Returns name of package which provides given application"""
-		return self.package_managers[0].provided_by(app_name)
+		return self.package_managers[0].provided_by(app)

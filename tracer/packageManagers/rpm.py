@@ -110,10 +110,10 @@ if System.distribution() in ["fedora", "rhel", "centos", "mageia"]:
 			package.description = package_hdr[rpm.RPMTAG_SUMMARY].decode()
 			package.category = package_hdr[rpm.RPMTAG_GROUP].decode()
 
-		def provided_by(self, app_name):
+		def provided_by(self, app):
 			"""Returns name of package which provides given application"""
 			# `rpm -qf ...` needs full path to binary, not only its name
-			process = Applications.find(app_name).instances[0]  # @TODO Reimplement for all processes
+			process = app.instances[0]  # @TODO Reimplement for all processes
 			package = self._file_provided_by(process.exe)
 			if package:
 				# If package is interpreter, return the package providing that interpreted file

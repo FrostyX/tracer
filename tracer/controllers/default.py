@@ -106,7 +106,7 @@ class DefaultController(object):
 			try:
 				if answer == "q": return
 				elif int(answer) <= 0 or int(answer) > len(filtered): raise IndexError
-				helper_controller.print_helper(filtered[int(answer) - 1].name, self.args)
+				helper_controller.print_helper(filtered[int(answer) - 1], self.args)
 
 			except (SyntaxError, IndexError, ValueError):
 				print(_("Wrong application number"))

@@ -38,7 +38,7 @@ class IPackageManager(object):
 		"""From database load informations about given package and set them to it"""
 		raise NotImplementedError
 
-	def provided_by(self, app_name):
+	def provided_by(self, app):
 		"""Returns name of package which provides given application"""
 		raise NotImplementedError
 

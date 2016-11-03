@@ -24,7 +24,7 @@ from tracer.resources.FilenameCleaner import FilenameCleaner
 from tracer.resources.processes import AffectedProcess
 from tracer.resources.collections import ApplicationsCollection, AffectedProcessesCollection, PackagesCollection
 from tracer.resources.exceptions import UnsupportedDistribution
-from tracer.resources.applications import Applications
+from tracer.resources.applications import Applications, AffectedApplication
 
 
 class Tracer(object):
@@ -112,9 +112,9 @@ class Tracer(object):
 							if a.name not in affected:
 								if self._erased and not self._PACKAGE_MANAGER.provided_by(a.name):
 									a.type = Applications.TYPES["ERASED"]
-								affected[a.name] = a
+								affected[a.name] = AffectedApplication(a._attributes)
 								affected[a.name].affected_instances = AffectedProcessesCollection()
-								self._call_hook(a)
+								self._call_hook(affected[a.name])
 							affected[a.name].affected_instances.append(p)
 					except NoSuchProcess:
 						pass
@@ -146,7 +146,7 @@ class Tracer(object):
 		if self._hooks_observer:
 			self._hooks_observer(app.name)
 
-	def trace_application(self, app_name, affected_process_factory=AffectedProcess):
+	def trace_application(self, app, affected_process_factory=AffectedProcess):
 		"""
 		Returns collection of processes where each of them contains
 		packages which affected it. Packages contains only files matching
@@ -154,7 +154,7 @@ class Tracer(object):
 		"""
 		packages = self._modified_packages()
 		processes = AffectedProcessesCollection()
-		for process in self._applications.find(app_name).instances:
+		for process in app.instances:
 			processes.update(self._affecting_processes(process, packages, affected_process_factory))
 			processes.update(self._affecting_children(process, packages, affected_process_factory))
 		return processes

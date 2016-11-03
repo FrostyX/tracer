@@ -117,9 +117,9 @@ class Applications(object):
 	def _helper(app):
 		if app.type == Applications.TYPES["DAEMON"]:
 			if System.init_system() == "systemd":
-				return "systemctl restart {0}".format(app.real_name)
+				return "systemctl restart {0}".format(app.name)
 			else:
-				return "service {0} restart".format(app.real_name)
+				return "service {0} restart".format(app.name)
 
 		elif app.type == Applications.TYPES["STATIC"]:
 			return _("You will have to reboot your computer")
@@ -169,7 +169,7 @@ class Application:
 		return item in self._attributes
 
 	def __str__(self):
-		return "<Application: " + self._attributes["name"] + ">"
+		return "<" + self.__class__.__name__ + ": " + self._attributes["name"] + ">"
 
 	def __repr__(self):
 		return self.__str__()
@@ -183,15 +183,6 @@ class Application:
 		self._attributes.update(values)
 
 	@property
-	def real_name(self):
-		# @TODO ideally have just name, but it is really slow because of huge (probably bug) usage
-		if self.is_interpreted:
-			for arg in self.instances[0].cmdline()[1:]:
-				if os.path.isfile(arg):
-					return os.path.basename(arg)
-		return self._attributes["name"]
-
-	@property
 	def is_interpreted(self):
 		# @TODO implement better detection of interpreted processes
 		return self.instances and self.instances[0].name() in ["python"]
@@ -202,7 +193,7 @@ class Application:
 
 	@property
 	def has_service_file(self):
-		return os.path.isfile("/usr/lib/systemd/system/{0}.service".format(self.real_name))
+		return os.path.isfile("/usr/lib/systemd/system/{0}.service".format(self.name))
 
 	# @TODO rename to helper_format
 	@property
@@ -252,3 +243,13 @@ class Application:
 		return self.processes_factory.all().filtered(lambda process: process.name() == self._attributes["name"])
 
 	affected_instances = None
+
+
+class AffectedApplication(Application):
+	@property
+	def name(self):
+		if self.is_interpreted:
+			for arg in self.instances[0].cmdline()[1:]:
+				if os.path.isfile(arg):
+					return os.path.basename(arg)
+		return self._attributes["name"]

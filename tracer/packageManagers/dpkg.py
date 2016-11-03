@@ -91,9 +91,9 @@ if System.distribution() == "debian":
 
 			package.description = description
 
-		def provided_by(self, app_name):
+		def provided_by(self, app):
 			"""Returns name of package which provides given application"""
-			command = ['dlocate', '-S', app_name]
+			command = ['dlocate', '-S', app.name]
 			process = subprocess.Popen(command, stdout=subprocess.PIPE)
 			pkg_name = process.communicate()[0]
 			pkg_name = pkg_name.decode().split('\n')[0]

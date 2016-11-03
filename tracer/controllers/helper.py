@@ -38,15 +38,14 @@ class HelperController(object):
 
 	def render(self):
 		for app_name in self.args.helper:
-			self.print_helper(app_name, self.args)
+			self.print_helper(Applications.find(app_name), self.args)
 			if app_name != self.args.helper[-1]:
 				print("")
 
-	def print_helper(self, app_name, args):
-		processes = Applications.find(app_name).instances
-		if processes:
+	def print_helper(self, app, args):
+		if app.instances:
 			manager = System.package_manager()
-			package = manager.provided_by(app_name)
+			package = manager.provided_by(app)
 			if package:
 				package.load_info(System.package_manager())
 
@@ -55,22 +54,20 @@ class HelperController(object):
 			if self.packages:
 				tr.specified_packages = self.packages
 
-			try: affected_by = tr.trace_application(app_name)
+			try: affected_by = tr.trace_application(app)
 			except AccessDenied: affected_by = _("You don't have enough permissions")
-
-			app = Applications.find(app_name)
 			affects = self._affects(app, affected_by)
 
 			view = HelperView()
 			view.assign("args", args)
-			view.assign("processes", processes)
+			view.assign("processes", app.instances)
 			view.assign("application", app)
 			view.assign("package", package)
 			view.assign("affected_by", affected_by)
 			view.assign("affects", affects)
 			view.render()
 		else:
-			print(_("Application called {0} is not running").format(app_name))
+			print(_("Application called {0} is not running").format(app.name))
 
 	def _affects(self, app, affected_by):
 		if not affected_by:

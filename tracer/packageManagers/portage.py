@@ -95,9 +95,9 @@ if System.distribution() == "gentoo":
 			package.description = description
 			package.category = category
 
-		def provided_by(self, app_name):
+		def provided_by(self, app):
 			"""Returns a package which provides given application"""
-			process = Applications.find(app_name).instances[0]  # @TODO Reimplement for all processes
+			process = app.instances[0]  # @TODO Reimplement for all processes
 			package = self._file_provided_by(process.exe)
 			if package:
 				if package.category == 'dev-lang':
