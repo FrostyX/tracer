@@ -177,6 +177,19 @@ class Process(ProcessWrapper):
 		return exe
 
 	@property
+	def is_interpreted(self):
+		# @TODO implement better detection of interpreted processes
+		return self.name() in ["python"]
+
+	@property
+	def real_name(self):
+		if self.is_interpreted:
+			for arg in self.cmdline()[1:]:
+				if os.path.isfile(arg):
+					return os.path.basename(arg)
+		return self.name()
+
+	@property
 	def str_started_ago(self):
 		"""
 		The time of how long process is running. Returned as string

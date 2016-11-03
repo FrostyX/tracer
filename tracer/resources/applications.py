@@ -184,8 +184,8 @@ class Application:
 
 	@property
 	def is_interpreted(self):
-		# @TODO implement better detection of interpreted processes
-		return self.instances and self.instances[0].name() in ["python"]
+		# @TODO check all instances
+		return self.instances and self.instances[0].is_interpreted
 
 	@property
 	def type(self):
@@ -240,7 +240,8 @@ class Application:
 		Return collection of processes with same name as application.
 		I.e. running instances of the application
 		"""
-		return self.processes_factory.all().filtered(lambda process: process.name() == self._attributes["name"])
+		return self.processes_factory.all().filtered(
+			lambda process: self._attributes["name"] in [process.name(), process.real_name])
 
 	affected_instances = None
 
@@ -249,7 +250,5 @@ class AffectedApplication(Application):
 	@property
 	def name(self):
 		if self.is_interpreted:
-			for arg in self.instances[0].cmdline()[1:]:
-				if os.path.isfile(arg):
-					return os.path.basename(arg)
+			return self.instances[0].real_name
 		return self._attributes["name"]
