@@ -22,7 +22,7 @@ class TestRules(unittest.TestCase):
 		self.assertIsInstance(affected, ApplicationsCollection)
 
 	def test_trace_application(self):
-		affected = self.tracer.trace_application("baz", AffectedProcessMock)
+		affected = self.tracer.trace_application(Applications.find("baz"), AffectedProcessMock)
 		self.assertIsInstance(affected, AffectedProcessesCollection)
 		self.assertEqual(len(affected), 1)
 
@@ -40,6 +40,14 @@ class ProcessMock(object):
 
 	def name(self):
 		return self._name
+
+	@property
+	def real_name(self):
+		return self._name
+
+	@property
+	def is_interpreted(self):
+		return False
 
 	def create_time(self):
 		return self._create_time
