@@ -16,6 +16,7 @@ help:
 	@echo "    rpm-test       to build fedora package locally"
 	@echo "    rpm-try        to build fedora package and install it"
 	@echo "    rpm-copr       to build fedora package through copr"
+	@echo "    rpm-fedora     to build fedora package through koji"
 	@echo ""
 	@echo "* Localization targets"
 	@echo "    pot            to generate .pot file from the code"
