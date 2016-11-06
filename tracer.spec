@@ -5,7 +5,7 @@
 %endif
 
 Name:       tracer
-Version:    0.6.11
+Version:    0.6.12
 Release:    1%{?dist}
 Summary:    Finds outdated running applications in your system
 
@@ -133,6 +133,11 @@ make DESTDIR=%{buildroot}%{_datadir} mo
 
 
 %changelog
+* Sun Nov 06 2016 Jakub Kadlčík <frostyx@email.cz> 0.6.12-1
+- Add Vagrantfile for more convenient testing (frostyx@email.cz)
+- Recommend systemctl instead of service on systemd machines (seanokeeffe797@gmail.com)
+- Implement --now and --packages as API Query methods (frostyx@email.cz)
+- Improve support for python applications (Fix #64) (frostyx@email.cz)
 * Sat Aug 06 2016 Jakub Kadlčík <frostyx@email.cz> 0.6.11-1
 - Release even for F25 (frostyx@email.cz)
 - Obsolete old tracer version (frostyx@email.cz)
