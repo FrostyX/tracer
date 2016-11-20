@@ -52,6 +52,7 @@ BuildRequires:  python-lxml
 Requires:       rpm-python
 Requires:       python-beautifulsoup4
 Requires:       python-psutil
+Requires:       %{name}-common = %{version}-%{release}
 %{?python_provide:%python_provide python2-%{name}}
 
 %description -n python2-%{name} %{_description}
@@ -70,6 +71,7 @@ BuildRequires:  python3-lxml
 Requires:       rpm-python3
 Requires:       python3-beautifulsoup4
 Requires:       python3-psutil
+Requires:       %{name}-common = %{version}-%{release}
 %{?python_provide:%python_provide python3-%{name}}
 Provides:       %{name} = %{version}-%{release}
 Obsoletes:      %{name} <= 0.6.11
