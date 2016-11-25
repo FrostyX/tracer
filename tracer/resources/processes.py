@@ -22,6 +22,7 @@ import psutil
 import datetime
 import time
 import os
+import re
 
 
 class Processes(object):
@@ -180,6 +181,13 @@ class Process(ProcessWrapper):
 	def is_interpreted(self):
 		# @TODO implement better detection of interpreted processes
 		return self.name() in ["python"]
+
+	@property
+	def is_session(self):
+                if self.terminal() is not None:
+                        return True
+                if re.search("sshd\:\ .*\ \[priv\]", str(self.cmdline())):
+                        return True
 
 	@property
 	def real_name(self):

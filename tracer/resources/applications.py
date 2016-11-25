@@ -188,8 +188,17 @@ class Application:
 		return self.instances and self.instances[0].is_interpreted
 
 	@property
+	def is_session(self):
+                return self.instances and self.instances[0].is_session
+
+	@property
 	def type(self):
-		return Applications.TYPES["DAEMON"] if self.has_service_file else self._attributes["type"]
+                if self.is_session:
+                        return Applications.TYPES["SESSION"]
+                elif self.has_service_file:
+                        return Applications.TYPES["DAEMON"]
+                else:
+                        return self._attributes["type"]
 
 	@property
 	def has_service_file(self):
