@@ -18,6 +18,11 @@
 
 import argparse
 
+try:
+    import argcomplete
+except ImportError:
+    pass
+
 parser = argparse.ArgumentParser(
 	prog = 'tracer',
 	description='Tracer finds outdated running applications in your system',
@@ -139,3 +144,7 @@ user.add_argument("--erased",
 	help="print even section with erased packages (DNF only)",
 	default=False
 )
+try:
+    argcomplete.autocomplete(parser)
+except NameError:
+    pass

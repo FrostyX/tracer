@@ -4,6 +4,12 @@
 %bcond_without python3
 %endif
 
+%if 0%{?fedora} && 0%{?fedora} >= 23
+%bcond_with suggest
+%else
+%bcond_without suggest
+%endif
+
 Name:       tracer
 Version:    0.6.12
 Release:    1%{?dist}
@@ -54,6 +60,11 @@ Requires:       python-beautifulsoup4
 Requires:       python-psutil
 Requires:       python-lxml
 Requires:       %{name}-common = %{version}-%{release}
+%if ! %{with suggest}
+Suggests:       python2-argcomplete
+%else
+Requires:       python2-argcomplete
+%endif
 %{?python_provide:%python_provide python2-%{name}}
 
 %description -n python2-%{name} %{_description}
@@ -74,6 +85,11 @@ Requires:       python3-beautifulsoup4
 Requires:       python3-psutil
 Requires:       python3-lxml
 Requires:       %{name}-common = %{version}-%{release}
+%if %{with suggest}
+Suggests:       python3-argcomplete
+%else
+Requires:       python3-argcomplete
+%endif
 %{?python_provide:%python_provide python3-%{name}}
 Provides:       %{name} = %{version}-%{release}
 Obsoletes:      %{name} <= 0.6.11
@@ -116,6 +132,9 @@ cp -ar %{name}/* tests %{buildroot}%{python3_sitelib}/%{name}/
 install -Dpm0755 bin/%{name}.py %{buildroot}%{_bindir}/%{name}
 install -Dpm0644 doc/build/man/%{name}.8 %{buildroot}%{_mandir}/man8/%{name}.8
 
+mkdir -p %{buildroot}%{_sysconfdir}/bash_completion.d
+install -pm 644 scripts/tracer.bash_completion %{buildroot}%{_sysconfdir}/bash_completion.d/tracer
+
 make DESTDIR=%{buildroot}%{_datadir} mo
 %find_lang %{name}
 
@@ -123,6 +142,7 @@ make DESTDIR=%{buildroot}%{_datadir} mo
 %license LICENSE
 %doc README.md
 %{_datadir}/%{name}/
+%{_sysconfdir}/bash_completion.d/tracer
 
 %files -n python2-%{name}
 %{python2_sitelib}/%{name}/
