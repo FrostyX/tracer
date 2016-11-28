@@ -107,7 +107,7 @@
 		<app name="wicd" />
 		<app name="firewalld" />
 		<app name="accounts-daemon" />
-               <app name="dhclient" rename="NetworkManager" />
+                <app name="dhclient" rename="NetworkManager" />
 	</group>
 
 	<group type="static">
