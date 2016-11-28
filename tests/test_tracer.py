@@ -49,6 +49,10 @@ class ProcessMock(object):
 	def is_interpreted(self):
 		return False
 
+	@property
+	def is_session(self):
+                return False
+
 	def create_time(self):
 		return self._create_time
 
