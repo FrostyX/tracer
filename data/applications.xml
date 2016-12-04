@@ -109,6 +109,7 @@
 		<app name="accounts-daemon" />
 		<app name="dhclient" rename="NetworkManager" />
 		<app name="cupsd" rename="cups" />
+		<app name="bluetoothd" rename="bluetooth" />
 	</group>
 
 	<group type="static">
