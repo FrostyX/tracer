@@ -107,7 +107,7 @@
 		<app name="wicd" />
 		<app name="firewalld" />
 		<app name="accounts-daemon" />
-                <app name="dhclient" rename="NetworkManager" />
+		<app name="dhclient" rename="NetworkManager" />
 	</group>
 
 	<group type="static">
@@ -137,6 +137,7 @@
 	<app name="console-kit-daemon" helper="service consolekit restart" />
 	<app name="dropbox" helper="dropbox stop; dropbox start" />
 	<app name="pulseaudio" helper="pulseaudio --kill; pulseaudio --start" />
+	<app name="gnome-shell" helper="killall -3 gnome-shell" />
 
 	<app name="abrt-dump-journal-oops" rename="abrtd" />
 	<app name="abrt-watch-log" rename="abrtd" />
