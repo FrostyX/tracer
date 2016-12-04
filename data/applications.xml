@@ -108,6 +108,7 @@
 		<app name="firewalld" />
 		<app name="accounts-daemon" />
 		<app name="dhclient" rename="NetworkManager" />
+		<app name="cupsd" rename="cups" />
 	</group>
 
 	<group type="static">
