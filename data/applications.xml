@@ -110,6 +110,8 @@
 		<app name="dhclient" rename="NetworkManager" />
 		<app name="cupsd" rename="cups" />
 		<app name="bluetoothd" rename="bluetooth" />
+		<app name="sssd" rename="sssd_autofs" rename="sssd_be" rename="sssd_nss" rename="sssd_pac" rename="sssd_pam" rename="sssd_secrets" rename="sssd_ssh" rename="sssd_sudo" />
+		<app name="postfix" rename="qmgr" rename="pickup" rename="master" />
 	</group>
 
 	<group type="static">
