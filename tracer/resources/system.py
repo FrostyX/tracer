@@ -4,7 +4,7 @@
 # Dont worry, only necessary data required for this application.
 # Tracer *will not* store, collect or send your data anywhere.
 #
-# Copyright (C) 2013 Jakub Kadlcik
+# Copyright (C) 2016 Jakub Kadlcik
 #
 # This copyrighted material is made available to anyone wishing to use,
 # modify, copy, or redistribute it subject to the terms and conditions of

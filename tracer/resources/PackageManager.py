@@ -3,7 +3,7 @@
 # Wrapper class for package managers.
 # Provides their API and allows to use multiple package managers at once.
 #
-# Copyright (C) 2014 Jakub Kadlcik
+# Copyright (C) 2016 Jakub Kadlcik
 #
 # This copyrighted material is made available to anyone wishing to use,
 # modify, copy, or redistribute it subject to the terms and conditions of

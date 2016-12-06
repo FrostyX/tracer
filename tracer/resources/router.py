@@ -2,7 +2,7 @@
 # router.py
 # Router chooses the right controller and its method and calls it
 #
-# Copyright (C) 2013 Jakub Kadlcik
+# Copyright (C) 2016 Jakub Kadlcik
 #
 # This copyrighted material is made available to anyone wishing to use,
 # modify, copy, or redistribute it subject to the terms and conditions of

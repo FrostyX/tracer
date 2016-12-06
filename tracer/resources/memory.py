@@ -2,7 +2,7 @@
 # memory.py
 # Module to work with files in memory
 #
-# Copyright (C) 2013 Jakub Kadlcik
+# Copyright (C) 2016 Jakub Kadlcik
 #
 # This copyrighted material is made available to anyone wishing to use,
 # modify, copy, or redistribute it subject to the terms and conditions of

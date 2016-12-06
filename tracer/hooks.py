@@ -2,7 +2,7 @@
 # hooks.py
 # Module providing hooks functionality
 #
-# Copyright (C) 2015 Jakub Kadlcik
+# Copyright (C) 2016 Jakub Kadlcik
 #
 # This copyrighted material is made available to anyone wishing to use,
 # modify, copy, or redistribute it subject to the terms and conditions of

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 #
 # Tracer documentation build configuration file, created by
-# sphinx-quickstart on Thu Oct  9 22:32:04 2014.
+# sphinx-quickstart on Thu Oct  9 22:32:04 2016.
 #
 # This file is execfile()d with the current directory set to its
 # containing dir.
@@ -48,7 +48,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'Tracer'
-copyright = u'2014, FrostyX'
+copyright = u'2016, FrostyX'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
