@@ -108,10 +108,12 @@
 		<app name="firewalld" />
 		<app name="accounts-daemon" />
 		<app name="dhclient" rename="NetworkManager" />
+		<app name="nm-vpnc-service" rename="NetworkManager" />
 		<app name="cupsd" rename="cups" />
 		<app name="bluetoothd" rename="bluetooth" />
 		<app name="sssd" rename="sssd_autofs" rename="sssd_be" rename="sssd_nss" rename="sssd_pac" rename="sssd_pam" rename="sssd_secrets" rename="sssd_ssh" rename="sssd_sudo" />
 		<app name="postfix" rename="qmgr" rename="pickup" rename="master" />
+		<app name="lvmetad" rename="lvm2-lvmetad" />
 	</group>
 
 	<group type="static">
@@ -122,6 +124,7 @@
 		<app name="at-spi-bus-launcher" />
 		<app name="gconfd-2" />
 		<app name="upowerd" />
+		<app name="systemd" />
 	</group>
 
 	<group type="session">
