@@ -24,6 +24,17 @@ Please note that for DNF also exists plugin which calls tracer after every succe
 
 Take a look into User Guide at :ref:`dnf-plugin`.
 
+Enterprise Linux 7 (CentOS, ect.)
+---------------------------------
+
+Tracer can be install from EPEL
+
+::
+
+    yum install epel-release
+    yum install tracer 
+
+
 Gentoo
 ------
 
