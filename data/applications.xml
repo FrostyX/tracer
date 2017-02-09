@@ -152,6 +152,7 @@
 	<app name="dropbox" helper="dropbox stop; dropbox start" />
 	<app name="pulseaudio" helper="pulseaudio --kill; pulseaudio --start" />
 	<app name="gnome-shell" helper="killall -3 gnome-shell" />
+	<app name="tracker-store" helper="tracker daemon --terminate=store; tracker daemon --start store" />
 
 	<app name="abrt-dump-journal-oops" rename="abrtd" />
 	<app name="abrt-watch-log" rename="abrtd" />
