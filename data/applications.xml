@@ -119,7 +119,10 @@
 		<app name="sssd_secrets" rename="sssd" />
 		<app name="sssd_ssh" rename="sssd" />
 		<app name="sssd_sudo" rename="sssd" />
-		<app name="postfix" rename="qmgr" rename="pickup" rename="master" />
+		<app name="qmgr" rename="postfix" />
+		<app name="pickup" rename="postfix" />
+		<app name="master" rename="postfix" />
+		<app name="tlsmgr" rename="postfix" />
 		<app name="lvmetad" rename="lvm2-lvmetad" />
 	</group>
 
