@@ -66,6 +66,7 @@ class System(object):
 			"debian":  [("tracer.packageManagers.dpkg", "Dpkg")],
 			"rhel":    [("tracer.packageManagers.yum", "Yum")],
 			"centos":  [("tracer.packageManagers.yum", "Yum")],
+			"ol":      [("tracer.packageManagers.yum", "Yum")],
 			"mageia":  [("tracer.packageManagers.dnf", "Dnf")],
 			"arch":    [("tracer.packageManagers.alpm", "Alpm")],
 			"archarm": [("tracer.packageManagers.alpm", "Alpm")],
