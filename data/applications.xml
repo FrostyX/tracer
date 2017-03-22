@@ -124,11 +124,11 @@
 		<app name="master" rename="postfix" />
 		<app name="tlsmgr" rename="postfix" />
 		<app name="lvmetad" rename="lvm2-lvmetad" />
+		<app name="polkitd" rename="polkit"/>
 	</group>
 
 	<group type="static">
 		<app name="dbus-daemon" />
-		<app name="polkitd" />
 		<app name="udisksd" />
 		<app name="gvfsd-metadata" />
 		<app name="at-spi-bus-launcher" />
