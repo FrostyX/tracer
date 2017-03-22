@@ -75,6 +75,6 @@ class DefaultView(View):
 
 		view = BlocksView(self.out)
 		view.assign("blocks", blocks)
-		if view.has_content():
+		if view.has_content_and_title():
 			self.print(_("You should restart:"))
 		view.render()

@@ -226,7 +226,6 @@ class TestViews(unittest.TestCase):
 		]))
 		view.render()
 		self.assertEquals(self.out.getvalue(), (
-			"You should restart:\n"
 			"There are:\n"
 			"  - 2 processes requiring restart of your session (i.e. Logging out & Logging in again)\n"
 			"  - 1 processes requiring reboot\n"
