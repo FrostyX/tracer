@@ -125,15 +125,15 @@
 		<app name="tlsmgr" rename="postfix" />
 		<app name="lvmetad" rename="lvm2-lvmetad" />
 		<app name="polkitd" rename="polkit"/>
+		<app name="udisksd" rename="udisks2"/>
+		<app name="upowerd" rename="upower"/>
 	</group>
 
 	<group type="static">
 		<app name="dbus-daemon" />
-		<app name="udisksd" />
 		<app name="gvfsd-metadata" />
 		<app name="at-spi-bus-launcher" />
 		<app name="gconfd-2" />
-		<app name="upowerd" />
 		<app name="systemd" />
 	</group>
 
