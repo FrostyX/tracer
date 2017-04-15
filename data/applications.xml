@@ -127,6 +127,7 @@
 		<app name="polkitd" rename="polkit"/>
 		<app name="udisksd" rename="udisks2"/>
 		<app name="upowerd" rename="upower"/>
+		<app name="packagekitd" rename="packagekit"/>
 	</group>
 
 	<group type="static">
