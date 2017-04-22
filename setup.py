@@ -1,7 +1,6 @@
 import os
 import shutil
 from distutils.core import setup
-from tracer.version import __version__
 
 
 if not os.path.exists('build/pip'):
@@ -12,13 +11,17 @@ shutil.copyfile('bin/tracer.py', 'build/tracer')
 with open("requirements.txt") as f:
 	install_requires = f.read().splitlines()
 
+with open("tracer.spec") as f:
+    version = next(iter(filter(lambda l:l.startswith('Version:'),
+        f.read().splitlines()))).split()[1]
+
 data_files = []
 if hasattr(os, 'geteuid') and os.geteuid() == 0:
     data_files = [('/etc/bash_completion.d', ['scripts/tracer.bash_completion']),]
 
 setup(
 	name='tracer',
-	version=__version__,
+	version=version,
 	author='FrostyX',
 	author_email='frostyx@email.cz',
 	url='http://tracer-package.com/',
