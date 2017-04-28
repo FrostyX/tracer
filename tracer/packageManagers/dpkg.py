@@ -20,7 +20,7 @@ from __future__ import absolute_import
 
 
 from tracer.resources.system import System
-if System.distribution() == "debian":
+if System.distribution() in ["debian", "ubuntu"]:
 
 	from .ipackageManager import IPackageManager
 	from tracer.resources.package import Package
