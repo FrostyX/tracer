@@ -128,6 +128,7 @@
 		<app name="udisksd" rename="udisks2"/>
 		<app name="upowerd" rename="upower"/>
 		<app name="packagekitd" rename="packagekit"/>
+		<app name="lvmetad" rename="lvm2-lvmetad"/>
 	</group>
 
 	<group type="static">
