@@ -76,61 +76,6 @@
 	   - Common applications
 	  -->
 
-	<group type="daemon">
-		<app name="apache2" />
-		<app name="abrtd" />
-		<app name="acpid" />
-		<app name="atd" />
-		<app name="auditd" />
-		<app name="crond" />
-		<app name="cups-browsed" />
-		<app name="cups" />
-		<app name="docker" />
-		<app name="httpd" />
-		<app name="iceccd" />
-		<app name="libvirtd" />
-		<app name="mcelog" />
-		<app name="mpd" />
-		<app name="mysqld" />
-		<app name="NetworkManager" />
-		<app name="nmbd" />
-		<app name="ntpd" />
-		<app name="openvpn" />
-		<app name="proftpd" />
-		<app name="rhnsd" />
-		<app name="samba" />
-		<app name="smbd" helper="service smb restart" />
-		<app name="sendmail" />
-		<app name="sm-client" />
-		<app name="sshd" />
-		<app name="vixie-cron" />
-		<app name="wicd" />
-		<app name="firewalld" />
-		<app name="accounts-daemon" />
-		<app name="dhclient" rename="NetworkManager" />
-		<app name="nm-vpnc-service" rename="NetworkManager" />
-		<app name="cupsd" rename="cups" />
-		<app name="bluetoothd" rename="bluetooth" />
-		<app name="sssd_autofs" rename="sssd" />
-		<app name="sssd_be" rename="sssd" />
-		<app name="sssd_nss" rename="sssd" />
-		<app name="sssd_pac" rename="sssd" />
-		<app name="sssd_pam" rename="sssd" />
-		<app name="sssd_secrets" rename="sssd" />
-		<app name="sssd_ssh" rename="sssd" />
-		<app name="sssd_sudo" rename="sssd" />
-		<app name="qmgr" rename="postfix" />
-		<app name="pickup" rename="postfix" />
-		<app name="master" rename="postfix" />
-		<app name="tlsmgr" rename="postfix" />
-		<app name="lvmetad" rename="lvm2-lvmetad" />
-		<app name="polkitd" rename="polkit"/>
-		<app name="udisksd" rename="udisks2"/>
-		<app name="upowerd" rename="upower"/>
-		<app name="packagekitd" rename="packagekit"/>
-		<app name="lvmetad" rename="lvm2-lvmetad"/>
-	</group>
-
 	<group type="static">
 		<app name="dbus-daemon" />
 		<app name="gvfsd-metadata" />
@@ -153,15 +98,10 @@
 		<app name="nm-applet" />
 	</group>
 
-	<app name="console-kit-daemon" helper="service consolekit restart" />
 	<app name="dropbox" helper="dropbox stop; dropbox start" />
 	<app name="pulseaudio" helper="pulseaudio --kill; pulseaudio --start" />
 	<app name="gnome-shell" helper="killall -3 gnome-shell" />
 	<app name="tracker-store" helper="tracker daemon --terminate=store; tracker daemon --start store" />
-
-	<app name="abrt-dump-journal-oops" rename="abrtd" />
-	<app name="abrt-watch-log" rename="abrtd" />
-
 
 	<!--
 	   - Login Managers
