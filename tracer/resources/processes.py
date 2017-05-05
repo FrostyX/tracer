@@ -65,6 +65,14 @@ class ProcessWrapper(object):
 		return bool(self._process)
 
 	def name(self):
+		# Special case for sshd, if its cmd contains the execuatable is must be the daemon 
+		# else must be the session.
+		try:
+			if self._attr("name") == 'sshd':
+				if self._attr("exe") not in self._attr("cmdline"):
+					return 'ssh-{0}-session'.format(re.split(' |@|',self._attr("cmdline")[0])[1])
+		except psutil.AccessDenied:
+			pass
 		return self._attr("name")
 
 	def exe(self):
@@ -185,8 +193,6 @@ class Process(ProcessWrapper):
 	@property
 	def is_session(self):
                 if self.terminal() is not None:
-                        return True
-                if re.search("sshd\:\ .*\ \[priv\]", str(self.cmdline())):
                         return True
 
 	@property

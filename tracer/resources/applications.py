@@ -189,7 +189,9 @@ class Application:
 
 	@property
 	def is_session(self):
-                return self.instances and self.instances[0].is_session
+		if re.search('ssh-.*-session', str(self.name)):
+			return True
+		return self.instances and self.instances[0].is_session
 
 	@property
 	def type(self):
