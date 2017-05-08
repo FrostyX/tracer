@@ -35,19 +35,28 @@ class System(object):
 
 	@staticmethod
 	def distribution():
-		# Checks if /etc/os-release exists, and if it does,
-		# use it to divine the name of the distribution
-		# Otherwise, revert to using platform.linux_distribution()
+		"""
+		Checks if /etc/os-release exists, and if it does, uses it to divine the name of the distribution or
+		distribution like. e.g It will return 'debian' on Ubuntu systems.
+		Otherwise, revert to using platform.linux_distribution()
+		"""
 		if os.path.isfile("/etc/os-release"):
 			with open("/etc/os-release") as os_release_file:
 				os_release_data = {}
+				distros = ["gentoo", "debian", "rhel", "centos", "ol", "mageia", "arch", "archarm", "fedora"]
 
 				# Remove empty lines and trailing spaces
 				lines = [line.rstrip() for line in os_release_file if line.rstrip()]
 				for line in lines:
 						os_release_key, os_release_value = line.split("=")
 						os_release_data[os_release_key] = os_release_value.strip('"')
-				return os_release_data["ID"]
+				if os_release_data["ID"] in distros:
+					return os_release_data["ID"]
+				else:
+					if os_release_data["ID_LIKE"]:
+						for distro in os_release_data["ID_LIKE"].split():
+							if distro in distros:
+								return distro
 		else:
 			return platform.linux_distribution(full_distribution_name=False)[0]
 
@@ -64,7 +73,6 @@ class System(object):
 		managers = {
 			"gentoo":  [("tracer.packageManagers.portage", "Portage")],
 			"debian":  [("tracer.packageManagers.dpkg", "Dpkg")],
-			"ubuntu":  [("tracer.packageManagers.dpkg", "Dpkg")],
 			"rhel":    [("tracer.packageManagers.yum", "Yum")],
 			"centos":  [("tracer.packageManagers.yum", "Yum")],
 			"ol":      [("tracer.packageManagers.yum", "Yum")],
