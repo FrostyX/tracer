@@ -109,13 +109,14 @@ class Tracer(object):
 							p = self._apply_rules(p)
 							a = self._applications.find(p.name())
 
-							if a.name not in affected:
-								if self._erased and not self._PACKAGE_MANAGER.provided_by(a.name):
-									a.type = Applications.TYPES["ERASED"]
-								affected[a.name] = AffectedApplication(a._attributes)
-								affected[a.name].affected_instances = AffectedProcessesCollection()
-								self._call_hook(affected[a.name])
-							affected[a.name].affected_instances.append(p)
+							if not a.ignore:
+								if a.name not in affected:
+									if self._erased and not self._PACKAGE_MANAGER.provided_by(a.name):
+										a.type = Applications.TYPES["ERASED"]
+									affected[a.name] = AffectedApplication(a._attributes)
+									affected[a.name].affected_instances = AffectedProcessesCollection()
+									self._call_hook(affected[a.name])
+								affected[a.name].affected_instances.append(p)
 					except NoSuchProcess:
 						pass
 
