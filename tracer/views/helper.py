@@ -15,6 +15,8 @@ class HelperView(View):
 			self.print("    Package:     {pkg_name}"        .format(pkg_name=self.args.package.name))
 			self.print("    Description: {pkg_description}" .format(pkg_description=self.args.package.description))
 			self.print("    Type:        {type}"            .format(type=self.args.application.type.capitalize()))
+			if self.args.application.affected_instances:
+				self.print("    Executable:  {executable}".format(executable=self.args.application.affected_instances[0].exe))
 		else:
 			self.print("    Package:     {app_name} is not provided by any package"
 				.format(app_name=self.args.application.name))
