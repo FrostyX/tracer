@@ -18,6 +18,8 @@
 
 from __future__ import absolute_import
 
+import os
+from distutils.version import LooseVersion
 from psutil import NoSuchProcess
 from tracer.resources.system import System
 from tracer.resources.FilenameCleaner import FilenameCleaner
@@ -25,6 +27,7 @@ from tracer.resources.processes import AffectedProcess
 from tracer.resources.collections import ApplicationsCollection, AffectedProcessesCollection, PackagesCollection
 from tracer.resources.exceptions import UnsupportedDistribution
 from tracer.resources.applications import Applications, AffectedApplication
+from tracer.resources.lang import _
 
 
 class Tracer(object):
@@ -119,8 +122,18 @@ class Tracer(object):
 								affected[a.name].affected_instances.append(p)
 					except NoSuchProcess:
 						pass
+		if self._has_updated_kernel() and not self._applications.find('kernel').ignore:
+			# Add fake AffectedApplication
+			affected['kernel'] = AffectedApplication({"name": "kernel", "type": Applications.TYPES["STATIC"],
+									"helper": _("You will have to reboot your computer")})
 
 		return ApplicationsCollection(affected.values())
+
+	def _has_updated_kernel(self):
+		for k_version in next(os.walk('/lib/modules/'))[1]:
+			if LooseVersion(os.uname()[2]) < LooseVersion(k_version):
+				return True
+		return False
 
 	def _apply_rules(self, process):
 		parent = process.parent()
