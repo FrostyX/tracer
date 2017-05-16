@@ -84,6 +84,7 @@ Requires:       rpm-python3
 Requires:       python3-beautifulsoup4
 Requires:       python3-psutil
 Requires:       python3-lxml
+Requires:       python3-dbus
 Requires:       %{name}-common = %{version}-%{release}
 %if %{with suggest}
 Suggests:       python3-argcomplete

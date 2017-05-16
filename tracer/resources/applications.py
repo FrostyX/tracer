@@ -25,6 +25,7 @@ from tracer.resources.collections import ApplicationsCollection
 from tracer.resources.lang import _
 from tracer.resources.processes import Processes
 from tracer.resources.system import System
+from tracer.resources.SystemdDbus import SystemdDbus
 import os
 import re
 
@@ -197,14 +198,15 @@ class Application:
 	def type(self):
                 if self.is_session:
                         return Applications.TYPES["SESSION"]
-                elif self.has_service_file:
+                elif self.is_service:
                         return Applications.TYPES["DAEMON"]
                 else:
                         return self._attributes["type"]
 
 	@property
-	def has_service_file(self):
-		return os.path.isfile("/usr/lib/systemd/system/{0}.service".format(self.name))
+	def is_service(self):
+		if System.init_system() == "systemd":
+			return SystemdDbus().unit_path_from_id("{0}.service".format(self.name))
 
 	# @TODO rename to helper_format
 	@property
@@ -260,6 +262,13 @@ class Application:
 class AffectedApplication(Application):
 	@property
 	def name(self):
+		if System.init_system() == "systemd":
+			bus = SystemdDbus()
+			if bus.unit_path_from_pid(self.instances[0].pid):
+				if not bus.has_service_property_from_pid(self.instances[0].pid,'PAMName'):
+					Id = bus.get_unit_property_from_pid(self.instances[0].pid,'Id')
+					if re.search("\.service$", Id):
+						return re.sub('\.service$', '', Id)
 		if self.is_interpreted:
 			return self.instances[0].real_name
 		return self._attributes["name"]
