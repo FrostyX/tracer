@@ -264,7 +264,7 @@ class AffectedApplication(Application):
 	def name(self):
 		if System.init_system() == "systemd":
 			bus = SystemdDbus()
-			if bus.unit_path_from_pid(self.instances[0].pid):
+			if self.instances and bus.unit_path_from_pid(self.instances[0].pid):
 				if not bus.has_service_property_from_pid(self.instances[0].pid,'PAMName'):
 					Id = bus.get_unit_property_from_pid(self.instances[0].pid,'Id')
 					if re.search("\.service$", Id):
