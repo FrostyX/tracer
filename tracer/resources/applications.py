@@ -39,7 +39,8 @@ class Applications(object):
 		"STATIC"       :  "static",
 		"SESSION"      :  "session",
 		"APPLICATION"  :  "application",
-		"ERASED"       :  "erased"
+		"ERASED"       :  "erased",
+		"UNDEF"        :  "undefined" #Internal only
 	}
 	DEFAULT_TYPE = TYPES["APPLICATION"]
 	_apps = None
@@ -56,7 +57,7 @@ class Applications(object):
 		# Return the default application
 		return Application({
 			"name": app_name,
-			"type": Applications.DEFAULT_TYPE,
+			"type": Applications.TYPES["UNDEF"],
 			"helper": None,
 			"note": None,
 			"ignore": False,
@@ -196,12 +197,14 @@ class Application:
 
 	@property
 	def type(self):
-                if self.is_session:
+                if not self._attributes["type"] == Applications.TYPES["UNDEF"]:
+                        return self._attributes["type"]
+                elif self.is_session:
                         return Applications.TYPES["SESSION"]
                 elif self.is_service:
                         return Applications.TYPES["DAEMON"]
                 else:
-                        return self._attributes["type"]
+                        return Applications.DEFAULT_TYPE
 
 	@property
 	def is_service(self):
