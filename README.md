@@ -36,10 +36,11 @@ Tracer determines which applications use outdated files and prints them. For spe
 Please see [User Guide](http://docs.tracer-package.com/en/latest/user-guide/)
 
 ## Requirements
-- Supported linux distribution - There are currently supported [Fedora](http://fedoraproject.org/), [Mageia](https://www.mageia.org/), [Gentoo](http://www.gentoo.org/), [Debian](https://www.debian.org/), and [Arch](https://archlinux.org)
+- Supported linux distribution - There are currently supported [Fedora](https://fedoraproject.org/), [Mageia](https://www.mageia.org/), [Gentoo](https://www.gentoo.org/), [Debian](https://www.debian.org/), [Arch](https://archlinux.org) and all of their derivatives.
 - Python interpreter (tracer is compatible with both 2.7 and 3.x)
 - Python [psutil](https://code.google.com/p/psutil/) module. Available [here](https://admin.fedoraproject.org/pkgdb/acls/name/python-psutil) and [here](https://packages.gentoo.org/package/dev-python/psutil).
-- Python [beautifulsoup](http://www.crummy.com/software/BeautifulSoup/bs4/doc/) module. Available [here](https://admin.fedoraproject.org/pkgdb/acls/name/python-beautifulsoup4) and [here](https://packages.gentoo.org/package/dev-python/beautifulsoup)
+- Python [beautifulsoup](https://www.crummy.com/software/BeautifulSoup/bs4/doc/) module. Available [here](https://admin.fedoraproject.org/pkgdb/acls/name/python-beautifulsoup4) and [here](https://packages.gentoo.org/package/dev-python/beautifulsoup)
+- Python [dbus](https://cgit.freedesktop.org/dbus/dbus-python) module. Available [here](https://admin.fedoraproject.org/pkgdb/package/rpms/dbus-python) and [here](https://packages.gentoo.org/packages/dev-python/dbus-python)
 
 
 ## Feedback
