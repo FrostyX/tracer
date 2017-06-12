@@ -14,6 +14,7 @@ class TestRules(unittest.TestCase):
 	def setUp(self):
 		self.tracer = Tracer(PackageManagerMock(), Rules, Applications, memory=dump_memory_mock)
 		self.tracer.timestamp = 5555  # Sure, it should be a UNIX timestamp value
+		Applications._append_application({"name": "kernel", "ignore": True})
 		Application.processes_factory = ProcessesMock
 
 	def test_trace_affected(self):
