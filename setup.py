@@ -1,3 +1,5 @@
+#-*- coding: utf-8 -*-
+
 import os
 import shutil
 from distutils.core import setup
@@ -11,9 +13,9 @@ shutil.copyfile('bin/tracer.py', 'build/tracer')
 with open("requirements.txt") as f:
 	install_requires = f.read().splitlines()
 
-with open("tracer.spec") as f:
+with open("tracer.spec", "rb") as f:
     version = next(iter(filter(lambda l:l.startswith('Version:'),
-        f.read().splitlines()))).split()[1]
+        f.read().decode("utf-8").splitlines()))).split()[1]
 
 data_files = []
 if hasattr(os, 'geteuid') and os.geteuid() == 0:
