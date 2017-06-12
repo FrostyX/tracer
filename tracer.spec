@@ -11,7 +11,7 @@
 %endif
 
 Name:       tracer
-Version:    0.6.12
+Version:    0.6.13
 Release:    1%{?dist}
 Summary:    Finds outdated running applications in your system
 
@@ -158,6 +158,20 @@ make DESTDIR=%{buildroot}%{_datadir} mo
 
 
 %changelog
+* Mon Jun 12 2017 Jakub Kadlčík <frostyx@email.cz> 0.6.13-1
+- report reboot for new kernels (#83) (seanokeeffe797@gmail.com)
+- Get daemon names from dbus (#82) (seanokeeffe797@gmail.com)
+- Added Enterprise Linux install instructions (seanokeeffe797@gmail.com)
+- bash completion support (seanokeeffe797@gmail.com)
+- Use ID_LIKE in /etc/os-release (#81) (seanokeeffe797@gmail.com)
+- Fixes #85 - Always respect app type defines (seanokeeffe797@gmail.com)
+- Fixes #84 - ignore flag is now respected (seanokeeffe797@gmail.com)
+- Fixes #20 - print executable in interactive mode (seanokeeffe797@gmail.com)
+- Fixes #56 - Add Ubunut support (seanokeeffe797@gmail.com)
+- Fixes #76 - polkitd service can be restarted (seanokeeffe797@gmail.com)
+- Fixes #73 - add support for Oracle Linux (seanokeeffe797@gmail.com)
+- Fixes #66 - reconise postfix process correctly (seanokeeffe797@gmail.com)
+- Fixes #68 - recognised SSH sessions correctly (seanokeeffe797@gmail.com)
 * Sun Nov 06 2016 Jakub Kadlčík <frostyx@email.cz> 0.6.12-1
 - Add Vagrantfile for more convenient testing (frostyx@email.cz)
 - Recommend systemctl instead of service on systemd machines (seanokeeffe797@gmail.com)
