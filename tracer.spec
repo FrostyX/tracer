@@ -63,7 +63,7 @@ Requires:       %{name}-common = %{version}-%{release}
 %if ! %{with suggest}
 Suggests:       python2-argcomplete
 %else
-Requires:       python2-argcomplete
+Requires:       python-argcomplete
 %endif
 %{?python_provide:%python_provide python2-%{name}}
 
@@ -89,7 +89,7 @@ Requires:       %{name}-common = %{version}-%{release}
 %if %{with suggest}
 Suggests:       python3-argcomplete
 %else
-Requires:       python3-argcomplete
+Requires:       python-argcomplete
 %endif
 %{?python_provide:%python_provide python3-%{name}}
 Provides:       %{name} = %{version}-%{release}
