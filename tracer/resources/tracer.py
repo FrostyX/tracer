@@ -19,7 +19,7 @@
 from __future__ import absolute_import
 
 import os
-from distutils.version import LooseVersion
+from pkg_resources import parse_version
 from psutil import NoSuchProcess
 from tracer.resources.system import System
 from tracer.resources.FilenameCleaner import FilenameCleaner
@@ -131,7 +131,7 @@ class Tracer(object):
 
 	def _has_updated_kernel(self):
 		for k_version in next(os.walk('/lib/modules/'))[1]:
-			if LooseVersion(os.uname()[2]) < LooseVersion(k_version):
+			if parse_version(os.uname()[2]) < parse_version(k_version):
 				return True
 		return False
 
