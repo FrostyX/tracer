@@ -11,7 +11,7 @@
 %endif
 
 Name:       tracer
-Version:    0.6.13
+Version:    0.6.13.1
 Release:    1%{?dist}
 Summary:    Finds outdated running applications in your system
 
@@ -160,6 +160,11 @@ make DESTDIR=%{buildroot}%{_datadir} mo
 
 
 %changelog
+* Mon Sep 11 2017 Sean O'Keeffe <seanokeeffe797@gmail.com> 0.6.13.1-1
+- Fixes #92 - Correct package version comparision (seanokeeffe797@gmail.com)
+- EPEL uses python-argcomplete not pythonX-argcomplete
+  (seanokeeffe797@gmail.com)
+
 * Mon Jun 12 2017 Jakub Kadlčík <frostyx@email.cz> 0.6.13-1
 - report reboot for new kernels (#83) (seanokeeffe797@gmail.com)
 - Get daemon names from dbus (#82) (seanokeeffe797@gmail.com)
