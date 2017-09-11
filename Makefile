@@ -75,10 +75,10 @@ rpm-try:
 	tito build --rpm --test --install
 
 rpm-copr:
-	tito release copr-frostyx
+	tito release copr
 
 rpm-copr-test:
-	tito release copr-frostyx-test
+	tito release copr-test
 
 rpm-fedora:
 	tito release fedora-git
