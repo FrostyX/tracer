@@ -88,7 +88,7 @@ Requires:       python3-lxml
 Requires:       python3-setuptools
 Requires:       python3-dbus
 Requires:       %{name}-common = %{version}-%{release}
-%if %{with suggest}
+%if ! %{with suggest}
 Suggests:       python3-argcomplete
 %else
 Requires:       python-argcomplete
