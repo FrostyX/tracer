@@ -130,9 +130,11 @@ class Tracer(object):
 		return ApplicationsCollection(affected.values())
 
 	def _has_updated_kernel(self):
-		for k_version in next(os.walk('/lib/modules/'))[1]:
-			if parse_version(os.uname()[2]) < parse_version(k_version):
-				return True
+		if os.path.isdir('/lib/modules/'):
+			for k_version in next(os.walk('/lib/modules/'))[1]:
+				if parse_version(os.uname()[2]) < parse_version(k_version):
+					return True
+			return False
 		return False
 
 	def _apply_rules(self, process):

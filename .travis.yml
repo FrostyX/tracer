@@ -1,32 +1,33 @@
 language: python
 dist: trusty
-sudo: required
+sudo: false
 
 python:
   - "2.7"
   - "3.3"
   - "3.4"
   - "3.5"
+  - "3.6"
   - "nightly"
 
-before_install:
-    - sudo apt-get update
-    - >
-      sudo apt-get -yq install
-      libdbus-1-dev
-      libdbus-glib-1-dev
-      dbus
+addons:
+  apt:
+    packages:
+      - dbus-x11
+      - libdbus-glib-1-dev
 
 install:
   # These first 2 lines are a nasty Travis hack, see https://github.com/travis-ci/travis-ci/issues/653
-  - which python3.3-config && sed -i "s|not getvar('Py_ENABLE_SHARED')|True|" $(which python3.3-config) || true
+  - sed -i "s|not getvar('Py_ENABLE_SHARED')|True|" /opt/python/3.3.6/bin/python3.3-config || true
   - sed -i "s|not getvar('Py_ENABLE_SHARED')|True|" $(which python)-config || true
 
-  - pip install -r requirements.txt
-  - pip install .  # See setup.py
-  - pip install coveralls
+  - PATH=/opt/python/3.3.6/bin/:$PATH pip install -r requirements.txt
+  - PATH=/opt/python/3.3.6/bin/:$PATH pip install .  # See setup.py
+  - PATH=/opt/python/3.3.6/bin/:$PATH pip install coveralls
 
-script: nosetests -v -d --with-coverage --cover-package=tracer --cover-inclusive
+script:
+  - export PYTHONPATH=/opt/python/3.3.6/lib/python3.3/site-packages/
+  - dbus-launch --exit-with-session nosetests -v -d --with-coverage --cover-package=tracer --cover-inclusive
 
 notifications:
   email: false
