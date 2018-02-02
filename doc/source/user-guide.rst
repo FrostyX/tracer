@@ -47,7 +47,7 @@ You got list of applications, but what next. There is ``-s`` or ``--show`` param
         How to restart:
              service apache2 restart
 
-Helpers for custom application can be defined in ``/etc/tracer/applications.xml`` & ``~/.config/tracer/applications.xml``. If you have any objections to the described way how to restart it, please `create an issue`_.
+Helpers for custom applications can be defined in ``/etc/tracer/applications.xml`` & ``~/.config/tracer/applications.xml``. If you have any objections to the described way how to restart it, please `create an issue`_.
 
 Interactive mode
 ----------------
