@@ -70,7 +70,7 @@ class ProcessWrapper(object):
 		try:
 			if self._attr("name") == 'sshd':
 				if self._attr("exe") not in self._attr("cmdline"):
-					return 'ssh-{0}-session'.format(re.split(' |@|',self._attr("cmdline")[0])[1])
+					return 'ssh-{0}-session'.format(re.split(' |@',' '.join(self._attr("cmdline")))[1])
 		except psutil.AccessDenied:
 			pass
 		return self._attr("name")
