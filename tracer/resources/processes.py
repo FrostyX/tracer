@@ -23,6 +23,7 @@ import datetime
 import time
 import os
 import re
+from future.utils import with_metaclass
 
 
 class Processes(object):
@@ -54,15 +55,21 @@ class ProcessWrapper(object):
 	Purpose of this class is cover incompatibility in ``psutil.Process`` class and
 	provide interface of new version. It allows using new interface even with
 	old version of ``psutil``.
-	"""
 
-	_process = None
+	Note that, for performance reasons, process information is cached at
+	object creation. To force a refresh, invoke the ``rebuild_cache()``
+	method.
+	"""
 
 	def __init__(self, pid=None):
 		self._process = psutil.Process(pid)
+		self.rebuild_cache()
 
 	def __nonzero__(self):
 		return bool(self._process)
+
+	def rebuild_cache(self):
+		self._procdict = self._process.as_dict(attrs=['name', 'exe', 'cmdline', 'ppid', 'username', 'create_time'])
 
 	def name(self):
 		# Special case for sshd, if its cmd contains the execuatable is must be the daemon 
@@ -94,31 +101,77 @@ class ProcessWrapper(object):
 		return self._attr("create_time")
 
 	def children(self, recursive=False):
-		try: return self._process.children()
-		except AttributeError: return self._process.get_children()
+		key = 'children-{0}'.format(recursive)
+		if key not in self._procdict:
+			try:
+				self._procdict[key] = self._process.children(recursive)
+			except AttributeError:
+				self._procdict[key] = self._process.get_children(recursive)
+		return self._procdict[key]
 
 	def _attr(self, name):
-		attr = getattr(self._process, name)
-		try: return attr()
-		except TypeError: return attr
+		if name not in self._procdict:
+			attr = getattr(self._process, name)
+			try:
+				self._procdict[name] = attr()
+			except TypeError:
+				self._procdict[name] = attr
+		return self._procdict[name]
 
 	def __getattr__(self, item):
 		return getattr(self._process, item)
 
 	# psutil 3.x to 1.x backward compatibility
 	def memory_maps(self, grouped=True):
-		try: return self._process.memory_maps(grouped=grouped)
-		except AttributeError: return self._process.get_memory_maps()
+		key = 'memory_maps-{0}'.format(grouped)
+		if key not in self._procdict:
+			try:
+				self._procdict[key] = self._process.memory_maps(grouped=grouped)
+			except AttributeError:
+				self._procdict[key] = self._process.get_memory_maps(grouped=grouped)
+		return self._procdict[key]
 
 
-class Process(ProcessWrapper):
+class ProcessMeta(type):
+	"""
+	Caching metaclass that ensures that only one ``Process`` object is ever
+	instantiated for any given PID. The cache can be cleared by calling
+	``Process.reset_cache()``.
+
+	Based on https://stackoverflow.com/a/33458129
+	"""
+
+	def __init__(cls, name, bases, attributes):
+		super(ProcessMeta, cls).__init__(name, bases, attributes)
+		def reset_cache():
+			cls._cache = {}
+		reset_cache()
+		setattr(cls, 'reset_cache', reset_cache)
+
+	def __call__(cls, *args, **kwargs):
+		pid = args[0]
+		if pid not in cls._cache:
+			self = cls.__new__(cls, *args, **kwargs)
+			cls.__init__(self, *args, **kwargs)
+			cls._cache[pid] = self
+		return cls._cache[pid]
+
+
+class Process(with_metaclass(ProcessMeta, ProcessWrapper)):
 	"""
 	Represent the process instance uniquely identifiable through PID
 
 	For all class properties and methods, please see
 	http://pythonhosted.org/psutil/#process-class
 
-	Bellow listed are only reimplemented ones.
+	Below listed are only reimplemented ones.
+
+	For performance reasons, instances are cached based on PID, and
+	multiple instantiations of a ``Process`` object with the same PID will
+	return the same object. To clear the cache, invoke
+	``Process.reset_cache()``. Additionally, as with ``ProcessWrapper``,
+	process information is cached at object creation. To force a refresh,
+	invoke the ``rebuild_cache()`` method on the object.
 	"""
 
 	def __eq__(self, process):
