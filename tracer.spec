@@ -55,11 +55,13 @@ BuildRequires:  python-beautifulsoup4
 BuildRequires:  python-psutil
 BuildRequires:  python-pygments
 BuildRequires:  python-lxml
+BuildRequires:  python2-future
 Requires:       rpm-python
 Requires:       python-beautifulsoup4
 Requires:       python-psutil
 Requires:       python-lxml
 Requires:       python-setuptools
+Requires:       python2-future
 Requires:       %{name}-common = %{version}-%{release}
 %if ! %{with suggest}
 Suggests:       python2-argcomplete
@@ -81,12 +83,14 @@ BuildRequires:  python3-beautifulsoup4
 BuildRequires:  python3-psutil
 BuildRequires:  python3-pygments
 BuildRequires:  python3-lxml
+BuildRequires:  python3-future
 Requires:       rpm-python3
 Requires:       python3-beautifulsoup4
 Requires:       python3-psutil
 Requires:       python3-lxml
 Requires:       python3-setuptools
 Requires:       python3-dbus
+Requires:       python3-future
 Requires:       %{name}-common = %{version}-%{release}
 %if ! %{with suggest}
 Suggests:       python3-argcomplete
