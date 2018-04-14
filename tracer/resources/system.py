@@ -53,7 +53,7 @@ class System(object):
 				if os_release_data["ID"] in distros:
 					return os_release_data["ID"]
 				else:
-					if os_release_data["ID_LIKE"]:
+					if "ID_LIKE" in os_release_data:
 						for distro in os_release_data["ID_LIKE"].split():
 							if distro in distros:
 								return distro
