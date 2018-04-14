@@ -12,7 +12,7 @@
 
 Name:       tracer
 Version:    0.6.13.1
-Release:    1%{?dist}
+Release:    4%{?dist}
 Summary:    Finds outdated running applications in your system
 
 BuildArch:  noarch
@@ -50,23 +50,23 @@ Provides:       %{name} = %{version}-%{release}
 Obsoletes:      %{name} <= 0.6.11
 %endif
 BuildRequires:  python2-devel
-BuildRequires:  python-sphinx
-BuildRequires:  python-beautifulsoup4
-BuildRequires:  python-psutil
-BuildRequires:  python-pygments
-BuildRequires:  python-lxml
+BuildRequires:  python2-sphinx
+BuildRequires:  python2-beautifulsoup4
+BuildRequires:  python2-psutil
+BuildRequires:  python2-pygments
+BuildRequires:  python2-lxml
 BuildRequires:  python2-future
-Requires:       rpm-python
-Requires:       python-beautifulsoup4
-Requires:       python-psutil
-Requires:       python-lxml
-Requires:       python-setuptools
+Requires:       python2-rpm
+Requires:       python2-beautifulsoup4
+Requires:       python2-psutil
+Requires:       python2-lxml
+Requires:       python2-setuptools
 Requires:       python2-future
 Requires:       %{name}-common = %{version}-%{release}
 %if ! %{with suggest}
 Suggests:       python2-argcomplete
 %else
-Requires:       python-argcomplete
+Requires:       python2-argcomplete
 %endif
 %{?python_provide:%python_provide python2-%{name}}
 
@@ -95,7 +95,7 @@ Requires:       %{name}-common = %{version}-%{release}
 %if ! %{with suggest}
 Suggests:       python3-argcomplete
 %else
-Requires:       python-argcomplete
+Requires:       python2-argcomplete
 %endif
 %{?python_provide:%python_provide python3-%{name}}
 Provides:       %{name} = %{version}-%{release}
@@ -164,6 +164,16 @@ make DESTDIR=%{buildroot}%{_datadir} mo
 
 
 %changelog
+* Wed Feb 21 2018 Iryna Shcherbina <ishcherb@redhat.com> - 0.6.13.1-4
+- Update Python 2 dependency declarations to new packaging standards
+  (See https://fedoraproject.org/wiki/FinalizingFedoraSwitchtoPython3)
+
+* Fri Feb 09 2018 Fedora Release Engineering <releng@fedoraproject.org> - 0.6.13.1-3
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_28_Mass_Rebuild
+
+* Mon Oct 02 2017 Jakub Kadlčík <frostyx@email.cz> 0.6.13.1-2
+- Fix argparse logic (RhBug: 1492078)
+
 * Mon Sep 11 2017 Sean O'Keeffe <seanokeeffe797@gmail.com> 0.6.13.1-1
 - Fixes #92 - Correct package version comparision (seanokeeffe797@gmail.com)
 - EPEL uses python-argcomplete not pythonX-argcomplete
