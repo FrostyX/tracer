@@ -238,16 +238,17 @@ class Application:
 		In other cases, there will be just one helper in the list.
 		"""
 		helpers = []
-		if not self.helper_contains_formating:
-			helpers.append(self.helper)
-		else:
-			for process in self.affected_instances:
-				helpers.append(self.helper.format(
-					NAME=self.name,
-					PNAME=process.name,
-					PID=process.pid,
-					EXE=process.exe,
-				))
+		if self.helper:
+			if not self.helper_contains_formating:
+				helpers.append(self.helper)
+			else:
+				for process in self.affected_instances:
+					helpers.append(self.helper.format(
+						NAME=self.name,
+						PNAME=process.name,
+						PID=process.pid,
+						EXE=process.exe,
+					))
 		return helpers
 
 	@property
