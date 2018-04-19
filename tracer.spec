@@ -11,8 +11,8 @@
 %endif
 
 Name:       tracer
-Version:    0.6.13.1
-Release:    4%{?dist}
+Version:    0.7.0
+Release:    1%{?dist}
 Summary:    Finds outdated running applications in your system
 
 BuildArch:  noarch
@@ -164,6 +164,23 @@ make DESTDIR=%{buildroot}%{_datadir} mo
 
 
 %changelog
+* Thu Apr 19 2018 Sean O'Keeffe <seanokeeffe797@gmail.com> 0.7.0-1
+- Fixes #98 - Don't try appending `None`, helpers (seanokeeffe797@gmail.com)
+- Fixes #104 - Replace None with "" when sorting (seanokeeffe797@gmail.com)
+- Update Python 2 dependency declarations to new packaging standards
+  (seanokeeffe797@gmail.com)
+- Fixes #105 - check ID_LIKE in /etc/os-release (seanokeeffe797@gmail.com)
+- Cache process info (elyscape@gmail.com)
+- Handle sshd sessions that use privilege separation (elyscape@gmail.com)
+- fix typo in docs (seanokeeffe797@gmail.com)
+- Switch Travis to container-based infrastructure (seanokeeffe797@gmail.com)
+- Fix RHBug #1469282 - bash completion should exit cleanly if python-
+  argcomplete is not installed (seanokeeffe797@gmail.com)
+- Fix argparse logic in spec (#94) (frostyx@email.cz)
+- Update branches for fedora releaser (frostyx@email.cz)
+- Add epel releaser (seanokeeffe797@gmail.com)
+- rename tito releasers (seanokeeffe797@gmail.com)
+
 * Wed Feb 21 2018 Iryna Shcherbina <ishcherb@redhat.com> - 0.6.13.1-4
 - Update Python 2 dependency declarations to new packaging standards
   (See https://fedoraproject.org/wiki/FinalizingFedoraSwitchtoPython3)
