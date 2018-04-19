@@ -24,7 +24,14 @@ from psutil import NoSuchProcess
 
 class Collection(list):
 
+	def replace_values(self, attribute, source_value, required_value):
+		for app in self:
+			if getattr(app, attribute) == source_value:
+				app.update(attribute, required_value)
+
+
 	def sorted(self, attribute):
+		self.replace_values(attribute, None, "")
 		try:
 			return sorted(self, key=methodcaller(attribute))
 		except TypeError:
