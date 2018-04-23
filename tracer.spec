@@ -1,6 +1,15 @@
-%if 0%{?rhel} && 0%{?rhel} <= 7
+%if 0%{?rhel}
+
+%if 0%{?rhel} <= 7
+%bcond_without python2
 %bcond_with python3
 %else
+%bcond_with python2
+%bcond_without python3
+%endif
+
+%else
+%bcond_without python2
 %bcond_without python3
 %endif
 
@@ -12,7 +21,7 @@
 
 Name:       tracer
 Version:    0.7.0
-Release:    2%{?dist}
+Release:    3%{?dist}
 Summary:    Finds outdated running applications in your system
 
 BuildArch:  noarch
@@ -43,6 +52,7 @@ Summary:        Common files for %{name}
 %description common
 %{summary}.
 
+%if %{with python2}
 %package -n python2-%{name}
 Summary:        %{summary}
 %if ! %{with python3}
@@ -77,6 +87,7 @@ Requires:       python-argcomplete
 %description -n python2-%{name} %{_description}
 
 Python 2 version.
+%endif
 
 %if %{with python3}
 %package -n python3-%{name}
@@ -112,14 +123,19 @@ Python 3 version.
 
 %prep
 %setup -q
-%if %{with python3}
-sed -i -e '1s|^#!.*$|#!%{__python3}|' bin/%{name}.py
-%else
+%if %{with python2}
 sed -i -e '1s|^#!.*$|#!%{__python2}|' bin/%{name}.py
 %endif
 
+%if %{with python3}
+sed -i -e '1s|^#!.*$|#!%{__python3}|' bin/%{name}.py
+%endif
+
 %build
+%if %{with python2}
 %py2_build
+%endif
+
 %if %{with python3}
 %py3_build
 %endif
@@ -133,8 +149,11 @@ make %{?_smp_mflags} man
 mkdir -p %{buildroot}%{_datadir}/%{name}/
 cp -a data/* %{buildroot}%{_datadir}/%{name}/
 
+%if %{with python2}
 mkdir -p %{buildroot}%{python2_sitelib}/%{name}/
 cp -ar %{name}/* tests %{buildroot}%{python2_sitelib}/%{name}/
+%endif
+
 %if %{with python3}
 mkdir -p %{buildroot}%{python3_sitelib}/%{name}/
 cp -ar %{name}/* tests %{buildroot}%{python3_sitelib}/%{name}/
@@ -155,8 +174,10 @@ make DESTDIR=%{buildroot}%{_datadir} mo
 %{_datadir}/%{name}/
 %{_sysconfdir}/bash_completion.d/tracer
 
+%if %{with python2}
 %files -n python2-%{name}
 %{python2_sitelib}/%{name}/
+%endif
 
 %if %{with python3}
 %files -n python3-%{name}
