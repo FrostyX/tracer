@@ -12,7 +12,7 @@
 
 Name:       tracer
 Version:    0.7.0
-Release:    1%{?dist}
+Release:    2%{?dist}
 Summary:    Finds outdated running applications in your system
 
 BuildArch:  noarch
@@ -56,7 +56,11 @@ BuildRequires:  python2-psutil
 BuildRequires:  python2-pygments
 BuildRequires:  python2-lxml
 BuildRequires:  python2-future
+%if 0%{?rhel}
+Requires:       rpm-python
+%else
 Requires:       python2-rpm
+%endif
 Requires:       python2-beautifulsoup4
 Requires:       python2-psutil
 Requires:       python2-lxml
@@ -66,7 +70,7 @@ Requires:       %{name}-common = %{version}-%{release}
 %if ! %{with suggest}
 Suggests:       python2-argcomplete
 %else
-Requires:       python2-argcomplete
+Requires:       python-argcomplete
 %endif
 %{?python_provide:%python_provide python2-%{name}}
 
@@ -95,7 +99,7 @@ Requires:       %{name}-common = %{version}-%{release}
 %if ! %{with suggest}
 Suggests:       python3-argcomplete
 %else
-Requires:       python2-argcomplete
+Requires:       python-argcomplete
 %endif
 %{?python_provide:%python_provide python3-%{name}}
 Provides:       %{name} = %{version}-%{release}
