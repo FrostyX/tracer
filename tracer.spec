@@ -60,12 +60,14 @@ BuildRequires:  python2-devel
 BuildRequires:  python2-sphinx
 %if 0%{?rhel} && 0%{?rhel} <= 7
 Requires:       rpm-python
+Requires:       python-beautifulsoup4
+Requires:       python-lxml
 %else
 Requires:       python2-rpm
+Requires:       python2-beautifulsoup4
+Requires:       python2-lxml
 %endif
-Requires:       python-beautifulsoup4
 Requires:       python2-psutil
-Requires:       python-lxml
 Requires:       python2-setuptools
 Requires:       python2-future
 Requires:       %{name}-common = %{version}-%{release}
