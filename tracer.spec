@@ -3,19 +3,16 @@
 %if 0%{?rhel} <= 7
 %bcond_without python2
 %bcond_with python3
+%bcond_with suggest
 %else
 %bcond_with python2
 %bcond_without python3
+%bcond_without suggest
 %endif
 
 %else
 %bcond_without python2
 %bcond_without python3
-%endif
-
-%if 0%{?fedora} && 0%{?fedora} >= 23
-%bcond_with suggest
-%else
 %bcond_without suggest
 %endif
 
@@ -77,8 +74,8 @@ Requires:       python2-lxml
 Requires:       python2-setuptools
 Requires:       python2-future
 Requires:       %{name}-common = %{version}-%{release}
-%if ! %{with suggest}
-Suggests:       python2-argcomplete
+%if %{with suggest}
+Suggests:       python-argcomplete
 %else
 Requires:       python-argcomplete
 %endif
@@ -107,10 +104,10 @@ Requires:       python3-setuptools
 Requires:       python3-dbus
 Requires:       python3-future
 Requires:       %{name}-common = %{version}-%{release}
-%if ! %{with suggest}
+%if %{with suggest}
 Suggests:       python3-argcomplete
 %else
-Requires:       python-argcomplete
+Requires:       python3-argcomplete
 %endif
 %{?python_provide:%python_provide python3-%{name}}
 Provides:       %{name} = %{version}-%{release}
