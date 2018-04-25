@@ -63,7 +63,7 @@ BuildRequires:  python2-psutil
 BuildRequires:  python2-pygments
 BuildRequires:  python2-lxml
 BuildRequires:  python2-future
-%if 0%{?rhel}
+%if 0%{?rhel} && 0%{?rhel} <= 7
 Requires:       rpm-python
 %else
 Requires:       python2-rpm
@@ -96,7 +96,7 @@ BuildRequires:  python3-psutil
 BuildRequires:  python3-pygments
 BuildRequires:  python3-lxml
 BuildRequires:  python3-future
-Requires:       rpm-python3
+Requires:       python3-rpm
 Requires:       python3-beautifulsoup4
 Requires:       python3-psutil
 Requires:       python3-lxml
