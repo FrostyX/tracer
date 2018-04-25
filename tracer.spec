@@ -58,19 +58,14 @@ Obsoletes:      %{name} <= 0.6.11
 %endif
 BuildRequires:  python2-devel
 BuildRequires:  python2-sphinx
-BuildRequires:  python2-beautifulsoup4
-BuildRequires:  python2-psutil
-BuildRequires:  python2-pygments
-BuildRequires:  python2-lxml
-BuildRequires:  python2-future
 %if 0%{?rhel} && 0%{?rhel} <= 7
 Requires:       rpm-python
 %else
 Requires:       python2-rpm
 %endif
-Requires:       python2-beautifulsoup4
+Requires:       python-beautifulsoup4
 Requires:       python2-psutil
-Requires:       python2-lxml
+Requires:       python-lxml
 Requires:       python2-setuptools
 Requires:       python2-future
 Requires:       %{name}-common = %{version}-%{release}
@@ -91,11 +86,6 @@ Python 2 version.
 Summary:        %{summary}
 BuildRequires:  python3-devel
 BuildRequires:  python3-sphinx
-BuildRequires:  python3-beautifulsoup4
-BuildRequires:  python3-psutil
-BuildRequires:  python3-pygments
-BuildRequires:  python3-lxml
-BuildRequires:  python3-future
 Requires:       python3-rpm
 Requires:       python3-beautifulsoup4
 Requires:       python3-psutil
