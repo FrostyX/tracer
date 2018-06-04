@@ -1,0 +1,31 @@
+document: modulemd
+version: 1
+data:
+  summary: 'Module for tracer package'
+  description: ''
+  license:
+    module: ['GPLv2']
+  profiles:
+    default:
+      rpms:
+      - python3-tracer
+      - tracer-common
+    python2:
+      rpms:
+      - python2-tracer
+      - tracer-common
+    python3:
+      rpms:
+      - python3-tracer
+      - tracer-common
+  components:
+    rpms:
+      python2-tracer:
+        rationale: Package for python2 runtime
+        repository: https://src.fedoraproject.org/rpms/tracer.git
+      python3-tracer:
+        rationale: Package for python3 runtime
+        repository: https://src.fedoraproject.org/rpms/tracer.git
+      tracer-common:
+        rationale: Package with common tracer code
+        repository: https://src.fedoraproject.org/rpms/tracer.git
