@@ -43,5 +43,9 @@ class SystemdDbus(object):
 		return bool(propty)
 
 	def get_unit_property_from_pid(self, pid, attr):
-		proxy = dbus.SystemBus().get_object('org.freedesktop.systemd1', self.unit_path_from_pid(pid))
-		return proxy.Get('org.freedesktop.systemd1.Unit', attr, dbus_interface='org.freedesktop.DBus.Properties')
+                unit_path = self.unit_path_from_pid(pid)
+                if bool(unit_path):
+		    proxy = dbus.SystemBus().get_object('org.freedesktop.systemd1', self.unit_path_from_pid(pid))
+		    return proxy.Get('org.freedesktop.systemd1.Unit', attr, dbus_interface='org.freedesktop.DBus.Properties')
+                else:
+                    return False
