@@ -18,6 +18,7 @@
 
 from __future__ import absolute_import
 
+import os.path
 
 from tracer.resources.system import System
 if System.distribution() in ["fedora", "mageia"]:
@@ -27,8 +28,16 @@ if System.distribution() in ["fedora", "mageia"]:
 
 	class Dnf(Rpm):
 
+		def __init__(self, **kwargs):
+			super(Dnf, self).__init__(**kwargs)
+			if os.path.exists('/var/lib/dnf/history.sqlite'):
+				self.opts['modern_swdb'] = True
+
 		@property
-		def history_path(self): return '/var/lib/dnf/history/'
+		def history_path(self):
+			if self.opts.get('modern_swdb'):
+				return '/var/lib/dnf/history.sqlite'
+			return '/var/lib/dnf/history/'
 
 		def package_files(self, pkg_name):
 			if self._is_installed(pkg_name):

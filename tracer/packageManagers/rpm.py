@@ -55,17 +55,29 @@ if System.distribution() in ["fedora", "rhel", "centos", "mageia", "ol"]:
 			if not os.path.exists(self.history_path):
 				return PackagesCollection([])
 
-			sql = """
-				SELECT DISTINCT pkgtups.name, trans_end.timestamp AS end
+			if self.opts.get('modern_swdb'):
+				sql = """
+					SELECT DISTINCT rpm.name, trans.dt_end AS end
 
-				FROM trans_beg JOIN trans_end JOIN trans_data_pkgs JOIN pkgtups
-				ON trans_beg.tid=trans_end.tid
-				AND trans_data_pkgs.tid=trans_beg.tid
-				AND trans_data_pkgs.pkgtupid=pkgtups.pkgtupid
+					FROM trans JOIN trans_item JOIN rpm
+					ON trans.id=trans_item.trans_id
+					AND trans_item.item_id=rpm.item_id
 
-				WHERE  trans_beg.timestamp > ?
-				ORDER BY pkgtups.name
-			"""
+					WHERE trans.dt_begin > ?
+					ORDER BY rpm.name
+				"""
+			else:
+				sql = """
+					SELECT DISTINCT pkgtups.name, trans_end.timestamp AS end
+
+					FROM trans_beg JOIN trans_end JOIN trans_data_pkgs JOIN pkgtups
+					ON trans_beg.tid=trans_end.tid
+					AND trans_data_pkgs.tid=trans_beg.tid
+					AND trans_data_pkgs.pkgtupid=pkgtups.pkgtupid
+
+					WHERE trans_beg.timestamp > ?
+					ORDER BY pkgtups.name
+				"""
 
 			try:
 				packages = PackagesCollection()
@@ -139,6 +151,8 @@ if System.distribution() in ["fedora", "rhel", "centos", "mageia", "ol"]:
 
 		def _database_file(self):
 			"""Returns path to yum history database file"""
+			if self.opts.get('modern_swdb'):
+				return self.history_path
 			for file in sorted(listdir(self.history_path), reverse=True):
 				if file.startswith("history-") and file.endswith(".sqlite"):
 					return self.history_path + file
