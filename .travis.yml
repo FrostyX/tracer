@@ -1,13 +1,13 @@
 language: python
-dist: trusty
+dist: xenial
 sudo: false
 
 python:
   - "2.7"
-  - "3.3"
   - "3.4"
   - "3.5"
   - "3.6"
+  - "3.7"
   - "nightly"
 
 addons:
@@ -17,16 +17,11 @@ addons:
       - libdbus-glib-1-dev
 
 install:
-  # These first 2 lines are a nasty Travis hack, see https://github.com/travis-ci/travis-ci/issues/653
-  - sed -i "s|not getvar('Py_ENABLE_SHARED')|True|" /opt/python/3.3.6/bin/python3.3-config || true
-  - sed -i "s|not getvar('Py_ENABLE_SHARED')|True|" $(which python)-config || true
-
-  - PATH=/opt/python/3.3.6/bin/:$PATH pip install -r requirements.txt
-  - PATH=/opt/python/3.3.6/bin/:$PATH pip install .  # See setup.py
-  - PATH=/opt/python/3.3.6/bin/:$PATH pip install coveralls
+  - pip install -r requirements.txt
+  - pip install .  # See setup.py
+  - pip install coveralls
 
 script:
-  - export PYTHONPATH=/opt/python/3.3.6/lib/python3.3/site-packages/
   - dbus-launch --exit-with-session nosetests -v -d --with-coverage --cover-package=tracer --cover-inclusive
 
 notifications:
