@@ -245,8 +245,12 @@ class Process(with_metaclass(ProcessMeta, ProcessWrapper)):
 
 	@property
 	def is_session(self):
-                if self.terminal() is not None:
-                        return True
+		terminal = self.terminal()
+		if terminal is None:
+			return None
+		parent = self.parent()
+		if parent is None or terminal != parent.terminal():
+			return True
 
 	@property
 	def real_name(self):
