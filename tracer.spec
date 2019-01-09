@@ -17,8 +17,8 @@
 %endif
 
 Name:       tracer
-Version:    0.7.0
-Release:    3%{?dist}
+Version:    0.7.1
+Release:    1%{?dist}
 Summary:    Finds outdated running applications in your system
 
 BuildArch:  noarch
@@ -178,6 +178,12 @@ make DESTDIR=%{buildroot}%{_datadir} mo
 
 
 %changelog
+* Wed Jan 09 2019 Jakub Kadlčík <frostyx@email.cz> 0.7.1-1
+- Fix #116 - Support currrent versions of DNF (elyscape@gmail.com)
+- Fix #112 - handle PIDs that have no unit_path (seanokeeffe797@gmail.com)
+- Fix #119 - Improve session detection logic to fix (elyscape@gmail.com)
+- Fix space, instead of tabs (#115) (JensKuehnel@users.noreply.github.com)
+- A lot of changes to spec file regarding python2/3 (seanokeeffe797@gmail.com)
 * Thu Apr 19 2018 Sean O'Keeffe <seanokeeffe797@gmail.com> 0.7.0-1
 - Fixes #98 - Don't try appending `None`, helpers (seanokeeffe797@gmail.com)
 - Fixes #104 - Replace None with "" when sorting (seanokeeffe797@gmail.com)
