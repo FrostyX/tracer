@@ -130,6 +130,13 @@ sed -i -e '1s|^#!.*$|#!%{__python3}|' bin/%{name}.py
 %endif
 make %{?_smp_mflags} man
 
+%check
+%if %{with python3}
+nosetests-3 .
+%else
+nosetests-2 .
+%endif
+
 %install
 # @TODO use following macros
 # %%py2_install
