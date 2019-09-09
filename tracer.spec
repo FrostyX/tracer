@@ -67,6 +67,7 @@ Requires:       python2-rpm
 Requires:       python2-beautifulsoup4
 Requires:       python2-lxml
 %endif
+BuildRequires:  python2-nose
 Requires:       python2-psutil
 Requires:       python2-setuptools
 Requires:       python2-future
@@ -88,6 +89,7 @@ Python 2 version.
 Summary:        %{summary}
 BuildRequires:  python3-devel
 BuildRequires:  python3-sphinx
+BuildRequires:  python3-nose
 Requires:       python3-rpm
 Requires:       python3-beautifulsoup4
 Requires:       python3-psutil
