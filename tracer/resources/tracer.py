@@ -132,9 +132,11 @@ class Tracer(object):
 	def _has_updated_kernel(self):
 		if os.path.isdir('/lib/modules/'):
 			for k_version in next(os.walk('/lib/modules/'))[1]:
+				if 'debug' in k_version:
+					continue
+
 				if parse_version(os.uname()[2]) < parse_version(k_version):
 					return True
-			return False
 		return False
 
 	def _apply_rules(self, process):
