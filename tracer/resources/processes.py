@@ -23,6 +23,8 @@ import datetime
 import time
 import os
 import re
+from subprocess import PIPE, Popen
+from threading import Timer
 from future.utils import with_metaclass
 
 
@@ -72,7 +74,7 @@ class ProcessWrapper(object):
 		self._procdict = self._process.as_dict(attrs=['name', 'exe', 'cmdline', 'ppid', 'username', 'create_time'])
 
 	def name(self):
-		# Special case for sshd, if its cmd contains the execuatable is must be the daemon 
+		# Special case for sshd, if its cmd contains the execuatable is must be the daemon
 		# else must be the session.
 		try:
 			if self._attr("name") == 'sshd':
@@ -184,6 +186,22 @@ class Process(with_metaclass(ProcessMeta, ProcessWrapper)):
 	def __hash__(self):
 		return hash(self.pid)
 
+	@staticmethod
+	def safe_isfile(file_path, timeout=0.5):
+		"""
+		Process arguments could be referring to files on remote filesystems and
+		os.path.isfile will hang forever if the shared FS is offline.
+		Instead, use a subprocess that we can time out if we can't reach some file.
+		"""
+		process = Popen(['test', '-f', file_path], stdout=PIPE, stderr=PIPE)
+		timer = Timer(timeout, process.kill)
+		try:
+			timer.start()
+			process.communicate()
+			return process.returncode == 0
+		finally:
+			timer.cancel()
+
 	@property
 	def files(self):
 		files = []
@@ -194,7 +212,10 @@ class Process(with_metaclass(ProcessMeta, ProcessWrapper)):
 
 		# Process arguments
 		for arg in self.cmdline()[1:]:
-			if os.path.isfile(arg):
+			if not os.path.isabs(arg):
+				continue
+
+			if Process.safe_isfile(arg):
 				files.append(arg)
 
 		return sorted(files)
