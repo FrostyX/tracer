@@ -3,6 +3,7 @@ psutil
 BeautifulSoup4
 sphinx_rtd_theme
 Pygments
-lxml
+lxml<4.0.0; python_version == '3.4'
+lxml; python_version != '3.4'
 dbus-python
 future
