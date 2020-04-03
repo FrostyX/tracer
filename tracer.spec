@@ -32,6 +32,7 @@ Source0:    %{name}-%{version}.tar.gz
 
 BuildRequires:  asciidoc
 BuildRequires:  gettext
+BuildRequires:  make
 
 %global _description \
 Tracer determines which applications use outdated files and prints them. For\
