@@ -26,6 +26,9 @@ class Package:
 	modified = None  #: UNIX timestamp of the modification
 	description = None
 	category = None
+	epoch = None
+	version = None
+	release = None
 
 	def __init__(self, name, modified=None):
 		self.name = name

@@ -19,8 +19,8 @@
 from __future__ import absolute_import
 
 import os
-from pkg_resources import parse_version
 from psutil import NoSuchProcess
+from tracer.resources.package import Package
 from tracer.resources.system import System
 from tracer.resources.FilenameCleaner import FilenameCleaner
 from tracer.resources.processes import AffectedProcess
@@ -122,7 +122,8 @@ class Tracer(object):
 								affected[a.name].affected_instances.append(p)
 					except NoSuchProcess:
 						pass
-		if self._has_updated_kernel() and not self._applications.find('kernel').ignore:
+
+		if not self._applications.find('kernel').ignore and self._has_updated_kernel():
 			# Add fake AffectedApplication
 			affected['kernel'] = AffectedApplication({"name": "kernel", "type": Applications.TYPES["STATIC"],
 									"helper": _("You will have to reboot your computer")})
@@ -130,14 +131,17 @@ class Tracer(object):
 		return ApplicationsCollection(affected.values())
 
 	def _has_updated_kernel(self):
-		if os.path.isdir('/lib/modules/'):
-			for k_version in next(os.walk('/lib/modules/'))[1]:
-				if 'debug' in k_version:
-					continue
+		running = System.running_kernel_package()
 
-				if parse_version(os.uname()[2]) < parse_version(k_version):
-					return True
-		return False
+		if running is None:
+			""" If the running kernel package could not be determined, abort """
+			return False
+
+		kernel_package_name = System.kernel_package_name()
+		latest = Package(kernel_package_name)
+		latest.load_info(self._PACKAGE_MANAGER)
+
+		return self._PACKAGE_MANAGER.compare_packages(running, latest) == -1
 
 	def _apply_rules(self, process):
 		parent = process.parent()
