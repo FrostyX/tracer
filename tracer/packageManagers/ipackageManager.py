@@ -42,6 +42,20 @@ class IPackageManager(object):
 		"""Returns name of package which provides given application"""
 		raise NotImplementedError
 
+	def find_package(self, pkg_name, search):
+		"""Find a package by name and some other input criteria"""
+		raise NotImplementedError
+
+	def compare_packages(self, package1, package2):
+		"""
+		Compares two packages by their version information
+		Returns:
+		0 if they are equal
+		1 if package1 > package2
+		-1 if package2 > package1
+		"""
+		raise NotImplementedError
+
 	@staticmethod
 	def _pkg_name_without_version(pkg_name):
 		try:

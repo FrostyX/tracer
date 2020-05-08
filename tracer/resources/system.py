@@ -30,7 +30,6 @@ from sys import version_info
 from tracer.resources.PackageManager import PackageManager
 from tracer.resources.processes import Process
 
-
 class System(object):
 
 	@staticmethod
@@ -111,6 +110,15 @@ class System(object):
 	@staticmethod
 	def python_version():
 		return "{}.{}.{}".format(version_info.major, version_info.minor, version_info.micro)
+
+	@staticmethod
+	def running_kernel_package():
+		return System.package_manager().find_package(System.kernel_package_name(), os.uname()[2])
+
+	@staticmethod
+	def kernel_package_name():
+		""" TODO: infer kernel package from current distribution """
+		return 'kernel'
 
 	@staticmethod
 	def user():

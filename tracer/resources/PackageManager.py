@@ -61,3 +61,17 @@ class PackageManager:
 	def provided_by(self, app):
 		"""Returns name of package which provides given application"""
 		return self.package_managers[0].provided_by(app)
+
+	def find_package(self, pkg_name, search):
+		"""Find a package by name and some other input criteria"""
+		return self.package_managers[0].find_package(pkg_name, search)
+
+	def compare_packages(self, package1, package2):
+		"""
+		Compares two packages by their version information
+		Returns:
+		0 if they are equal
+		1 if package1 > package2
+		-1 if package2 > package1
+		"""
+		return self.package_managers[0].compare_packages(package1, package2)
