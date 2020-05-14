@@ -143,7 +143,7 @@ class DefaultController(object):
 		]) if not args.all else applications
 
 	def _user(self, user):
-		if   user == '*':    return None
+		if   user == ['*'] or '*':    return None
 		elif user == 'root': return user
 		elif not user:       return System.user()
 		else: return user[0]
