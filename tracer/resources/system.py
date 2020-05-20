@@ -72,7 +72,10 @@ class System(object):
 		managers = {
 			"gentoo":  [("tracer.packageManagers.portage", "Portage")],
 			"debian":  [("tracer.packageManagers.dpkg", "Dpkg")],
-			"rhel":    [("tracer.packageManagers.yum", "Yum")],
+			"rhel":  [
+				("tracer.packageManagers.dnf", "Dnf"),
+				("tracer.packageManagers.yum", "Yum"),
+			],
 			"centos":  [("tracer.packageManagers.yum", "Yum")],
 			"ol":      [("tracer.packageManagers.yum", "Yum")],
 			"mageia":  [("tracer.packageManagers.dnf", "Dnf")],
