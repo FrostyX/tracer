@@ -18,7 +18,7 @@
 
 Name:       tracer
 Version:    0.7.2
-Release:    2
+Release:    3
 Summary:    Finds outdated running applications in your system
 
 BuildArch:  noarch
@@ -206,6 +206,10 @@ make DESTDIR=%{buildroot}%{_datadir} mo
 
 
 %changelog
+* Thu May 21 2020 Jonathon Turel <jturel@gmail.com> 0.7.2-3
+- Update tito releaser branches (frostyx@email.cz)
+- Not build for python2 package for Fedora anymore (frostyx@email.cz)
+
 * Thu May 21 2020 Jonathon Turel <jturel@gmail.com> 0.7.2-2
 - Fix build dependencies for EL7, EL8, F30 (jturel@gmail.com)
 
