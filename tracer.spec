@@ -17,7 +17,7 @@
 %endif
 
 Name:       tracer
-Version:    0.7.1
+Version:    0.7.2
 Release:    1%{?dist}
 Summary:    Finds outdated running applications in your system
 
@@ -188,6 +188,18 @@ make DESTDIR=%{buildroot}%{_datadir} mo
 
 
 %changelog
+* Thu May 21 2020 Jonathon Turel <jturel@gmail.com> 0.7.2-1
+- Use DNF on RHEL (jturel@gmail.com)
+- Use PackageManager to determine kernel version (jturel@gmail.com)
+- Use subprocess to check process path arguments (jturel@gmail.com)
+- Find the right lxml version for Python 3.4 (jturel@gmail.com)
+- Update Vagrantfile to use Fedora 30 (jturel@gmail.com)
+- Ignore debug kernels when checking if kernel has been updated
+  (jturel@gmail.com)
+- Add build dependency for nosetests (frostyx@email.cz)
+- Run tests within the %%check phase (frostyx@email.cz)
+- Update fedora branches (frostyx@email.cz)
+
 * Wed Jan 09 2019 Jakub Kadlčík <frostyx@email.cz> 0.7.1-1
 - Fix #116 - Support currrent versions of DNF (elyscape@gmail.com)
 - Fix #112 - handle PIDs that have no unit_path (seanokeeffe797@gmail.com)
