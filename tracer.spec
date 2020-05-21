@@ -60,15 +60,24 @@ Obsoletes:      %{name} <= 0.6.11
 BuildRequires:  python2-devel
 BuildRequires:  python2-sphinx
 %if 0%{?rhel} && 0%{?rhel} <= 7
+BuildRequires:  python-beautifulsoup4
+BuildRequires:  rpm-python
+BuildRequires:  python-lxml
 Requires:       rpm-python
 Requires:       python-beautifulsoup4
 Requires:       python-lxml
 %else
+BuildRequires:  python2-beautifulsoup4
+BuildRequires:  python2-rpm
 Requires:       python2-rpm
 Requires:       python2-beautifulsoup4
 Requires:       python2-lxml
 %endif
 BuildRequires:  python2-nose
+BuildRequires:  python2-psutil
+BuildRequires:  python2-future
+BuildRequires:  dbus-python
+Requires:       dbus-python
 Requires:       python2-psutil
 Requires:       python2-setuptools
 Requires:       python2-future
@@ -91,6 +100,11 @@ Summary:        %{summary}
 BuildRequires:  python3-devel
 BuildRequires:  python3-sphinx
 BuildRequires:  python3-nose
+BuildRequires:  python3-psutil
+BuildRequires:  python3-future
+BuildRequires:  python3-beautifulsoup4
+BuildRequires:  python3-dbus
+BuildRequires:  python3-rpm
 Requires:       python3-rpm
 Requires:       python3-beautifulsoup4
 Requires:       python3-psutil
@@ -137,7 +151,11 @@ make %{?_smp_mflags} man
 %if %{with python3}
 nosetests-3 .
 %else
+%if 0%{?rhel} && 0%{?rhel} <= 7
+nosetests .
+%else
 nosetests-2 .
+%endif
 %endif
 
 %install
