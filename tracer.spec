@@ -11,7 +11,7 @@
 %endif
 
 %else
-%bcond_without python2
+%bcond_with python2
 %bcond_without python3
 %bcond_without suggest
 %endif
