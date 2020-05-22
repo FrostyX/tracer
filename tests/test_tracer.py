@@ -9,6 +9,11 @@ from tracer.resources.collections import \
 	ApplicationsCollection, \
 	AffectedProcessesCollection
 
+try:
+	from unittest.mock import patch
+except:
+	from mock import patch
+
 
 class TestRules(unittest.TestCase):
 	def setUp(self):
@@ -17,7 +22,8 @@ class TestRules(unittest.TestCase):
 		Applications._append_application({"name": "kernel", "ignore": True})
 		Application.processes_factory = ProcessesMock
 
-	def test_trace_affected(self):
+	@patch('tracer.resources.applications.System.init_system', return_value="dummy")
+	def test_trace_affected(self, init_system):
 		affected = self.tracer.trace_affected()
 		self.assertSetEqual(set(affected), set([Applications.find("baz"), Applications.find("qux")]))
 		self.assertIsInstance(affected, ApplicationsCollection)

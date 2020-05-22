@@ -19,6 +19,11 @@ import gettext
 t = gettext.translation('tracer', fallback=True, languages=["en"])
 _ = t.ugettext
 
+try:
+	from unittest.mock import patch
+except:
+	from mock import patch
+
 # Mock the gettext function to use only english
 tracer.views.default._ = _
 tracer.views.helper._ = _
@@ -231,7 +236,8 @@ class TestViews(unittest.TestCase):
 			"  - 1 processes requiring reboot\n"
 		))
 
-	def test_helper(self):
+	@patch('tracer.resources.applications.System.init_system', return_value="dummy")
+	def test_helper(self, init_system):
 		processes = [
 			ProcessMock(2, "foo", 1234, ["file1", "file2"]),
 			ProcessMock(3, "foo", 5678, ["file2", "file3"]),

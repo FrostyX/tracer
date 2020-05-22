@@ -63,6 +63,7 @@ BuildRequires:  python2-sphinx
 BuildRequires:  python-beautifulsoup4
 BuildRequires:  rpm-python
 BuildRequires:  python-lxml
+BuildRequires:  python2-mock
 Requires:       rpm-python
 Requires:       python-beautifulsoup4
 Requires:       python-lxml
