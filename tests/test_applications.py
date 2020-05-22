@@ -2,6 +2,11 @@ from .__meta__ import *
 from tracer.resources.applications import Applications, Application
 from tracer.resources.collections import ApplicationsCollection, ProcessesCollection
 
+try:
+	from unittest.mock import patch
+except:
+	from mock import patch
+
 
 class TestApplications(unittest.TestCase):
 
@@ -32,7 +37,8 @@ class TestApplications(unittest.TestCase):
 			if self._count(a.name, apps) > 1:
 				self.fail("Duplicate definitions for: " + a.name)
 
-	def test_app_with_no_definition(self):
+	@patch('tracer.resources.applications.System.init_system', return_value="dummy")
+	def test_app_with_no_definition(self, init_system):
 		app_name = "NON_EXISTING_APPLICATION"
 		app = Applications.find(app_name)
 		self.assertEquals(app.name, app_name)
