@@ -18,7 +18,7 @@
 
 Name:       tracer
 Version:    0.7.3
-Release:    1
+Release:    2%{?dist}
 Summary:    Finds outdated running applications in your system
 
 BuildArch:  noarch
@@ -207,6 +207,9 @@ make DESTDIR=%{buildroot}%{_datadir} mo
 
 
 %changelog
+* Sat May 23 2020 Jakub Kadlčík <jkadlcik@redhat.com> - 0.7.3-2
+- We lost release dist macro somewhere
+
 * Fri May 22 2020 Jonathon Turel <jturel@gmail.com> 0.7.3-1
 - Stub dbus calls in tests (jturel@gmail.com)
 
@@ -463,4 +466,3 @@ make DESTDIR=%{buildroot}%{_datadir} mo
 - Add 'tracer --helpers' parameter to list helpers (frostyx@email.cz)
 * Tue Jul 08 2014 Jakub Kadlčík <frostyx@email.cz> 0.4.0-1
 - new package built with tito
-
