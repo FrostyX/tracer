@@ -222,10 +222,14 @@ class Application:
 
 	@property
 	def helper_contains_formating(self):
+		if not self.helper:
+			return None
 		return bool(re.search("\{.*\}", self.helper))
 
 	@property
 	def helper_contains_name(self):
+		if not self.helper:
+			return None
 		return bool(re.search("\{NAME\}", self.helper))
 
 	@property

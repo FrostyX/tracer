@@ -64,6 +64,11 @@ class TestApplications(unittest.TestCase):
 		self.assertFalse(a1.helper_contains_formating)
 		self.assertTrue(a3.helper_contains_formating)
 
+	def test_helper_contains_when_none(self):
+		a1 = Application({"name": "foo", "type": "applicaiton", "helper": None})
+		self.assertFalse(a1.helper_contains_formating)
+		self.assertFalse(a1.helper_contains_name)
+
 	def _count(self, app_name, apps):
 		count = 0
 		for a in apps:
@@ -74,4 +79,3 @@ class TestApplications(unittest.TestCase):
 
 if __name__ == '__main__':
 	unittest.main()
-
