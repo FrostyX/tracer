@@ -27,7 +27,7 @@ class Collection(list):
 	def replace_values(self, attribute, source_value, required_value):
 		for app in self:
 			if getattr(app, attribute) == source_value:
-				app.update(attribute, required_value)
+				app.update({attribute: required_value})
 
 
 	def sorted(self, attribute):
