@@ -51,3 +51,13 @@ class TestCollections(unittest.TestCase):
 		self.assertEqual(c1.intersection([p1, p3]).sorted("name"), PackagesCollection([p1, p3]).sorted("name"))
 		self.assertEqual(c1.intersection(None), c1)
 		self.assertIsNotNone(c1.intersection([p5])[0].modified)
+
+	def test_replace_values(self):
+		a1 = Application({"name": "foo"})
+		a2 = Application({"name": "bar"})
+		a3 = Application({"name": "baz"})
+		c1 = ApplicationsCollection([a1, a2, a3])
+
+		assert {a.name for a in c1} == {"foo", "bar", "baz"}
+		c1.replace_values("name", "foo", "qux")
+		assert {a.name for a in c1} == {"qux", "bar", "baz"}

@@ -198,15 +198,15 @@ if System.distribution() in ["fedora", "rhel", "centos", "mageia", "ol"]:
 			return epoch, ver, rel, arch
 
 		def _load_package_info_from_hdr(self, package, hdr):
-			package.description = hdr[rpm.RPMTAG_SUMMARY].decode()
-			package.category = hdr[rpm.RPMTAG_GROUP].decode()
+			package.description = hdr[rpm.RPMTAG_SUMMARY]
+			package.category = hdr[rpm.RPMTAG_GROUP]
 
 			epoch = hdr[rpm.RPMTAG_EPOCH]
 			if epoch:
-				package.epoch = epoch.decode()
+				package.epoch = epoch
 
-			package.version = hdr[rpm.RPMTAG_VERSION].decode()
-			package.release = hdr[rpm.RPMTAG_RELEASE].decode()
+			package.version = hdr[rpm.RPMTAG_VERSION]
+			package.release = hdr[rpm.RPMTAG_RELEASE]
 
 		def _file_provided_by(self, file):
 			"""Returns name of package which provides given file"""
@@ -216,8 +216,8 @@ if System.distribution() in ["fedora", "rhel", "centos", "mageia", "ol"]:
 				return None
 
 			pkg = next(db)
-			p = Package(pkg[rpm.RPMTAG_NAME].decode())
-			p.category = pkg[rpm.RPMTAG_GROUP].decode()
+			p = Package(pkg[rpm.RPMTAG_NAME])
+			p.category = pkg[rpm.RPMTAG_GROUP]
 			return p
 
 		def _database_file(self):
