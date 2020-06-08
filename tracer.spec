@@ -17,8 +17,8 @@
 %endif
 
 Name:       tracer
-Version:    0.7.3
-Release:    2%{?dist}
+Version:    0.7.4
+Release:    1%{?dist}
 Summary:    Finds outdated running applications in your system
 
 BuildArch:  noarch
@@ -207,6 +207,14 @@ make DESTDIR=%{buildroot}%{_datadir} mo
 
 
 %changelog
+* Mon Jun 08 2020 Jakub Kadlcik <frostyx@email.cz> 0.7.4-1
+- Fix list index out of range for ssh process names (frostyx@email.cz)
+- When there is no helper, it doesn't contain anything (frostyx@email.cz)
+- Fix wrong parameters number when upating an application objects
+  (frostyx@email.cz)
+- Remove unnecessary string decoding (frostyx@email.cz)
+- Fix the missing dist in release (frostyx@email.cz)
+
 * Sat May 23 2020 Jakub Kadlčík <jkadlcik@redhat.com> - 0.7.3-2
 - We lost release dist macro somewhere
 
