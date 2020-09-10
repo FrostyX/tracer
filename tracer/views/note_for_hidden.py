@@ -12,7 +12,7 @@ class NoteForHiddenView(View):
 			if self.args.session_count + self.args.static_count == self.args.total_count:
 				self.print(_("There are:"))
 			else:
-				self.print(_("Additionally to those process above, there are:"))
+				self.print(_("Additionally, there are:"))
 
 			if self.args.session_count > 0:
 				self.print("  - " + \

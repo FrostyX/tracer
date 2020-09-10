@@ -24,7 +24,7 @@ Standard way to use tracer is just running the ``sudo tracer`` command. I am wor
           dolphin
           gvim
 
-    Additionally to those process above, there are:
+    Additionally, there are:
       - 6 processes requiring restarting your session (i.e. Logging out & Logging in again)
       - 2 processes requiring reboot
 
