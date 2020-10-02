@@ -65,6 +65,29 @@ DEBUG
                           options: packages | processes | rules | applications | system
                           dump informations that tracer can use
 
+EXIT CODES
+----------
+::
+
+  Status codes and their meanings:
+
+  +-------------+----------------------------------+
+  | Status code | Meaning                          |
+  +=============+==================================+
+  | 1-99        | Error exit codes                 |
+  +-------------+----------------------------------+
+  | 0           | No affected applications         |
+  +-------------+----------------------------------+
+  | 101         | Found some affected applications |
+  +-------------+----------------------------------+
+  | 102         | Found some affected daemons      |
+  +-------------+----------------------------------+
+  | 103         | Session restart needed           |
+  +-------------+----------------------------------+
+  | 104         | Reboot needed                    |
+  +-------------+----------------------------------+
+
+
 EXAMPLES
 --------
 
