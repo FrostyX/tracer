@@ -23,7 +23,7 @@ install:
   - pip install coveralls
 
 script:
-  - dbus-launch --exit-with-session nosetests -v -d --with-coverage --cover-package=tracer --cover-inclusive
+  - dbus-launch --exit-with-session python -m pytest -v tests
 
 notifications:
   email: false

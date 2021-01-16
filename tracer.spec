@@ -74,7 +74,7 @@ Requires:       python2-rpm
 Requires:       python2-beautifulsoup4
 Requires:       python2-lxml
 %endif
-BuildRequires:  python2-nose
+BuildRequires:  python2-pytest
 BuildRequires:  python2-psutil
 BuildRequires:  python2-future
 BuildRequires:  dbus-python
@@ -100,7 +100,7 @@ Python 2 version.
 Summary:        %{summary}
 BuildRequires:  python3-devel
 BuildRequires:  python3-sphinx
-BuildRequires:  python3-nose
+BuildRequires:  python3-pytest
 BuildRequires:  python3-psutil
 BuildRequires:  python3-future
 BuildRequires:  python3-beautifulsoup4
@@ -150,13 +150,9 @@ make %{?_smp_mflags} man
 
 %check
 %if %{with python3}
-nosetests-3 .
+python3 -m pytest -v tests
 %else
-%if 0%{?rhel} && 0%{?rhel} <= 7
-nosetests .
-%else
-nosetests-2 .
-%endif
+python2 -m pytest -v tests
 %endif
 
 %install

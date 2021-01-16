@@ -32,7 +32,7 @@ release: test
 packages: rpm
 
 test:
-	nosetests
+	python -m pytest -v tests
 
 doc:
 	@echo Move to ./doc/ directory and run
