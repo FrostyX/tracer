@@ -41,7 +41,7 @@ class TestApplications(unittest.TestCase):
 	def test_app_with_no_definition(self, init_system):
 		app_name = "NON_EXISTING_APPLICATION"
 		app = Applications.find(app_name)
-		self.assertEquals(app.name, app_name)
+		self.assertEqual(app.name, app_name)
 		self.assertEqual(app.type, Applications.DEFAULT_TYPE)
 		self.assertEqual(app.helper, None)
 		self.assertEqual(app.note, None)
@@ -49,8 +49,8 @@ class TestApplications(unittest.TestCase):
 
 	def test_representations(self):
 		rule = Application({"name": "foo"})
-		self.assertEquals(str(rule), "<Application: foo>")
-		self.assertEquals(repr(rule), "<Application: foo>")
+		self.assertEqual(str(rule), "<Application: foo>")
+		self.assertEqual(repr(rule), "<Application: foo>")
 
 	def test_contains_name(self):
 		a1 = Application({"name": "foo", "type": "applicaiton", "helper": "some helper"})

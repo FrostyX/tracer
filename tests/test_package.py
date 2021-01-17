@@ -9,9 +9,9 @@ class TestPackage(unittest.TestCase):
 		p2 = Package("foo")
 		p3 = Package("bar")
 
-		self.assertEquals(p1, p2)
-		self.assertNotEquals(p1, p3)
+		self.assertEqual(p1, p2)
+		self.assertNotEqual(p1, p3)
 
 	def test_representation(self):
 		package = Package("foo")
-		self.assertEquals(repr(package), "<Package:foo>")
+		self.assertEqual(repr(package), "<Package:foo>")
