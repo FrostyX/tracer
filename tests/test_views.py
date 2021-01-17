@@ -40,7 +40,7 @@ class TestViews(unittest.TestCase):
 		view.assign("args", ArgsMock())
 		view.assign("applications", ApplicationsCollection([]))
 		view.render()
-		self.assertEquals(self.out.getvalue(), "")
+		self.assertEqual(self.out.getvalue(), "")
 
 	def test_default_with_helpers(self):
 		view = DefaultView(self.out)
@@ -51,7 +51,7 @@ class TestViews(unittest.TestCase):
 			Application({"type": "application", "helper": "third helper", "name": None}),
 		]))
 		view.render()
-		self.assertEquals(self.out.getvalue(), (
+		self.assertEqual(self.out.getvalue(), (
 			"You should restart:\n"
 		    "  * Some applications using:\n"
 		    "      first helper\n"
@@ -68,7 +68,7 @@ class TestViews(unittest.TestCase):
 			Application({"type": "application", "name": "baz", "helper": None}),
 		]))
 		view.render()
-		self.assertEquals(self.out.getvalue(), (
+		self.assertEqual(self.out.getvalue(), (
 			"You should restart:\n"
 			"  * These applications manually:\n"
 			"      bar\n"
@@ -88,7 +88,7 @@ class TestViews(unittest.TestCase):
 			Application({"type": "application", "name": "baz", "helper": None}),
 		]))
 		view.render()
-		self.assertEquals(self.out.getvalue(), (
+		self.assertEqual(self.out.getvalue(), (
 			"You should restart:\n"
 			"  * Some applications using:\n"
 			"      first helper\n"
@@ -110,7 +110,7 @@ class TestViews(unittest.TestCase):
 			Application({"type": "session", "name": "baz", "helper": "h3"}),
 		]))
 		view.render()
-		self.assertEquals(self.out.getvalue(), (
+		self.assertEqual(self.out.getvalue(), (
 			"You should restart:\n"
 			"  * These applications restarting your session:\n"
 			"      bar\n"
@@ -127,7 +127,7 @@ class TestViews(unittest.TestCase):
 			Application({"type": "static", "name": "baz", "helper": "h3"}),
 		]))
 		view.render()
-		self.assertEquals(self.out.getvalue(), (
+		self.assertEqual(self.out.getvalue(), (
 			"You should restart:\n"
 			"  * These applications rebooting your computer:\n"
 			"      bar\n"
@@ -147,7 +147,7 @@ class TestViews(unittest.TestCase):
 			Application({"type": "static",  "name": "ccc", "helper": "h6"}),
 		]))
 		view.render()
-		self.assertEquals(self.out.getvalue(), (
+		self.assertEqual(self.out.getvalue(), (
 			"You should restart:\n"
 			"  * These applications restarting your session:\n"
 			"      bar\n"
@@ -174,7 +174,7 @@ class TestViews(unittest.TestCase):
 			Application({"type": "static",  "name": "bbb", "helper": "h4"}),
 		]))
 		view.render()
-		self.assertEquals(self.out.getvalue(), (
+		self.assertEqual(self.out.getvalue(), (
 			"You should restart:\n"
 			"  * Some applications using:\n"
 			"      first helper\n"
@@ -206,7 +206,7 @@ class TestViews(unittest.TestCase):
 			Application({"type": "static",  "name": "aaa", "helper": "h3"}),
 		]))
 		view.render()
-		self.assertEquals(self.out.getvalue(), (
+		self.assertEqual(self.out.getvalue(), (
 			"You should restart:\n"
 			"  * Some applications using:\n"
 			"      first helper\n"
@@ -230,7 +230,7 @@ class TestViews(unittest.TestCase):
 			Application({"type": "static",  "name": "baz", "helper": "h3"}),
 		]))
 		view.render()
-		self.assertEquals(self.out.getvalue(), (
+		self.assertEqual(self.out.getvalue(), (
 			"There are:\n"
 			"  - 2 processes requiring restart of your session (i.e. Logging out & Logging in again)\n"
 			"  - 1 processes requiring reboot\n"
@@ -261,7 +261,7 @@ class TestViews(unittest.TestCase):
 		view.assign("affected_by", affected_by)
 		view.assign("affects", None)
 		view.render()
-		self.assertEquals(self.out.getvalue(), (
+		self.assertEqual(self.out.getvalue(), (
 			"* foo\n"
 			"    Package:     foopackage\n"
 			"    Description: Foo package description\n"

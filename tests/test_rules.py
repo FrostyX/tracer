@@ -33,15 +33,15 @@ class TestRules(unittest.TestCase):
 
 	def test_representations(self):
 		rule = Rule({"name": "foo"})
-		self.assertEquals(str(rule), "<Rule: foo>")
-		self.assertEquals(repr(rule), "<Rule: foo>")
+		self.assertEqual(str(rule), "<Rule: foo>")
+		self.assertEqual(repr(rule), "<Rule: foo>")
 
 	def test_update(self):
 		r1 = Rule({"name": "foo", "action": "bar"})
 		r2 = Rule({"name": "foo", "action": "baz"})
 
 		r1.update(r2)
-		self.assertEquals(r1.action, "baz")
+		self.assertEqual(r1.action, "baz")
 
 
 if __name__ == '__main__':
