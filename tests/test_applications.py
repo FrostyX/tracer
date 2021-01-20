@@ -1,14 +1,26 @@
 from .__meta__ import *
+from tracer.paths import DATA_DIR
 from tracer.resources.applications import Applications, Application
 from tracer.resources.collections import ApplicationsCollection, ProcessesCollection
 
 try:
-	from unittest.mock import patch
+	from unittest.mock import patch, mock_open
+	builtins_open = "builtins.open"
 except:
-	from mock import patch
+	from mock import patch, mock_open
+	builtins_open = "__builtin__.open"
 
 
 class TestApplications(unittest.TestCase):
+
+	@classmethod
+	def setUpClass(cls):
+		cls.DEFINITIONS = [x for x in Applications.DEFINITIONS
+						   if x.startswith(DATA_DIR)]
+
+	def setUp(self):
+		Applications.DEFINITIONS = self.DEFINITIONS
+		Applications._apps = None
 
 	def test_apps_types(self):
 		self.assertIsInstance(Applications.all(), ApplicationsCollection)
@@ -68,6 +80,30 @@ class TestApplications(unittest.TestCase):
 		a1 = Application({"name": "foo", "type": "applicaiton", "helper": None})
 		self.assertFalse(a1.helper_contains_formating)
 		self.assertFalse(a1.helper_contains_name)
+
+	@patch("tracer.resources.system.System.init_system", return_value="systemd")
+	def test_load(self, _init_system):
+		"""
+		Test parsing a single XML file with applications
+		"""
+		Applications.DEFINITIONS = ["whatever-file.xml"]
+		data = (
+			"<applications>"
+			"    <app name='foo' type='daemon' />"
+			"    <group type='session'>"
+			"        <app name='bar' />"
+			"        <app name='baz' helper='Or kill it and see what happens' />"
+			"    </group>"
+			"</applications>"
+		)
+		with patch(builtins_open, mock_open(read_data=data)):
+			apps = Applications.all()
+			self.assertEqual(len(apps), 3)
+			self.assertTrue(all([isinstance(x, Application) for x in apps]))
+			self.assertEqual(apps[0].name, "foo")
+			self.assertTrue(apps[0].helper.endswith("systemctl restart foo"))
+			self.assertEqual(apps[2].type, "session")
+			self.assertIn("kill it", apps[2].helper)
 
 	def _count(self, app_name, apps):
 		count = 0

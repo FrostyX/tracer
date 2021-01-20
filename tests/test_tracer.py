@@ -17,6 +17,7 @@ except:
 
 class TestRules(unittest.TestCase):
 	def setUp(self):
+		Applications._apps = ApplicationsCollection()
 		self.tracer = Tracer(PackageManagerMock(), Rules, Applications, memory=dump_memory_mock)
 		self.tracer.timestamp = 5555  # Sure, it should be a UNIX timestamp value
 		Applications._append_application({"name": "kernel", "ignore": True})
