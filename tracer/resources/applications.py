@@ -18,7 +18,7 @@
 
 from __future__ import absolute_import
 
-from bs4 import BeautifulSoup, element
+from xml.dom import minidom
 from tracer.paths import DATA_DIR, USER_CONFIG_DIRS
 from tracer.resources.exceptions import PathNotFound
 from tracer.resources.collections import ApplicationsCollection
@@ -79,26 +79,33 @@ class Applications(object):
 				if not os.path.dirname(file) in USER_CONFIG_DIRS:
 					raise ex
 
-	@staticmethod
-	def _load(file):
+	@classmethod
+	def _load(cls, file):
 		try:
-			f = open(file)
-			soup = BeautifulSoup(f.read(), "lxml")
-
-			for child in soup.applications.children:
-				if not isinstance(child, element.Tag):
-					continue
-
-				if child.name == "app":
-					Applications._append_application(child.attrs)
-
-				if child.name == "group":
-					for app in child.findChildren():
-						Applications._append_application(app.attrs, child.attrs)
-			f.close()
-
+			with open(file, "r") as f:
+				xmldoc = minidom.parseString(f.read())
 		except IOError:
 			raise PathNotFound('DATA_DIR')
+
+		for applications in xmldoc.getElementsByTagName("applications"):
+			cls._remove_unwanted_children(applications)
+			for child in applications.childNodes:
+				if child.nodeName == "app":
+					attrs = dict(child.attributes.items())
+					Applications._append_application(attrs)
+
+				if child.nodeName == "group":
+					cls._remove_unwanted_children(child)
+					for app in child.childNodes:
+						app_attrs = dict(app.attributes.items())
+						group_attrs = dict(child.attributes.items())
+						Applications._append_application(app_attrs, group_attrs)
+
+	@classmethod
+	def _remove_unwanted_children(cls, node):
+		for child in node.childNodes:
+			if child.nodeType != node.ELEMENT_NODE:
+				node.removeChild(child)
 
 	@staticmethod
 	def _append_application(default_attrs, specific_attrs={}):

@@ -18,7 +18,7 @@
 
 from __future__ import absolute_import
 
-from bs4 import BeautifulSoup
+from xml.dom import minidom
 from tracer.paths import DATA_DIR, USER_CONFIG_DIRS
 from tracer.resources.exceptions import PathNotFound
 from os.path import dirname
@@ -63,22 +63,21 @@ class Rules(object):
 	@staticmethod
 	def _load(file):
 		try:
-			f = open(file)
-			soup = BeautifulSoup(f.read(), "lxml")
+			with open(file, "r") as f:
+				xmldoc = minidom.parseString(f.read())
+		except IOError:
+			raise PathNotFound('DATA_DIR')
 
-			for rule in soup.find_all("rule"):
-				r = Rule(rule.attrs)
+		for rules in xmldoc.getElementsByTagName("rules"):
+			for rule in rules.getElementsByTagName("rule"):
+				attrs = dict(rule.attributes.items())
+				r = Rule(attrs)
 				if r in Rules._rules:
 					i = Rules._rules.index(r)
 					Rules._rules[i].update(r)
 				else:
 					r.setdefault('action', Rules._DEFAULT_ACTION)
 					Rules._rules.append(r)
-
-			f.close()
-
-		except IOError:
-			raise PathNotFound('DATA_DIR')
 
 
 class Rule(object):
