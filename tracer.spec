@@ -72,7 +72,7 @@ Requires:       python2-lxml
 %endif
 BuildRequires:  python2-pytest
 BuildRequires:  python2-psutil
-BuildRequires:  python2-future
+BuildRequires:  python2-six
 BuildRequires:  dbus-python
 Requires:       dbus-python
 Requires:       python2-psutil
@@ -98,7 +98,7 @@ BuildRequires:  python3-devel
 BuildRequires:  python3-sphinx
 BuildRequires:  python3-pytest
 BuildRequires:  python3-psutil
-BuildRequires:  python3-future
+BuildRequires:  python3-six
 BuildRequires:  python3-dbus
 BuildRequires:  python3-rpm
 Requires:       python3-rpm
@@ -106,7 +106,7 @@ Requires:       python3-psutil
 Requires:       python3-lxml
 Requires:       python3-setuptools
 Requires:       python3-dbus
-Requires:       python3-future
+Requires:       python3-six
 Requires:       %{name}-common = %{version}-%{release}
 %if %{with suggest}
 Suggests:       python3-argcomplete

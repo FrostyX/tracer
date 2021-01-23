@@ -25,7 +25,7 @@ import os
 import re
 from subprocess import PIPE, Popen
 from threading import Timer
-from future.utils import with_metaclass
+from six import with_metaclass
 
 
 class Processes(object):
