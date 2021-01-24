@@ -17,7 +17,7 @@
 %endif
 
 Name:       tracer
-Version:    0.7.4
+Version:    0.7.5
 Release:    1%{?dist}
 Summary:    Finds outdated running applications in your system
 
@@ -197,6 +197,11 @@ make DESTDIR=%{buildroot}%{_datadir} mo
 
 
 %changelog
+* Sun Jan 24 2021 Jakub Kadlcik <frostyx@email.cz> 0.7.5-1
+- Depend on python3-six instead of python3-future (frostyx@email.cz)
+- Drop beautifulsoup4 in favor of built-in xml.dom (frostyx@email.cz)
+- Drop nosetests dependency, use pytest instead (frostyx@email.cz)
+
 * Mon Jun 08 2020 Jakub Kadlcik <frostyx@email.cz> 0.7.4-1
 - Fix list index out of range for ssh process names (frostyx@email.cz)
 - When there is no helper, it doesn't contain anything (frostyx@email.cz)
