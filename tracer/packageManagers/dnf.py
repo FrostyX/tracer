@@ -21,7 +21,7 @@ from __future__ import absolute_import
 import os.path
 
 from tracer.resources.system import System
-if System.distribution() in ["rhel", "fedora", "mageia"]:
+if System.distribution() in ["rhel", "fedora", "mageia", "suse"]:
 
 	import subprocess
 	from tracer.packageManagers.rpm import Rpm
@@ -30,14 +30,22 @@ if System.distribution() in ["rhel", "fedora", "mageia"]:
 
 		def __init__(self, **kwargs):
 			super(Dnf, self).__init__(**kwargs)
-			if os.path.exists('/var/lib/dnf/history.sqlite'):
+			if os.path.exists('/usr/lib/sysimage/dnf'):
+				self.opts['sysimage_persistdir'] = True
+			if os.path.exists('/usr/lib/sysimage/dnf/history.sqlite') or os.path.exists('/var/lib/dnf/history.sqlite'):
 				self.opts['modern_swdb'] = True
 
 		@property
 		def history_path(self):
 			if self.opts.get('modern_swdb'):
-				return '/var/lib/dnf/history.sqlite'
-			return '/var/lib/dnf/history/'
+				if self.opts.get('sysimage_persistdir'):
+					return '/usr/lib/sysimage/dnf/history.sqlite'
+				else:
+					return '/var/lib/dnf/history.sqlite'
+			if self.opts.get('sysimage_persistdir'):
+				return '/usr/lib/sysimage/dnf/history/'
+			else:
+				return '/var/lib/dnf/history/'
 
 		def package_files(self, pkg_name):
 			if self._is_installed(pkg_name):

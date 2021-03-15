@@ -42,7 +42,7 @@ class System(object):
 		if os.path.isfile("/etc/os-release"):
 			with open("/etc/os-release") as os_release_file:
 				os_release_data = {}
-				distros = ["gentoo", "debian", "rhel", "centos", "ol", "mageia", "arch", "archarm", "fedora"]
+				distros = ["gentoo", "debian", "rhel", "centos", "ol", "mageia", "arch", "archarm", "fedora", "suse"]
 
 				# Remove empty lines and trailing spaces
 				lines = [line.rstrip() for line in os_release_file if line.rstrip()]
@@ -85,6 +85,7 @@ class System(object):
 				("tracer.packageManagers.dnf", "Dnf"),
 				("tracer.packageManagers.yum", "Yum"),
 			],
+			"suse":  [("tracer.packageManagers.dnf", "Dnf")],
 		}
 
 		distro = System.distribution()
