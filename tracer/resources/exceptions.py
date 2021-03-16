@@ -30,6 +30,14 @@ class Printable(object):
 		print(self.message.encode("utf-8") if version_info.major == 2 else self.message)
 
 
+class TracerError(Exception, Printable):
+	"""
+	Unspecified tracer error
+	"""
+	def __init__(self, message):
+		self.message = message
+
+
 class UnsupportedDistribution(OSError, Printable):
 
 	@property

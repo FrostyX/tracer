@@ -19,8 +19,9 @@
 from __future__ import absolute_import
 
 from xml.dom import minidom
+from xml.parsers.expat import ExpatError
 from tracer.paths import DATA_DIR, USER_CONFIG_DIRS
-from tracer.resources.exceptions import PathNotFound
+from tracer.resources.exceptions import PathNotFound, TracerError
 from tracer.resources.collections import ApplicationsCollection
 from tracer.resources.lang import _
 from tracer.resources.processes import Processes
@@ -86,6 +87,9 @@ class Applications(object):
 				xmldoc = minidom.parseString(f.read())
 		except IOError:
 			raise PathNotFound('DATA_DIR')
+		except ExpatError as ex:
+			msg = "Unable to parse {0}\nHint: {1}".format(file, ex)
+			raise TracerError(msg)
 
 		for applications in xmldoc.getElementsByTagName("applications"):
 			cls._remove_unwanted_children(applications)
