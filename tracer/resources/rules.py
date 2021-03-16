@@ -19,8 +19,9 @@
 from __future__ import absolute_import
 
 from xml.dom import minidom
+from xml.parsers.expat import ExpatError
 from tracer.paths import DATA_DIR, USER_CONFIG_DIRS
-from tracer.resources.exceptions import PathNotFound
+from tracer.resources.exceptions import PathNotFound, TracerError
 from os.path import dirname
 
 
@@ -67,6 +68,9 @@ class Rules(object):
 				xmldoc = minidom.parseString(f.read())
 		except IOError:
 			raise PathNotFound('DATA_DIR')
+		except ExpatError as ex:
+			msg = "Unable to parse {0}\nHint: {1}".format(file, ex)
+			raise TracerError(msg)
 
 		for rules in xmldoc.getElementsByTagName("rules"):
 			for rule in rules.getElementsByTagName("rule"):
