@@ -50,6 +50,9 @@ class System(object):
 						os_release_key, os_release_value = line.split("=")
 						os_release_data[os_release_key] = os_release_value.strip('"')
 				if os_release_data["ID"] in distros:
+					# Special case since centos 7 has only yum, but centos-8 uses dnf
+					if os_release_data["ID"] == "centos" and os_release_data["VERSION_ID"] == 7:
+						return "centos-7"
 					return os_release_data["ID"]
 				else:
 					if "ID_LIKE" in os_release_data:
@@ -76,7 +79,11 @@ class System(object):
 				("tracer.packageManagers.dnf", "Dnf"),
 				("tracer.packageManagers.yum", "Yum"),
 			],
-			"centos":  [("tracer.packageManagers.yum", "Yum")],
+			"centos":  [
+				("tracer.packageManagers.dnf", "Dnf"),
+				("tracer.packageManagers.yum", "Yum"),
+			],
+			"centos-7":  [("tracer.packageManagers.yum", "Yum")],
 			"ol":      [("tracer.packageManagers.yum", "Yum")],
 			"mageia":  [("tracer.packageManagers.dnf", "Dnf")],
 			"arch":    [("tracer.packageManagers.alpm", "Alpm")],

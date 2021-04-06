@@ -21,7 +21,7 @@ from __future__ import absolute_import
 import os.path
 
 from tracer.resources.system import System
-if System.distribution() in ["rhel", "fedora", "mageia", "suse"]:
+if System.distribution() in ["rhel", "fedora", "centos", "centos-7", "mageia", "suse"]:
 
 	import subprocess
 	from tracer.packageManagers.rpm import Rpm
