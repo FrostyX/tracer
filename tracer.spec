@@ -78,6 +78,7 @@ Requires:       dbus-python
 Requires:       python2-psutil
 Requires:       python2-setuptools
 Requires:       python2-future
+Requires:       python2-six
 Requires:       %{name}-common = %{version}-%{release}
 %if %{with suggest}
 Suggests:       python-argcomplete
