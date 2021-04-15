@@ -82,6 +82,3 @@ rpm-copr-test:
 
 rpm-fedora:
 	tito release fedora-git
-
-rpm-epel:
-	tito release epel-git
