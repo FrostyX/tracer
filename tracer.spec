@@ -17,7 +17,7 @@
 %endif
 
 Name:       tracer
-Version:    0.7.5
+Version:    0.7.6
 Release:    1%{?dist}
 Summary:    Finds outdated running applications in your system
 
@@ -198,6 +198,15 @@ make DESTDIR=%{buildroot}%{_datadir} mo
 
 
 %changelog
+* Fri Apr 16 2021 Jakub Kadlcik <frostyx@email.cz> 0.7.6-1
+- Update tito releasers (frostyx@email.cz)
+- CentOS-8 uses DNF (mmarusak@redhat.com)
+- Add missing runtime dependency on python2-six (frostyx@email.cz)
+- Add support for SUSE distributions using DNF (ngompa13@gmail.com)
+- Print a user-friendly error when a xml file cannot be parsed
+  (frostyx@email.cz)
+- Update tito releasers (frostyx@email.cz)
+
 * Sun Jan 24 2021 Jakub Kadlcik <frostyx@email.cz> 0.7.5-1
 - Depend on python3-six instead of python3-future (frostyx@email.cz)
 - Drop beautifulsoup4 in favor of built-in xml.dom (frostyx@email.cz)
