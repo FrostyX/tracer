@@ -18,7 +18,7 @@
 
 from __future__ import absolute_import
 
-from operator import attrgetter, methodcaller
+from functools import cmp_to_key
 from psutil import NoSuchProcess
 
 
@@ -31,11 +31,32 @@ class Collection(list):
 
 
 	def sorted(self, attribute):
-		self.replace_values(attribute, None, "")
-		try:
-			return sorted(self, key=methodcaller(attribute))
-		except TypeError:
-			return sorted(self, key=attrgetter(attribute))
+		def _sort(app1, app2):
+			value1 = _value(app1, attribute)
+			value2 = _value(app2, attribute)
+
+			# Make sure the None values are at the end
+			# This shouldn't happen anyway but sometimes if does,
+			# for some reason, see #151 or #156
+			if not value1:
+				return 1
+
+			if not value2:
+				return -1
+
+			# https://stackoverflow.com/a/13239857/3285282
+			if value1 < value2:
+				return -1
+			if value1 > value2:
+				return 1
+			return 0
+
+		def _value(app, attribute):
+			if callable(getattr(self[0], attribute)):
+				return getattr(app, attribute)()
+			return getattr(app, attribute)
+
+		return sorted(self, key=cmp_to_key(_sort))
 
 
 class ApplicationsCollection(Collection):

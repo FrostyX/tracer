@@ -61,3 +61,24 @@ class TestCollections(unittest.TestCase):
 		assert {a.name for a in c1} == {"foo", "bar", "baz"}
 		c1.replace_values("name", "foo", "qux")
 		assert {a.name for a in c1} == {"qux", "bar", "baz"}
+
+	def test_collection_sorted_callable(self):
+		c1 = Processes.all()
+		c2 = c1.sorted("create_time")
+
+		for i in range(len(c2) - 1):
+			if c2[i].create_time() > c2[i+1].create_time():
+				raise Exception("The collection isn't sorted properly")
+
+	def test_application_sorted_none_helper(self):
+		"""
+		https://github.com/FrostyX/tracer/issues/151
+		https://github.com/FrostyX/tracer/issues/156
+		"""
+		default_type = Applications.DEFAULT_TYPE
+		a1 = Application({'name': 'foo', 'helper': None, 'type': default_type})
+		a2 = Application({'name': 'baz', 'helper': 'qux', 'type': default_type})
+		collection = ApplicationsCollection([a1, a2])
+		collection_sorted = collection.sorted('helper')
+		self.assertEqual([app.helper for app in collection_sorted],
+						 ["qux", None])
