@@ -17,7 +17,11 @@ class DefaultView(View):
 		def with_helpers_content():
 			content = ""
 			types = [Applications.TYPES["SESSION"], Applications.TYPES["STATIC"], Applications.TYPES["ERASED"]]
-			applications = self.args.applications.with_helpers().exclude_types(types).sorted("helper")
+			applications = (self.args.applications
+							.with_helpers()
+							.exclude_types(types)
+							.unique()
+							.sorted("helper"))
 			for application in applications:
 				helpers = "; ".join(application.helpers)
 				if application.helper_contains_formating and not application.helper_contains_name:
@@ -27,20 +31,32 @@ class DefaultView(View):
 
 		def without_helpers_content():
 			content = ""
-			apps = self.args.applications.exclude_types(Applications.TYPES["ERASED"]).without_helpers().sorted("name")
+			apps = (self.args.applications
+					.exclude_types(Applications.TYPES["ERASED"])
+					.unique()
+					.without_helpers()
+					.sorted("name"))
 			for application in apps:
 				content += "      " + application.name + "\n"
 			return content
 
 		def erased_content():
 			content = ""
-			for application in self.args.applications.filter_types([Applications.TYPES["ERASED"]]).sorted("name"):
+			apps = (self.args.applications
+					.filter_types([Applications.TYPES["ERASED"]])
+					.unique()
+					.sorted("name"))
+			for application in apps:
 				content += "      " + application.name + "\n"
 			return content
 
 		def unrestartable_content(app_type):
 			content = ""
-			applications = self.args.applications.with_helpers().filter_types([app_type]).sorted("name")
+			applications = (self.args.applications
+							.with_helpers()
+							.filter_types([app_type])
+							.unique()
+							.sorted("name"))
 			for application in applications:
 				content += "      " + application.name + "\n"
 			return content

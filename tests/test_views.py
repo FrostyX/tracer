@@ -46,9 +46,9 @@ class TestViews(unittest.TestCase):
 		view = DefaultView(self.out)
 		view.assign("args", ArgsMock())
 		view.assign("applications", ApplicationsCollection([
-			Application({"type": "application", "helper": "first helper", "name": None}),
-			Application({"type": "application", "helper": "second helper", "name": None}),
-			Application({"type": "application", "helper": "third helper", "name": None}),
+			Application({"type": "application", "helper": "first helper", "name": "first"}),
+			Application({"type": "application", "helper": "second helper", "name": "second"}),
+			Application({"type": "application", "helper": "third helper", "name": "third"}),
 		]))
 		view.render()
 		self.assertEqual(self.out.getvalue(), (
@@ -80,9 +80,9 @@ class TestViews(unittest.TestCase):
 		view = DefaultView(self.out)
 		view.assign("args", ArgsMock())
 		view.assign("applications", ApplicationsCollection([
-			Application({"type": "application", "helper": "first helper", "name": None}),
-			Application({"type": "application", "helper": "second helper", "name": None}),
-			Application({"type": "application", "helper": "third helper", "name": None}),
+			Application({"type": "application", "helper": "first helper", "name": "first"}),
+			Application({"type": "application", "helper": "second helper", "name": "second"}),
+			Application({"type": "application", "helper": "third helper", "name": "third"}),
 			Application({"type": "application", "name": "foo", "helper": None}),
 			Application({"type": "application", "name": "bar", "helper": None}),
 			Application({"type": "application", "name": "baz", "helper": None}),
@@ -164,8 +164,8 @@ class TestViews(unittest.TestCase):
 		view = DefaultView(self.out)
 		view.assign("args", ArgsMock(all=True))
 		view.assign("applications", ApplicationsCollection([
-			Application({"type": "application", "helper": "first helper", "name": None}),
-			Application({"type": "application", "helper": "second helper", "name": None}),
+			Application({"type": "application", "helper": "first helper", "name": "first"}),
+			Application({"type": "application", "helper": "second helper", "name": "second"}),
 			Application({"type": "application", "name": "foo", "helper": None}),
 			Application({"type": "application", "name": "bar", "helper": None}),
 			Application({"type": "session", "name": "baz", "helper": "h1"}),
@@ -197,8 +197,8 @@ class TestViews(unittest.TestCase):
 		view = DefaultView(self.out)
 		view.assign("args", ArgsMock())
 		view.assign("applications", ApplicationsCollection([
-			Application({"type": "application", "helper": "first helper", "name": None}),
-			Application({"type": "application", "helper": "second helper", "name": None}),
+			Application({"type": "application", "helper": "first helper", "name": "first"}),
+			Application({"type": "application", "helper": "second helper", "name": "second"}),
 			Application({"type": "application", "name": "foo", "helper": None}),
 			Application({"type": "application", "name": "bar", "helper": None}),
 			Application({"type": "session", "name": "baz", "helper": "h1"}),

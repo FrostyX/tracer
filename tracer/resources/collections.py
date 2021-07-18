@@ -86,6 +86,9 @@ class ApplicationsCollection(Collection):
 				count += 1
 		return count
 
+	def unique(self):
+		return ApplicationsCollection(set(self))
+
 
 class ProcessesCollection(Collection):
 
