@@ -176,4 +176,10 @@
 		<app name="lxpolkit" />
 	</group>
 
+
+	<!-- We should just ignore sudo -->
+	<!-- https://github.com/FrostyX/tracer/issues/162 -->
+	<app name="sudo" ignore="ignore" />
+	<app name="su" ignore="ignore" />
+
 </applications>
