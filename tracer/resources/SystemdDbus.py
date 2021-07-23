@@ -36,7 +36,11 @@ class SystemdDbus(object):
 
 	def has_service_property_from_pid(self, pid, attr):
 		try:
-			proxy = dbus.SystemBus().get_object('org.freedesktop.systemd1', self.unit_path_from_pid(pid))
+			unit = self.unit_path_from_pid(pid)
+			if not unit:
+				return False
+
+			proxy = dbus.SystemBus().get_object('org.freedesktop.systemd1', unit)
 			propty = proxy.Get('org.freedesktop.systemd1.Service', attr, dbus_interface='org.freedesktop.DBus.Properties')
 		except dbus.exceptions.DBusException:
 			return False
