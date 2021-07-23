@@ -283,11 +283,20 @@ class AffectedApplication(Application):
 	def name(self):
 		if System.init_system() == "systemd":
 			bus = SystemdDbus()
-			if self.instances and bus.unit_path_from_pid(self.instances[0].pid):
-				if not bus.has_service_property_from_pid(self.instances[0].pid,'PAMName'):
-					Id = bus.get_unit_property_from_pid(self.instances[0].pid,'Id')
-					if Id and re.search("\.service$", Id):
-						return re.sub('\.service$', '', Id)
+
+			# Trying to access `self.instances` just once
+			try:
+				pid = self.instances[0].pid
+			except IndexError:
+				pid = None
+
+			if pid:
+				if self.instances and bus.unit_path_from_pid(pid):
+					if not bus.has_service_property_from_pid(pid, 'PAMName'):
+						Id = bus.get_unit_property_from_pid(pid, 'Id')
+						if Id and re.search("\.service$", Id):
+							return re.sub('\.service$', '', Id)
+
 		if self.is_interpreted:
 			return self.instances[0].real_name
 		return self._attributes["name"]
