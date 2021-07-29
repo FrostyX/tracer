@@ -67,6 +67,12 @@ Their derivates might be supported as well, although some minor tweaks
 might be necessary.
 
 
+## Installation instructions
+
+Please see [Installation instructions][docs-installation-instructions]
+in the documentation.
+
+
 ## Feedback
 
 Please report any bugs or feature requests to [issues][tracer-issues]
@@ -92,4 +98,5 @@ talk or something, you can find me on `#gentoo.cs` or `#fedora-cs` at
 [docs-dnf-plugin]: http://docs.tracer-package.com/en/latest/user-guide/#fedora-dnf-plugin
 [docs-user-guide]: http://docs.tracer-package.com/en/latest/user-guide/
 [docs-developer-guide]: http://docs.tracer-package.com/en/latest/developer-guide/
+[docs-installation-instructions]: http://docs.tracer-package.com/en/latest/get-tracer/
 [tracer-issues]: https://github.com/FrostyX/tracer/issues
