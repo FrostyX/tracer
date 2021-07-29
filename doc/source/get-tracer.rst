@@ -24,6 +24,23 @@ Please note that for DNF also exists plugin which calls tracer after every succe
 
 Take a look into User Guide at :ref:`dnf-plugin`.
 
+
+EPEL 8
+------
+
+The ``tracer`` package is available in the official repositories for
+RHEL 8.4 and higher. As such, it can be easily installed with::
+
+    dnf install tracer
+
+There is also a Copr repository providing up-to-date stable builds for
+EPEL8. It is recommended to use this repository for installing
+Tracer on RHEL 8.3 and lower::
+
+    dnf copr enable frostyx/tracer-epel
+    dnf install tracer
+
+
 Enterprise Linux 7 (CentOS, ect.)
 ---------------------------------
 
