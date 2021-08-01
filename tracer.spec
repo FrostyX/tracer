@@ -17,7 +17,7 @@
 %endif
 
 Name:       tracer
-Version:    0.7.6
+Version:    0.7.7
 Release:    1%{?dist}
 Summary:    Finds outdated running applications in your system
 
@@ -198,6 +198,17 @@ make DESTDIR=%{buildroot}%{_datadir} mo
 
 
 %changelog
+* Sun Aug 01 2021 Jakub Kadlcik <frostyx@email.cz> 0.7.7-1
+- Add installation instructions of EPEL 8 (frostyx@email.cz)
+- Make the source of README.md more readable (frostyx@email.cz)
+- Remove duplicates in suggested helpers (frostyx@email.cz)
+- Make sure Collection.sorted doesn't traceback for None values
+  (frostyx@email.cz)
+- Ignore sudo and su in the output (frostyx@email.cz)
+- Don't traceback for nonexisting PID (frostyx@email.cz)
+- Access process PID only once (frostyx@email.cz)
+- Rename tito master branch to rawhide (frostyx@email.cz)
+
 * Fri Apr 16 2021 Jakub Kadlcik <frostyx@email.cz> 0.7.6-1
 - Update tito releasers (frostyx@email.cz)
 - CentOS-8 uses DNF (mmarusak@redhat.com)
