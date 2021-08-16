@@ -4,7 +4,6 @@ parentdir = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
 os.sys.path.insert(0, parentdir)
 
 import sys
-import platform
 import unittest
 from tracer.resources.system import System
 

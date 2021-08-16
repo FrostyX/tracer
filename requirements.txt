@@ -5,3 +5,4 @@ sphinx_rtd_theme
 Pygments
 dbus-python
 future
+distro
