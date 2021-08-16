@@ -24,7 +24,7 @@ from __future__ import absolute_import
 import os
 import pwd
 import importlib
-import platform
+import distro
 import psutil
 from sys import version_info
 from tracer.resources.PackageManager import PackageManager
@@ -37,7 +37,7 @@ class System(object):
 		"""
 		Checks if /etc/os-release exists, and if it does, uses it to divine the name of the distribution or
 		distribution like. e.g It will return 'debian' on Ubuntu systems.
-		Otherwise, revert to using platform.linux_distribution()
+		Otherwise, revert to using distro.id()
 		"""
 		if os.path.isfile("/etc/os-release"):
 			with open("/etc/os-release") as os_release_file:
@@ -56,11 +56,11 @@ class System(object):
 					return os_release_data["ID"]
 				else:
 					if "ID_LIKE" in os_release_data:
-						for distro in os_release_data["ID_LIKE"].split():
-							if distro in distros:
-								return distro
+						for distribution in os_release_data["ID_LIKE"].split():
+							if distribution in distros:
+								return distribution
 		else:
-			return platform.linux_distribution(full_distribution_name=False)[0]
+			return distro.id()
 
 	@staticmethod
 	def package_manager(**kwargs):
@@ -95,11 +95,11 @@ class System(object):
 			"suse":  [("tracer.packageManagers.dnf", "Dnf")],
 		}
 
-		distro = System.distribution()
-		if distro not in managers:
+		distribution = System.distribution()
+		if distribution not in managers:
 			return None
 
-		return PackageManager(*list(map(get_instance, managers[distro])))
+		return PackageManager(*list(map(get_instance, managers[distribution])))
 
 	@staticmethod
 	def init_system():

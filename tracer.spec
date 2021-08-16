@@ -71,11 +71,13 @@ BuildRequires:  python2-pytest
 BuildRequires:  python2-psutil
 BuildRequires:  python2-six
 BuildRequires:  dbus-python
+BuildRequires:  python2-distro
 Requires:       dbus-python
 Requires:       python2-psutil
 Requires:       python2-setuptools
 Requires:       python2-future
 Requires:       python2-six
+Requires:       python2-distro
 Requires:       %{name}-common = %{version}-%{release}
 %if %{with suggest}
 Suggests:       python-argcomplete
@@ -99,11 +101,13 @@ BuildRequires:  python3-psutil
 BuildRequires:  python3-six
 BuildRequires:  python3-dbus
 BuildRequires:  python3-rpm
+BuildRequires:  python3-distro
 Requires:       python3-rpm
 Requires:       python3-psutil
 Requires:       python3-setuptools
 Requires:       python3-dbus
 Requires:       python3-six
+Requires:       python3-distro
 Requires:       %{name}-common = %{version}-%{release}
 %if %{with suggest}
 Suggests:       python3-argcomplete
