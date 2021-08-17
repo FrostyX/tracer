@@ -78,6 +78,14 @@ if System.distribution() in ["arch", "archarm"]:
 			process = app.instances[0]
 			return self._file_provided_by(process.exe)
 
+		def find_package(self, pkg_name, version):
+			"""
+			Find a package by name and some other input criteria
+			"""
+			pkg = self.db.get_pkg(pkg_name)
+			if pkg and pyalpm.vercmp(pkg.version, version) == 0:
+				return pkg
+
 		@staticmethod
 		def _bsearch_list(l, item):
 			"""
