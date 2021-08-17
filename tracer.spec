@@ -61,14 +61,11 @@ BuildRequires:  python2-devel
 BuildRequires:  python2-sphinx
 %if 0%{?rhel} && 0%{?rhel} <= 7
 BuildRequires:  rpm-python
-BuildRequires:  python-lxml
 BuildRequires:  python2-mock
 Requires:       rpm-python
-Requires:       python-lxml
 %else
 BuildRequires:  python2-rpm
 Requires:       python2-rpm
-Requires:       python2-lxml
 %endif
 BuildRequires:  python2-pytest
 BuildRequires:  python2-psutil
@@ -104,7 +101,6 @@ BuildRequires:  python3-dbus
 BuildRequires:  python3-rpm
 Requires:       python3-rpm
 Requires:       python3-psutil
-Requires:       python3-lxml
 Requires:       python3-setuptools
 Requires:       python3-dbus
 Requires:       python3-six
