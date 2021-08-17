@@ -7,7 +7,6 @@ Python
 Tracer is written in Python and it is compatible with its both 2.7 and 3.x versions. Besides standard python interpreter, tracer requires its few packages:
 
 - `psutil`_ - For getting informations about processes, memory, etc
-- `beautifulsoup`_ - For parsing user defined xml files such as ``data/applications.xml`` and ``data/rules.xml``
 
 Coding style
 ------------
@@ -88,7 +87,6 @@ Fedora
 
 
 .. _psutil: https://code.google.com/p/psutil/
-.. _beautifulsoup: http://www.crummy.com/software/BeautifulSoup/bs4/doc/
 .. _tito: https://github.com/dgoodwin/tito
 .. _Makefile: https://github.com/FrostyX/tracer/blob/master/Makefile
 .. _copr: https://copr.fedoraproject.org/coprs/

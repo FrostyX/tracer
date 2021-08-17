@@ -5,7 +5,7 @@ $script = <<SCRIPT
     sudo dnf install -y tito tracer
 
     # the following deps fail during the tito --install due to tito using --cache-only option, so install them beforehand
-    sudo dnf install -y python2-beautifulsoup4 python2-cssselect python2-html5lib python2-rpm python2-webencodings python2-future python2-psutil
+    sudo dnf install -y python2-cssselect python2-html5lib python2-rpm python2-webencodings python2-future python2-psutil
 
     sudo dnf builddep -y tracer.spec
     tito build --rpm --test --install
