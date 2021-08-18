@@ -17,8 +17,8 @@
 #
 
 import os
-import imp
 from tracer.paths import HOOKS_DIRS
+from tracer.resources.pycomp import load_source
 
 _hooks = {}
 
@@ -74,6 +74,6 @@ def _register_hooks():
 			for fname in files:
 				modname = os.path.splitext(fname)[0]
 				try:
-					module=imp.load_source(modname,os.path.join(root, fname))
+					load_source(modname, os.path.join(root, fname))
 				except Exception:
 					continue

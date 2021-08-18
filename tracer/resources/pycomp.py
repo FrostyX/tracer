@@ -24,3 +24,20 @@ if PY3:
 	from io import StringIO
 else:
 	from StringIO import StringIO
+
+
+def load_source(module_name, path):
+	"""
+	Read and evaluate a python file
+	This is useful when we don't know the module name beforehand and somehow
+	figure it out at the runtime (e.g. user-defined hook files)
+	"""
+	if not PY3:
+		import imp
+		return imp.load_source(module_name, path)
+
+	from importlib.machinery import SourceFileLoader
+	import types
+	loader = SourceFileLoader(module_name, path)
+	loaded = types.ModuleType(loader.name)
+	return loader.exec_module(loaded)
