@@ -86,6 +86,15 @@ if System.distribution() in ["arch", "archarm"]:
 			if pkg and pyalpm.vercmp(pkg.version, version) == 0:
 				return pkg
 
+		def compare_packages(self, package1, package2):
+			"""
+			vercmp returns:
+			< 0 if ver1 < ver2
+			0 if ver1 == ver2
+			> 0 if ver1 > ver2
+			"""
+			return pyalpm.vercmp(package1.version, package2.version)
+
 		@staticmethod
 		def _bsearch_list(l, item):
 			"""
