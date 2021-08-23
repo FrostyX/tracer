@@ -17,7 +17,7 @@
 %endif
 
 Name:       tracer
-Version:    0.7.7
+Version:    0.7.8
 Release:    1%{?dist}
 Summary:    Finds outdated running applications in your system
 
@@ -198,6 +198,15 @@ make DESTDIR=%{buildroot}%{_datadir} mo
 
 
 %changelog
+* Mon Aug 23 2021 Jakub Kadlcik <frostyx@email.cz> 0.7.8-1
+- Release also for F35 (frostyx@email.cz)
+- Use distro.id() instead of platform.linux_distribution() (frostyx@email.cz)
+- Implement compare_packages for the alpm backend (jvanderwaa@redhat.com)
+- Add find_package support for alpm (jvanderwaa@redhat.com)
+- Use importlib instead of deprecated imp (frostyx@email.cz)
+- Drop beautifulsoup4/lxml dependencies (jvanderwaa@redhat.com)
+- Drop F32 from releasers.conf (frostyx@email.cz)
+
 * Sun Aug 01 2021 Jakub Kadlcik <frostyx@email.cz> 0.7.7-1
 - Add installation instructions of EPEL 8 (frostyx@email.cz)
 - Make the source of README.md more readable (frostyx@email.cz)
