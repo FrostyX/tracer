@@ -7,8 +7,8 @@ ask Tracer for various informations and provide you a results. And from data str
 Surely you could access internal classes and methods on your own, but there is a risk that they will change in the
 future. In API could be a little changes too, but they will be documented
 
-Quering
--------
+Querying
+--------
 
 .. autoclass:: tracer.Query
     :members:

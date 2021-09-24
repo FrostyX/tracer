@@ -1,6 +1,6 @@
 #-*- coding: utf-8 -*-
 # query.py
-# Module providing quering operations to Tracer API
+# Module providing querying operations to Tracer API
 #
 # Copyright (C) 2016 Jakub Kadlcik
 #
@@ -25,7 +25,7 @@ from tracer.resources.memory import dump_memory
 
 class Query(object):
 	"""
-	Provide API for Tracer quering operations.
+	Provide API for Tracer querying operations.
 	They are executed kind of lazily, so running the operation will
 	return just an wrapper class with ``get()`` method.
 
@@ -36,7 +36,7 @@ class Query(object):
 		q.affected_applications().get()
 
 	.. note::
-		Some quering methods can require root permissions
+		Some querying methods can require root permissions
 
 	"""
 
