@@ -235,13 +235,13 @@ class Application:
 	def helper_contains_formating(self):
 		if not self.helper:
 			return None
-		return bool(re.search("\{.*\}", self.helper))
+		return bool(re.search(r"\{.*\}", self.helper))
 
 	@property
 	def helper_contains_name(self):
 		if not self.helper:
 			return None
-		return bool(re.search("\{NAME\}", self.helper))
+		return bool(re.search(r"\{NAME\}", self.helper))
 
 	@property
 	def helpers(self):
@@ -294,8 +294,8 @@ class AffectedApplication(Application):
 				if self.instances and bus.unit_path_from_pid(pid):
 					if not bus.has_service_property_from_pid(pid, 'PAMName'):
 						Id = bus.get_unit_property_from_pid(pid, 'Id')
-						if Id and re.search("\.service$", Id):
-							return re.sub('\.service$', '', Id)
+						if Id and re.search(r"\.service$", Id):
+							return re.sub(r'\.service$', '', Id)
 
 		if self.is_interpreted:
 			return self.instances[0].real_name
