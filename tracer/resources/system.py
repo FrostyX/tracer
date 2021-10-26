@@ -84,7 +84,10 @@ class System(object):
 				("tracer.packageManagers.yum", "Yum"),
 			],
 			"centos-7":  [("tracer.packageManagers.yum", "Yum")],
-			"ol":      [("tracer.packageManagers.yum", "Yum")],
+			"ol":  [
+				("tracer.packageManagers.dnf", "Dnf"),
+				("tracer.packageManagers.yum", "Yum"),
+			],
 			"mageia":  [("tracer.packageManagers.dnf", "Dnf")],
 			"arch":    [("tracer.packageManagers.alpm", "Alpm")],
 			"archarm": [("tracer.packageManagers.alpm", "Alpm")],
