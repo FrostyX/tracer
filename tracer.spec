@@ -74,7 +74,6 @@ BuildRequires:  dbus-python
 BuildRequires:  python2-distro
 Requires:       dbus-python
 Requires:       python2-psutil
-Requires:       python2-setuptools
 Requires:       python2-future
 Requires:       python2-six
 Requires:       python2-distro
@@ -104,7 +103,6 @@ BuildRequires:  python3-rpm
 BuildRequires:  python3-distro
 Requires:       python3-rpm
 Requires:       python3-psutil
-Requires:       python3-setuptools
 Requires:       python3-dbus
 Requires:       python3-six
 Requires:       python3-distro
