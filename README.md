@@ -25,7 +25,7 @@ as outdated.
 		</tr>
 		<tr>
 			<th>Documentation:</th>
-			<td><a href="http://docs.tracer-package.com">http://docs.tracer-package.com</a></td>
+			<td><a href="https://tracer.readthedocs.io/">https://tracer.readthedocs.io/</a></td>
 		</tr>
 		<tr>
 			<th>License:</th>
@@ -93,10 +93,10 @@ talk or something, you can find me on `#gentoo.cs` or `#fedora-cs` at
 [badge-coverage-url]: https://coveralls.io/r/FrostyX/tracer?branch=master
 [badge-travis-img]: https://travis-ci.org/FrostyX/tracer.svg?branch=master
 [badge-travis-url]: https://travis-ci.org/FrostyX/tracer
-[docs-standard-usage]: http://docs.tracer-package.com/en/latest/user-guide/#standard-usage
-[docs-helpers]: http://docs.tracer-package.com/en/latest/user-guide/#helpers
-[docs-dnf-plugin]: http://docs.tracer-package.com/en/latest/user-guide/#fedora-dnf-plugin
-[docs-user-guide]: http://docs.tracer-package.com/en/latest/user-guide/
-[docs-developer-guide]: http://docs.tracer-package.com/en/latest/developer-guide/
-[docs-installation-instructions]: http://docs.tracer-package.com/en/latest/get-tracer/
+[docs-standard-usage]: https://tracer.readthedocs.io/en/latest/user-guide.html#standard-usage
+[docs-helpers]: https://tracer.readthedocs.io/en/latest/user-guide.html#helpers
+[docs-dnf-plugin]: https://tracer.readthedocs.io/en/latest/user-guide.html#fedora-dnf-plugin
+[docs-user-guide]: https://tracer.readthedocs.io/en/latest/user-guide.html
+[docs-developer-guide]: https://tracer.readthedocs.io/en/latest/developer-guide.html
+[docs-installation-instructions]: https://tracer.readthedocs.io/en/latest/get-tracer.html
 [tracer-issues]: https://github.com/FrostyX/tracer/issues
