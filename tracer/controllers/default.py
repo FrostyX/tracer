@@ -74,7 +74,7 @@ class DefaultController(object):
 	def render_helpers(self):
 		helper_controller = HelperController(self.args)
 		for application in self._restartable_applications(self.applications, self.args):
-			helper_controller.print_helper(application.name, self.args)
+			helper_controller.print_helper(application, self.args)
 			print("")
 
 		view = NoteForHiddenView()
