@@ -136,7 +136,7 @@ class System(object):
 
 	@staticmethod
 	def user():
-		# getlogin is prefered because it return current username even
+		# getlogin is preferred because it return current username even
 		# if python process is executed with sudo
 		try: return os.getlogin()
 		except OSError: return pwd.getpwuid(os.getuid())[0]
