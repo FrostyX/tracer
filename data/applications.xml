@@ -98,6 +98,7 @@
 		<app name="nm-applet" />
 	</group>
 
+	<app name="auditd" type="daemon" helper="service auditd restart" />
 	<app name="dropbox" helper="dropbox stop; dropbox start" />
 	<app name="pulseaudio" helper="pulseaudio --kill; pulseaudio --start" />
 	<app name="gnome-shell" helper="killall -3 gnome-shell" />
