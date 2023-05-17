@@ -69,6 +69,7 @@ class DefaultController(object):
 			view.assign("applications", self.applications)
 			view.assign("args", self.args)
 			view.render()
+			self.create_reboot_required_file()
 		exit(self.status_code())
 
 	def render_helpers(self):
@@ -135,6 +136,15 @@ class DefaultController(object):
 		if self.applications.count_type(Applications.TYPES['STATIC']):
 			code = 104
 		return code
+
+	def create_reboot_required_file(self):
+		"""
+		If a reboot is needed, create a /var/run/reboot-required file.
+		This is how Debian/Ubuntu distros does it.
+		"""
+		if self.applications.count_type(Applications.TYPES["STATIC"]):
+			with open("/var/run/reboot-required", "w") as fp:
+				fp.write("Tracer says reboot is required\n")
 
 	def _restartable_applications(self, applications, args):
 		return applications.exclude_types([
