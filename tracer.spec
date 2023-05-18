@@ -17,7 +17,7 @@
 %endif
 
 Name:       tracer
-Version:    0.7.8
+Version:    0.7.9
 Release:    1%{?dist}
 Summary:    Finds outdated running applications in your system
 
@@ -197,6 +197,19 @@ make DESTDIR=%{buildroot}%{_datadir} mo
 
 
 %changelog
+* Thu May 18 2023 Jakub Kadlcik <frostyx@email.cz> 0.7.9-1
+- Create /var/run/reboot-required file (frostyx@email.cz)
+- Recommend the correct command for restarting auditd (frostyx@email.cz)
+- Add python3-setuptools dependency (frostyx@email.cz)
+- Fix argument passed to print_helper() (ferdnyc@gmail.com)
+- Add similar software to the readme (frostyx@email.cz)
+- Update url references to point to tracer.readthedocs.io (dcampano@gmail.com)
+- Oracle Linux 8 uses dnf, too (suttner@atix.de)
+- Drop python-setuptools runtime dependency (frostyx@email.cz)
+- Fix Python DeprecationWarning: invalid escape sequence
+  (jvanderwaa@redhat.com)
+- Add readthedocs configuration file (frostyx@email.cz)
+
 * Mon Aug 23 2021 Jakub Kadlcik <frostyx@email.cz> 0.7.8-1
 - Release also for F35 (frostyx@email.cz)
 - Use distro.id() instead of platform.linux_distribution() (frostyx@email.cz)
