@@ -22,7 +22,7 @@ Release:    1%{?dist}
 Summary:    Finds outdated running applications in your system
 
 BuildArch:  noarch
-License:    GPLv2+
+License:    GPL-2.0-or-later
 URL:        http://tracer-package.com/
 # Sources can be obtained by
 # git clone git@github.com:FrostyX/tracer.git
