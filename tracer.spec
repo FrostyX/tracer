@@ -17,7 +17,7 @@
 %endif
 
 Name:       tracer
-Version:    0.7.9
+Version:    0.7.10
 Release:    1%{?dist}
 Summary:    Finds outdated running applications in your system
 
@@ -197,6 +197,10 @@ make DESTDIR=%{buildroot}%{_datadir} mo
 
 
 %changelog
+* Mon Jun 05 2023 Jakub Kadlcik <frostyx@email.cz> 0.7.10-1
+- Update license to SPDX (frostyx@email.cz)
+- Update tito releasers (frostyx@email.cz)
+
 * Thu May 18 2023 Jakub Kadlcik <frostyx@email.cz> 0.7.9-1
 - Create /var/run/reboot-required file (frostyx@email.cz)
 - Recommend the correct command for restarting auditd (frostyx@email.cz)
