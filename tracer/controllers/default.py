@@ -139,11 +139,11 @@ class DefaultController(object):
 
 	def create_reboot_required_file(self):
 		"""
-		If a reboot is needed, create a /var/run/reboot-required file.
+		If a reboot is needed, create a /run/reboot-required file.
 		This is how Debian/Ubuntu distros does it.
 		"""
 		if self.applications.count_type(Applications.TYPES["STATIC"]):
-			with open("/var/run/reboot-required", "w") as fp:
+			with open("/run/reboot-required", "w") as fp:
 				fp.write("Tracer says reboot is required\n")
 
 	def _restartable_applications(self, applications, args):
