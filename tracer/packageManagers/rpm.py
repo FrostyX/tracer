@@ -102,8 +102,8 @@ if System.distribution() in ["fedora", "rhel", "centos", "centos-7", "mageia", "
 			if self._is_installed(pkg_name):
 				ts = rpm.TransactionSet()
 				mi = ts.dbMatch("name", pkg_name)
-				fi = rpm.fi(next(mi))
-				return [f[0] for f in fi]
+				hdr = next(mi)
+				return [x.name for x in rpm.files(hdr)]
 
 			# Tracer will not find uninstalled applications
 			return []
