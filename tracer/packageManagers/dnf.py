@@ -30,7 +30,7 @@ if System.distribution() in ["rhel", "fedora", "centos", "centos-7", "mageia", "
 
 		def __init__(self, **kwargs):
 			super(Dnf, self).__init__(**kwargs)
-			if os.path.exists('/usr/lib/sysimage/dnf'):
+			if os.path.exists('/usr/lib/sysimage/dnf/history.sqlite'):
 				self.opts['sysimage_persistdir'] = True
 			if os.path.exists('/usr/lib/sysimage/dnf/history.sqlite') or os.path.exists('/var/lib/dnf/history.sqlite'):
 				self.opts['modern_swdb'] = True
