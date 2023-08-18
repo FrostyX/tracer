@@ -114,7 +114,7 @@ class Tracer(object):
 
 							if not a.ignore:
 								if a.name not in affected:
-									if self._erased and not self._PACKAGE_MANAGER.provided_by(a.name):
+									if self._erased and not self._PACKAGE_MANAGER.provided_by(a):
 										a.type = Applications.TYPES["ERASED"]
 									affected[a.name] = AffectedApplication(a._attributes)
 									affected[a.name].affected_instances = AffectedProcessesCollection()
