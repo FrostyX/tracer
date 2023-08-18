@@ -18,6 +18,7 @@
 
 from __future__ import print_function
 
+import os
 import sys
 import time
 from tracer.resources.router import Router
@@ -38,7 +39,7 @@ def run():
 
 	# If there is something on stdin (that means piped into tracer)
 	stdin_packages = []
-	if not sys.stdin.isatty():
+	if not sys.stdin.isatty() and "SSH_CONNECTION" not in os.environ:
 		stdin_packages = sys.stdin.readline().split()
 
 	# All input packages enchanced by actual time (as modified time)
