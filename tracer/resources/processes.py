@@ -22,7 +22,6 @@ import psutil
 import datetime
 import time
 import os
-import re
 from subprocess import PIPE, Popen
 from threading import Timer
 from six import with_metaclass
@@ -79,7 +78,8 @@ class ProcessWrapper(object):
 		try:
 			if self._attr("name") == 'sshd':
 				if self._attr("exe") not in self._attr("cmdline") and len(self._attr("cmdline")) > 1:
-					return 'ssh-{0}-session'.format(re.split(' |@',' '.join(self._attr("cmdline")))[1])
+					username= self._attr("cmdline")[1].split("@")[0]
+					return 'ssh-{0}-session'.format(username)
 		except psutil.AccessDenied:
 			pass
 		return self._attr("name")

@@ -205,7 +205,7 @@ class Application:
 	@property
 	@lru_cache(maxsize=None)
 	def is_session(self):
-		if re.search('ssh-.*-session', str(self.name)):
+		if self.name.startswith("ssh-") and self.name.endswith("-session"):
 			return True
 		return self.instances and self.instances[0].is_session
 
