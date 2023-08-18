@@ -22,6 +22,7 @@ from __future__ import absolute_import
 from tracer.resources.system import System
 if System.distribution() in ["fedora", "rhel", "centos", "centos-7", "mageia", "ol"]:
 
+	from functools import lru_cache
 	from os import listdir
 	from .ipackageManager import IPackageManager
 	from tracer.resources.package import Package
@@ -228,10 +229,16 @@ if System.distribution() in ["fedora", "rhel", "centos", "centos-7", "mageia", "
 				if file.startswith("history-") and file.endswith(".sqlite"):
 					return self.history_path + file
 
-		@staticmethod
-		def _is_installed(pkg_name):
+		@classmethod
+		def _is_installed(cls, pkg_name):
 			"""Returns True if package is installed"""
+			# Querying all installed packages at onece is faster than for each
+			# package querying whether it is installed
+			return pkg_name in cls._all_installed_packages()
 
+		@staticmethod
+		@lru_cache(maxsize=None)
+		def _all_installed_packages():
 			ts = rpm.TransactionSet()
-			mi = ts.dbMatch('name', pkg_name)
-			return True if len(mi) > 0 else False
+			mi = ts.dbMatch()
+			return [x.name for x in mi]
