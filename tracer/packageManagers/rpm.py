@@ -100,11 +100,11 @@ if System.distribution() in ["fedora", "rhel", "centos", "centos-7", "mageia", "
 			Returns list of files provided by package
 			See also: http://docs.fedoraproject.org/en-US/Fedora_Draft_Documentation/0.1/html/RPM_Guide/ch04s02s03.html
 			"""
-			if self._is_installed(pkg_name):
-				ts = rpm.TransactionSet()
-				mi = ts.dbMatch("name", pkg_name)
-				hdr = next(mi)
-				return [x.name for x in rpm.files(hdr)]
+			ts = rpm.TransactionSet()
+			mi = ts.dbMatch("name", pkg_name)
+			packages = list(mi)
+			if packages:
+				return [x.name for x in rpm.files(packages[0])]
 
 			# Tracer will not find uninstalled applications
 			return []
@@ -228,17 +228,3 @@ if System.distribution() in ["fedora", "rhel", "centos", "centos-7", "mageia", "
 			for file in sorted(listdir(self.history_path), reverse=True):
 				if file.startswith("history-") and file.endswith(".sqlite"):
 					return self.history_path + file
-
-		@classmethod
-		def _is_installed(cls, pkg_name):
-			"""Returns True if package is installed"""
-			# Querying all installed packages at onece is faster than for each
-			# package querying whether it is installed
-			return pkg_name in cls._all_installed_packages()
-
-		@staticmethod
-		@lru_cache(maxsize=None)
-		def _all_installed_packages():
-			ts = rpm.TransactionSet()
-			mi = ts.dbMatch()
-			return [x.name for x in mi]

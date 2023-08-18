@@ -48,12 +48,10 @@ if System.distribution() in ["rhel", "fedora", "centos", "centos-7", "mageia", "
 				return '/var/lib/dnf/history/'
 
 		def package_files(self, pkg_name):
-			if self._is_installed(pkg_name):
+			if not self.opts.get("erased"):
 				return super(Dnf, self).package_files(pkg_name)
 
-			if "erased" not in self.opts or not self.opts["erased"]:
-				return []
-
+			# TODO Running an external command is tooooo slow, use python API instead
 			process = subprocess.Popen(["dnf", "repoquery", "-q", "-l", pkg_name], stdout=subprocess.PIPE)
 			out = process.communicate()[0]
 			return out.decode().split("\n")
