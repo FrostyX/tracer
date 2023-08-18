@@ -18,6 +18,7 @@
 
 from __future__ import absolute_import
 
+from functools import lru_cache
 from xml.dom import minidom
 from xml.parsers.expat import ExpatError
 from tracer.paths import DATA_DIR, USER_CONFIG_DIRS
@@ -162,6 +163,7 @@ class Application:
 
 	def __init__(self, attributes_dict):
 		self._attributes = attributes_dict
+		self._cached_name = None
 
 	def __eq__(self, other):
 		return isinstance(other, Application) and self.name == other.name
@@ -201,6 +203,7 @@ class Application:
 		return self.instances and self.instances[0].is_interpreted
 
 	@property
+	@lru_cache(maxsize=None)
 	def is_session(self):
 		if re.search('ssh-.*-session', str(self.name)):
 			return True
@@ -220,6 +223,7 @@ class Application:
 		return Applications.DEFAULT_TYPE
 
 	@property
+	@lru_cache(maxsize=None)
 	def is_service(self):
 		if System.init_system() == "systemd":
 			return SystemdDbus().unit_path_from_id("{0}.service".format(self.name))
@@ -283,6 +287,13 @@ class Application:
 class AffectedApplication(Application):
 	@property
 	def name(self):
+		# We need to cache manually instead of using `@lru_cache` because this
+		# property is used for self.__hash__
+		if not self._cached_name:
+			self._cached_name = self._name()
+		return self._cached_name
+
+	def _name(self):
 		if System.init_system() == "systemd":
 			bus = SystemdDbus()
 
