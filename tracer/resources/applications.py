@@ -208,14 +208,16 @@ class Application:
 
 	@property
 	def type(self):
-                if not self._attributes["type"] == Applications.TYPES["UNDEF"]:
-                        return self._attributes["type"]
-                elif self.is_session:
-                        return Applications.TYPES["SESSION"]
-                elif self.is_service:
-                        return Applications.TYPES["DAEMON"]
-                else:
-                        return Applications.DEFAULT_TYPE
+		if self._attributes["type"] != Applications.TYPES["UNDEF"]:
+			return self._attributes["type"]
+
+		if self.is_session:
+			return Applications.TYPES["SESSION"]
+
+		if self.is_service:
+			return Applications.TYPES["DAEMON"]
+
+		return Applications.DEFAULT_TYPE
 
 	@property
 	def is_service(self):
