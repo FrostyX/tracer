@@ -227,7 +227,7 @@ class Application:
 	# @TODO rename to helper_format
 	@property
 	def helper(self):
-		helper = self._attributes["helper"] if self._attributes["helper"] else Applications._helper(self)
+		helper = self._attributes["helper"] or Applications._helper(self)
 		if System.user() != "root" and self.type == Applications.TYPES["DAEMON"]:
 			if helper and not helper.startswith("sudo "):
 				helper = "sudo " + helper
