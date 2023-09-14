@@ -27,6 +27,7 @@ if System.distribution() in ["fedora", "rhel", "centos", "centos-7", "mageia", "
 	from tracer.resources.package import Package
 	from tracer.resources.collections import PackagesCollection
 	from tracer.resources.exceptions import LockedDatabase, DatabasePermissions
+	from tracer.resources.pycomp import PY3
 	import sqlite3
 	import rpm
 	import os
@@ -102,11 +103,17 @@ if System.distribution() in ["fedora", "rhel", "centos", "centos-7", "mageia", "
 			ts = rpm.TransactionSet()
 			mi = ts.dbMatch("name", pkg_name)
 			packages = list(mi)
-			if packages:
-				return [x.name for x in rpm.files(packages[0])]
 
 			# Tracer will not find uninstalled applications
-			return []
+			if not packages:
+				return []
+
+			if PY3:
+				files = rpm.files(packages[0])
+				return [x.name for x in files]
+			else:
+				files = rpm.fi(packages[0])
+				return [f[0] for f in files]
 
 		def find_package(self, name, evra):
 			evra = self._splitEvra(evra)
