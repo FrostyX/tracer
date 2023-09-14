@@ -22,8 +22,10 @@ PY3 = version_info.major >= 3
 
 if PY3:
 	from io import StringIO
+	from functools import lru_cache
 else:
 	from StringIO import StringIO
+	from backports.functools_lru_cache import lru_cache
 
 
 def load_source(module_name, path):

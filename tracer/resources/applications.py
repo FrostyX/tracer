@@ -18,7 +18,6 @@
 
 from __future__ import absolute_import
 
-from functools import lru_cache
 from xml.dom import minidom
 from xml.parsers.expat import ExpatError
 from tracer.paths import DATA_DIR, USER_CONFIG_DIRS
@@ -28,6 +27,7 @@ from tracer.resources.lang import _
 from tracer.resources.processes import Processes
 from tracer.resources.system import System
 from tracer.resources.SystemdDbus import SystemdDbus
+from tracer.resources.pycomp import lru_cache
 import os
 import re
 

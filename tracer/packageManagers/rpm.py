@@ -22,7 +22,6 @@ from __future__ import absolute_import
 from tracer.resources.system import System
 if System.distribution() in ["fedora", "rhel", "centos", "centos-7", "mageia", "ol"]:
 
-	from functools import lru_cache
 	from os import listdir
 	from .ipackageManager import IPackageManager
 	from tracer.resources.package import Package

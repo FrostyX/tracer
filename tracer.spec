@@ -72,11 +72,13 @@ BuildRequires:  python2-psutil
 BuildRequires:  python2-six
 BuildRequires:  dbus-python
 BuildRequires:  python2-distro
+BuildRequires:  python2-backports-functools_lru_cache
 Requires:       dbus-python
 Requires:       python2-psutil
 Requires:       python2-future
 Requires:       python2-six
 Requires:       python2-distro
+Requires:       python2-backports-functools_lru_cache
 Requires:       %{name}-common = %{version}-%{release}
 %if %{with suggest}
 Suggests:       python-argcomplete
