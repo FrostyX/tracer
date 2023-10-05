@@ -17,7 +17,7 @@
 %endif
 
 Name:       tracer
-Version:    1.0
+Version:    1.1
 Release:    1%{?dist}
 Summary:    Finds outdated running applications in your system
 
@@ -199,6 +199,9 @@ make DESTDIR=%{buildroot}%{_datadir} mo
 
 
 %changelog
+* Thu Oct 05 2023 Jakub Kadlcik <frostyx@email.cz> 1.1-1
+- Fix parameters for specifying the target user (frostyx@email.cz)
+
 * Fri Sep 15 2023 Jakub Kadlcik <frostyx@email.cz> 1.0-1
 - Fix querying RPM files on EPEL7 (frostyx@email.cz)
 - Use backported lru_cache on EPEL7 (frostyx@email.cz)
