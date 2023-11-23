@@ -87,6 +87,7 @@ talk or something, you can find me on `#gentoo.cs` or `#fedora-cs` at
 - [needs-restarting](https://dnf-plugins-core.readthedocs.io/en/latest/needs_restarting.html)
 - [oldprocs](https://github.com/gsauthof/utility/#oldprocs)
 - [checkrestart](http://manpages.ubuntu.com/manpages/trusty/man1/checkrestart.1.html)
+- [needrestart](https://github.com/liske/needrestart)
 
 
 ## References
