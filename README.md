@@ -90,12 +90,6 @@ talk or something, you can find me on `#gentoo.cs` or `#fedora-cs` at
 - [needrestart](https://github.com/liske/needrestart)
 
 
-## References
-- <https://pythonhosted.org/psutil/>
-- <https://code.google.com/p/psutil/wiki/Documentation>
-- <https://docs.python.org/2/library/unittest.html>
-
-
 
 [badge-coverage-img]: https://coveralls.io/repos/FrostyX/tracer/badge.png?branch=master
 [badge-coverage-url]: https://coveralls.io/r/FrostyX/tracer?branch=master
