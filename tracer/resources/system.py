@@ -76,26 +76,36 @@ class System(object):
 			"gentoo":  [("tracer.packageManagers.portage", "Portage")],
 			"debian":  [("tracer.packageManagers.dpkg", "Dpkg")],
 			"rhel":  [
+				("tracer.packageManagers.dnf", "Dnf5"),
 				("tracer.packageManagers.dnf", "Dnf"),
 				("tracer.packageManagers.yum", "Yum"),
 			],
 			"centos":  [
+				("tracer.packageManagers.dnf", "Dnf5"),
 				("tracer.packageManagers.dnf", "Dnf"),
 				("tracer.packageManagers.yum", "Yum"),
 			],
 			"centos-7":  [("tracer.packageManagers.yum", "Yum")],
 			"ol":  [
+				("tracer.packageManagers.dnf", "Dnf5"),
 				("tracer.packageManagers.dnf", "Dnf"),
 				("tracer.packageManagers.yum", "Yum"),
 			],
-			"mageia":  [("tracer.packageManagers.dnf", "Dnf")],
+			"mageia":  [
+				("tracer.packageManagers.dnf", "Dnf5"),
+				("tracer.packageManagers.dnf", "Dnf"),
+			],
 			"arch":    [("tracer.packageManagers.alpm", "Alpm")],
 			"archarm": [("tracer.packageManagers.alpm", "Alpm")],
 			"fedora":  [
+				("tracer.packageManagers.dnf", "Dnf5"),
 				("tracer.packageManagers.dnf", "Dnf"),
 				("tracer.packageManagers.yum", "Yum"),
 			],
-			"suse":  [("tracer.packageManagers.dnf", "Dnf")],
+			"suse":  [
+				("tracer.packageManagers.dnf", "Dnf5"),
+				("tracer.packageManagers.dnf", "Dnf"),
+			],
 		}
 
 		distribution = System.distribution()
