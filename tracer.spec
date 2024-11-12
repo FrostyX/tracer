@@ -17,7 +17,7 @@
 %endif
 
 Name:       tracer
-Version:    1.1
+Version:    1.2
 Release:    1%{?dist}
 Summary:    Finds outdated running applications in your system
 
@@ -205,6 +205,9 @@ make DESTDIR=%{buildroot}%{_datadir} mo
 
 
 %changelog
+* Tue Nov 12 2024 Jakub Kadlcik <frostyx@email.cz> 1.2-1
+- Implement support for DNF5 (frostyx@email.cz)
+
 * Thu Oct 05 2023 Jakub Kadlcik <frostyx@email.cz> 1.1-1
 - Fix parameters for specifying the target user (frostyx@email.cz)
 
