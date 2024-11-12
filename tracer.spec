@@ -104,12 +104,18 @@ BuildRequires:  python3-dbus
 BuildRequires:  python3-rpm
 BuildRequires:  python3-distro
 BuildRequires:  python3-setuptools
+%if 0%{?fedora}
+BuildRequires:  python3-libdnf5
+%endif
 Requires:       python3-rpm
 Requires:       python3-psutil
 Requires:       python3-dbus
 Requires:       python3-six
 Requires:       python3-distro
 Requires:       %{name}-common = %{version}-%{release}
+%if 0%{?fedora}
+Requires:       python3-libdnf5
+%endif
 %if %{with suggest}
 Suggests:       python3-argcomplete
 %else
