@@ -144,7 +144,9 @@ class DefaultController(object):
 		"""
 		if self.applications.count_type(Applications.TYPES["STATIC"]):
 			with open("/run/reboot-required", "w") as fp:
-				fp.write("Tracer says reboot is required\n")
+				fp.write("Tracer says reboot is required for:\n")
+				for app in self.applications.filter_types([Applications.TYPES["STATIC"]]).unique().sorted("name"):
+					fp.write(f"- {app.name}\n")
 
 	def _restartable_applications(self, applications, args):
 		return applications.exclude_types([
