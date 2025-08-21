@@ -17,7 +17,7 @@
 %endif
 
 Name:       tracer
-Version:    1.2
+Version:    1.3
 Release:    1%{?dist}
 Summary:    Finds outdated running applications in your system
 
@@ -205,6 +205,9 @@ make DESTDIR=%{buildroot}%{_datadir} mo
 
 
 %changelog
+* Thu Aug 21 2025 Jakub Kadlcik <frostyx@email.cz> 1.3-1
+- Add list of applications triggering reboot-required (riehecky@fnal.gov)
+
 * Tue Nov 12 2024 Jakub Kadlcik <frostyx@email.cz> 1.2-1
 - Implement support for DNF5 (frostyx@email.cz)
 
