@@ -19,17 +19,18 @@ class TestRules(unittest.TestCase):
 	def setUp(self):
 		Applications._apps = ApplicationsCollection()
 		self.tracer = Tracer(PackageManagerMock(), Rules, Applications, memory=dump_memory_mock)
-		self.tracer.timestamp = 5555  # Sure, it should be a UNIX timestamp value
 		Applications._append_application({"name": "kernel", "ignore": True})
 		Application.processes_factory = ProcessesMock
 
 	@patch('tracer.resources.applications.System.init_system', return_value="dummy")
-	def test_trace_affected(self, init_system):
+	@patch('tracer.resources.applications.System.boot_time', return_value=5555)
+	def test_trace_affected(self, boot_time, init_system):
 		affected = self.tracer.trace_affected()
 		self.assertSetEqual(set(affected), set([Applications.find("baz"), Applications.find("qux")]))
 		self.assertIsInstance(affected, ApplicationsCollection)
 
-	def test_trace_application(self):
+	@patch('tracer.resources.applications.System.boot_time', return_value=5555)
+	def test_trace_application(self, boot_time):
 		affected = self.tracer.trace_application(Applications.find("baz"), AffectedProcessMock)
 		self.assertIsInstance(affected, AffectedProcessesCollection)
 		self.assertEqual(len(affected), 1)
