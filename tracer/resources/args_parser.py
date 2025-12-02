@@ -94,16 +94,23 @@ parser.add_argument('-a', '--all',
 	help='list even session and unrestartable applications'
 )
 
-parser.add_argument('--daemons-only', '--services-only',
-	dest='daemons_only',
-	action='store_true',
-	help='list only daemons/services'
-)
-
 parser.add_argument('--hooks-only',
 	dest='hooks_only',
 	action='store_true',
 	help='do not print traced applications, only run their hooks'
+)
+
+filter_type = parser.add_mutually_exclusive_group()
+filter_type.add_argument('--reboot-only',
+	dest='reboot_only',
+	action='store_true',
+	help='list only items requiring a reboot'
+)
+
+filter_type.add_argument('--daemons-only', '--services-only',
+	dest='daemons_only',
+	action='store_true',
+	help='list only daemons/services'
 )
 
 parser.add_argument('--version',

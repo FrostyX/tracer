@@ -62,6 +62,8 @@ class DefaultController(object):
 		self.applications = self.tracer.trace_affected(self._user(args.user))
 		if self.args.daemons_only:
 			self.applications = self.applications.filter_types([Applications.TYPES["DAEMON"]])
+		elif self.args.reboot_only:
+			self.applications = self.applications.filter_types([Applications.TYPES["STATIC"]])
 
 	def render(self):
 		if not self.args.hooks_only:
