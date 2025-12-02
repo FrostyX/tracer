@@ -82,7 +82,7 @@ if System.distribution() in ["fedora", "rhel", "centos", "centos-7", "mageia", "
 			try:
 				packages = PackagesCollection()
 				sqlite = self._database_file()
-				conn = sqlite3.connect(sqlite)
+				conn = sqlite3.connect('file:' + sqlite + '?mode=ro', uri=True)
 				conn.row_factory = sqlite3.Row
 				cursor = conn.cursor()
 				cursor.execute(sql, [unix_time])
