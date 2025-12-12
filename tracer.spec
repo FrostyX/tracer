@@ -17,7 +17,7 @@
 %endif
 
 Name:       tracer
-Version:    1.3
+Version:    1.4
 Release:    1%{?dist}
 Summary:    Finds outdated running applications in your system
 
@@ -205,6 +205,10 @@ make DESTDIR=%{buildroot}%{_datadir} mo
 
 
 %changelog
+* Fri Dec 12 2025 Jakub Kadlcik <frostyx@email.cz> 1.4-1
+- Permit dnf4 to check for reboot with non-root user (riehecky@fnal.gov)
+- Add --reboot-only filter (riehecky@fnal.gov)
+
 * Thu Aug 21 2025 Jakub Kadlcik <frostyx@email.cz> 1.3-1
 - Add list of applications triggering reboot-required (riehecky@fnal.gov)
 
