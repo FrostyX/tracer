@@ -58,6 +58,12 @@ if System.distribution() in ["rhel", "fedora", "centos", "centos-7", "mageia", "
 			out = process.communicate()[0]
 			return out.decode().split("\n")
 
+		def package_name_only(self, pkg_object):
+			"""
+			Transform our search result into a string with the package name
+			"""
+			return pkg_object.name
+
 
 	class FakeDnf5(Dnf):
 		def packages_newer_than(self, unix_time):
