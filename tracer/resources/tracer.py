@@ -137,7 +137,7 @@ class Tracer(object):
 			""" If the running kernel package could not be determined, abort """
 			return False
 
-		kernel_package_name = System.kernel_package_name()
+		kernel_package_name = self._PACKAGE_MANAGER.package_name_only(running)
 		latest = Package(kernel_package_name)
 		latest.load_info(self._PACKAGE_MANAGER)
 

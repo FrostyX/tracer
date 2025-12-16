@@ -137,12 +137,29 @@ class System(object):
 
 	@staticmethod
 	def running_kernel_package():
-		return System.package_manager().find_package(System.kernel_package_name(), os.uname()[2])
+		for kernel_package in System.kernel_package_names():
+			search_result = System.package_manager().find_package(kernel_package, os.uname()[2])
+			if search_result is not None:
+				return search_result
 
 	@staticmethod
-	def kernel_package_name():
-		""" TODO: infer kernel package from current distribution """
-		return 'kernel'
+	def kernel_package_names():
+		""" TODO: finish list of kernel packages """
+		distribution = System.distribution()
+		if distribution in ['rhel', 'centos']:
+			# RHEL includes kernel, kernel-core, and kernel-rt
+			# ELRepo includes kernel-lt and kernel-ml
+			return ['kernel', 'kernel-core', 'kernel-rt', 'kernel-lt', 'kernel-ml']
+		elif distribution == 'ol':
+			# RHEL includes kernel, kernel-core, and kernel-rt
+			# ELRepo includes kernel-lt and kernel-ml
+			# Oracle includes kernel-uek
+			return ['kernel', 'kernel-core', 'kernel-rt', 'kernel-lt', 'kernel-ml', 'kernel-uek']
+		elif distribution == 'fedora':
+			# Fedora includes kernel, kernel-core
+			return ['kernel', 'kernel-core']
+		else:
+			return ['kernel']
 
 	@staticmethod
 	def user():

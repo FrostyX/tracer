@@ -129,6 +129,12 @@ if System.distribution() in ["fedora", "rhel", "centos", "centos-7", "mageia", "
 
 			return None
 
+		def package_name_only(self, pkg_object):
+			"""
+			Transform our search result into a string with the package name
+			"""
+			return pkg_object.name
+
 		def load_package_info(self, package):
 			"""From database load informations about given package and set them to it"""
 			if not package:

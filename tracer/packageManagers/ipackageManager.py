@@ -46,6 +46,10 @@ class IPackageManager(object):
 		"""Find a package by name and some other input criteria"""
 		raise NotImplementedError
 
+	def package_name_only(self, pkg_object):
+		"""Returns the name of a package from the object found via the search functions"""
+		raise NotImplementedError
+
 	def compare_packages(self, package1, package2):
 		"""
 		Compares two packages by their version information
