@@ -86,6 +86,12 @@ if System.distribution() in ["arch", "archarm"]:
 			if pkg and pyalpm.vercmp(pkg.version, version) == 0:
 				return pkg
 
+		def package_name_only(self, pkg_object):
+			"""
+			Transform our search result into a string with the package name
+			"""
+			return pkg_object.name
+
 		def compare_packages(self, package1, package2):
 			"""
 			vercmp returns:

@@ -95,6 +95,12 @@ if System.distribution() == "gentoo":
 			package.description = description
 			package.category = category
 
+		def package_name_only(self, pkg_object):
+			"""
+			Transform our search result into a string with the package name
+			"""
+			return pkg_object.name
+
 		def provided_by(self, app):
 			"""Returns a package which provides given application"""
 			process = app.instances[0]  # @TODO Reimplement for all processes
