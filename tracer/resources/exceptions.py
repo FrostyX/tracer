@@ -48,9 +48,13 @@ class UnsupportedDistribution(OSError, Printable):
 			"Please visit https://github.com/FrostyX/tracer/issues\n"
 			"and create new issue called 'Unknown or unsupported linux distribution: {0} (v{1})' if there isn't such.\n"
 			"\n"
-			"Don't you have an GitHub account? Please report this issue on frostyx@email.cz")
+			"Don't you have an GitHub account? Please report this issue on frostyx@email.cz"
+			.format(self.distro, self.version)
+		)
 
 	def __init__(self, distro):
+		self.distro = distro
+		self.version = __version__
 		OSError.__init__(self, self.message.format(distro, __version__))
 
 
