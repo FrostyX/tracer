@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-09-10 23:43+0200\n"
+"POT-Creation-Date: 2023-02-21 17:29+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,27 +17,88 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../tracer/views/default.py:59
+#: ../tracer/main.py:58
+msgid "You will probably need to run tracer as root"
+msgstr ""
+
+#: ../tracer/controllers/default.py:104
+msgid "Press application number for help or 'q' to quit"
+msgstr ""
+
+#: ../tracer/controllers/default.py:112
+msgid "Wrong application number"
+msgstr ""
+
+#: ../tracer/controllers/default.py:114
+msgid "Press <enter> to get list of applications"
+msgstr ""
+
+#: ../tracer/controllers/helper.py:58
+msgid "You don't have enough permissions"
+msgstr ""
+
+#: ../tracer/controllers/helper.py:70
+#, python-brace-format
+msgid "Application called {0} is not running"
+msgstr ""
+
+#: ../tracer/resources/exceptions.py:46
+#, python-brace-format
+msgid ""
+"You are running unsupported linux distribution\n"
+"\n"
+"Please visit https://github.com/FrostyX/tracer/issues\n"
+"and create new issue called 'Unknown or unsupported linux distribution: {0} "
+"(v{1})' if there isn't such.\n"
+"\n"
+"Don't you have an GitHub account? Please report this issue on frostyx@email."
+"cz"
+msgstr ""
+
+#: ../tracer/resources/exceptions.py:61
+msgid "Package database is locked by another process"
+msgstr ""
+
+#: ../tracer/resources/exceptions.py:71
+msgid "You can't open package database due to insufficient permissions"
+msgstr ""
+
+#: ../tracer/resources/exceptions.py:82
+#, python-brace-format
+msgid ""
+"Problem occurred - neither one of {0} paths exists\n"
+"Please contact maintainer of tracer package in your distribution."
+msgstr ""
+
+#: ../tracer/resources/tracer.py:129 ../tracer/resources/applications.py:138
+msgid "You will have to reboot your computer"
+msgstr ""
+
+#: ../tracer/resources/applications.py:141
+msgid "You will have to log out & log in again"
+msgstr ""
+
+#: ../tracer/views/default.py:75
 msgid "Some applications using:"
 msgstr ""
 
-#: ../tracer/views/default.py:60
+#: ../tracer/views/default.py:76
 msgid "These applications manually:"
 msgstr ""
 
-#: ../tracer/views/default.py:61
+#: ../tracer/views/default.py:77
 msgid "Uninstalled applications:"
 msgstr ""
 
-#: ../tracer/views/default.py:66
+#: ../tracer/views/default.py:82
 msgid "These applications restarting your session:"
 msgstr ""
 
-#: ../tracer/views/default.py:70
+#: ../tracer/views/default.py:86
 msgid "These applications rebooting your computer:"
 msgstr ""
 
-#: ../tracer/views/default.py:79 ../tracer/views/interactive.py:11
+#: ../tracer/views/default.py:95 ../tracer/views/interactive.py:11
 msgid "You should restart:"
 msgstr ""
 
@@ -72,65 +133,4 @@ msgstr ""
 #: ../tracer/views/note_for_hidden.py:24
 #, python-brace-format
 msgid "{0} processes requiring reboot"
-msgstr ""
-
-#: ../tracer/main.py:52
-msgid "You will probably need to run tracer as root"
-msgstr ""
-
-#: ../tracer/resources/applications.py:127 ../tracer/resources/tracer.py:129
-msgid "You will have to reboot your computer"
-msgstr ""
-
-#: ../tracer/resources/applications.py:130
-msgid "You will have to log out & log in again"
-msgstr ""
-
-#: ../tracer/resources/exceptions.py:38
-#, python-brace-format
-msgid ""
-"You are running unsupported linux distribution\n"
-"\n"
-"Please visit https://github.com/FrostyX/tracer/issues\n"
-"and create new issue called 'Unknown or unsupported linux distribution: {0} "
-"(v{1})' if there isn't such.\n"
-"\n"
-"Don't you have an GitHub account? Please report this issue on frostyx@email."
-"cz"
-msgstr ""
-
-#: ../tracer/resources/exceptions.py:53
-msgid "Package database is locked by another process"
-msgstr ""
-
-#: ../tracer/resources/exceptions.py:63
-msgid "You can't open package database due to insufficient permissions"
-msgstr ""
-
-#: ../tracer/resources/exceptions.py:74
-#, python-brace-format
-msgid ""
-"Problem occurred - neither one of {0} paths exists\n"
-"Please contact maintainer of tracer package in your distribution."
-msgstr ""
-
-#: ../tracer/controllers/default.py:104
-msgid "Press application number for help or 'q' to quit"
-msgstr ""
-
-#: ../tracer/controllers/default.py:112
-msgid "Wrong application number"
-msgstr ""
-
-#: ../tracer/controllers/default.py:114
-msgid "Press <enter> to get list of applications"
-msgstr ""
-
-#: ../tracer/controllers/helper.py:58
-msgid "You don't have enough permissions"
-msgstr ""
-
-#: ../tracer/controllers/helper.py:70
-#, python-brace-format
-msgid "Application called {0} is not running"
 msgstr ""
