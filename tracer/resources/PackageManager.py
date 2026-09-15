@@ -66,6 +66,10 @@ class PackageManager:
 		"""Find a package by name and some other input criteria"""
 		return self.package_managers[0].find_package(pkg_name, search)
 
+	def package_name_only(self, pkg_object):
+		"""Returns the name of a package from the object found via the search functions"""
+		return self.package_managers[0].package_name_only(pkg_object)
+
 	def compare_packages(self, package1, package2):
 		"""
 		Compares two packages by their version information

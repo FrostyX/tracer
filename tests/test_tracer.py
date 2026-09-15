@@ -113,6 +113,12 @@ class PackageManagerMock(object):
 			if package.name == pkg_name:
 				return package.files
 
+	def package_name_only(self, pkg_object):
+		return pkg_object.name
+
+	def compare_packages(self, package1, package2):
+		return 0
+
 
 def dump_memory_mock(user=None):
 	memory = {}
