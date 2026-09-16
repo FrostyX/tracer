@@ -135,6 +135,23 @@ class TestViews(unittest.TestCase):
 			"      foo\n"
 		))
 
+	def test_default_all_static_package(self):
+		view = DefaultView(self.out)
+		view.assign("args", ArgsMock(all=True))
+		view.assign("applications", ApplicationsCollection([
+			Application({"type": "static-package", "name": "foo", "helper": "h1"}),
+			Application({"type": "static-package", "name": "bar", "helper": "h2"}),
+			Application({"type": "static-package", "name": "baz", "helper": "h3"}),
+		]))
+		view.render()
+		self.assertEqual(self.out.getvalue(), (
+			"You should restart:\n"
+			"  * These applications rebooting your computer:\n"
+			"      bar\n"
+			"      baz\n"
+			"      foo\n"
+		))
+
 	def test_default_all_session_static(self):
 		view = DefaultView(self.out)
 		view.assign("args", ArgsMock(all=True))

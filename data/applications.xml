@@ -24,10 +24,14 @@
   -
   -
   - Available types:
-  -     * daemon - Application is managed by init system
-  -     * static - Application is restartable only through rebooting the system
-  -     * session - Application is restartable only through restarting the session
-  -                 (i.e. Log out & Log in again)
+  -     * daemon         - Application is managed by init system
+  -     * static         - Application is restartable only through rebooting
+  -                        the system, detected via running process
+  -     * static-package - Application is restartable only through rebooting the
+  -                        system, detected when the named package changed since
+  -                        boot (or the reference timestamp)
+  -     * session        - Application is restartable only through restarting the
+  -                        session (i.e. Log out & Log in again)
   -
   - Application syntax:
   -     <app name="app_name1" type="daemon" />
@@ -82,6 +86,21 @@
 		<app name="at-spi-bus-launcher" />
 		<app name="gconfd-2" />
 		<app name="systemd" />
+	</group>
+
+	<!--
+	   - These packages require reboot as per:
+	   -   https://access.redhat.com/solutions/27943
+	   - See also the `NEED_REBOOT` variable in `needs_restarting`
+	   - https://github.com/rpm-software-management/dnf-plugins-core/blob/master/plugins/needs_restarting.py
+	   -->
+	<group type="static-package">
+		<app name="dbus" />
+		<app name="dbus-broker" />
+		<app name="dbus-daemon" />
+		<app name="glibc" />
+		<app name="linux-firmware" />
+		<app name="microcode_ctl" />
 	</group>
 
 	<group type="session">

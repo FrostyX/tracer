@@ -128,7 +128,27 @@ class Tracer(object):
 			affected['kernel'] = AffectedApplication({"name": "kernel", "type": Applications.TYPES["STATIC"],
 									"helper": _("You will have to reboot your computer")})
 
+		self._affected_static_packages(affected, packages)
+
 		return ApplicationsCollection(affected.values())
+
+	def _affected_static_packages(self, affected, packages):
+		"""
+		Add static-package applications whose package has been modified
+		since the reference timestamp (boot time by default).
+		"""
+		modified_package_names = set(p.name for p in packages)
+		for app in self._applications.all():
+			if app.type != Applications.TYPES["STATIC_PACKAGE"]:
+				continue
+			if app.name in affected:
+				continue
+			if app.ignore:
+				continue
+			if app.name in modified_package_names:
+				affected[app.name] = AffectedApplication(app._attributes)
+				affected[app.name].affected_instances = AffectedProcessesCollection()
+				self._call_hook(affected[app.name])
 
 	def _has_updated_kernel(self):
 		running = System.running_kernel_package()

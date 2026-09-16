@@ -16,7 +16,7 @@ class DefaultView(View):
 
 		def with_helpers_content():
 			content = ""
-			types = [Applications.TYPES["SESSION"], Applications.TYPES["STATIC"], Applications.TYPES["ERASED"]]
+			types = [Applications.TYPES["SESSION"], Applications.TYPES["ERASED"]] + Applications.REBOOT_TYPES
 			applications = (self.args.applications
 							.with_helpers()
 							.exclude_types(types)
@@ -50,11 +50,11 @@ class DefaultView(View):
 				content += "      " + application.name + "\n"
 			return content
 
-		def unrestartable_content(app_type):
+		def unrestartable_content(app_types):
 			content = ""
 			applications = (self.args.applications
 							.with_helpers()
-							.filter_types([app_type])
+							.filter_types(app_types)
 							.unique()
 							.sorted("name"))
 			for application in applications:
@@ -66,8 +66,8 @@ class DefaultView(View):
 			view = NoteForHiddenView(content)
 			view.assign("args", self.args.args)
 			view.assign("total_count", len(self.args.applications))
-			view.assign("session_count", self.args.applications.count_type(Applications.TYPES["SESSION"]))
-			view.assign("static_count", self.args.applications.count_type(Applications.TYPES["STATIC"]))
+			view.assign("session_count", self.args.applications.count_type(Applications.TYPES['SESSION']))
+			view.assign("static_count", sum(self.args.applications.count_type(t) for t in Applications.REBOOT_TYPES))
 			view.render()
 			return content.getvalue() if version_info.major >= 3 else content.getvalue().decode("utf8")
 
@@ -80,11 +80,11 @@ class DefaultView(View):
 		if self.args.args.all:
 			blocks.append({
 				"title": "  * " + _("These applications restarting your session:"),
-				"content": unrestartable_content(Applications.TYPES["SESSION"])
+				"content": unrestartable_content([Applications.TYPES["SESSION"]])
 			})
 			blocks.append({
 				"title": "  * " + _("These applications rebooting your computer:"),
-				"content": unrestartable_content(Applications.TYPES["STATIC"])
+				"content": unrestartable_content(Applications.REBOOT_TYPES)
 			})
 		else:
 			blocks.append({"content": note_content()})
