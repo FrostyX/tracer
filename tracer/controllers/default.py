@@ -63,7 +63,7 @@ class DefaultController(object):
 		if self.args.daemons_only:
 			self.applications = self.applications.filter_types([Applications.TYPES["DAEMON"]])
 		elif self.args.reboot_only:
-			self.applications = self.applications.filter_types([Applications.TYPES["STATIC"]])
+			self.applications = self.applications.filter_types(Applications.REBOOT_TYPES)
 
 	def render(self):
 		if not self.args.hooks_only:
@@ -84,7 +84,7 @@ class DefaultController(object):
 		view.assign("args", self.args)
 		view.assign("total_count", len(self.applications))
 		view.assign("session_count", self.applications.count_type(Applications.TYPES['SESSION']))
-		view.assign("static_count", self.applications.count_type(Applications.TYPES['STATIC']))
+		view.assign("static_count", self._static_count())
 		view.render()
 
 	def render_interactive(self):
@@ -97,7 +97,7 @@ class DefaultController(object):
 			view.assign("args", self.args)
 			view.assign("total_count", len(self.applications))
 			view.assign("session_count", self.applications.count_type(Applications.TYPES['SESSION']))
-			view.assign("static_count", self.applications.count_type(Applications.TYPES['STATIC']))
+			view.assign("static_count", self._static_count())
 			view.render()
 
 			# If there are only hidden applications (any listed)
@@ -135,7 +135,7 @@ class DefaultController(object):
 		if self.applications.count_type(Applications.TYPES['SESSION']):
 			code = 103
 
-		if self.applications.count_type(Applications.TYPES['STATIC']):
+		if self._static_count():
 			code = 104
 		return code
 
@@ -144,17 +144,19 @@ class DefaultController(object):
 		If a reboot is needed, create a /run/reboot-required file.
 		This is how Debian/Ubuntu distros does it.
 		"""
-		if os.getuid() == 0 and self.applications.count_type(Applications.TYPES["STATIC"]):
+		if os.getuid() == 0 and self._static_count():
 			with open("/run/reboot-required", "w") as fp:
 				fp.write("Tracer says reboot is required for:\n")
-				for app in self.applications.filter_types([Applications.TYPES["STATIC"]]).unique().sorted("name"):
+				for app in self.applications.filter_types(Applications.REBOOT_TYPES).unique().sorted("name"):
 					fp.write(f"- {app.name}\n")
 
 	def _restartable_applications(self, applications, args):
-		return applications.exclude_types([
-			Applications.TYPES['STATIC'],
-			Applications.TYPES['SESSION']
-		]) if not args.all else applications
+		return applications.exclude_types(
+			Applications.REBOOT_TYPES + [Applications.TYPES['SESSION']]
+		) if not args.all else applications
+
+	def _static_count(self):
+		return sum(self.applications.count_type(t) for t in Applications.REBOOT_TYPES)
 
 	def _user(self, user):
 		if   user == ['*'] or user == '*':    return None

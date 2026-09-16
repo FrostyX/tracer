@@ -21,13 +21,24 @@ class TestRules(unittest.TestCase):
 		self.tracer = Tracer(PackageManagerMock(), Rules, Applications, memory=dump_memory_mock)
 		self.tracer.timestamp = 5555  # Sure, it should be a UNIX timestamp value
 		Applications._append_application({"name": "kernel", "ignore": True})
+		Applications._append_application({"name": "glibc", "type": "static-package"})
 		Application.processes_factory = ProcessesMock
 
 	@patch('tracer.resources.applications.System.init_system', return_value="dummy")
 	def test_trace_affected(self, init_system):
 		affected = self.tracer.trace_affected()
-		self.assertSetEqual(set(affected), set([Applications.find("baz"), Applications.find("qux")]))
+		self.assertSetEqual(set(affected), set([
+			Applications.find("baz"),
+			Applications.find("qux"),
+			Applications.find("glibc"),
+		]))
 		self.assertIsInstance(affected, ApplicationsCollection)
+
+	@patch('tracer.resources.applications.System.init_system', return_value="dummy")
+	def test_trace_affected_static_package(self, init_system):
+		"""static-package apps are detected by package name even with no running process."""
+		affected = self.tracer.trace_affected()
+		self.assertIn(Applications.find("glibc"), affected)
 
 	def test_trace_application(self):
 		affected = self.tracer.trace_application(Applications.find("baz"), AffectedProcessMock)
@@ -103,6 +114,7 @@ class PackageManagerMock(object):
 		PackageMock("B", 4444, ["file4", "file5", "file6"]),
 		PackageMock("C", 7777, ["file7", "file8", "file9"]),
 		PackageMock("D", 8888, ["file10", "file11", "file12"]),
+		PackageMock("glibc", 6666, ["file13", "file14"]),
 	]
 
 	def packages_newer_than(self, unix_time):
@@ -128,6 +140,57 @@ def dump_memory_mock(user=None):
 					memory[file].append(process)
 				else:
 					memory[file] = [process]
+	return memory
+
+
+class TestStaticPackageDedup(unittest.TestCase):
+	"""Ensure an app detected by both process walk and static-package logic is emitted once."""
+
+	def setUp(self):
+		Applications._apps = ApplicationsCollection()
+		Applications._append_application({"name": "kernel", "ignore": True})
+		Applications._append_application({"name": "systemd", "type": "static-package"})
+		Application.processes_factory = ProcessesDedupMock
+
+	@patch('tracer.resources.applications.System.init_system', return_value="dummy")
+	def test_static_package_not_duplicated(self, init_system):
+		tracer = Tracer(PackageManagerDedupMock(), Rules, Applications, memory=dump_memory_dedup_mock)
+		tracer.timestamp = 5555
+		affected = tracer.trace_affected()
+		systemd_apps = [a for a in affected if a.name == "systemd"]
+		self.assertEqual(len(systemd_apps), 1)
+
+
+class ProcessesDedupMock(object):
+	@staticmethod
+	def all():
+		return ProcessesCollection([
+			ProcessMock(6, "systemd", 1111, ["file15"]),
+		])
+
+
+class PackageManagerDedupMock(object):
+	_packages = [
+		PackageMock("systemd", 6666, ["file15"]),
+	]
+
+	def packages_newer_than(self, unix_time):
+		return PackagesCollection(filter(lambda p: p.modified >= unix_time, self._packages))
+
+	def package_files(self, pkg_name):
+		for package in self._packages:
+			if package.name == pkg_name:
+				return package.files
+
+
+def dump_memory_dedup_mock(user=None):
+	memory = {}
+	for process in ProcessesDedupMock.all():
+		for file in process.files:
+			if file in memory:
+				memory[file].append(process)
+			else:
+				memory[file] = [process]
 	return memory
 
 
