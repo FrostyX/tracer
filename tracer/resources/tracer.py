@@ -79,10 +79,18 @@ class Tracer(object):
 		if self.specified_packages and self.now:
 			return PackagesCollection(self.specified_packages)
 
-		timestamp = self.timestamp if self.timestamp else System.boot_time()
+		timestamp = self._timestamp()
 		packages = self._PACKAGE_MANAGER.packages_newer_than(timestamp)
 		packages = packages.intersection(self.specified_packages)
 		return packages
+
+	def _timestamp(self):
+		boot = System.boot_time()
+		if not self.timestamp:
+			return boot
+		if self.timestamp < boot:
+			return boot
+		return self.timestamp
 
 	def trace_affected(self, user=None):
 		"""
