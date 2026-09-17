@@ -28,7 +28,6 @@ if System.distribution() == "gentoo":
 	from tracer.resources.collections import PackagesCollection
 	from gentoolkit.helpers import FileOwner
 	from tracer.resources.exceptions import DatabasePermissions
-	from tracer.resources.applications import Applications
 	import os
 	import portage
 	import subprocess

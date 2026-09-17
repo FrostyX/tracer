@@ -24,7 +24,6 @@ if System.distribution() in ["arch", "archarm"]:
 	from .ipackageManager import IPackageManager
 	from tracer.resources.package import Package
 	from tracer.resources.collections import PackagesCollection
-	from tracer.resources.applications import Applications
 	import pyalpm
 
 	class Alpm(IPackageManager):

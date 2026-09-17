@@ -19,7 +19,6 @@
 
 from __future__ import absolute_import
 
-import locale
 import gettext
 from gettext import NullTranslations
 from sys import version_info

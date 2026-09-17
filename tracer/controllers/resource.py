@@ -19,7 +19,6 @@
 
 from __future__ import absolute_import
 
-import os
 import psutil
 from datetime import datetime
 from tracer.resources.processes import Processes

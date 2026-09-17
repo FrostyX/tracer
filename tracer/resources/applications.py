@@ -80,7 +80,7 @@ class Applications(object):
 		for file in Applications.DEFINITIONS:
 			try: Applications._load(file)
 			except PathNotFound as ex:
-				if not os.path.dirname(file) in USER_CONFIG_DIRS:
+				if os.path.dirname(file) not in USER_CONFIG_DIRS:
 					raise ex
 
 	@classmethod
