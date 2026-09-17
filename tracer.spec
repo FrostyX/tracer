@@ -17,7 +17,7 @@
 %endif
 
 Name:       tracer
-Version:    1.5
+Version:    1.6
 Release:    1%{?dist}
 Summary:    Finds outdated running applications in your system
 
@@ -205,6 +205,10 @@ make DESTDIR=%{buildroot}%{_datadir} mo
 
 
 %changelog
+* Thu Sep 17 2026 Jakub Kadlcik <frostyx@email.cz> 1.6-1
+- Add support for checking specific package names for reboot
+- Fix missing `package_name_only`
+
 * Mon Sep 07 2026 Jakub Kadlcik <frostyx@email.cz> 1.5-1
 - Initial stub out for different kernel packages per distro (riehecky@fnal.gov)
 
