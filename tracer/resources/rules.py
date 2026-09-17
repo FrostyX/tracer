@@ -58,7 +58,7 @@ class Rules(object):
 		for file in Rules.DEFINITIONS:
 			try: Rules._load(file);
 			except PathNotFound as ex:
-				if not dirname(file) in USER_CONFIG_DIRS:
+				if dirname(file) not in USER_CONFIG_DIRS:
 					raise ex
 
 	@staticmethod

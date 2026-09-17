@@ -8,7 +8,6 @@ from tracer.views.note_for_hidden import NoteForHiddenView
 from tracer.views.blocks import BlocksView
 from tracer.resources.pycomp import StringIO
 from sys import version_info
-import re
 
 
 class DefaultView(View):

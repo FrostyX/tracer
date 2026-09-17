@@ -18,9 +18,7 @@
 
 from __future__ import absolute_import
 
-import os
 from tracer.version import __version__
-from tracer.resources.lang import _
 # WARNING: There are local imports in dispatch method
 
 

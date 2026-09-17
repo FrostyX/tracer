@@ -18,7 +18,6 @@
 
 from __future__ import absolute_import
 
-import os
 from psutil import NoSuchProcess
 from tracer.resources.package import Package
 from tracer.resources.system import System
@@ -99,7 +98,7 @@ class Tracer(object):
 			for file in self._PACKAGE_MANAGER.package_files(package.name):
 
 				file = FilenameCleaner.strip(file)
-				if not file in memory:
+				if file not in memory:
 					continue
 
 				for p in memory[file]:
@@ -208,7 +207,7 @@ class Tracer(object):
 			matching_files = set()
 			for package_file in self._PACKAGE_MANAGER.package_files(package.name):
 				package_file = FilenameCleaner.strip(package_file)
-				if not package_file in process_files:
+				if package_file not in process_files:
 					continue
 
 				if process.create_time() <= package.modified:
