@@ -70,6 +70,42 @@ class ProcessMock(object):
 
 	@property
 	def is_session(self):
+		return False
+
+	def create_time(self):
+		return self._create_time
+
+	def children(self):
+		return []
+
+	def parent(self):
+		return None
+
+
+class AffectedProcessMock(AffectedProcess):
+	def __init__(self, pid=None):
+		self.pid = pid
+		self.packages = set()
+		self.files = set()
+	def __init__(self, pid, name, create_time, files):
+		self.pid = pid
+		self.files = files
+		self._name = name
+		self._create_time = create_time
+
+	def name(self):
+		return self._name
+
+	@property
+	def real_name(self):
+		return self._name
+
+	@property
+	def is_interpreted(self):
+		return False
+
+	@property
+	def is_session(self):
                 return False
 
 	def create_time(self):

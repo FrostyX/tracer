@@ -42,4 +42,5 @@ def load_source(module_name, path):
 	import types
 	loader = SourceFileLoader(module_name, path)
 	loaded = types.ModuleType(loader.name)
-	return loader.exec_module(loaded)
+	loader.exec_module(loaded)
+	return loaded
