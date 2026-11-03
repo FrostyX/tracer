@@ -65,6 +65,11 @@ class TestProcesses(unittest.TestCase):
 			   "cmdline": ["withoutparams"]}
 		assert p3.name() == "sshd"
 
+		# A zombie process, psutil cannot read its exe and command line
+		p4 = ProcessMock()
+		p4.data = {"name": "sshd", "exe": None, "cmdline": None}
+		assert p4.name() == "sshd"
+
 	@unittest.skipIf(True, "@TODO Create Mock for Processes class")
 	def test_dbus(self):
 		dbus = SystemdDbus()

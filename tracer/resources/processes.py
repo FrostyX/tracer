@@ -77,8 +77,9 @@ class ProcessWrapper(object):
 		# else must be the session.
 		try:
 			if self._attr("name") == 'sshd':
-				if self._attr("exe") not in self._attr("cmdline") and len(self._attr("cmdline")) > 1:
-					username= self._attr("cmdline")[1].split("@")[0]
+				cmdline = self.cmdline()
+				if self._attr("exe") not in cmdline and len(cmdline) > 1:
+					username= cmdline[1].split("@")[0]
 					return 'ssh-{0}-session'.format(username)
 		except psutil.AccessDenied:
 			pass
@@ -88,7 +89,9 @@ class ProcessWrapper(object):
 		return self._attr("exe")
 
 	def cmdline(self):
-		return self._attr("cmdline")
+		# psutil reports None when it cannot read the command line,
+		# e.g. for a zombie process
+		return self._attr("cmdline") or []
 
 	def ppid(self):
 		return self._attr("ppid")
